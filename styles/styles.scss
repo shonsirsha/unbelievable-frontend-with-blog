@@ -12,7 +12,7 @@ $font-family-sans-serif: OpenSansRegular !important;
 
 // Base Colours
 $white: #ffffff;
-$blue: #007bff !default;
+$blue: #2b72f0 !default;
 $indigo: #6610f2 !default;
 $purple: #6f42c1 !default;
 $pink: #e83e8c !default;
@@ -21,30 +21,29 @@ $orange: #fd7e14 !default;
 $yellow: #ffc107 !default;
 $green: #28a745 !default;
 $teal: #20c997 !default;
-$cyan: #17a2b8 !default;
+$cyan: #0ac7ce !default;
 
 // Additional / Custom Colours
-$tan: #e6daca;
 
-$tan-100: #cdbfae;
-
-$iceBlue: #d5dbe3;
+$gray: #636466;
+$gray2: #606060;
+$lightgray: #e8e8e8;
 $slate: #c0c5d0;
-$black: #272729;
-$black-100: #1c1c1c;
-$black-200: #585757;
-$black-300: #969696;
-$black-400: #e4e4e4;
-$black-500: #f7f7f7;
+$tan: #eae5c9;
+$darktan: #e8bc52;
+$darkpurple: #363c54;
+
+$darkBlue: #2b72f0;
+
 // Variables
-$primary: #1c3350;
+$primary: #171b2d;
 $secondary: #d52f89;
 $success: $green !default;
 $info: $cyan !default;
 $warning: $yellow !default;
 $danger: $red !default;
 
-$input-placeholder-color: $black-200;
+// $input-placeholder-color: $black-200;
 
 $theme-colors: () !default;
 $theme-colors: map-merge(
@@ -55,16 +54,14 @@ $theme-colors: map-merge(
 		"info": $info,
 		"warning": $warning,
 		"danger": $danger,
-		"tan": $tan,
-		"tan-100": $tan-100,
-		"iceblue": $iceBlue,
-		"black": $black,
-		"black-100": $black-100,
-		"black-200": $black-200,
-		"black-300": $black-300,
-		"black-400": $black-400,
-		"black-500": $black-500,
+		"darkblue": $darkBlue,
 		"white": $white,
+		"gray": $gray,
+		"gray2": $gray2,
+		"lightgray": $lightgray,
+		"tan": $tan,
+		"darkpurple": $darkpurple,
+		"darktan": $darktan,
 	),
 	$theme-colors
 );
@@ -83,8 +80,5 @@ $border-radius-sm: 8px !default;
 :export {
 	primary: $primary;
 	secondary: $secondary;
-	tan: $tan;
 	slate: $slate;
-	black100: $black-100;
-	black200: $black-200;
 }
