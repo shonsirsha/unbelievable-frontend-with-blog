@@ -13,8 +13,8 @@ export const HeadingXL = styled.h1`
 	font-family: MontSerratBold;
 	font-size: 56px;
 	font-weight: 400;
-	letter-spacing: -1.6px;
-	line-height: 56px;
+	letter-spacing: 1px;
+	line-height: 72px;
 	margin: 0px;
 `;
 
