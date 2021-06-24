@@ -1,0 +1,90 @@
+@font-face {
+	font-family: OpenSansRegular;
+	src: url("./fonts/OpenSans-Regular.ttf");
+}
+
+@font-face {
+	font-family: MontSerratBold;
+	src: url("./fonts/Montserrat-Bold.ttf");
+}
+
+$font-family-sans-serif: OpenSansRegular !important;
+
+// Base Colours
+$white: #ffffff;
+$blue: #007bff !default;
+$indigo: #6610f2 !default;
+$purple: #6f42c1 !default;
+$pink: #e83e8c !default;
+$red: #dc3545 !default;
+$orange: #fd7e14 !default;
+$yellow: #ffc107 !default;
+$green: #28a745 !default;
+$teal: #20c997 !default;
+$cyan: #17a2b8 !default;
+
+// Additional / Custom Colours
+$tan: #e6daca;
+
+$tan-100: #cdbfae;
+
+$iceBlue: #d5dbe3;
+$slate: #c0c5d0;
+$black: #272729;
+$black-100: #1c1c1c;
+$black-200: #585757;
+$black-300: #969696;
+$black-400: #e4e4e4;
+$black-500: #f7f7f7;
+// Variables
+$primary: #1c3350;
+$secondary: #d52f89;
+$success: $green !default;
+$info: $cyan !default;
+$warning: $yellow !default;
+$danger: $red !default;
+
+$input-placeholder-color: $black-200;
+
+$theme-colors: () !default;
+$theme-colors: map-merge(
+	(
+		"primary": $primary,
+		"secondary": $secondary,
+		"success": $success,
+		"info": $info,
+		"warning": $warning,
+		"danger": $danger,
+		"tan": $tan,
+		"tan-100": $tan-100,
+		"iceblue": $iceBlue,
+		"black": $black,
+		"black-100": $black-100,
+		"black-200": $black-200,
+		"black-300": $black-300,
+		"black-400": $black-400,
+		"black-500": $black-500,
+		"white": $white,
+	),
+	$theme-colors
+);
+
+$display1-size: 3.5rem !default;
+$display2-size: 2.5rem !default;
+$display3-size: 1.5rem !default;
+$display4-size: 0.5rem !default;
+
+$border-radius: 1rem !default;
+$border-radius-lg: 0.3rem !default;
+$border-radius-sm: 8px !default;
+
+@import "~bootstrap/scss/bootstrap";
+
+:export {
+	primary: $primary;
+	secondary: $secondary;
+	tan: $tan;
+	slate: $slate;
+	black100: $black-100;
+	black200: $black-200;
+}
