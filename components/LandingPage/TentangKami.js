@@ -21,11 +21,11 @@ const StyledImg = styled(Image)`
 export default function TentangKami() {
 	const left = (
 		<>
-			<StyledHeadingXXL>tumbuh</StyledHeadingXXL>;
-			<StyledTextPrimary className="mt-1 text-white">
+			<StyledHeadingXXL>tumbuh</StyledHeadingXXL>
+			<StyledTextPrimary className="text-white">
 				bersama komunitas
 			</StyledTextPrimary>
-			<StyledHeadingMD className="mt-2 text-blue">
+			<StyledHeadingMD className="mt-1 text-blue">
 				Unbelieveable
 			</StyledHeadingMD>
 			<StyledImg src="/images/cat.jpeg" alt="image" />
@@ -48,42 +48,7 @@ export default function TentangKami() {
 			</TextPrimary>
 		</>
 	);
-	return (
-		<HalfHalf left={left} right={right} />
-		// <OuterContainer className="bg-primary1">
-		// 	<Container>
-		// 		{/* <StyledRow>
-		// 			<Col lg={6} md={12}>
-		// 				<StyledHeadingXXL>tumbuh</StyledHeadingXXL>
-		// 				<StyledTextPrimary className="mt-1 text-white">
-		// 					bersama komunitas
-		// 				</StyledTextPrimary>
-		// 				<StyledHeadingMD className="mt-2 text-blue">
-		// 					Unbelieveable
-		// 				</StyledHeadingMD>
-		// 				<StyledImg src="/images/cat.jpeg" alt="image" />
-		// 			</Col>
-		// 			<StyledCol lg={6} md={12}>
-		// 				<TextPrimary className="text-white">
-		// 					UNBELIEVABLE merupakan sebuah komunitas yang ingin bersama
-		// 					meningkatkan kualitas hidup setiap individu di dunia dengan cara
-		// 					yang paling efektif
-		// 				</TextPrimary>
-
-		// 				<TextPrimary className="mt-4 text-white">
-		// 					Belajarlah bersama karakter spesial Unbelievable agar belajar
-		// 					lebih menyenangkan dan efektif!
-		// 				</TextPrimary>
-
-		// 				<TextPrimary className="mt-4 text-white">
-		// 					Setiap hari kamu akan merasakan perubahannya, bayangkan perubahan
-		// 					yang terjadi dalam waktu 1 tahun!
-		// 				</TextPrimary>
-		// 			</StyledCol>
-		// 		</StyledRow> */}
-		// 	</Container>
-		// </OuterContainer>
-	);
+	return <HalfHalf left={left} right={right} />;
 }
 
 {

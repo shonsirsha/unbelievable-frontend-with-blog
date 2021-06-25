@@ -52,7 +52,8 @@ export default function Header() {
 		const heroHeight = document.querySelector("#hero").clientHeight;
 		if (typeof window !== undefined) {
 			if (
-				(window.pageYOffset >= 120 && window.pageYOffset <= heroHeight - 16) ||
+				(window.pageYOffset >= heroHeight - 736 &&
+					window.pageYOffset <= heroHeight) ||
 				window.pageYOffset > heroHeight
 			) {
 				setNavbarClass("purple");
