@@ -21,11 +21,11 @@ const StyledImg = styled(Image)`
 export default function TentangKami() {
 	const left = (
 		<>
-			<StyledHeadingXXL>tumbuh</StyledHeadingXXL>
-			<StyledTextPrimary className="text-white">
+			<StyledHeadingXXL as="h2">tumbuh</StyledHeadingXXL>
+			<StyledTextPrimary as="h2" className="text-white">
 				bersama komunitas
 			</StyledTextPrimary>
-			<StyledHeadingMD className="mt-1 text-blue">
+			<StyledHeadingMD as="h2" className="mt-1 text-blue">
 				Unbelieveable
 			</StyledHeadingMD>
 			<StyledImg src="/images/cat.jpeg" alt="image" />

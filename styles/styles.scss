@@ -39,7 +39,7 @@ $slate: #c0c5d0;
 $tan: #eae5c9;
 $darktan: #e8bc52;
 $darkpurple: #363c54;
-
+$lightBlue: $cyan;
 $darkBlue: #2b72f0;
 
 $primary1: #171b2d;
@@ -73,6 +73,7 @@ $theme-colors: map-merge(
 		"tan": $tan,
 		"darkpurple": $darkpurple,
 		"darktan": $darktan,
+		"lightblue": $lightBlue,
 	),
 	$theme-colors
 );
