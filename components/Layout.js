@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Footer from "./Footer";
-
+import Header from "./Header";
 export default function Layout({
 	title = "Unbelieveable",
 	keywords = "self development, lms",
@@ -16,6 +16,7 @@ export default function Layout({
 				<meta name="description" content={description} />
 				<meta name="keywords" content={keywords} />
 			</Head>
+			<Header />
 			<div>{children}</div>
 			<Footer />
 		</div>

@@ -3,8 +3,8 @@ import styled from "styled-components";
 export const TextPrimary = styled.p`
 	font-size: 18px;
 	font-weight: 400;
-	letter-spacing: 0px;
-	line-height: 18px;
+	letter-spacing: 0.5px;
+	line-height: 32px;
 	margin: 0px;
 `;
 
@@ -12,7 +12,7 @@ export const TextSecondary = styled.p`
 	font-size: 15px;
 	font-weight: 400;
 	letter-spacing: -0.2px;
-	line-height: 15px;
+	line-height: 28px;
 	margin: 0px;
 `;
 export const TextTertiary = styled.p`

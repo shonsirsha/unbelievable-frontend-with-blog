@@ -12,7 +12,9 @@
 	font-family: MontserratRegular;
 	src: url("./fonts/Montserrat-Regular.ttf");
 }
-
+p {
+	margin: 0;
+}
 $font-family-sans-serif: OpenSansRegular !important;
 
 // Base Colours
@@ -40,6 +42,8 @@ $darkpurple: #363c54;
 
 $darkBlue: #2b72f0;
 
+$primary1: #171b2d;
+
 // Variables
 $primary: #171b2d;
 $secondary: #d52f89;
@@ -54,12 +58,14 @@ $theme-colors: () !default;
 $theme-colors: map-merge(
 	(
 		"primary": $primary,
+		"primary1": $primary1,
 		"secondary": $secondary,
 		"success": $success,
 		"info": $info,
 		"warning": $warning,
 		"danger": $danger,
 		"darkblue": $darkBlue,
+		"blue": $blue,
 		"white": $white,
 		"gray": $gray,
 		"gray2": $gray2,
