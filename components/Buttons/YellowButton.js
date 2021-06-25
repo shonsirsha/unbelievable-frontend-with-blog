@@ -8,14 +8,18 @@ const StyledButton = styled(Button)`
 	border-radius: 8px;
 	color: black;
 	letter-spacing: 0.3px;
+	border-color: transparent;
+	max-width: ${(props) => props.width && `${props.width}px`};
 
 	&:hover {
 		color: black;
+		border-color: transparent;
 	}
 `;
 export default function YellowButton({ children, ...props }) {
+	const { width } = props;
 	return (
-		<StyledButton className={"shadow bg-darktan"} {...props}>
+		<StyledButton width={width} className={"shadow bg-darktan"} {...props}>
 			{children}
 		</StyledButton>
 	);

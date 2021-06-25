@@ -25,11 +25,11 @@ export default function CaraKerja() {
 			body: "Kelas unbelievable dirancang sangat menyenangkan seperti bermain game, setiap hari belajar hanya 10-20 menit dan rasakan perubahannya!",
 		},
 		{
-			title: "Berubah setiap hari dengan Kelas Khusus UNBELIEVABLE",
+			title: "Bersama komunitas khusus Unbelievable",
 			body: "Kamu akan bertemu dengan para pahlawan lainnya untuk saling mendukung menjadi pribadi yang lebih baik lagi!",
 		},
 		{
-			title: "Berubah setiap hari dengan Kelas Khusus UNBELIEVABLE",
+			title: "Bergabunglah bersama para pahlawan!",
 			body: "Setiap bulan kamu akan mendapatkan sebuah perubahan baru, baik itu menjadi percaya diri, badan fit, menjadi orang tua yang baik. Bayangkan hal yang bisa kamu dapatkan dalam waktu 1 tahun?",
 		},
 	];
