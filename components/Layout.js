@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Footer from "./Footer";
-import Header from "./Header";
+import Header from "./Headers/Header";
 export default function Layout({
 	title = "Unbelieveable",
 	keywords = "self development, lms",

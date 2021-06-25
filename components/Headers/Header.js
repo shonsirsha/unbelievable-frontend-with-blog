@@ -15,7 +15,7 @@ const StyledContainer = styled.div`
 	flex-direction: column;
 	img {
 		margin-top: 24px;
-		width: 350px;
+		width: 290px;
 	}
 	&:hover {
 		cursor: pointer;
@@ -26,24 +26,24 @@ const StyledContainer = styled.div`
 	}
 `;
 
-const StyledLink = styled.a`
-	margin: 0 32px;
-	transition: 0.45s;
+// const StyledLink = styled.a`
+// 	margin: 0 32px;
+// 	transition: 0.45s;
 
-	&:hover {
-		text-decoration: none;
-	}
+// 	&:hover {
+// 		text-decoration: none;
+// 	}
 
-	&.hide {
-		color: transparent !important;
-	}
-`;
+// 	&.hide {
+// 		color: transparent !important;
+// 	}
+// `;
 
 export default function Header() {
 	const router = useRouter();
 	const [navbarClass, setNavbarClass] = useState("");
-	const [showMenuLinks, setShowMenuLinks] = useState(true);
-	const [menuLinkClass, setMenuLinksClass] = useState("");
+	// const [showMenuLinks, setShowMenuLinks] = useState(true);
+	// const [menuLinkClass, setMenuLinksClass] = useState("");
 	useEffect(() => {
 		window.addEventListener("scroll", handleScroll);
 	}, []);
@@ -51,16 +51,22 @@ export default function Header() {
 	const handleScroll = () => {
 		const heroHeight = document.querySelector("#hero").clientHeight;
 		if (typeof window !== undefined) {
-			if (window.pageYOffset >= 120 && window.pageYOffset <= heroHeight - 16) {
+			if (
+				(window.pageYOffset >= 120 && window.pageYOffset <= heroHeight - 16) ||
+				window.pageYOffset > heroHeight
+			) {
 				setNavbarClass("purple");
 			} else {
 				setNavbarClass("");
 			}
 
 			if (window.pageYOffset > heroHeight - 183) {
-				setMenuLinksClass("hide");
+				// setMenuLinksClass("hide");
+				// setTimeout(() => {
+				// 	setShowMenuLinks(false);
+				// }, 300);
 			} else {
-				setMenuLinksClass("");
+				// setMenuLinksClass("");
 			}
 		}
 	};
@@ -72,7 +78,7 @@ export default function Header() {
 			<div className="d-flex justify-content-center">
 				<Image onClick={goHome} src="/images/logo.png" alt="logo" />
 			</div>
-			{showMenuLinks && (
+			{/* {showMenuLinks && (
 				<div className="d-none mt-5 d-lg-flex justify-content-center">
 					<div className="mt-3 d-flex">
 						<Link href="/">
@@ -97,7 +103,7 @@ export default function Header() {
 						</Link>
 					</div>
 				</div>
-			)}
+			)} */}
 		</StyledContainer>
 	);
 }
