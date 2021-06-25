@@ -22,9 +22,12 @@ const StyledCol = styled(Col)`
 	flex-direction: column;
 	justify-content: center;
 `;
+const OuterContainer = styled.div`
+	padding-top: 100px;
+`;
 export default function TentangKami() {
 	return (
-		<div className="bg-primary1">
+		<OuterContainer className="bg-primary1">
 			<Container>
 				<Row>
 					<Col lg={6} md={12}>
@@ -56,6 +59,6 @@ export default function TentangKami() {
 					</StyledCol>
 				</Row>
 			</Container>
-		</div>
+		</OuterContainer>
 	);
 }

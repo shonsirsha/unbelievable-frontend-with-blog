@@ -33,7 +33,7 @@ const BlueBlob = styled(Image)`
 `;
 export default function Hero() {
 	return (
-		<OuterContainer>
+		<OuterContainer id="hero">
 			<StyledContainer className="position-relative">
 				<StyledRow>
 					<Col className="align-items-center d-flex justify-content-center">
