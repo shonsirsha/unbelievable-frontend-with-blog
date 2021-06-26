@@ -46,6 +46,31 @@ const StyledSlider = styled(Slider)`
 		display: flex;
 		justify-content: center;
 	}
+
+	.slick-dots li button:before {
+		font-size: 12px;
+	}
+
+	.slick-dots li button:before {
+		color: #e8bc52;
+	}
+
+	.slick-prev:before,
+	.slick-next:before {
+		color: #e8bc52;
+	}
+	.slick-prev:before,
+	.slick-next:before {
+		font-size: 48px;
+	}
+
+	.slick-prev {
+		left: 174px;
+	}
+
+	.slick-next {
+		right: 240px;
+	}
 `;
 export default function MulaiSekarang() {
 	const settings = {
