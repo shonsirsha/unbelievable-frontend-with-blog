@@ -3,14 +3,7 @@ import { Col, Row, Container, Image } from "react-bootstrap";
 import { HeadingXL } from "components/Typography/Headings";
 import { TextPrimary } from "components/Typography/Text";
 import YellowButton from "components/Buttons/YellowButton";
-
-const StyledHeading = styled(HeadingXL)`
-	font-family: MontserratRegular;
-	max-width: 800px;
-	& > span {
-		font-family: MontserratBold;
-	}
-`;
+import { mediaBreakpoint } from "utils/breakpoints";
 
 const StyledContainer = styled(Container)`
 	display: flex;
@@ -18,6 +11,19 @@ const StyledContainer = styled(Container)`
 	justify-content: center;
 	align-items: center;
 	height: 100%;
+`;
+
+const StyledHeading = styled(HeadingXL)`
+	font-family: MontserratRegular;
+	max-width: 800px;
+	& > span {
+		font-family: MontserratBold;
+	}
+
+	@media ${mediaBreakpoint.down.md} {
+		font-size: 32px;
+		line-height: 48px;
+	}
 `;
 
 const OuterContainer = styled.div`

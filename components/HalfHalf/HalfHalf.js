@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { Container, Row, Col } from "react-bootstrap";
+import { mediaBreakpoint } from "utils/breakpoints";
+
 const StyledCol = styled(Col)`
 	display: flex;
 	flex-direction: column;
@@ -8,13 +10,26 @@ const StyledCol = styled(Col)`
 	&.special {
 		margin-top: 96px;
 	}
+
+	@media ${mediaBreakpoint.down.lg} {
+		&:nth-child(2) {
+			margin-top: 48px;
+		}
+	}
 `;
 const StyledRow = styled(Row)`
 	padding-top: 160px;
+	@media ${mediaBreakpoint.down.lg} {
+		padding-top: 48px;
+	}
 `;
 const OuterContainer = styled.div`
 	display: flex;
 	padding-bottom: 160px;
+
+	@media ${mediaBreakpoint.down.lg} {
+		padding-bottom: 48px;
+	}
 `;
 export default function HalfHalf({ left, right, light, bottom }) {
 	return (

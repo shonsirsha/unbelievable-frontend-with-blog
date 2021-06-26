@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { mediaBreakpoint } from "utils/breakpoints";
 
 export const HeadingXXL = styled.h1`
 	font-family: MontSerratBold;

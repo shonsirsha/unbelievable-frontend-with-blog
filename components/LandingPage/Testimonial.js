@@ -1,22 +1,28 @@
 import styled from "styled-components";
-import { TextPrimary, TextTertiary } from "components/Typography/Text";
+import { TextTertiary } from "components/Typography/Text";
 import { Image, Container, Row, Col } from "react-bootstrap";
 import Slider from "react-slick";
-
-import {
-	HeadingSM,
-	HeadingMD,
-	HeadingXS,
-} from "components/Typography/Headings";
-
+import { HeadingXS, HeadingMD } from "components/Typography/Headings";
+import { mediaBreakpoint } from "utils/breakpoints";
 const StyledHeadingXS = styled(HeadingXS)`
 	font-size: 22px;
 	margin-top: 96px;
 `;
 
+const StyledHeadingMD = styled(HeadingMD)`
+	@media ${mediaBreakpoint.down.lg} {
+		font-size: 32px;
+		line-height: 34px;
+	}
+`;
+
 const OuterContainer = styled.div`
 	display: flex;
 	padding: 160px 0;
+
+	@media ${mediaBreakpoint.down.lg} {
+		padding: 48px 0;
+	}
 `;
 const CardBody = styled.div`
 	display: flex;
@@ -34,6 +40,8 @@ const CardBody = styled.div`
 `;
 
 const StyledSlider = styled(Slider)`
+	width: 100%;
+	max-width: 350px;
 	.slick-track {
 		margin: auto;
 	}
@@ -65,11 +73,27 @@ const StyledSlider = styled(Slider)`
 	}
 
 	.slick-prev {
-		left: 174px;
+		z-index: 88;
+		left: -58px;
 	}
 
 	.slick-next {
-		right: 240px;
+		z-index: 88;
+	}
+
+	@media ${mediaBreakpoint.down.md} {
+		.slick-next,
+		.slick-prev {
+			top: 100%;
+		}
+
+		.slick-next {
+			right: 40px;
+		}
+
+		.slick-prev {
+			left: 19px;
+		}
 	}
 `;
 export default function MulaiSekarang() {
@@ -85,12 +109,12 @@ export default function MulaiSekarang() {
 			<Container>
 				<Row>
 					<Col lg={12}>
-						<HeadingMD className="text-center">
+						<StyledHeadingMD className="text-center">
 							Testimoni Member yang sudah Join Batch 1
-						</HeadingMD>
+						</StyledHeadingMD>
 					</Col>
 
-					<Col lg={12} className="mt-4">
+					<Col lg={12} className="d-flex justify-content-center mt-4">
 						<StyledSlider {...settings}>
 							<TestimonialCard />
 							<TestimonialCard />

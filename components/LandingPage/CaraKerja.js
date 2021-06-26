@@ -1,22 +1,50 @@
 import styled from "styled-components";
 import HalfHalf from "components/HalfHalf/HalfHalf";
 import { TextPrimary, TextSecondary } from "components/Typography/Text";
+
 import {
 	HeadingLG,
 	HeadingXXL,
 	HeadingXS,
 	HeadingSM,
 } from "components/Typography/Headings";
+import { mediaBreakpoint } from "utils/breakpoints";
+
 const StyledTextSecondary = styled(TextSecondary)`
 	max-width: 260px;
 	text-align: justify;
+	@media ${mediaBreakpoint.down.lg} {
+		max-width: 100%;
+	}
 `;
 const StyledHeadingXXL = styled(HeadingXXL)`
 	font-size: 96px;
 	margin-right: ${(props) => (props.nth === 0 ? `80` : `64`)}px;
+
+	@media ${mediaBreakpoint.down.md} {
+		margin-bottom: auto;
+		font-size: 72px;
+		margin-right: ${(props) => (props.nth === 0 ? `40` : `24`)}px;
+	}
 `;
 const StyledHeadingXS = styled(HeadingXS)`
 	font-size: 18px;
+`;
+
+const StyledHeadingLG = styled(HeadingLG)`
+	@media ${mediaBreakpoint.down.md} {
+		font-size: 32px;
+	}
+`;
+
+const StyledHeadingSM = styled(HeadingSM)`
+	@media ${mediaBreakpoint.down.md} {
+		font-size: 34px;
+	}
+
+	@media ${mediaBreakpoint.down.lg} {
+		font-size: 40px;
+	}
 `;
 export default function CaraKerja() {
 	const caraKerja = [
@@ -35,10 +63,10 @@ export default function CaraKerja() {
 	];
 	const left = (
 		<>
-			<HeadingLG as="h2">bagaimana</HeadingLG>
-			<HeadingSM as="h2" className="mt-1 text-blue">
+			<StyledHeadingLG as="h2">bagaimana</StyledHeadingLG>
+			<StyledHeadingSM as="h2" className="mt-1 text-blue">
 				cara kerjanya?
-			</HeadingSM>
+			</StyledHeadingSM>
 		</>
 	);
 
@@ -46,7 +74,7 @@ export default function CaraKerja() {
 		<>
 			<div className="d-flex flex-column">
 				{caraKerja.map((item, ix) => (
-					<div key={ix} className="mb-3 d-flex align-items-center">
+					<div key={ix} className="mb-lg-3 mb-5 d-flex align-items-center">
 						<StyledHeadingXXL nth={ix} className="text-lightblue" as="p">
 							{ix + 1}
 						</StyledHeadingXXL>

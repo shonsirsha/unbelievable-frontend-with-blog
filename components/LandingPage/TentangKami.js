@@ -3,19 +3,33 @@ import { Image } from "react-bootstrap";
 import { TextPrimary } from "components/Typography/Text";
 import { HeadingXXL, HeadingMD } from "components/Typography/Headings";
 import HalfHalf from "components/HalfHalf/HalfHalf";
+import { mediaBreakpoint } from "utils/breakpoints";
+
 const StyledHeadingXXL = styled(HeadingXXL)`
 	color: #a5a5a5;
+
+	@media ${mediaBreakpoint.down.md} {
+		font-size: 48px;
+	}
 `;
 const StyledTextPrimary = styled(TextPrimary)`
 	font-size: 30px;
 `;
 const StyledHeadingMD = styled(HeadingMD)`
 	text-transform: uppercase;
+
+	@media ${mediaBreakpoint.down.md} {
+		font-size: 32px;
+	}
 `;
 const StyledImg = styled(Image)`
 	width: 80%;
 	margin-top: 48px;
 	border-radius: 8px;
+
+	@media ${mediaBreakpoint.down.md} {
+		margin-top: 16px;
+	}
 `;
 
 export default function TentangKami() {

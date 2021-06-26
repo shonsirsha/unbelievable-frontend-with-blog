@@ -4,6 +4,7 @@ import { TextPrimary } from "components/Typography/Text";
 import { Image } from "react-bootstrap";
 import { HeadingSM } from "components/Typography/Headings";
 import YellowButton from "components/Buttons/YellowButton";
+import { mediaBreakpoint } from "utils/breakpoints";
 const StyledHeadingSM = styled(HeadingSM)`
 	font-family: MontserratRegular;
 	font-size: 29px;
@@ -19,10 +20,18 @@ const StyledTextPrimary = styled(TextPrimary)`
 `;
 const LeftContainer = styled.div`
 	padding-right: 80px;
+
+	@media ${mediaBreakpoint.down.md} {
+		padding-right: 0;
+	}
 `;
 
 const RightContainer = styled.div`
 	padding-left: 80px;
+
+	@media ${mediaBreakpoint.down.md} {
+		padding-left: 0;
+	}
 `;
 
 export default function MulaiSekarang() {

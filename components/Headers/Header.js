@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { Image } from "react-bootstrap";
 import styled from "styled-components";
-import Link from "next/link";
+// import Link from "next/link";
 import { useRouter } from "next/router";
+import { mediaBreakpoint } from "utils/breakpoints";
 const StyledContainer = styled.div`
 	position: fixed;
 	top: 0;
 	padding-top: 24px;
 	width: 100%;
 	transition: 0.35s;
-	z-index: 5;
+	z-index: 89;
 	display: flex;
 	padding-bottom: 48px;
 	flex-direction: column;
@@ -23,6 +24,13 @@ const StyledContainer = styled.div`
 
 	&.purple {
 		background: #171b2d;
+	}
+
+	@media ${mediaBreakpoint.down.md} {
+		img {
+			margin-top: 24px;
+			width: 210px;
+		}
 	}
 `;
 
@@ -51,14 +59,18 @@ export default function Header() {
 	const handleScroll = () => {
 		const heroHeight = document.querySelector("#hero").clientHeight;
 		if (typeof window !== undefined) {
-			if (
-				(window.pageYOffset >= heroHeight - 736 &&
-					window.pageYOffset <= heroHeight) ||
-				window.pageYOffset > heroHeight
-			) {
-				setNavbarClass("purple");
-			} else {
+			if (window.pageYOffset < 10) {
 				setNavbarClass("");
+			} else {
+				if (
+					(window.pageYOffset >= heroHeight - 736 &&
+						window.pageYOffset <= heroHeight) ||
+					window.pageYOffset > heroHeight
+				) {
+					setNavbarClass("purple");
+				} else {
+					setNavbarClass("");
+				}
 			}
 
 			if (window.pageYOffset > heroHeight - 183) {
