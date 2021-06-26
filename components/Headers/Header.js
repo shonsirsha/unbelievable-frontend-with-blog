@@ -17,6 +17,7 @@ const StyledContainer = styled.div`
 	img {
 		margin-top: 24px;
 		width: 290px;
+		height: 31px;
 	}
 	&:hover {
 		cursor: pointer;
@@ -28,6 +29,7 @@ const StyledContainer = styled.div`
 
 	@media ${mediaBreakpoint.down.md} {
 		img {
+			height: auto;
 			margin-top: 24px;
 			width: 210px;
 		}

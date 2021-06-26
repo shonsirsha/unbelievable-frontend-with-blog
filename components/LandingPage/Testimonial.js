@@ -84,15 +84,7 @@ const StyledSlider = styled(Slider)`
 	@media ${mediaBreakpoint.down.md} {
 		.slick-next,
 		.slick-prev {
-			top: 100%;
-		}
-
-		.slick-next {
-			right: 40px;
-		}
-
-		.slick-prev {
-			left: 19px;
+			display: none !important;
 		}
 	}
 `;
