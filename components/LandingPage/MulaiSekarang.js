@@ -47,13 +47,11 @@ export default function MulaiSekarang() {
 		</RightContainer>
 	);
 	return (
-		<div className="d-flex flex-column">
-			<HalfHalf
-				left={left}
-				right={right}
-				light
-				bottom={<YellowButton width={280}>Mulai Sekarang!</YellowButton>}
-			/>
-		</div>
+		<HalfHalf
+			left={left}
+			right={right}
+			light
+			bottom={<YellowButton width={280}>Mulai Sekarang!</YellowButton>}
+		/>
 	);
 }

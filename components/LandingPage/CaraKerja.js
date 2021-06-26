@@ -46,7 +46,7 @@ export default function CaraKerja() {
 		<>
 			<div className="d-flex flex-column">
 				{caraKerja.map((item, ix) => (
-					<div className="mb-3 d-flex align-items-center">
+					<div key={ix} className="mb-3 d-flex align-items-center">
 						<StyledHeadingXXL nth={ix} className="text-lightblue" as="p">
 							{ix + 1}
 						</StyledHeadingXXL>

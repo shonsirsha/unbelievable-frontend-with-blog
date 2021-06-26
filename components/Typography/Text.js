@@ -18,8 +18,8 @@ export const TextSecondary = styled.p`
 export const TextTertiary = styled.p`
 	font-size: 14px;
 	font-weight: normal;
-	letter-spacing: -0.1px;
-	line-height: 14px;
+	letter-spacing: 0.4px;
+	line-height: 19px;
 	margin: 0px;
 `;
 
