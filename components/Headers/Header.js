@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { HiMenuAlt4 } from "react-icons/hi";
+import { TextPrimary } from "components/Typography/Text";
 const StyledContainer = styled.div`
 	position: fixed;
 	top: 0;
@@ -12,7 +13,7 @@ const StyledContainer = styled.div`
 	transition: 0.35s;
 	z-index: 89;
 	display: flex;
-	padding: 48px 48px;
+	padding: 32px 48px;
 	flex-direction: column;
 	.logo {
 		width: 290px;
@@ -30,12 +31,10 @@ const StyledContainer = styled.div`
 	@media ${mediaBreakpoint.down.md} {
 		.logo {
 			height: 22.8px;
-			margin-top: 16px;
 
 			width: 210px;
 		}
-		padding-top: 8px;
-		padding-bottom: 24px;
+		padding: 16px;
 	}
 `;
 
@@ -46,6 +45,10 @@ const HamburgerIcon = styled(HiMenuAlt4)`
 	&:hover {
 		cursor: pointer;
 	}
+`;
+
+const StyledTextPrimary = styled(TextPrimary)`
+	font-size: 21px;
 `;
 
 const MenuContainer = styled.div`
@@ -59,6 +62,23 @@ const MenuContainer = styled.div`
 	&.show{
 		left: 0;
 	}
+
+	@media ${mediaBreakpoint.down.md} {
+		min-width: 80vw;
+		left: -80vw;
+	}
+	padding: 32px;
+    padding-right: 0;
+	a{
+		margin-bottom: 30px;
+		color: #171B2D;
+		text-decoration:none;
+	}
+
+	.hamburger{
+		color: #171B2D;
+		margin-bottom: 52px;
+	}
 }
 `;
 
@@ -68,6 +88,7 @@ const Overlay = styled.div`
 	height: 100vh;
 	top: 0;
 	left: 0;
+
 	background: #000000b0;
 `;
 
@@ -108,9 +129,41 @@ export default function Header() {
 		}
 	};
 	return (
-		<StyledContainer className={navbarClass}>
+		<StyledContainer
+			className={`${navbarClass} ${navbarClass !== "" && `shadow-lg`}`}
+		>
 			{menuShown === "show" && <Overlay onClick={handleClickMenu} />}
-			<MenuContainer className={menuShown}></MenuContainer>
+			<MenuContainer className={menuShown}>
+				<div className="d-flex flex-column">
+					<HamburgerIcon className="hamburger" onClick={handleClickMenu} />
+
+					<Link href="/">
+						<a onClick={handleClickMenu}>
+							<StyledTextPrimary>Home</StyledTextPrimary>
+						</a>
+					</Link>
+					<Link href="/#about">
+						<a onClick={handleClickMenu}>
+							<StyledTextPrimary>Tentang Kami</StyledTextPrimary>
+						</a>
+					</Link>
+					<Link href="/">
+						<a onClick={handleClickMenu}>
+							<StyledTextPrimary>Daftar Kelas</StyledTextPrimary>
+						</a>
+					</Link>
+					<Link href="/">
+						<a onClick={handleClickMenu}>
+							<StyledTextPrimary>Menjadi Member</StyledTextPrimary>
+						</a>
+					</Link>
+					<Link href="/">
+						<a onClick={handleClickMenu}>
+							<StyledTextPrimary>Pertanyaan</StyledTextPrimary>
+						</a>
+					</Link>
+				</div>
+			</MenuContainer>
 			<div className="d-flex justify-content-between align-items-center">
 				<HamburgerIcon onClick={handleClickMenu} />
 				<Image
@@ -119,7 +172,7 @@ export default function Header() {
 					src="/images/logo.png"
 					alt="logo"
 				/>
-				<Image src="images/profile.png" alt="Profile" />
+				<Image src="images/profile.png" alt="Profile" width={43} height={43} />
 			</div>
 		</StyledContainer>
 	);

@@ -62,5 +62,9 @@ export default function TentangKami() {
 			</TextPrimary>
 		</>
 	);
-	return <HalfHalf left={left} right={right} />;
+	return (
+		<div id="about">
+			<HalfHalf left={left} right={right} />
+		</div>
+	);
 }

@@ -1,3 +1,7 @@
+html {
+	scroll-behavior: smooth;
+}
+
 @font-face {
 	font-family: OpenSansRegular;
 	src: url("./fonts/OpenSans-Regular.ttf");
@@ -20,6 +24,7 @@
 p {
 	margin: 0;
 }
+
 $font-family-sans-serif: OpenSansRegular !important;
 
 // Base Colours
