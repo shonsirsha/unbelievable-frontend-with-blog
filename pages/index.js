@@ -7,7 +7,7 @@ import MulaiSekarang from "components/LandingPage/MulaiSekarang";
 import Testimonial from "components/LandingPage/Testimonial";
 export default function Home() {
 	return (
-		<Layout>
+		<Layout withFB>
 			<Hero />
 			<TentangKami />
 			<CaraKerja />
