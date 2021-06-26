@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button, Image } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 const StyledButton = styled(Button)`
 	border-radius: 100%;
@@ -11,10 +11,9 @@ const StyledButton = styled(Button)`
 	outline: none;
 
 	&:hover {
-		background: url("/images/home.png");
+		background: url(${(props) => props.img});
 		border: 5px solid white;
 		background-position: center;
-		margin-bottom: 16px;
 	}
 	&:focus {
 		border: 5px solid white;

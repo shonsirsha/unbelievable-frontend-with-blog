@@ -5,15 +5,39 @@ import Footer from "./Footer";
 import Header from "./Headers/Header";
 import RoundedBtnIcon from "./Buttons/RoundedBtnIcon";
 import styled from "styled-components";
+import { mediaBreakpoint } from "utils/breakpoints";
 
 const FlyingButtonsContainer = styled.div`
-	width: 380px;
+	width: 0;
+	display: flex;
+	z-index: 100;
 	left: 0;
 	top: 0;
 	height: 100vh;
 	position: fixed;
 	padding-top: 128px;
 	padding-left: 48px;
+
+	flex-direction: column;
+	a {
+		margin-bottom: 16px;
+	}
+
+	@media ${mediaBreakpoint.down.md} {
+		padding-bottom: 10px;
+		right: 120px;
+		left: unset;
+		flex-direction: row;
+		padding-left: 0;
+		a {
+			margin-top: auto;
+			margin-bottom: 0;
+		}
+
+		a:nth-child(1) {
+			margin-right: 8px;
+		}
+	}
 `;
 export default function Layout({
 	title = "Unbelieveable",
@@ -37,6 +61,11 @@ export default function Layout({
 					<Link href="/">
 						<a>
 							<RoundedBtnIcon img={`images/home.png`} />
+						</a>
+					</Link>
+					<Link href="/">
+						<a>
+							<RoundedBtnIcon img={`images/smiley.png`} />
 						</a>
 					</Link>
 				</FlyingButtonsContainer>
