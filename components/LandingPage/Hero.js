@@ -24,11 +24,20 @@ const StyledHeading = styled(HeadingXL)`
 		font-size: 32px;
 		line-height: 48px;
 	}
+
+	@media (max-width: 320px) {
+		margin-top: 94px;
+		font-size: 30px;
+		line-height: 45px;
+	}
 `;
 
 const OuterContainer = styled.div`
 	height: 100vh;
 	background-image: linear-gradient(#1022a4, #31a4fa);
+	@media (max-width: 320px) {
+		min-height: 100vh;
+	}
 `;
 const StyledRow = styled(Row)`
 	position: relative;
