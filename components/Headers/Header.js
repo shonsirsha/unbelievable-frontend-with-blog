@@ -30,9 +30,12 @@ const StyledContainer = styled.div`
 	@media ${mediaBreakpoint.down.md} {
 		img {
 			height: 22.8px;
-			margin-top: 24px;
+			margin-top: 16px;
+
 			width: 210px;
 		}
+		padding-top: 8px;
+		padding-bottom: 24px;
 	}
 `;
 
