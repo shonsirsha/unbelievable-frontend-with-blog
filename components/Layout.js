@@ -24,14 +24,12 @@ const FlyingButtonsContainer = styled.div`
 	}
 
 	@media ${mediaBreakpoint.down.md} {
-		padding-bottom: 10px;
-		right: 120px;
-		left: unset;
-		flex-direction: row;
-		padding-left: 0;
+		padding-top: 96px;
+		//right: 120px;
+		flex-direction: column;
+		padding-left: 18px;
 		a {
-			margin-top: auto;
-			margin-bottom: 0;
+			margin-bottom: 12px;
 		}
 
 		a:nth-child(1) {

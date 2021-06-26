@@ -11,7 +11,7 @@ const StyledContainer = styled.div`
 	top: 0;
 	width: 100%;
 	transition: 0.35s;
-	z-index: 89;
+	z-index: 101;
 	display: flex;
 	padding: 32px 48px;
 	flex-direction: column;
