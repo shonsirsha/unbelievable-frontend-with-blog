@@ -19,6 +19,7 @@ const StyledHeadingMD = styled(HeadingMD)`
 const OuterContainer = styled.div`
 	display: flex;
 	padding: 160px 0;
+	padding-bottom: 24px;
 
 	@media ${mediaBreakpoint.down.lg} {
 		padding: 48px 0;
@@ -30,7 +31,7 @@ const CardBody = styled.div`
 	min-height: 350px;
 	padding: 32px;
 	border-radius: 32px;
-	width: 270px;
+	width: 85%;
 	align-items: center;
 	position: relative;
 	img {
@@ -41,13 +42,13 @@ const CardBody = styled.div`
 
 const StyledSlider = styled(Slider)`
 	width: 100%;
-	max-width: 350px;
+	max-width: 100%;
 	.slick-track {
 		margin: auto;
 	}
 	.slick-list {
-		height: 490px;
 		padding-top: 90px;
+		padding-bottom: 24px;
 	}
 
 	.slick-slide > div {
@@ -88,7 +89,7 @@ const StyledSlider = styled(Slider)`
 		}
 	}
 `;
-export default function MulaiSekarang() {
+export default function Testimonial({ testimonials }) {
 	const settings = {
 		dots: true,
 		infinite: true,
@@ -108,8 +109,14 @@ export default function MulaiSekarang() {
 
 					<Col lg={12} className="d-flex justify-content-center mt-4">
 						<StyledSlider {...settings}>
-							<TestimonialCard />
-							<TestimonialCard />
+							{testimonials &&
+								testimonials.map((t) => (
+									<TestimonialCard
+										nama={t.nama}
+										status={t.status}
+										testimonial={t.testimonial}
+									/>
+								))}
 						</StyledSlider>
 					</Col>
 				</Row>
@@ -117,16 +124,16 @@ export default function MulaiSekarang() {
 		</OuterContainer>
 	);
 }
-const TestimonialCard = () => {
+const TestimonialCard = ({ nama, status, testimonial }) => {
 	return (
 		<CardBody className="shadow bg-tan">
 			<Image src="/images/plcholder.png" width={160} roundedCircle />
 
-			<StyledHeadingXS>Mega, Pelajar</StyledHeadingXS>
-			<TextTertiary className="mt-3 text-center">
-				blablablabla isinya testimoni yang bagus bagus bagus yang menyakinkan
-				sekali woh
-			</TextTertiary>
+			<StyledHeadingXS>
+				{nama}
+				{status && `, ${status}`}
+			</StyledHeadingXS>
+			<TextTertiary className="mt-3 text-center">{testimonial}</TextTertiary>
 		</CardBody>
 	);
 };
