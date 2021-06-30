@@ -42,7 +42,9 @@ export default function Layout({
 	keywords = "self development, lms",
 	description = "Belajarlah setiap hari, jadilah unbelieveable!",
 	children,
+	landingPage = false,
 	withFB = false, // FB = FlyingButtons
+	background = "transparent",
 }) {
 	const router = useRouter();
 	return (
@@ -52,7 +54,7 @@ export default function Layout({
 				<meta name="description" content={description} />
 				<meta name="keywords" content={keywords} />
 			</Head>
-			<Header />
+			<Header landingPage={landingPage} background={background} />
 
 			{withFB && (
 				<FlyingButtonsContainer>

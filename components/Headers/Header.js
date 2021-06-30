@@ -15,6 +15,7 @@ const StyledContainer = styled.div`
 	display: flex;
 	padding: 32px 48px;
 	flex-direction: column;
+	background: ${(props) => props.background};
 	.logo {
 		width: 290px;
 		height: 31px;
@@ -92,12 +93,14 @@ const Overlay = styled.div`
 	background: #000000b0;
 `;
 
-export default function Header() {
+export default function Header({ landingPage, background }) {
 	const router = useRouter();
 	const [navbarClass, setNavbarClass] = useState("");
 	const [menuShown, setMenuShown] = useState("");
 	useEffect(() => {
-		window.addEventListener("scroll", handleScroll);
+		if (landingPage) {
+			window.addEventListener("scroll", handleScroll);
+		}
 	}, []);
 
 	const handleScroll = () => {
@@ -130,6 +133,8 @@ export default function Header() {
 	};
 	return (
 		<StyledContainer
+			background={background}
+			landingpage={landingPage}
 			className={`${navbarClass} ${navbarClass !== "" && `shadow-lg`}`}
 		>
 			{menuShown === "show" && <Overlay onClick={handleClickMenu} />}
