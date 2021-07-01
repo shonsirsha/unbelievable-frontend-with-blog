@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import Link from "next/link";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import AuthContext from "context/AuthContext";
 import Layout from "components/Layout";
 import styled from "styled-components";
 import {
@@ -13,10 +16,11 @@ import {
 } from "react-bootstrap";
 import { HeadingXS } from "components/Typography/Headings";
 import { TextSecondary } from "components/Typography/Text";
+import mustBeUnauthed from "utils/mustBeUnauthed";
 
 const OuterContainer = styled.div`
 	background: #fff;
-	height: 90vh;
+	height: 80vh;
 `;
 
 const StyledContainer = styled(Container)`
@@ -75,28 +79,38 @@ const GreenCharacter = styled(Image)`
 		right: -65px;
 	}
 `;
-export default function index() {
+const index = () => {
 	const [loginDetails, setLoginDetails] = useState({
 		email: "",
 		password: "",
 	});
 	const [focus, setFocus] = useState("");
+
+	const { login, err } = useContext(AuthContext);
+
+	useEffect(() => {
+		toast.error(err);
+	}, [err]);
+
 	const handleChange = (e) => {
 		setLoginDetails({ ...loginDetails, [e.target.name]: e.target.value });
 	};
+	const { email, password } = loginDetails;
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setFocus("");
+		login({ email, password });
 	};
 	return (
-		<Layout background="#171b2d">
+		<Layout background="#171b2d" withMargin>
 			<OuterContainer>
 				<StyledContainer>
 					<FormContainer className="shadow">
 						<HeadingXS>Masuk</HeadingXS>
+						<ToastContainer />
 
 						<Form autoComplete={false} className="w-100 mt-3">
-							<FormGroup controlId="formBasicEmail">
+							<FormGroup>
 								<FormLabel>E-mail</FormLabel>
 								<StyledFormControl
 									autoComplete={false}
@@ -105,13 +119,13 @@ export default function index() {
 									onFocus={() => setFocus("focus")}
 									className={"shadow-none"}
 									name="email"
-									value={loginDetails.email}
+									value={email}
 									onChange={handleChange}
 									placeholder="email@contoh.com"
 								/>
 							</FormGroup>
 
-							<FormGroup controlId="formBasicEmail">
+							<FormGroup>
 								<FormLabel>Password</FormLabel>
 								<StyledFormControl
 									type="password"
@@ -119,7 +133,7 @@ export default function index() {
 									onBlur={() => setFocus("")}
 									onFocus={() => setFocus("focus2")}
 									className={"shadow-none"}
-									value={loginDetails.password}
+									value={password}
 									placeholder="Password"
 									onChange={handleChange}
 								/>
@@ -151,4 +165,6 @@ export default function index() {
 			</OuterContainer>
 		</Layout>
 	);
-}
+};
+
+export default mustBeUnauthed(index);

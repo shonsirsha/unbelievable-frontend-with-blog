@@ -44,6 +44,7 @@ export default function Layout({
 	children,
 	landingPage = false,
 	withFB = false, // FB = FlyingButtons
+	withMargin = false,
 	background = "transparent",
 }) {
 	const router = useRouter();
@@ -70,7 +71,7 @@ export default function Layout({
 					</Link>
 				</FlyingButtonsContainer>
 			)}
-			<div>{children}</div>
+			<div style={{ marginTop: withMargin ? `112px` : `0` }}>{children}</div>
 			<Footer />
 		</div>
 	);

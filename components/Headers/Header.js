@@ -177,7 +177,15 @@ export default function Header({ landingPage, background }) {
 					src="/images/logo.png"
 					alt="logo"
 				/>
-				<Image src="images/profile.png" alt="Profile" width={43} height={43} />
+				<Image
+					onClick={() => {
+						router.push("/login");
+					}}
+					src="images/profile.png"
+					alt="Profile"
+					width={43}
+					height={43}
+				/>
 			</div>
 		</StyledContainer>
 	);
