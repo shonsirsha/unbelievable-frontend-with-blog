@@ -12,10 +12,5 @@ function Application({ Component, pageProps }) {
 		</AuthProvider>
 	);
 }
-Application.getInitialProps = async (appContext) => {
-	// calls page's `getInitialProps` and fills `appProps.pageProps`
-	console.log("ASdadaD");
-	return {};
-};
 
 export default Application;

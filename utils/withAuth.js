@@ -18,9 +18,9 @@ const withAuth = (Component) => {
 		if (!loading) {
 			// If user is not logged in, return login component
 			if (!user) {
-				router.push("/login");
+				router.push("/masuk");
 			} else {
-				return <Component {...props} />;
+				return <Component {...props} user={user} />;
 			}
 			// If user is logged in, return original component
 		}

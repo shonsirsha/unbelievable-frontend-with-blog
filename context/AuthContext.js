@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
 		const data = await res.json();
 		if (res.ok) {
 			setUser(data.user);
-			router.push("/account/dashboard");
+			router.push("/dashboard");
 		} else {
 			setErr(data.message);
 			setErr(null);
@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }) => {
 
 		if (res.ok) {
 			setUser(null);
-			router.push("/login");
+			router.push("/masuk");
 		}
 	};
 

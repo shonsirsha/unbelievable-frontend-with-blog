@@ -92,7 +92,11 @@ const Overlay = styled.div`
 
 	background: #000000b0;
 `;
-
+const ProfileImage = styled(Image)`
+	&:hover {
+		cursor: pointer;
+	}
+`;
 export default function Header({ landingPage, background }) {
 	const router = useRouter();
 	const [navbarClass, setNavbarClass] = useState("");
@@ -104,19 +108,21 @@ export default function Header({ landingPage, background }) {
 	}, []);
 
 	const handleScroll = () => {
-		const heroHeight = document.querySelector("#hero").clientHeight;
-		if (typeof window !== undefined) {
-			if (window.pageYOffset < 10) {
-				setNavbarClass("");
-			} else {
-				if (
-					(window.pageYOffset >= heroHeight - 736 &&
-						window.pageYOffset <= heroHeight) ||
-					window.pageYOffset > heroHeight
-				) {
-					setNavbarClass("purple");
-				} else {
+		if (document.querySelector("#hero")) {
+			const heroHeight = document.querySelector("#hero").clientHeight;
+			if (typeof window !== undefined) {
+				if (window.pageYOffset < 10) {
 					setNavbarClass("");
+				} else {
+					if (
+						(window.pageYOffset >= heroHeight - 736 &&
+							window.pageYOffset <= heroHeight) ||
+						window.pageYOffset > heroHeight
+					) {
+						setNavbarClass("purple");
+					} else {
+						setNavbarClass("");
+					}
 				}
 			}
 		}
@@ -177,9 +183,9 @@ export default function Header({ landingPage, background }) {
 					src="/images/logo.png"
 					alt="logo"
 				/>
-				<Image
+				<ProfileImage
 					onClick={() => {
-						router.push("/login");
+						router.push("/masuk");
 					}}
 					src="images/profile.png"
 					alt="Profile"
