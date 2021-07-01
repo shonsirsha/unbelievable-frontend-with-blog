@@ -20,7 +20,7 @@ import mustBeUnauthed from "utils/mustBeUnauthed";
 
 const OuterContainer = styled.div`
 	background: #fff;
-	height: 80vh;
+	height: 100vh;
 `;
 
 const StyledContainer = styled(Container)`
@@ -104,7 +104,6 @@ const index = () => {
 		register({
 			email,
 			password,
-			username: "",
 			first_name,
 			last_name,
 		});

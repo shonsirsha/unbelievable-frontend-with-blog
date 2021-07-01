@@ -3,21 +3,22 @@ import { API_URL } from "config/index";
 
 export default async (req, res) => {
 	if (req.method === "POST") {
-		const { username, email, password, first_name, last_name } = req.body;
+		const { email, password, first_name, last_name } = req.body;
+		const datex = Date.now();
+
 		const strapiRes = await fetch(`${API_URL}/auth/local/register`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				username,
+				username: String(datex),
 				email,
 				password,
 				first_name,
 				last_name,
 				onboarded: false,
 				blocked: false,
-				referral_code: "",
 			}),
 		});
 
@@ -38,6 +39,7 @@ export default async (req, res) => {
 				user: data.user,
 			});
 		} else {
+			console.log(data);
 			res
 				.status(data.statusCode)
 				.json({ message: data.message[0].messages[0].message });
