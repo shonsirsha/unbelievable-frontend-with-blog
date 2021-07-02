@@ -88,7 +88,7 @@ const ProfileImage = styled(Image)`
 const Logo = styled(Image)`
 	width: 290px;
 	height: 31px;
-	${(props) => props.user && `margin-left: 156px`};
+	${(props) => props.user && props.landing && `margin-left: 156px`};
 	&:hover {
 		cursor: pointer;
 	}
@@ -207,9 +207,11 @@ export default function Header({
 				</div>
 			</MenuContainer>
 			<div className="d-flex justify-content-between align-items-center">
-				<HamburgerIcon onClick={handleClickMenu} />
+				{landingPage && <HamburgerIcon onClick={handleClickMenu} />}
+
 				<Logo
 					className={`logo`}
+					landing={landingPage}
 					user={user ? true : false}
 					onClick={handleClickLogo}
 					src="/images/logo.png"
@@ -218,7 +220,11 @@ export default function Header({
 				<div className="d-flex align-items-center">
 					<ProfileImage
 						onClick={() => {
-							router.push("/masuk");
+							if (user) {
+								router.push("/dashboard");
+							} else {
+								router.push("/masuk");
+							}
 						}}
 						src="images/profile.png"
 						alt="Profile"
