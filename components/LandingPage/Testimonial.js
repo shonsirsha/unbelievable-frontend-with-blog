@@ -110,8 +110,9 @@ export default function Testimonial({ testimonials }) {
 					<Col lg={12} className="d-flex justify-content-center mt-4">
 						<StyledSlider {...settings}>
 							{testimonials &&
-								testimonials.map((t) => (
+								testimonials.map((t, ix) => (
 									<TestimonialCard
+										key={ix}
 										nama={t.nama}
 										status={t.status}
 										testimonial={t.testimonial}
