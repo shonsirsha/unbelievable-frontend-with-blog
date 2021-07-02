@@ -1,5 +1,10 @@
 import videojs from "video.js";
 import VREPlayer from "videojs-react-enhanced";
+import styled from "styled-components";
+
+const StyledPlayer = styled(VREPlayer)`
+	height: 320px;
+`;
 
 export default function VideoPlayerNonHLS({ liveUrl }) {
 	const playerOptions = {
@@ -12,7 +17,7 @@ export default function VideoPlayerNonHLS({ liveUrl }) {
 	};
 
 	return (
-		<VREPlayer
+		<StyledPlayer
 			playerOptions={playerOptions}
 			videojsOptions={videojsOptions}
 			onReady={(player) => console.log(player)}

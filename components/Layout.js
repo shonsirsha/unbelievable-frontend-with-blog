@@ -1,3 +1,5 @@
+import { useContext } from "react";
+
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -6,6 +8,7 @@ import Header from "./Headers/Header";
 import RoundedBtnIcon from "./Buttons/RoundedBtnIcon";
 import styled from "styled-components";
 import { mediaBreakpoint } from "utils/breakpoints";
+import AuthContext from "context/AuthContext";
 
 const FlyingButtonsContainer = styled.div`
 	width: 0;
@@ -45,8 +48,11 @@ export default function Layout({
 	landingPage = false,
 	withFB = false, // FB = FlyingButtons
 	withMargin = false,
+	onboarding = false,
 	background = "transparent",
 }) {
+	const { user, loading } = useContext(AuthContext);
+
 	const router = useRouter();
 	return (
 		<div>
@@ -55,7 +61,14 @@ export default function Layout({
 				<meta name="description" content={description} />
 				<meta name="keywords" content={keywords} />
 			</Head>
-			<Header landingPage={landingPage} background={background} />
+			{!loading && (
+				<Header
+					onboarding={onboarding}
+					landingPage={landingPage}
+					background={background}
+					user={user}
+				/>
+			)}
 
 			{withFB && (
 				<FlyingButtonsContainer>

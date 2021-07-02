@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { TextPrimary } from "components/Typography/Text";
+import { HeadingXXS } from "components/Typography/Headings";
 const StyledContainer = styled.div`
 	position: fixed;
 	top: 0;
@@ -16,25 +17,12 @@ const StyledContainer = styled.div`
 	padding: 32px 48px;
 	flex-direction: column;
 	background: ${(props) => props.background};
-	.logo {
-		width: 290px;
-		height: 31px;
-	}
 
 	&.purple {
 		background: #171b2d;
 	}
 
-	.logo:hover {
-		cursor: pointer;
-	}
-
 	@media ${mediaBreakpoint.down.md} {
-		.logo {
-			height: 22.8px;
-
-			width: 210px;
-		}
 		padding: 16px;
 	}
 `;
@@ -97,13 +85,37 @@ const ProfileImage = styled(Image)`
 		cursor: pointer;
 	}
 `;
-export default function Header({ landingPage, background }) {
+const Logo = styled(Image)`
+	width: 290px;
+	height: 31px;
+	${(props) => props.user && `margin-left: 156px`};
+	&:hover {
+		cursor: pointer;
+	}
+	@media ${mediaBreakpoint.down.lg} {
+		margin-left: 0;
+	}
+	@media ${mediaBreakpoint.down.md} {
+		height: 22.8px;
+		width: 210px;
+	}
+`;
+export default function Header({
+	landingPage,
+	background,
+	user = null,
+	onboarding,
+}) {
 	const router = useRouter();
 	const [navbarClass, setNavbarClass] = useState("");
 	const [menuShown, setMenuShown] = useState("");
 	useEffect(() => {
 		if (landingPage) {
 			window.addEventListener("scroll", handleScroll);
+		}
+
+		if (onboarding) {
+			window.addEventListener("scroll", handleScroll2);
 		}
 	}, []);
 
@@ -127,8 +139,27 @@ export default function Header({ landingPage, background }) {
 			}
 		}
 	};
-	const goHome = () => {
-		router.push("/");
+
+	const handleScroll2 = () => {
+		if (typeof window !== undefined) {
+			if (window.pageYOffset < 10) {
+				setNavbarClass("");
+			} else {
+				if (window.pageYOffset >= parseInt(112 + 64) - 120) {
+					setNavbarClass("purple");
+				} else {
+					setNavbarClass("");
+				}
+			}
+		}
+	};
+
+	const handleClickLogo = () => {
+		if (user) {
+			router.push("/dashboard");
+		} else {
+			router.push("/");
+		}
 	};
 	const handleClickMenu = () => {
 		if (menuShown === "") {
@@ -177,21 +208,27 @@ export default function Header({ landingPage, background }) {
 			</MenuContainer>
 			<div className="d-flex justify-content-between align-items-center">
 				<HamburgerIcon onClick={handleClickMenu} />
-				<Image
-					className="logo"
-					onClick={goHome}
+				<Logo
+					className={`logo`}
+					user={user ? true : false}
+					onClick={handleClickLogo}
 					src="/images/logo.png"
 					alt="logo"
 				/>
-				<ProfileImage
-					onClick={() => {
-						router.push("/masuk");
-					}}
-					src="images/profile.png"
-					alt="Profile"
-					width={43}
-					height={43}
-				/>
+				<div className="d-flex align-items-center">
+					<ProfileImage
+						onClick={() => {
+							router.push("/masuk");
+						}}
+						src="images/profile.png"
+						alt="Profile"
+						width={43}
+						height={43}
+					/>
+					<HeadingXXS as="p" className="text-white ml-3 d-lg-block d-none">
+						{user && `${user.first_name} ${user.last_name}`}
+					</HeadingXXS>
+				</div>
 			</div>
 		</StyledContainer>
 	);

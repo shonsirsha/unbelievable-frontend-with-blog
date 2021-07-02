@@ -10,6 +10,9 @@ export const AuthProvider = ({ children }) => {
 	const [loading, setLoading] = useState(true);
 
 	const router = useRouter();
+	useEffect(() => {
+		checkUserLoggedIn();
+	}, []);
 	//Register a user
 	const register = async (user) => {
 		const res = await fetch(`${NEXT_URL}/api/register`, {

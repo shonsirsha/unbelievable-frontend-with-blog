@@ -1,15 +1,12 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useRouter } from "next/router";
 import AuthContext from "context/AuthContext";
 
 const withAuth = (Component) => {
 	const Auth = (props) => {
-		const { user, loading, checkUserLoggedIn } = useContext(AuthContext);
+		const { user, loading } = useContext(AuthContext);
 		const router = useRouter();
 
-		useEffect(() => {
-			checkUserLoggedIn();
-		}, []);
 		if (loading) {
 			return "loading..."; // loading svg..
 		}

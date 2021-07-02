@@ -4,12 +4,9 @@ import AuthContext from "context/AuthContext";
 
 const mustBeUnauthed = (Component) => {
 	const Auth = (props) => {
-		const { user, loading, checkUserLoggedIn } = useContext(AuthContext);
+		const { user, loading } = useContext(AuthContext);
 		const router = useRouter();
 
-		useEffect(() => {
-			checkUserLoggedIn();
-		}, []);
 		if (loading) {
 			return "loading..."; // loading svg..
 		}

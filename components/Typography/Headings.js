@@ -54,3 +54,12 @@ export const HeadingXS = styled.h1`
 	line-height: 30px;
 	margin: 0px;
 `;
+
+export const HeadingXXS = styled.h1`
+	font-family: MontSerratBold;
+	font-size: 16px;
+	font-weight: 400;
+	letter-spacing: 0.1px;
+	line-height: 16px;
+	margin: 0px;
+`;
