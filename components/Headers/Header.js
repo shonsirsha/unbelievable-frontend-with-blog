@@ -104,7 +104,7 @@ export default function Header({
 	landingPage,
 	background,
 	user = null,
-	onboarding,
+	scrollToSolid,
 }) {
 	const router = useRouter();
 	const [navbarClass, setNavbarClass] = useState("");
@@ -114,7 +114,7 @@ export default function Header({
 			window.addEventListener("scroll", handleScroll);
 		}
 
-		if (onboarding) {
+		if (scrollToSolid) {
 			window.addEventListener("scroll", handleScroll2);
 		}
 	}, []);

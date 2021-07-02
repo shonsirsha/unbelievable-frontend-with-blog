@@ -183,7 +183,7 @@ const index = () => {
 							<TextSecondary className="mt-3">
 								Sudah punya akun?{" "}
 								<Link href="/masuk">
-									<a>Daftar</a>
+									<a>Masuk</a>
 								</Link>{" "}
 							</TextSecondary>
 						</Form>

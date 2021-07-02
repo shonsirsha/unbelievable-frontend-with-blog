@@ -48,7 +48,7 @@ export default function Layout({
 	landingPage = false,
 	withFB = false, // FB = FlyingButtons
 	withMargin = false,
-	onboarding = false,
+	scrollToSolid = false,
 	background = "transparent",
 }) {
 	const { user, loading } = useContext(AuthContext);
@@ -63,7 +63,7 @@ export default function Layout({
 			</Head>
 			{!loading && (
 				<Header
-					onboarding={onboarding}
+					scrollToSolid={scrollToSolid}
 					landingPage={landingPage}
 					background={background}
 					user={user}

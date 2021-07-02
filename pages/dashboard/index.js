@@ -24,10 +24,7 @@ const index = ({ token, onboardings }) => {
 	const [stage, setStage] = useState(1);
 	const url = onboardingsData[0][`video_intro_${stage}`].url;
 	return (
-		<Layout
-			onboarding={onboardingsData ? true : false}
-			background="rgba(0,0,0,0.27)"
-		>
+		<Layout scrollToSolid background="rgba(0,0,0,0.27)">
 			<OuterContainer className="bg-lightblue2">
 				<Container className="d-flex flex-column justify-content-center align-items-center">
 					<HeadingSM as="h1" className="text-white">
@@ -38,7 +35,7 @@ const index = ({ token, onboardings }) => {
 					</HeadingMD>
 					{onboardingsData && (
 						<VideoContainer className="mt-4">
-							<VideoPlayerNonHLS liveUrl={""} />
+							<VideoPlayerNonHLS liveUrl={url} />
 						</VideoContainer>
 					)}
 				</Container>
