@@ -116,7 +116,7 @@ const index = () => {
 						<HeadingXS>Daftar</HeadingXS>
 						<ToastContainer />
 
-						<Form autoComplete={false} className="w-100 mt-3">
+						<Form className="w-100 mt-3">
 							<FormGroup>
 								<FormLabel>Nama Lengkap</FormLabel>
 								<div className="d-flex flex-xl-row flex-column">

@@ -4,7 +4,7 @@ import videojs from "video.js";
 import qualitySelector from "videojs-hls-quality-selector";
 import qualityLevels from "videojs-contrib-quality-levels";
 
-const VideoPlayer = ({ liveURL }) => {
+const VideoPlayerHLS = ({ liveURL }) => {
 	const videoRef = useRef();
 	const [player, setPlayer] = useState(undefined);
 
@@ -55,4 +55,4 @@ const VideoPlayer = ({ liveURL }) => {
 	);
 };
 
-export default VideoPlayer;
+export default VideoPlayerHLS;

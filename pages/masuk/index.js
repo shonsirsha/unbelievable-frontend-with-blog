@@ -113,7 +113,6 @@ const index = () => {
 							<FormGroup>
 								<FormLabel>E-mail</FormLabel>
 								<StyledFormControl
-									autoComplete={false}
 									type="email"
 									onBlur={() => setFocus("")}
 									onFocus={() => setFocus("focus")}
