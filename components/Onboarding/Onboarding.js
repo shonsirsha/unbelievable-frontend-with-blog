@@ -9,8 +9,8 @@ import { FaChevronRight } from "react-icons/fa";
 const OuterContainer = styled.div`
 	min-height: 600px;
 	width: 100%;
-	padding-bottom: 64px;
-	padding-top: 176px;
+	padding-bottom: 32px;
+	padding-top: 144px;
 	transition: background 0.5s;
 	display: flex;
 	flex-direction: column;
@@ -48,7 +48,7 @@ export default function Onboarding({ onboardings, token }) {
 					)}
 				</Container>
 				<CircleButton
-					className="ml-auto mr-lg-5 mr-auto mt-4"
+					className="ml-auto mr-lg-5 mr-auto mt-1"
 					bg={"primary1"}
 					icon={<FaChevronRight size={24} />}
 				/>

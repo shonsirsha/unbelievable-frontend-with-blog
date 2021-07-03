@@ -145,7 +145,7 @@ export default function Header({
 			if (window.pageYOffset < 10) {
 				setNavbarClass("");
 			} else {
-				if (window.pageYOffset >= parseInt(112 + 64) - 120) {
+				if (window.pageYOffset >= parseInt(112 + 32) - 120) {
 					setNavbarClass("purple");
 				} else {
 					setNavbarClass("");

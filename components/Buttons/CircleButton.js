@@ -6,10 +6,6 @@ const StyledButton = styled(Button)`
 	height: 48px;
 	width: 48px;
 	border: none;
-
-	&:hover {
-		color: lighten(red, 50%);
-	}
 `;
 export default function RoundedBtnIcon({ bg, icon, ...props }) {
 	return (
