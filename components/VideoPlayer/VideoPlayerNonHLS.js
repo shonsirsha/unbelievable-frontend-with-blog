@@ -15,7 +15,11 @@ export default function VideoPlayerNonHLS({ liveUrl, onVideoFinished }) {
 	const [finished, setFinished] = useState(false);
 	const [sec, setSec] = useState(0);
 
-	useEffect(() => {}, [duration]);
+	useEffect(() => {
+		if (finished) {
+			onVideoFinished();
+		}
+	}, [finished]);
 
 	useEffect(() => {
 		if (!finished && duration) {

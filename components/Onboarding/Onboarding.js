@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import Layout from "components/Layout";
 import styled from "styled-components";
@@ -20,13 +20,46 @@ const VideoContainer = styled.div`
 	width: 100%;
 `;
 export default function Onboarding({ onboardings, token }) {
-	const [stage, setStage] = useState(1);
-	const url = onboardings[0][`video_intro_${stage}`].url;
-	const bgArr = ["lightblue2", "palegreen"];
-
-	const onVideoFinished = (e) => {
-		console.log(e);
+	const onVideoFinished = () => {
+		setBtnDisplayed(true);
 	};
+
+	const onClickNextBtn = () => {
+		setStage(stage + 1);
+	};
+
+	const [stage, setStage] = useState(1);
+	const bgArr = ["lightblue2", "palegreen"];
+	const [btnDisplayed, setBtnDisplayed] = useState(false);
+	const [url, setUrl] = useState(onboardings[0][`video_intro_${stage}`].url);
+	const [VP, setVP] = useState(
+		<VideoContainer className="mt-4">
+			<VideoPlayerNonHLS liveUrl={url} onVideoFinished={onVideoFinished} />
+		</VideoContainer>
+	);
+
+	useEffect(() => {
+		if (stage > 1) {
+			setUrl(onboardings[0][`video_intro_${stage}`].url);
+		}
+	}, [stage]);
+
+	useEffect(() => {
+		if (stage > 1) {
+			setVP(<></>);
+			setTimeout(() => {
+				setVP(
+					<VideoContainer className="mt-4">
+						<VideoPlayerNonHLS
+							liveUrl={url}
+							onVideoFinished={onVideoFinished}
+						/>
+					</VideoContainer>
+				);
+			}, 300);
+			setBtnDisplayed(false);
+		}
+	}, [url]);
 
 	return (
 		<Layout scrollToSolid background="rgba(0,0,0,0.27)">
@@ -38,20 +71,16 @@ export default function Onboarding({ onboardings, token }) {
 					<HeadingMD as="h2" className="mt-2 text-yellow2">
 						Hero!
 					</HeadingMD>
-					{onboardings && (
-						<VideoContainer className="mt-4">
-							<VideoPlayerNonHLS
-								liveUrl={url}
-								onVideoFinished={onVideoFinished}
-							/>
-						</VideoContainer>
-					)}
+					{onboardings && VP}
 				</Container>
-				<CircleButton
-					className="ml-auto mr-lg-5 mr-auto mt-1"
-					bg={"primary1"}
-					icon={<FaChevronRight size={24} />}
-				/>
+				{btnDisplayed && (
+					<CircleButton
+						className="ml-auto mr-lg-5 mr-auto mt-1"
+						bg={"primary1"}
+						onClick={onClickNextBtn}
+						icon={<FaChevronRight size={24} />}
+					/>
+				)}
 			</OuterContainer>
 		</Layout>
 	);

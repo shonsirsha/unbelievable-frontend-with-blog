@@ -9,7 +9,11 @@ const StyledButton = styled(Button)`
 `;
 export default function RoundedBtnIcon({ bg, icon, ...props }) {
 	return (
-		<StyledButton variant="primary" className={`bg-${bg} ${props.className}`}>
+		<StyledButton
+			variant="primary"
+			className={`bg-${bg} ${props.className}`}
+			onClick={props.onClick}
+		>
 			{icon}
 		</StyledButton>
 	);
