@@ -1,7 +1,7 @@
 import { useContext } from "react";
 
 import Head from "next/head";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import Link from "next/link";
 import Footer from "./Footer";
 import Header from "./Headers/Header";
@@ -52,8 +52,7 @@ export default function Layout({
 	background = "transparent",
 }) {
 	const { user, loading } = useContext(AuthContext);
-
-	const router = useRouter();
+	// const router = useRouter();
 	return (
 		<div>
 			<Head>

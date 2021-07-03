@@ -42,7 +42,7 @@ export const HeadingSM = styled.h1`
 	font-size: 32px;
 	font-weight: 400;
 	letter-spacing: 0.3px;
-	line-height: 32px;
+	line-height: 41px;
 	margin: 0px;
 `;
 

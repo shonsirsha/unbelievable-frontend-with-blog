@@ -24,7 +24,6 @@ export default function VideoPlayerNonHLS({ liveUrl, onVideoFinished }) {
 	useEffect(() => {
 		if (!finished && duration) {
 			if (sec >= duration - 10) {
-				console.log("finisshedd");
 				setFinished(true);
 			}
 		}

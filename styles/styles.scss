@@ -55,6 +55,7 @@ $lightBlue2: #02a0e1;
 $yellow2: #fed214;
 $primary1: #171b2d;
 $paleGreen: #42a591;
+$darkPaleGreen: #007474;
 
 // Variables
 $primary: #171b2d;
@@ -89,6 +90,7 @@ $theme-colors: map-merge(
 		"lightblue2": $lightBlue2,
 		"yellow2": $yellow2,
 		"palegreen": $paleGreen,
+		"darkpalegreen": $darkPaleGreen,
 	),
 	$theme-colors
 );
