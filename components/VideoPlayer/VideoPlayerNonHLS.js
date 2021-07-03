@@ -1,12 +1,7 @@
-import videojs from "video.js";
+import { useState, useEffect } from "react";
 import VREPlayer from "videojs-react-enhanced";
-import styled from "styled-components";
 
-const StyledPlayer = styled(VREPlayer)`
-	height: 320px;
-`;
-
-export default function VideoPlayerNonHLS({ liveUrl }) {
+export default function VideoPlayerNonHLS({ liveUrl, onVideoFinished }) {
 	const playerOptions = {
 		src: liveUrl,
 		controls: true,
@@ -16,14 +11,37 @@ export default function VideoPlayerNonHLS({ liveUrl }) {
 		fluid: true,
 	};
 
+	const [duration, setDuration] = useState(null);
+	const [finished, setFinished] = useState(false);
+	const [sec, setSec] = useState(0);
+
+	useEffect(() => {}, [duration]);
+
+	useEffect(() => {
+		if (!finished && duration) {
+			if (sec >= duration - 10) {
+				console.log("finisshedd");
+				setFinished(true);
+			}
+		}
+	}, [sec]);
+
 	return (
-		<StyledPlayer
+		<VREPlayer
 			playerOptions={playerOptions}
 			videojsOptions={videojsOptions}
-			onReady={(player) => console.log(player)}
-			onPlay={(e, _, second) => console.log("Play!")}
-			onPause={(e, _, second) => console.log("Pause!")}
-			onEnded={(e, _) => console.log("Ended!")}
+			onLoadedMetadata={(e, player) => {
+				setDuration(player.duration());
+			}}
+			onReady={(player) => {}}
+			onPlay={(e, _, second) => {}}
+			onTimeUpdate={(e, _, second) => {
+				setSec(second);
+			}}
+			onPause={(e, _, second) => {}}
+			onEnded={(e, _) => {
+				setFinished(true);
+			}}
 		/>
 	);
 }
