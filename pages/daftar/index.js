@@ -17,28 +17,37 @@ import {
 import { HeadingXS } from "components/Typography/Headings";
 import { TextSecondary } from "components/Typography/Text";
 import mustBeUnauthed from "utils/mustBeUnauthed";
+import { mediaBreakpoint } from "utils/breakpoints";
 
 const OuterContainer = styled.div`
 	background: #fff;
 	height: 100vh;
+
+	display: flex;
+	@media ${mediaBreakpoint.down.lg} {
+	}
 `;
 
 const StyledContainer = styled(Container)`
 	height: 100%;
 	display: flex;
-	align-items: center;
 	justify-content: center;
 `;
 
 const FormContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	width: 520px;
+	max-width: 520px;
+	width: 100%;
 	background: #fff;
 	padding: 32px 24px;
 	border-radius: 10px;
 	align-items: center;
 	position: absolute;
+
+	@media ${mediaBreakpoint.down.lg} {
+		max-width: 90%;
+	}
 `;
 const StyledFormControl = styled(FormControl)`
 	border: none;
@@ -67,16 +76,35 @@ const StyledSubmitBtn = styled(Button)`
 const GreenCharacter = styled(Image)`
 	position: absolute;
 	right: -50px;
-	top: -75px;
+	top: -50px;
+	width: 124px;
+	height: 109px;
 	transition: 0.8s;
 	&.focus {
-		top: -90px;
+		top: -70px;
 		right: -45px;
 	}
 
 	&.focus2 {
-		top: -110px;
+		top: -80px;
 		right: -65px;
+	}
+
+	@media ${mediaBreakpoint.down.lg} {
+		right: 0;
+		top: 0;
+		width: 64px;
+		height: 56.33px;
+
+		&.focus {
+			top: -10px;
+			right: 15px;
+		}
+
+		&.focus2 {
+			top: -20px;
+			right: 5px;
+		}
 	}
 `;
 const index = () => {
@@ -111,7 +139,7 @@ const index = () => {
 	return (
 		<Layout background="#171b2d" withMargin>
 			<OuterContainer>
-				<StyledContainer>
+				<StyledContainer className="align-items-center">
 					<FormContainer className="shadow">
 						<HeadingXS>Daftar</HeadingXS>
 						<ToastContainer />

@@ -18,6 +18,7 @@ import { HeadingXS } from "components/Typography/Headings";
 import { TextSecondary } from "components/Typography/Text";
 import mustBeUnauthed from "utils/mustBeUnauthed";
 import { mediaBreakpoint } from "utils/breakpoints";
+
 const OuterContainer = styled.div`
 	background: #fff;
 	height: 80vh;
@@ -42,7 +43,7 @@ const FormContainer = styled.div`
 	position: absolute;
 
 	@media ${mediaBreakpoint.down.lg} {
-		max-width: 320px;
+		max-width: 90%;
 	}
 `;
 const StyledFormControl = styled(FormControl)`
@@ -72,22 +73,25 @@ const StyledSubmitBtn = styled(Button)`
 const GreenCharacter = styled(Image)`
 	position: absolute;
 	right: -50px;
-	top: -75px;
+	top: -50px;
+	width: 124px;
+	height: 109px;
 	transition: 0.8s;
 	&.focus {
-		top: -90px;
+		top: -70px;
 		right: -45px;
 	}
 
 	&.focus2 {
-		top: -110px;
+		top: -80px;
 		right: -65px;
 	}
 
 	@media ${mediaBreakpoint.down.lg} {
 		right: 0;
 		top: 0;
-		width: 40px;
+		width: 64px;
+		height: 56.33px;
 
 		&.focus {
 			top: -10px;
