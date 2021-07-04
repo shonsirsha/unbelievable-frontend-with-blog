@@ -52,13 +52,17 @@ const index = ({ token, onboardings, user }) => {
 	);
 };
 
-export async function getServerSideProps({ req, res }) {
+export async function getServerSideProps({ req, _ }) {
 	const { token } = parseCookies(req);
 
 	if (token === undefined) {
-		res.setHeader("location", "/");
-		res.statusCode = 302;
-		res.end();
+		return {
+			redirect: {
+				permanent: false,
+				destination: "/",
+			},
+			props: {},
+		};
 	} else {
 		const res = await fetch(`${API_URL}/onboardings`, {
 			method: "GET",
