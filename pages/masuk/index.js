@@ -17,7 +17,7 @@ import {
 import { HeadingXS } from "components/Typography/Headings";
 import { TextSecondary } from "components/Typography/Text";
 import mustBeUnauthed from "utils/mustBeUnauthed";
-
+import { mediaBreakpoint } from "utils/breakpoints";
 const OuterContainer = styled.div`
 	background: #fff;
 	height: 80vh;
@@ -33,12 +33,17 @@ const StyledContainer = styled(Container)`
 const FormContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	width: 520px;
+	max-width: 520px;
+	width: 100%;
 	background: #fff;
 	padding: 32px 24px;
 	border-radius: 10px;
 	align-items: center;
 	position: absolute;
+
+	@media ${mediaBreakpoint.down.lg} {
+		max-width: 320px;
+	}
 `;
 const StyledFormControl = styled(FormControl)`
 	border: none;
@@ -77,6 +82,22 @@ const GreenCharacter = styled(Image)`
 	&.focus2 {
 		top: -110px;
 		right: -65px;
+	}
+
+	@media ${mediaBreakpoint.down.lg} {
+		right: 0;
+		top: 0;
+		width: 40px;
+
+		&.focus {
+			top: -10px;
+			right: 15px;
+		}
+
+		&.focus2 {
+			top: -20px;
+			right: 5px;
+		}
 	}
 `;
 const index = () => {
