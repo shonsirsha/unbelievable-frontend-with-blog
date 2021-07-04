@@ -75,11 +75,18 @@ const StyledSlider = styled(Slider)`
 
 	.slick-prev {
 		z-index: 88;
-		left: -58px;
+		left: -64px;
 	}
 
 	.slick-next {
+		right: -56px;
 		z-index: 88;
+	}
+
+	.slick-arrow {
+		width: 48px;
+		height: 48px;
+		margin-top: 48px;
 	}
 
 	@media ${mediaBreakpoint.down.md} {
