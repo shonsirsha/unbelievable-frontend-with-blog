@@ -130,6 +130,7 @@ const index = () => {
 		setFocus("");
 		login({ email, password });
 	};
+
 	return (
 		<Layout background="#171b2d" withMargin>
 			<OuterContainer>

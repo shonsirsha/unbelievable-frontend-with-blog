@@ -155,11 +155,7 @@ export default function Header({
 	};
 
 	const handleClickLogo = () => {
-		if (user) {
-			router.push("/dashboard");
-		} else {
-			router.push("/");
-		}
+		router.push("/");
 	};
 	const handleClickMenu = () => {
 		if (menuShown === "") {

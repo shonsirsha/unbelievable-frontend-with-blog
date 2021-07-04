@@ -71,7 +71,7 @@ export default function Layout({
 
 			{withFB && (
 				<FlyingButtonsContainer>
-					<Link href="/">
+					<Link href="#hero">
 						<a>
 							<RoundedBtnIcon img={`images/home.png`} />
 						</a>

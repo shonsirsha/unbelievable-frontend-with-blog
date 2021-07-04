@@ -4,6 +4,7 @@ import Router from "next/router";
 import AuthContext from "context/AuthContext";
 import { API_URL } from "config/index";
 import Onboarding from "components/Onboarding/Onboarding";
+
 const index = ({ token, onboardings, user }) => {
 	const { logout } = useContext(AuthContext);
 
@@ -41,7 +42,7 @@ const index = ({ token, onboardings, user }) => {
 			</>
 		);
 	}
-	console.log(user.onboarded);
+
 	return (
 		<>
 			Onboarded!
