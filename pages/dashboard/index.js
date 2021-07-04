@@ -25,7 +25,7 @@ const index = ({ token, onboardings, user }) => {
 			}
 			toast.error("Terjadi Kesalahan Mohon Coba Lagi");
 		} else {
-			Router.reload();
+			Router.push("/dashboard");
 		}
 	};
 
