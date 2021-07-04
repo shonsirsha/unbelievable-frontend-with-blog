@@ -1,11 +1,14 @@
+import { useContext } from "react";
+
 import Head from "next/head";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import Link from "next/link";
 import Footer from "./Footer";
 import Header from "./Headers/Header";
 import RoundedBtnIcon from "./Buttons/RoundedBtnIcon";
 import styled from "styled-components";
 import { mediaBreakpoint } from "utils/breakpoints";
+import AuthContext from "context/AuthContext";
 
 const FlyingButtonsContainer = styled.div`
 	width: 0;
@@ -42,9 +45,14 @@ export default function Layout({
 	keywords = "self development, lms",
 	description = "Belajarlah setiap hari, jadilah unbelieveable!",
 	children,
+	landingPage = false,
 	withFB = false, // FB = FlyingButtons
+	withMargin = false,
+	scrollToSolid = false,
+	background = "transparent",
 }) {
-	const router = useRouter();
+	const { user, loading } = useContext(AuthContext);
+	// const router = useRouter();
 	return (
 		<div>
 			<Head>
@@ -52,11 +60,18 @@ export default function Layout({
 				<meta name="description" content={description} />
 				<meta name="keywords" content={keywords} />
 			</Head>
-			<Header />
+			{!loading && (
+				<Header
+					scrollToSolid={scrollToSolid}
+					landingPage={landingPage}
+					background={background}
+					user={user}
+				/>
+			)}
 
 			{withFB && (
 				<FlyingButtonsContainer>
-					<Link href="/">
+					<Link href="#hero">
 						<a>
 							<RoundedBtnIcon img={`images/home.png`} />
 						</a>
@@ -68,7 +83,7 @@ export default function Layout({
 					</Link>
 				</FlyingButtonsContainer>
 			)}
-			<div>{children}</div>
+			<div style={{ marginTop: withMargin ? `112px` : `0` }}>{children}</div>
 			<Footer />
 		</div>
 	);

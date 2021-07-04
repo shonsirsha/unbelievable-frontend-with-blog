@@ -4,6 +4,7 @@ import { HeadingXL } from "components/Typography/Headings";
 import { TextPrimary } from "components/Typography/Text";
 import YellowButton from "components/Buttons/YellowButton";
 import { mediaBreakpoint } from "utils/breakpoints";
+import Link from "next/link";
 
 const StyledContainer = styled(Container)`
 	display: flex;
@@ -34,7 +35,7 @@ const StyledHeading = styled(HeadingXL)`
 
 const OuterContainer = styled.div`
 	height: 100vh;
-	background-image: linear-gradient(#1022a4, #31a4fa);
+	background: linear-gradient(#1022a4, #31a4fa);
 	@media (max-width: 320px) {
 		min-height: 100vh;
 	}
@@ -71,7 +72,9 @@ export default function Hero() {
 				</StyledRow>
 				<StyledRow className="mt-4">
 					<Col>
-						<YellowButton>Menjadi Member</YellowButton>
+						<Link href="/daftar">
+							<YellowButton>Menjadi Member</YellowButton>
+						</Link>
 					</Col>
 				</StyledRow>
 				<BlueBlob className="position-absolute" src={"/images/blueblob.png"} />

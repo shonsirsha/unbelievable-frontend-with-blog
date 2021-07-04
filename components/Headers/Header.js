@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { TextPrimary } from "components/Typography/Text";
+import { HeadingXXS } from "components/Typography/Headings";
 const StyledContainer = styled.div`
 	position: fixed;
 	top: 0;
@@ -15,25 +16,13 @@ const StyledContainer = styled.div`
 	display: flex;
 	padding: 32px 48px;
 	flex-direction: column;
-	.logo {
-		width: 290px;
-		height: 31px;
-	}
+	background: ${(props) => props.background};
 
 	&.purple {
 		background: #171b2d;
 	}
 
-	.logo:hover {
-		cursor: pointer;
-	}
-
 	@media ${mediaBreakpoint.down.md} {
-		.logo {
-			height: 22.8px;
-
-			width: 210px;
-		}
 		padding: 16px;
 	}
 `;
@@ -91,26 +80,72 @@ const Overlay = styled.div`
 
 	background: #000000b0;
 `;
-
-export default function Header() {
+const ProfileImage = styled(Image)`
+	&:hover {
+		cursor: pointer;
+	}
+`;
+const Logo = styled(Image)`
+	width: 290px;
+	height: 31px;
+	${(props) => props.user && props.landing && `margin-left: 156px`};
+	&:hover {
+		cursor: pointer;
+	}
+	@media ${mediaBreakpoint.down.lg} {
+		margin-left: 0;
+	}
+	@media ${mediaBreakpoint.down.md} {
+		height: 22.8px;
+		width: 210px;
+	}
+`;
+export default function Header({
+	landingPage,
+	background,
+	user = null,
+	scrollToSolid,
+}) {
 	const router = useRouter();
 	const [navbarClass, setNavbarClass] = useState("");
 	const [menuShown, setMenuShown] = useState("");
 	useEffect(() => {
-		window.addEventListener("scroll", handleScroll);
+		if (landingPage) {
+			window.addEventListener("scroll", handleScroll);
+		}
+
+		if (scrollToSolid) {
+			window.addEventListener("scroll", handleScroll2);
+		}
 	}, []);
 
 	const handleScroll = () => {
-		const heroHeight = document.querySelector("#hero").clientHeight;
+		if (document.querySelector("#hero")) {
+			const heroHeight = document.querySelector("#hero").clientHeight;
+			if (typeof window !== undefined) {
+				if (window.pageYOffset < 10) {
+					setNavbarClass("");
+				} else {
+					if (
+						(window.pageYOffset >= heroHeight - 736 &&
+							window.pageYOffset <= heroHeight) ||
+						window.pageYOffset > heroHeight
+					) {
+						setNavbarClass("purple");
+					} else {
+						setNavbarClass("");
+					}
+				}
+			}
+		}
+	};
+
+	const handleScroll2 = () => {
 		if (typeof window !== undefined) {
 			if (window.pageYOffset < 10) {
 				setNavbarClass("");
 			} else {
-				if (
-					(window.pageYOffset >= heroHeight - 736 &&
-						window.pageYOffset <= heroHeight) ||
-					window.pageYOffset > heroHeight
-				) {
+				if (window.pageYOffset >= parseInt(112 + 32) - 120) {
 					setNavbarClass("purple");
 				} else {
 					setNavbarClass("");
@@ -118,7 +153,8 @@ export default function Header() {
 			}
 		}
 	};
-	const goHome = () => {
+
+	const handleClickLogo = () => {
 		router.push("/");
 	};
 	const handleClickMenu = () => {
@@ -130,6 +166,8 @@ export default function Header() {
 	};
 	return (
 		<StyledContainer
+			background={background}
+			landingpage={landingPage}
 			className={`${navbarClass} ${navbarClass !== "" && `shadow-lg`}`}
 		>
 			{menuShown === "show" && <Overlay onClick={handleClickMenu} />}
@@ -165,14 +203,34 @@ export default function Header() {
 				</div>
 			</MenuContainer>
 			<div className="d-flex justify-content-between align-items-center">
-				<HamburgerIcon onClick={handleClickMenu} />
-				<Image
-					className="logo"
-					onClick={goHome}
+				{landingPage && <HamburgerIcon onClick={handleClickMenu} />}
+
+				<Logo
+					className={`logo`}
+					landing={landingPage}
+					user={user ? true : false}
+					onClick={handleClickLogo}
 					src="/images/logo.png"
 					alt="logo"
 				/>
-				<Image src="images/profile.png" alt="Profile" width={43} height={43} />
+				<div className="d-flex align-items-center">
+					<ProfileImage
+						onClick={() => {
+							if (user) {
+								router.push("/dashboard");
+							} else {
+								router.push("/masuk");
+							}
+						}}
+						src="images/profile.png"
+						alt="Profile"
+						width={43}
+						height={43}
+					/>
+					<HeadingXXS as="p" className="text-white ml-3 d-lg-block d-none">
+						{user && `${user.first_name} ${user.last_name}`}
+					</HeadingXXS>
+				</div>
 			</div>
 		</StyledContainer>
 	);
