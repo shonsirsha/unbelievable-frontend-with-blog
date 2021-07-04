@@ -114,7 +114,11 @@ const index = () => {
 	const { login, err, authLoading } = useContext(AuthContext);
 
 	useEffect(() => {
-		toast.error(err);
+		if (err === "Identifier or password invalid.") {
+			toast.error("E-mail atau password salah");
+		} else {
+			toast.error(err);
+		}
 	}, [err]);
 
 	const handleChange = (e) => {

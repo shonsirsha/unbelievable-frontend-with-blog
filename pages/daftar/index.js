@@ -12,12 +12,14 @@ import {
 	FormGroup,
 	FormLabel,
 	Button,
+	FormText,
 	Image,
 } from "react-bootstrap";
 import { HeadingXS } from "components/Typography/Headings";
 import { TextSecondary } from "components/Typography/Text";
 import mustBeUnauthed from "utils/mustBeUnauthed";
 import { mediaBreakpoint } from "utils/breakpoints";
+import { checkPassword } from "utils/checkPassword";
 
 const OuterContainer = styled.div`
 	background: #fff;
@@ -119,7 +121,13 @@ const index = () => {
 	const { register, err, authLoading } = useContext(AuthContext);
 
 	useEffect(() => {
-		toast.error(err);
+		if (err === "Email is already taken.") {
+			toast.error("Email telah digunakan");
+		} else if (err === "Please provide valid email address.") {
+			toast.error("Email tidak valid");
+		} else {
+			toast.error(err);
+		}
 	}, [err]);
 
 	const handleChange = (e) => {
@@ -129,12 +137,16 @@ const index = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setFocus("");
-		register({
-			email,
-			password,
-			first_name,
-			last_name,
-		});
+		if (!checkPassword(password)) {
+			toast.error("Password tidak memenuhi kriteria");
+		} else {
+			register({
+				email,
+				password,
+				first_name,
+				last_name,
+			});
+		}
 	};
 	return (
 		<Layout background="#171b2d" withMargin>
@@ -198,6 +210,10 @@ const index = () => {
 									placeholder="Password"
 									onChange={handleChange}
 								/>
+								<FormText className="mt-2 text-muted">
+									Password harus minimal 8 karakter, dengan huruf besar, huruf
+									kecil, nomer, dan simbol.
+								</FormText>
 							</FormGroup>
 
 							<StyledSubmitBtn
