@@ -116,7 +116,7 @@ const index = () => {
 	});
 	const [focus, setFocus] = useState("");
 
-	const { register, err } = useContext(AuthContext);
+	const { register, err, authLoading } = useContext(AuthContext);
 
 	useEffect(() => {
 		toast.error(err);
@@ -203,6 +203,7 @@ const index = () => {
 							<StyledSubmitBtn
 								onClick={handleSubmit}
 								type="submit"
+								disabled={authLoading}
 								variant="primary"
 							>
 								<TextSecondary>Daftar</TextSecondary>

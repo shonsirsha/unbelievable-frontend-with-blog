@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [err, setErr] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [authLoading, setAuthLoading] = useState(false);
 
 	const router = useRouter();
 	useEffect(() => {
@@ -15,6 +16,8 @@ export const AuthProvider = ({ children }) => {
 	}, []);
 	//Register a user
 	const register = async (user) => {
+		setAuthLoading(true);
+
 		const res = await fetch(`${NEXT_URL}/api/register`, {
 			method: "POST",
 			headers: {
@@ -31,11 +34,14 @@ export const AuthProvider = ({ children }) => {
 			setErr(data.message);
 			setErr(null);
 		}
+		setAuthLoading(false);
 	};
 
 	//Login user
 
 	const login = async ({ email: identifier, password }) => {
+		setAuthLoading(true);
+
 		const res = await fetch(`${NEXT_URL}/api/login`, {
 			method: "POST",
 			headers: {
@@ -55,6 +61,7 @@ export const AuthProvider = ({ children }) => {
 			setErr(data.message);
 			setErr(null);
 		}
+		setAuthLoading(false);
 	};
 
 	//Logout user
@@ -88,7 +95,16 @@ export const AuthProvider = ({ children }) => {
 
 	return (
 		<AuthContext.Provider
-			value={{ user, err, register, login, logout, checkUserLoggedIn, loading }}
+			value={{
+				user,
+				err,
+				register,
+				login,
+				logout,
+				checkUserLoggedIn,
+				loading,
+				authLoading,
+			}}
 		>
 			{children}
 		</AuthContext.Provider>
