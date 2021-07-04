@@ -5,7 +5,7 @@ export default function VideoPlayerNonHLS({ liveUrl, onVideoFinished }) {
 	const playerOptions = {
 		src: liveUrl,
 		controls: true,
-		autoplay: "play",
+		autoplay: true,
 	};
 	const videojsOptions = {
 		fluid: true,
