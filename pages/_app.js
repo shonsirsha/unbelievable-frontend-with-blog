@@ -7,30 +7,20 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "video.js/dist/video-js.css";
-import { useRouter } from "next/router";
+import Router from "next/router";
 import { AuthProvider } from "context/AuthContext";
 
 function Application({ Component, pageProps }) {
-	const router = useRouter();
+	NProgress.configure({
+		minimum: 0.3,
+		easing: "ease",
+		speed: 800,
+		showSpinner: false,
+	});
 
-	useEffect(() => {
-		const handleStart = (url) => {
-			NProgress.start();
-		};
-		const handleStop = () => {
-			NProgress.done();
-		};
-
-		router.events.on("routeChangeStart", handleStart);
-		router.events.on("routeChangeComplete", handleStop);
-		router.events.on("routeChangeError", handleStop);
-
-		return () => {
-			router.events.off("routeChangeStart", handleStart);
-			router.events.off("routeChangeComplete", handleStop);
-			router.events.off("routeChangeError", handleStop);
-		};
-	}, [router]);
+	Router.events.on("routeChangeStart", () => NProgress.start());
+	Router.events.on("routeChangeComplete", () => NProgress.done());
+	Router.events.on("routeChangeError", () => NProgress.done());
 	return (
 		<AuthProvider>
 			<Component {...pageProps} />
