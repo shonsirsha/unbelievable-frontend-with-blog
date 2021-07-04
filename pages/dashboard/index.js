@@ -37,7 +37,7 @@ const index = ({ token, onboardings, user }) => {
 					user={user}
 					onboardings={onboardings}
 				/>
-				;<button onClick={() => logout()}>logout</button>
+				<button onClick={() => logout()}>logout</button>
 			</>
 		);
 	}

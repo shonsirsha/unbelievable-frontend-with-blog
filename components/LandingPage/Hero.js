@@ -34,7 +34,7 @@ const StyledHeading = styled(HeadingXL)`
 
 const OuterContainer = styled.div`
 	height: 100vh;
-	background-image: linear-gradient(#1022a4, #31a4fa);
+	background: linear-gradient(#1022a4, #31a4fa);
 	@media (max-width: 320px) {
 		min-height: 100vh;
 	}
