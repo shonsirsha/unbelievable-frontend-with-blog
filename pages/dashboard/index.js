@@ -53,6 +53,8 @@ const index = ({ token, onboardings, user, courses }) => {
 						shortDesc={course.short_desc}
 						img={course.image}
 						creatorName={course.content_creator.full_name}
+						rating={course.rating}
+						user={user}
 					/>
 				))}
 			</div>
