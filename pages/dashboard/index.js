@@ -1,13 +1,13 @@
 import { parseCookies } from "utils/cookies";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Router from "next/router";
 import AuthContext from "context/AuthContext";
 import { API_URL } from "config/index";
 import Onboarding from "components/Onboarding/Onboarding";
-
-const index = ({ token, onboardings, user }) => {
+import DefaultCourseCard from "components/Course/DefaultCourseCard";
+const index = ({ token, onboardings, user, courses }) => {
 	const { logout } = useContext(AuthContext);
-
+	const [allCourses] = useState(courses);
 	const handleFinishOnboarding = async () => {
 		const res = await fetch(`${API_URL}/users/me`, {
 			method: "PUT",
@@ -45,9 +45,21 @@ const index = ({ token, onboardings, user }) => {
 
 	return (
 		<>
-			Onboarded!
-			{user.onboarded}
-			<button onClick={() => logout()}>logout</button>
+			<div className="d-flex">
+				{allCourses.map((course) => (
+					<DefaultCourseCard
+						className="mr-5"
+						title={course.title}
+						shortDesc={course.short_desc}
+						img={course.image}
+						creatorName={course.content_creator.full_name}
+					/>
+				))}
+			</div>
+
+			<button className="mt-5" onClick={() => logout()}>
+				logout
+			</button>
 		</>
 	);
 };
@@ -77,14 +89,21 @@ export async function getServerSideProps({ req, _ }) {
 				Authorization: `Bearer ${token}`,
 			},
 		});
+
+		const res3 = await fetch(`${API_URL}/courses`, {
+			method: "GET",
+		});
+
 		const onboardings = await res.json();
 		const user = await res2.json();
+		const courses = await res3.json();
 
 		return {
 			props: {
 				onboardings,
 				token,
 				user,
+				courses,
 			},
 		};
 	}
