@@ -4,10 +4,15 @@ import Link from "next/link";
 import styled from "styled-components";
 const OuterContainer = styled.div`
 	display: flex;
+	height: 100vh;
+	margin-right: 200px;
+	margin-left: 64px;
+`;
+const MenuContainer = styled.div`
+	position: fixed;
+	display: flex;
+	top: 50%;
 	flex-direction: column;
-	height: 100%;
-	padding: 0 64px;
-	margin-right: auto;
 `;
 const StyledHeadingXXS = styled(HeadingXXS)`
 	font-family: MontserratRegular;
@@ -45,17 +50,19 @@ export default function SideMenu() {
 	];
 	return (
 		<OuterContainer>
-			{routes.map((r) => (
-				<Link href={r.url}>
-					<StyledHeadingXXS
-						active={r.url === router.pathname}
-						className="text-black"
-						as="a"
-					>
-						{r.text}
-					</StyledHeadingXXS>
-				</Link>
-			))}
+			<MenuContainer>
+				{routes.map((r) => (
+					<Link href={r.url}>
+						<StyledHeadingXXS
+							active={r.url === router.pathname}
+							className="text-black"
+							as="a"
+						>
+							{r.text}
+						</StyledHeadingXXS>
+					</Link>
+				))}
+			</MenuContainer>
 		</OuterContainer>
 	);
 }

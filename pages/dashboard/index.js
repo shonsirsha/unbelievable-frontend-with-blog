@@ -7,6 +7,7 @@ import { API_URL } from "config/index";
 import Layout from "components/Layout";
 import Onboarding from "components/Onboarding/Onboarding";
 import DefaultCourseCard from "components/Course/DefaultCourseCard";
+import Wishlist from "components/Wishlist/Wishlist";
 import styled from "styled-components";
 
 const OuterContainer = styled.div`
@@ -59,11 +60,51 @@ const index = ({ token, onboardings, user, courses }) => {
 			mainApp
 		>
 			<OuterContainer>
-				<Container>
-					<Row>
-						<Col>
-							<div className="d-flex">
-								{allCourses.map((course) => (
+				<div className="d-flex flex-wrap">
+					{allCourses.map((course) => (
+						<DefaultCourseCard
+							className="mr-5 mt-5 "
+							title={course.title}
+							shortDesc={course.short_desc}
+							img={course.image}
+							creatorName={course.content_creator.full_name}
+							rating={course.rating}
+							user={user}
+						/>
+					))}
+					<DefaultCourseCard
+						className="mr-5 mt-5"
+						title={"Some Title"}
+						shortDesc={"Very Short"}
+						creatorName={"Sean Liesanggoro"}
+						rating={3}
+						user={user}
+					/>
+					<DefaultCourseCard
+						className="mr-5 mt-5"
+						title={"Some Title"}
+						shortDesc={"Very Short"}
+						creatorName={"Sean Liesanggoro"}
+						rating={3}
+						user={user}
+					/>{" "}
+					<DefaultCourseCard
+						className="mr-5 mt-5"
+						title={"Some Title"}
+						shortDesc={"Very Short"}
+						creatorName={"Sean Liesanggoro"}
+						rating={3}
+						user={user}
+					/>{" "}
+					<DefaultCourseCard
+						className="mr-5 mt-5"
+						title={"Some Title"}
+						shortDesc={"Very Short"}
+						creatorName={"Sean Liesanggoro"}
+						rating={3}
+						user={user}
+					/>
+					{/* {allCourses.map((course) => (
 									<DefaultCourseCard
 										className="mr-5"
 										title={course.title}
@@ -73,11 +114,12 @@ const index = ({ token, onboardings, user, courses }) => {
 										rating={course.rating}
 										user={user}
 									/>
-								))}
-							</div>
-						</Col>
-					</Row>
-				</Container>
+								))} */}
+				</div>
+
+				{/* <Col xl={1} md={12}>
+							<Wishlist />
+						</Col> */}
 			</OuterContainer>
 			{/* <button className="mt-5" onClick={() => logout()}>
 				logout
