@@ -9,7 +9,7 @@ const EnrollBtn = styled(Button)`
 	border: none;
 	padding: 8px 24px;
 	margin: auto;
-	margin-bottom: -40px;
+	margin-bottom: -36px;
 	width: 116px;
 `;
 const CardBody = styled.div`
@@ -39,7 +39,7 @@ const StyledCard = styled(Card)`
 	border-radius: 12px;
 	box-shadow: 2px 1px 15px rgba(0, 0, 0, 0.1);
 	width: 308px;
-	min-height: 532px;
+	height: 480px;
 	border: none;
 
 	&:hover {
@@ -51,7 +51,7 @@ const ImageContainer = styled.div`
 		props.img ? `url(${props.img}) no-repeat` : `gray`};
 	background-size: cover; /* <------ */
 	background-position: center center; /* optional, center the image */
-	height: 100%;
+	height: 380px;
 	width: 100%;
 	border-radius: 12px;
 	border-bottom-left-radius: 0;
@@ -108,11 +108,11 @@ export default function DefaultCourseCard({
 					<div className="d-flex">
 						{user && (
 							<Like
-								className="mr-2"
 								onClick={(e) => {
 									e.stopPropagation();
-									alert("Liked");
+									alert("liked");
 								}}
+								className="mr-2"
 							/>
 						)}
 						<Share

@@ -1,10 +1,18 @@
-import { parseCookies } from "utils/cookies";
 import { useContext, useState } from "react";
+import { parseCookies } from "utils/cookies";
+import { Container, Row, Col } from "react-bootstrap";
 import Router from "next/router";
 import AuthContext from "context/AuthContext";
 import { API_URL } from "config/index";
+import Layout from "components/Layout";
 import Onboarding from "components/Onboarding/Onboarding";
 import DefaultCourseCard from "components/Course/DefaultCourseCard";
+import styled from "styled-components";
+
+const OuterContainer = styled.div`
+	padding: 64px 0;
+	display: flex;
+`;
 const index = ({ token, onboardings, user, courses }) => {
 	const { logout } = useContext(AuthContext);
 	const [allCourses] = useState(courses);
@@ -44,25 +52,36 @@ const index = ({ token, onboardings, user, courses }) => {
 	}
 
 	return (
-		<>
-			<div className="d-flex">
-				{allCourses.map((course) => (
-					<DefaultCourseCard
-						className="mr-5"
-						title={course.title}
-						shortDesc={course.short_desc}
-						img={course.image}
-						creatorName={course.content_creator.full_name}
-						rating={course.rating}
-						user={user}
-					/>
-				))}
-			</div>
-
-			<button className="mt-5" onClick={() => logout()}>
+		<Layout
+			title="Selamat Datang! | Unbelieveable"
+			background="#171b2d"
+			withMargin
+		>
+			<OuterContainer>
+				<Container>
+					<Row>
+						<Col>
+							<div className="d-flex">
+								{allCourses.map((course) => (
+									<DefaultCourseCard
+										className="mr-5"
+										title={course.title}
+										shortDesc={course.short_desc}
+										img={course.image}
+										creatorName={course.content_creator.full_name}
+										rating={course.rating}
+										user={user}
+									/>
+								))}
+							</div>
+						</Col>
+					</Row>
+				</Container>
+			</OuterContainer>
+			{/* <button className="mt-5" onClick={() => logout()}>
 				logout
-			</button>
-		</>
+			</button> */}
+		</Layout>
 	);
 };
 
