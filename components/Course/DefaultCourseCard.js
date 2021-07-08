@@ -8,8 +8,12 @@ const EnrollBtn = styled(Button)`
 	border-radius: 40px;
 	border: none;
 	padding: 8px 24px;
-	margin: auto;
-	margin-bottom: -36px;
+	position: absolute;
+	bottom: -16px;
+	left: 0;
+	right: 0;
+	margin-left: ${(props) => (props.small ? `22.5%` : `30%`)};
+
 	width: 116px;
 `;
 const CardBody = styled.div`
@@ -18,12 +22,14 @@ const CardBody = styled.div`
 	flex-direction: column;
 	position: relative;
 	padding: 20px 32px;
+	padding-bottom: 48px;
 `;
 const StyledHeadingXXS = styled(HeadingXXS)`
 	font-size: 14px;
 `;
 const CardHeader = styled(HeadingXXS)`
 	font-size: 17px;
+	height: 32px;
 	font-family: MontserratRegular;
 `;
 
@@ -38,7 +44,7 @@ const StyledTextTertiary = styled(TextTertiary)`
 const StyledCard = styled(Card)`
 	border-radius: 12px;
 	box-shadow: 2px 1px 15px rgba(0, 0, 0, 0.1);
-	width: 308px;
+	width: ${(props) => (props.small ? `215px` : `308px`)};
 	height: 480px;
 	border: none;
 
@@ -51,7 +57,8 @@ const ImageContainer = styled.div`
 		props.img ? `url(${props.img}) no-repeat` : `gray`};
 	background-size: cover; /* <------ */
 	background-position: center center; /* optional, center the image */
-	height: 380px;
+	height: ${(props) => (props.small ? `240px` : `380px`)};
+
 	width: 100%;
 	border-radius: 12px;
 	border-bottom-left-radius: 0;
@@ -75,28 +82,35 @@ const Like = styled(FaHeart)`
 		color: #3c4777;
 	}
 `;
+const TextDesc = styled(TextTertiary)`
+	height: ${(props) => (props.small ? `56px` : `32px`)};
+	font-size: ${(props) => (props.small ? `12px` : `14px`)};
+`;
 export default function DefaultCourseCard({
 	title,
 	shortDesc,
 	img,
 	creatorName,
 	rating,
+	small,
 	user,
 	...props
 }) {
 	return (
-		<StyledCard {...props}>
-			<ImageContainer img={img} />
+		<StyledCard small={small} {...props}>
+			<ImageContainer small={small} img={img} />
 
 			<CardBody onClick={() => alert("Clicked card")}>
 				<CardHeader as="p" className="mt-3">
 					{title}
 				</CardHeader>
 				<div className="d-flex mt-2">
-					<TextTertiary>{shortDesc}</TextTertiary>
+					<TextDesc small={small}>{shortDesc}</TextDesc>
 				</div>
 
-				<StyledTextTertiary className="mt-4">{creatorName}</StyledTextTertiary>
+				<StyledTextTertiary className="mt-auto">
+					{creatorName}
+				</StyledTextTertiary>
 
 				<div className="d-flex ml-0 mt-3 ml-lg-auto justify-content-center align-items-center">
 					<HeadingXS className="text-primary1 mr-1 ">
@@ -104,7 +118,7 @@ export default function DefaultCourseCard({
 					</HeadingXS>
 					<TotalRating>/ 5</TotalRating>
 				</div>
-				<div className="mt-2 d-flex justify-content-between align-items-center">
+				<div className="mt-auto d-flex justify-content-between align-items-center">
 					<div className="d-flex">
 						{user && (
 							<Like
@@ -132,7 +146,7 @@ export default function DefaultCourseCard({
 					</div>
 				</div>
 
-				<EnrollBtn className="bg-primary1">
+				<EnrollBtn className="bg-primary1" small={small}>
 					<StyledHeadingXXS as="p">enroll</StyledHeadingXXS>
 				</EnrollBtn>
 			</CardBody>

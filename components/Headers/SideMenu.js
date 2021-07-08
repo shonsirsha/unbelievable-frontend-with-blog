@@ -17,7 +17,7 @@ const MenuContainer = styled.div`
 const StyledHeadingXXS = styled(HeadingXXS)`
 	font-family: MontserratRegular;
 	font-size: 19px;
-	padding-bottom: 8px;
+	padding-bottom: 9px;
 	padding-top: 15px;
 	${(props) => props.active && `border-bottom: 2px solid #171B2D;`}
 	color: ${(props) => (props.active ? `#171B2D;` : `#8E8F91;`)}

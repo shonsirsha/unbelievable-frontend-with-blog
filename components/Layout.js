@@ -87,7 +87,7 @@ export default function Layout({
 				</FlyingButtonsContainer>
 			)}
 			<div
-				className={`${mainApp && `d-flex align-items-center`}`}
+				className={`${mainApp && `d-flex `}`}
 				style={{ marginTop: withMargin ? `112px` : `0` }}
 			>
 				{mainApp && <SideMenu />}

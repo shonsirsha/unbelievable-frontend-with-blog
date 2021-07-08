@@ -11,8 +11,20 @@ import Wishlist from "components/Wishlist/Wishlist";
 import styled from "styled-components";
 
 const OuterContainer = styled.div`
-	padding: 64px 0;
+	padding: 64px;
+	width: 100%;
+	padding-left: 128px;
+	paddin-right: 16px;
 	display: flex;
+`;
+const RightContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	width: 320px;
+`;
+const ComponentsContainer = styled.div`
+	bottom: 48px;
+	right: 16px;
 `;
 const index = ({ token, onboardings, user, courses }) => {
 	const { logout } = useContext(AuthContext);
@@ -60,62 +72,48 @@ const index = ({ token, onboardings, user, courses }) => {
 			mainApp
 		>
 			<OuterContainer>
-				<div className="d-flex flex-wrap">
-					{allCourses.map((course) => (
+				<div className="d-flex w-100">
+					<div className="d-flex flex-wrap w-100">
+						{allCourses.map((course) => (
+							<DefaultCourseCard
+								small
+								className="mr-3 mt-5 "
+								title={course.title}
+								shortDesc={course.short_desc}
+								img={course.image}
+								creatorName={course.content_creator.full_name}
+								rating={course.rating}
+								user={user}
+							/>
+						))}
+
 						<DefaultCourseCard
-							className="mr-5 mt-5 "
-							title={course.title}
-							shortDesc={course.short_desc}
-							img={course.image}
-							creatorName={course.content_creator.full_name}
-							rating={course.rating}
+							small
+							className="mr-3 mt-5 "
+							title={"Some Title"}
+							shortDesc={"Some Short Desc"}
+							creatorName={"Sean S.L."}
+							rating={5}
 							user={user}
 						/>
-					))}
-					<DefaultCourseCard
-						className="mr-5 mt-5"
-						title={"Some Title"}
-						shortDesc={"Very Short"}
-						creatorName={"Sean Liesanggoro"}
-						rating={3}
-						user={user}
-					/>
-					<DefaultCourseCard
-						className="mr-5 mt-5"
-						title={"Some Title"}
-						shortDesc={"Very Short"}
-						creatorName={"Sean Liesanggoro"}
-						rating={3}
-						user={user}
-					/>{" "}
-					<DefaultCourseCard
-						className="mr-5 mt-5"
-						title={"Some Title"}
-						shortDesc={"Very Short"}
-						creatorName={"Sean Liesanggoro"}
-						rating={3}
-						user={user}
-					/>{" "}
-					<DefaultCourseCard
-						className="mr-5 mt-5"
-						title={"Some Title"}
-						shortDesc={"Very Short"}
-						creatorName={"Sean Liesanggoro"}
-						rating={3}
-						user={user}
-					/>
-					{/* {allCourses.map((course) => (
-									<DefaultCourseCard
-										className="mr-5"
-										title={course.title}
-										shortDesc={course.short_desc}
-										img={course.image}
-										creatorName={course.content_creator.full_name}
-										rating={course.rating}
-										user={user}
-									/>
-								))} */}
+
+						<DefaultCourseCard
+							small
+							className="mr-3 mt-5 "
+							title={"Some Title"}
+							shortDesc={"Some Short Desc"}
+							creatorName={"Sean S.L."}
+							rating={4.5}
+							user={user}
+						/>
+					</div>
 				</div>
+				<RightContainer>
+					<ComponentsContainer className="position-fixed">
+						<Wishlist className="mb-3" />
+						<Wishlist />
+					</ComponentsContainer>
+				</RightContainer>
 
 				{/* <Col xl={1} md={12}>
 							<Wishlist />
