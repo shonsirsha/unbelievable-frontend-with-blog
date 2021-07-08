@@ -5,6 +5,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Footer from "./Footer";
 import Header from "./Headers/Header";
+import SideMenu from "components/Headers/SideMenu";
 import RoundedBtnIcon from "./Buttons/RoundedBtnIcon";
 import styled from "styled-components";
 import { mediaBreakpoint } from "utils/breakpoints";
@@ -50,6 +51,7 @@ export default function Layout({
 	withMargin = false,
 	scrollToSolid = false,
 	background = "transparent",
+	mainApp = false,
 }) {
 	const { user, loading } = useContext(AuthContext);
 	// const router = useRouter();
@@ -66,6 +68,7 @@ export default function Layout({
 					landingPage={landingPage}
 					background={background}
 					user={user}
+					mainApp={mainApp}
 				/>
 			)}
 
@@ -83,7 +86,14 @@ export default function Layout({
 					</Link>
 				</FlyingButtonsContainer>
 			)}
-			<div style={{ marginTop: withMargin ? `112px` : `0` }}>{children}</div>
+			<div
+				className={`${mainApp && `d-flex align-items-center`}`}
+				style={{ marginTop: withMargin ? `112px` : `0` }}
+			>
+				{mainApp && <SideMenu />}
+
+				{children}
+			</div>
 			<Footer />
 		</div>
 	);

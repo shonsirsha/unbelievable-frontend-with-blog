@@ -56,6 +56,7 @@ const index = ({ token, onboardings, user, courses }) => {
 			title="Selamat Datang! | Unbelieveable"
 			background="#171b2d"
 			withMargin
+			mainApp
 		>
 			<OuterContainer>
 				<Container>

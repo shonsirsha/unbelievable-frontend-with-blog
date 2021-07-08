@@ -88,7 +88,7 @@ const ProfileImage = styled(Image)`
 const Logo = styled(Image)`
 	width: 290px;
 	height: 31px;
-	${(props) => props.user && props.landing && `margin-left: 156px`};
+	${(props) => props.user && !props.mainapp && `margin-left: 156px`};
 	&:hover {
 		cursor: pointer;
 	}
@@ -105,6 +105,7 @@ export default function Header({
 	background,
 	user = null,
 	scrollToSolid,
+	mainApp,
 }) {
 	const router = useRouter();
 	const [navbarClass, setNavbarClass] = useState("");
@@ -203,11 +204,10 @@ export default function Header({
 				</div>
 			</MenuContainer>
 			<div className="d-flex justify-content-between align-items-center">
-				{landingPage && <HamburgerIcon onClick={handleClickMenu} />}
-
+				{!mainApp && <HamburgerIcon onClick={handleClickMenu} />}
 				<Logo
 					className={`logo`}
-					landing={landingPage}
+					mainapp={mainApp}
 					user={user ? true : false}
 					onClick={handleClickLogo}
 					src="/images/logo.png"
