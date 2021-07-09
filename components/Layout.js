@@ -10,6 +10,8 @@ import RoundedBtnIcon from "./Buttons/RoundedBtnIcon";
 import styled from "styled-components";
 import { mediaBreakpoint } from "utils/breakpoints";
 import AuthContext from "context/AuthContext";
+import SideBlock from "./SideItems/SideBlock";
+import ReviewBlock from "./SideItems/ReviewBlock";
 
 const FlyingButtonsContainer = styled.div`
 	width: 0;
@@ -40,6 +42,17 @@ const FlyingButtonsContainer = styled.div`
 			margin-right: 8px;
 		}
 	}
+`;
+
+const RightContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	width: 320px;
+`;
+
+const ComponentsContainer = styled.div`
+	bottom: 48px;
+	right: 16px;
 `;
 export default function Layout({
 	title = "Unbelieveable",
@@ -113,6 +126,15 @@ export default function Layout({
 				{mainApp && <SideMenu />}
 
 				{children}
+				{mainApp && (
+					<RightContainer>
+						<ComponentsContainer className="position-fixed">
+							<SideBlock className="mb-3" />
+							<SideBlock className="mb-3" />
+							<ReviewBlock />
+						</ComponentsContainer>
+					</RightContainer>
+				)}
 			</div>
 			<Footer />
 		</div>

@@ -109,14 +109,8 @@ const index = ({ token, onboardings, user, courses }) => {
 						/>
 					</div>
 				</div>
-				<RightContainer>
-					<ComponentsContainer className="position-fixed">
-						<SideBlock className="mb-3" />
-						<SideBlock className="mb-3" />
-						<ReviewBlock />
-					</ComponentsContainer>
-				</RightContainer>
 			</OuterContainer>
+
 			{/* <button className="mb-5" onClick={() => logout()}>
 				logout
 			</button> */}

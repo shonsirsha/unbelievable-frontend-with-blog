@@ -152,8 +152,6 @@ export default function Header({
 		}
 	}, []);
 
-	console.log(router.pathname);
-
 	const handleScroll = () => {
 		if (document.querySelector("#hero")) {
 			const heroHeight = document.querySelector("#hero").clientHeight;
@@ -203,7 +201,6 @@ export default function Header({
 		}
 	};
 
-	console.log(router);
 	return (
 		<StyledContainer
 			background={background}
