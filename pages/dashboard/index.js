@@ -7,7 +7,8 @@ import { API_URL } from "config/index";
 import Layout from "components/Layout";
 import Onboarding from "components/Onboarding/Onboarding";
 import DefaultCourseCard from "components/Course/DefaultCourseCard";
-import SideBlock from "components/SideBlock/SideBlock";
+import SideBlock from "components/SideItems/SideBlock";
+import ReviewBlock from "components/SideItems/ReviewBlock";
 import styled from "styled-components";
 
 const OuterContainer = styled.div`
@@ -66,7 +67,7 @@ const index = ({ token, onboardings, user, courses }) => {
 
 	return (
 		<Layout
-			title="Selamat Datang! | Unbelieveable"
+			title="Dashboard | Unbelieveable"
 			background="#171b2d"
 			withMargin
 			mainApp
@@ -77,7 +78,7 @@ const index = ({ token, onboardings, user, courses }) => {
 						{allCourses.map((course) => (
 							<DefaultCourseCard
 								small
-								className="mr-3 mt-5 "
+								className="mr-3 mb-5 "
 								title={course.title}
 								shortDesc={course.short_desc}
 								img={course.image}
@@ -89,7 +90,7 @@ const index = ({ token, onboardings, user, courses }) => {
 
 						<DefaultCourseCard
 							small
-							className="mr-3 mt-5 "
+							className="mr-3 mb-5 "
 							title={"Some Title"}
 							shortDesc={"Some Short Desc"}
 							creatorName={"Sean S.L."}
@@ -99,7 +100,7 @@ const index = ({ token, onboardings, user, courses }) => {
 
 						<DefaultCourseCard
 							small
-							className="mr-3 mt-5 "
+							className="mr-3 mb-5 "
 							title={"Some Title"}
 							shortDesc={"Some Short Desc"}
 							creatorName={"Sean S.L."}
@@ -112,11 +113,11 @@ const index = ({ token, onboardings, user, courses }) => {
 					<ComponentsContainer className="position-fixed">
 						<SideBlock className="mb-3" />
 						<SideBlock className="mb-3" />
-						<SideBlock className="bg-yellow3" />
+						<ReviewBlock />
 					</ComponentsContainer>
 				</RightContainer>
 			</OuterContainer>
-			{/* <button className="mt-5" onClick={() => logout()}>
+			{/* <button className="mb-5" onClick={() => logout()}>
 				logout
 			</button> */}
 		</Layout>
@@ -130,7 +131,7 @@ export async function getServerSideProps({ req, _ }) {
 		return {
 			redirect: {
 				permanent: false,
-				destination: "/",
+				destination: "/masuk",
 			},
 			props: {},
 		};

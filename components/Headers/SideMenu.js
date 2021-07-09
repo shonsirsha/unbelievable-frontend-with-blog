@@ -11,7 +11,7 @@ const OuterContainer = styled.div`
 const MenuContainer = styled.div`
 	position: fixed;
 	display: flex;
-	top: 50%;
+	top: 45%;
 	flex-direction: column;
 `;
 const StyledHeadingXXS = styled(HeadingXXS)`
