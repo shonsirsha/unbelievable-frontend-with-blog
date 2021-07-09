@@ -28,8 +28,8 @@ const StyledHeadingXXS = styled(HeadingXXS)`
 	font-size: 14px;
 `;
 const CardHeader = styled(HeadingXXS)`
-	font-size: 17px;
-	height: 32px;
+	font-size: 14px;
+	height: 40px;
 	font-family: MontserratRegular;
 `;
 
@@ -45,7 +45,7 @@ const StyledCard = styled(Card)`
 	border-radius: 12px;
 	box-shadow: 2px 1px 15px rgba(0, 0, 0, 0.1);
 	width: ${(props) => (props.small ? `215px` : `308px`)};
-	height: 480px;
+	height: 520px;
 	border: none;
 
 	&:hover {
@@ -97,10 +97,10 @@ export default function DefaultCourseCard({
 	...props
 }) {
 	return (
-		<StyledCard small={small} {...props}>
+		<StyledCard small={small} {...props} onClick={() => alert("Card clicked")}>
 			<ImageContainer small={small} img={img} />
 
-			<CardBody onClick={() => alert("Clicked card")}>
+			<CardBody>
 				<CardHeader as="p" className="mt-3">
 					{title}
 				</CardHeader>
@@ -112,7 +112,7 @@ export default function DefaultCourseCard({
 					{creatorName}
 				</StyledTextTertiary>
 
-				<div className="d-flex ml-0 mt-3 ml-lg-auto justify-content-center align-items-center">
+				<div className="d-flex ml-0 mt-4 ml-lg-auto justify-content-center align-items-center">
 					<HeadingXS className="text-primary1 mr-1 ">
 						{rating ? rating : "-"}
 					</HeadingXS>
@@ -146,7 +146,14 @@ export default function DefaultCourseCard({
 					</div>
 				</div>
 
-				<EnrollBtn className="bg-primary1" small={small}>
+				<EnrollBtn
+					className="bg-primary1"
+					small={small}
+					onClick={(e) => {
+						e.stopPropagation();
+						alert("enroll btn clicked");
+					}}
+				>
 					<StyledHeadingXXS as="p">enroll</StyledHeadingXXS>
 				</EnrollBtn>
 			</CardBody>

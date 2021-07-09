@@ -7,7 +7,7 @@ import { API_URL } from "config/index";
 import Layout from "components/Layout";
 import Onboarding from "components/Onboarding/Onboarding";
 import DefaultCourseCard from "components/Course/DefaultCourseCard";
-import Wishlist from "components/Wishlist/Wishlist";
+import SideBlock from "components/SideBlock/SideBlock";
 import styled from "styled-components";
 
 const OuterContainer = styled.div`
@@ -110,14 +110,11 @@ const index = ({ token, onboardings, user, courses }) => {
 				</div>
 				<RightContainer>
 					<ComponentsContainer className="position-fixed">
-						<Wishlist className="mb-3" />
-						<Wishlist />
+						<SideBlock className="mb-3" />
+						<SideBlock className="mb-3" />
+						<SideBlock className="bg-yellow3" />
 					</ComponentsContainer>
 				</RightContainer>
-
-				{/* <Col xl={1} md={12}>
-							<Wishlist />
-						</Col> */}
 			</OuterContainer>
 			{/* <button className="mt-5" onClick={() => logout()}>
 				logout
