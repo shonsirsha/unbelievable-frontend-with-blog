@@ -58,7 +58,10 @@ export default function Layout({
 
 	const { user, loading } = useContext(AuthContext);
 
-	if (!mainApp && user && !showBurger) backBtn = true;
+	// mainApp is when layout has the floating side menu...
+
+	if (!mainApp && user && user.onboarded && !showBurger) backBtn = true;
+
 	if (mainApp) {
 		showBurger = false;
 	} else if (!user) {

@@ -77,11 +77,6 @@ const Blob = styled(Image)`
 		}
 	}
 `;
-const StyledCharacterImage = styled(Image)`
-	width: 320px;
-	height: 107px;
-	margin-top: 32px;
-`;
 
 const StyledP = styled.p`
 	z-index: 3;
@@ -246,6 +241,7 @@ export default function Onboarding({
 		<Layout
 			title="Selamat Datang! | Unbelieveable"
 			scrollToSolid
+			showBurger={false}
 			background="rgba(0,0,0,0.27)"
 		>
 			<OuterContainer bg={bgArr[stage - 1]}>

@@ -7,6 +7,7 @@ import { mediaBreakpoint } from "utils/breakpoints";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { TextPrimary } from "components/Typography/Text";
 import { HeadingXXS } from "components/Typography/Headings";
+import { MdChevronLeft } from "react-icons/md";
 const StyledContainer = styled.div`
 	position: fixed;
 	top: 0;
@@ -47,6 +48,7 @@ const MenuContainer = styled.div`
     position: absolute;
 	min-width: 370px;
 	transition: 0.35s;
+
 	background:#fff;
 	&.show{
 		left: 0;
@@ -88,7 +90,11 @@ const ProfileImage = styled(Image)`
 const Logo = styled(Image)`
 	width: 290px;
 	height: 31px;
-	${(props) => props.user && props.showburger && `margin-left: 156px`};
+	position: absolute;
+	left: ${(props) => (props.showburger || props.backbtn ? `50%;` : `48px;`)}
+	${(props) =>
+		(props.showburger || props.backbtn) && `transform: translateX(-50%);`}
+
 	&:hover {
 		cursor: pointer;
 	}
@@ -99,6 +105,10 @@ const Logo = styled(Image)`
 		height: 22.8px;
 		width: 210px;
 	}
+`;
+const Back = styled(MdChevronLeft)`
+	font-size: 48px;
+	color: #fff;
 `;
 export default function Header({
 	landingPage,
@@ -160,6 +170,9 @@ export default function Header({
 	const handleClickLogo = () => {
 		router.push("/");
 	};
+	const handleClickBack = () => {
+		router.push("/dashboard");
+	};
 	const handleClickMenu = () => {
 		if (menuShown === "") {
 			setMenuShown("show");
@@ -205,25 +218,26 @@ export default function Header({
 					</Link>
 				</div>
 			</MenuContainer>
-			<div className="d-flex justify-content-between align-items-center">
+			<div className="d-flex align-items-center">
 				{!backBtn ? (
 					<HamburgerIcon
 						className={`${!showBurger && `d-xl-none d-sm-block`}`}
 						onClick={handleClickMenu}
 					/>
 				) : (
-					<p>Back</p>
+					<Back role="button" onClick={handleClickBack} />
 				)}
 				<Logo
 					className={`logo`}
 					mainapp={mainApp}
 					showburger={showBurger}
+					backbtn={backBtn}
 					user={user ? true : false}
 					onClick={handleClickLogo}
 					src="/images/logo.png"
 					alt="logo"
 				/>
-				<div className="d-flex align-items-center">
+				<div className="ml-auto d-flex align-items-center">
 					<ProfileImage
 						onClick={() => {
 							if (user) {
