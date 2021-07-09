@@ -44,22 +44,6 @@ const FlyingButtonsContainer = styled.div`
 	}
 `;
 
-const RightContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	width: 320px;
-
-	@media (max-width: 1024px) {
-		/*iPad Pro and below*/
-		display: none;
-	}
-`;
-
-const ComponentsContainer = styled.div`
-	bottom: 48px;
-	right: 16px;
-`;
-
 const OuterContainer = styled.div`
 	padding: 64px;
 	width: 100%;
@@ -166,21 +150,6 @@ export default function Layout({
 					<OuterContainer>{children}</OuterContainer>
 				) : (
 					<>{children}</>
-				)}
-
-				{mainApp && (
-					<RightContainer>
-						<ComponentsContainer className="position-fixed">
-							<SideBlock
-								content={"Wishlist Box (Work in progress..)"}
-								className="mb-3"
-							/>
-							<SideBlock
-								content={"Mission Box (Work in progress..)"}
-								className="mb-3"
-							/>
-						</ComponentsContainer>
-					</RightContainer>
 				)}
 			</div>
 			<Footer />

@@ -6,7 +6,7 @@ import { API_URL } from "config/index";
 import Layout from "components/Layout";
 import Onboarding from "components/Onboarding/Onboarding";
 import DefaultCourseCard from "components/Course/DefaultCourseCard";
-import ReviewBlock from "components/SideItems/ReviewBlock";
+import SideBlock from "components/SideItems/SideBlock";
 import styled from "styled-components";
 const StyledDefault = styled(DefaultCourseCard)`
 	@media (max-width: 1024px) {
@@ -14,7 +14,21 @@ const StyledDefault = styled(DefaultCourseCard)`
 		min-width: 215px;
 	}
 `;
+const RightContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	width: 320px;
 
+	@media (max-width: 1024px) {
+		/*iPad Pro and below*/
+		display: none;
+	}
+`;
+
+const ComponentsContainer = styled.div`
+	bottom: 48px;
+	right: 16px;
+`;
 const index = ({ token, onboardings, user, courses }) => {
 	const { logout } = useContext(AuthContext);
 	const [allCourses] = useState(courses);
@@ -106,6 +120,19 @@ const index = ({ token, onboardings, user, courses }) => {
 					/>
 				</div>
 			</div>
+
+			<RightContainer>
+				<ComponentsContainer className="position-fixed">
+					<SideBlock
+						content={"Wishlist Box (Work in progress..)"}
+						className="mb-3"
+					/>
+					<SideBlock
+						content={"Mission Box (Work in progress..)"}
+						className="mb-3"
+					/>
+				</ComponentsContainer>
+			</RightContainer>
 
 			{/* <button className="mb-5" onClick={() => logout()}>
 				logout
