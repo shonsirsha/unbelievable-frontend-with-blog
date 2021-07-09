@@ -37,8 +37,19 @@ const HamburgerIcon = styled(HiMenuAlt4)`
 	}
 `;
 
+const SpecialHamburger = styled(HamburgerIcon)`
+	display: none;
+
+	@media (max-width: 1024px) {
+		/*iPad Pro and below*/
+		display: block;
+	}
+`;
+
 const StyledTextPrimary = styled(TextPrimary)`
 	font-size: 21px;
+	padding-bottom: 8px;
+	${(props) => props.active && `border-bottom: 2px solid black;`}
 `;
 
 const MenuContainer = styled.div`
@@ -47,6 +58,7 @@ const MenuContainer = styled.div`
     left: -370px;
     position: absolute;
 	min-width: 370px;
+	z-index: 2;
 	transition: 0.35s;
 
 	background:#fff;
@@ -98,12 +110,20 @@ const Logo = styled(Image)`
 	&:hover {
 		cursor: pointer;
 	}
+	@media (max-width: 1024px) {
+		/*iPad Pro and below*/
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
 	@media ${mediaBreakpoint.down.lg} {
 		margin-left: 0;
+			
 	}
 	@media ${mediaBreakpoint.down.md} {
 		height: 22.8px;
 		width: 210px;
+	
 	}
 `;
 const Back = styled(MdChevronLeft)`
@@ -131,6 +151,8 @@ export default function Header({
 			window.addEventListener("scroll", handleScroll2);
 		}
 	}, []);
+
+	console.log(router.pathname);
 
 	const handleScroll = () => {
 		if (document.querySelector("#hero")) {
@@ -180,6 +202,8 @@ export default function Header({
 			setMenuShown("");
 		}
 	};
+
+	console.log(router);
 	return (
 		<StyledContainer
 			background={background}
@@ -188,32 +212,44 @@ export default function Header({
 		>
 			{menuShown === "show" && <Overlay onClick={handleClickMenu} />}
 			<MenuContainer className={menuShown}>
-				<div className="d-flex flex-column">
+				<div className="d-flex flex-column align-items-start">
 					<HamburgerIcon className="hamburger" onClick={handleClickMenu} />
 
-					<Link href="/">
+					<Link href="/#hero">
 						<a onClick={handleClickMenu}>
-							<StyledTextPrimary>Home</StyledTextPrimary>
+							<StyledTextPrimary
+								active={router.asPath === "/" || router.asPath === "/#hero"}
+							>
+								Home
+							</StyledTextPrimary>
 						</a>
 					</Link>
 					<Link href="/#about">
 						<a onClick={handleClickMenu}>
-							<StyledTextPrimary>Tentang Kami</StyledTextPrimary>
+							<StyledTextPrimary active={router.asPath === "/#about"}>
+								Tentang Kami
+							</StyledTextPrimary>
 						</a>
 					</Link>
-					<Link href="/">
+					<Link href="/daftar-kelas">
 						<a onClick={handleClickMenu}>
-							<StyledTextPrimary>Daftar Kelas</StyledTextPrimary>
+							<StyledTextPrimary active={router.pathname === "/daftar-kelas"}>
+								Daftar Kelas
+							</StyledTextPrimary>
 						</a>
 					</Link>
-					<Link href="/">
+					<Link href="/menjadi-member">
 						<a onClick={handleClickMenu}>
-							<StyledTextPrimary>Menjadi Member</StyledTextPrimary>
+							<StyledTextPrimary active={router.pathname === "/menjadi-member"}>
+								Menjadi Member
+							</StyledTextPrimary>
 						</a>
 					</Link>
-					<Link href="/">
+					<Link href="/pertanyaan">
 						<a onClick={handleClickMenu}>
-							<StyledTextPrimary>Pertanyaan</StyledTextPrimary>
+							<StyledTextPrimary active={router.pathname === "/pertanyaan"}>
+								Pertanyaan
+							</StyledTextPrimary>
 						</a>
 					</Link>
 				</div>
@@ -221,12 +257,13 @@ export default function Header({
 			<div className="d-flex align-items-center">
 				{!backBtn ? (
 					<HamburgerIcon
-						className={`${!showBurger && `d-xl-none d-sm-block`}`}
+						className={`${!showBurger && `d-none`}`}
 						onClick={handleClickMenu}
 					/>
 				) : (
 					<Back role="button" onClick={handleClickBack} />
 				)}
+				{mainApp && <SpecialHamburger onClick={handleClickMenu} />}
 				<Logo
 					className={`logo`}
 					mainapp={mainApp}
@@ -251,6 +288,7 @@ export default function Header({
 						width={43}
 						height={43}
 					/>
+
 					<HeadingXXS as="p" className="text-white ml-3 d-lg-block d-none">
 						{user && `${user.first_name} ${user.last_name}`}
 					</HeadingXXS>
