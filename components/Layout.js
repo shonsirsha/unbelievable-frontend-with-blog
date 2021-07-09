@@ -49,11 +49,26 @@ export default function Layout({
 	landingPage = false,
 	withFB = false, // FB = FlyingButtons
 	withMargin = false,
+	showBurger = true,
 	scrollToSolid = false,
 	background = "transparent",
 	mainApp = false,
 }) {
+	let backBtn = false;
+
 	const { user, loading } = useContext(AuthContext);
+
+	if (!mainApp && user && !showBurger) backBtn = true;
+	if (mainApp) {
+		showBurger = false;
+	} else if (!user) {
+		showBurger = true;
+	}
+
+	if (loading) {
+		return <></>;
+	}
+
 	// const router = useRouter();
 	return (
 		<div>
@@ -64,11 +79,13 @@ export default function Layout({
 			</Head>
 			{!loading && (
 				<Header
+					showBurger={showBurger}
 					scrollToSolid={scrollToSolid}
 					landingPage={landingPage}
 					background={background}
 					user={user}
 					mainApp={mainApp}
+					backBtn={backBtn}
 				/>
 			)}
 

@@ -1,8 +1,7 @@
 import Layout from "components/Layout";
-
 export default function index() {
 	return (
-		<Layout background="red" withMargin>
+		<Layout showBurger={false} background="red" withMargin>
 			tespu
 		</Layout>
 	);

@@ -88,7 +88,7 @@ const ProfileImage = styled(Image)`
 const Logo = styled(Image)`
 	width: 290px;
 	height: 31px;
-	${(props) => props.user && !props.mainapp && `margin-left: 156px`};
+	${(props) => props.user && props.showburger && `margin-left: 156px`};
 	&:hover {
 		cursor: pointer;
 	}
@@ -104,8 +104,10 @@ export default function Header({
 	landingPage,
 	background,
 	user = null,
+	showBurger,
 	scrollToSolid,
 	mainApp,
+	backBtn,
 }) {
 	const router = useRouter();
 	const [navbarClass, setNavbarClass] = useState("");
@@ -204,10 +206,18 @@ export default function Header({
 				</div>
 			</MenuContainer>
 			<div className="d-flex justify-content-between align-items-center">
-				{!mainApp && <HamburgerIcon onClick={handleClickMenu} />}
+				{!backBtn ? (
+					<HamburgerIcon
+						className={`${!showBurger && `d-xl-none d-sm-block`}`}
+						onClick={handleClickMenu}
+					/>
+				) : (
+					<p>Back</p>
+				)}
 				<Logo
 					className={`logo`}
 					mainapp={mainApp}
+					showburger={showBurger}
 					user={user ? true : false}
 					onClick={handleClickLogo}
 					src="/images/logo.png"
