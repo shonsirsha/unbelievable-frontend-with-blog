@@ -10,22 +10,33 @@ const StyledHeadingXXS = styled(HeadingXXS)`
 `;
 const StyledSideBlock = styled(SideBlock)`
 	width: 180px;
+
+	a {
+		color: inherit;
+	}
+	a:hover {
+		text-decoration: none;
+	}
 `;
 export default function ReviewBlock() {
 	const content = (
 		<Link href="/review">
-			<div
-				role="button"
-				className="d-flex justify-content-between align-items-center flex-column"
-			>
-				<div className="d-flex flex-column">
-					<StyledHeadingXXS as="p" className="text-center">
-						tulis review
-					</StyledHeadingXXS>
-					<TextTertiary className="mt-1 text-center mb-2">disini!</TextTertiary>
+			<a>
+				<div
+					role="button"
+					className="d-flex justify-content-between align-items-center flex-column"
+				>
+					<div className="d-flex flex-column">
+						<StyledHeadingXXS as="p" className="text-center">
+							tulis review
+						</StyledHeadingXXS>
+						<TextTertiary className="mt-1 text-center mb-2">
+							disini!
+						</TextTertiary>
+					</div>
+					<Image src="images/character2.png" alt="Character" />
 				</div>
-				<Image src="images/character2.png" alt="Character" />
-			</div>
+			</a>
 		</Link>
 	);
 	return <StyledSideBlock content={content} className="bg-yellow3" />;

@@ -3,11 +3,13 @@ import { parseCookies } from "utils/cookies";
 import Router from "next/router";
 import AuthContext from "context/AuthContext";
 import { API_URL } from "config/index";
+import { HeadingXS, HeadingLG } from "components/Typography/Headings";
 import Layout from "components/Layout";
 import Onboarding from "components/Onboarding/Onboarding";
 import DefaultCourseCard from "components/Course/DefaultCourseCard";
 import SideBlock from "components/SideItems/SideBlock";
 import styled from "styled-components";
+
 const StyledDefault = styled(DefaultCourseCard)`
 	@media (max-width: 1024px) {
 		/*iPad Pro and below*/
@@ -28,6 +30,13 @@ const RightContainer = styled.div`
 const ComponentsContainer = styled.div`
 	bottom: 48px;
 	right: 16px;
+`;
+const StyledHeadingLG = styled(HeadingLG)`
+	font-size: 52px;
+`;
+
+const StyledHeadingXS = styled(HeadingXS)`
+	font-size: 21px;
 `;
 const index = ({ token, onboardings, user, courses }) => {
 	const { logout } = useContext(AuthContext);
@@ -74,50 +83,63 @@ const index = ({ token, onboardings, user, courses }) => {
 			withMargin
 			mainApp
 		>
-			<div className="d-flex w-100">
-				<div className="d-flex flex-lg-wrap flex-nowrap w-100 overflow-lg-none overflow-auto px-2">
-					{allCourses.map((course) => (
+			<div className="d-flex w-100 flex-column">
+				<HeadingXS className="text-gray mb-2">
+					selamat datang kembali,
+				</HeadingXS>
+				<StyledHeadingLG className="text-primary1 mb-5">
+					heroes!
+				</StyledHeadingLG>
+				<div className="d-flex flex-column">
+					<StyledHeadingXS className="mb-2 ml-1">kelas populer</StyledHeadingXS>
+					<div className="d-flex flex-lg-wrap flex-nowrap w-100 overflow-lg-none overflow-auto px-2">
+						{allCourses.map((course) => (
+							<StyledDefault
+								small
+								className="mr-3 mb-5 "
+								title={course.title}
+								shortDesc={course.short_desc}
+								img={course.image}
+								creatorName={course.content_creator.full_name}
+								rating={course.rating}
+								user={user}
+							/>
+						))}
+
 						<StyledDefault
 							small
 							className="mr-3 mb-5 "
-							title={course.title}
-							shortDesc={course.short_desc}
-							img={course.image}
-							creatorName={course.content_creator.full_name}
-							rating={course.rating}
+							title={"Some Title"}
+							shortDesc={"Some Short Desc"}
+							creatorName={"Sean S.L."}
+							rating={5}
 							user={user}
 						/>
-					))}
 
-					<StyledDefault
-						small
-						className="mr-3 mb-5 "
-						title={"Some Title"}
-						shortDesc={"Some Short Desc"}
-						creatorName={"Sean S.L."}
-						rating={5}
-						user={user}
-					/>
+						<StyledDefault
+							small
+							className="mr-3 mb-5 "
+							title={"Some Title"}
+							shortDesc={"Some Short Desc"}
+							creatorName={"Sean S.L."}
+							rating={4.5}
+							user={user}
+						/>
 
-					<StyledDefault
-						small
-						className="mr-3 mb-5 "
-						title={"Some Title"}
-						shortDesc={"Some Short Desc"}
-						creatorName={"Sean S.L."}
-						rating={4.5}
-						user={user}
-					/>
+						<StyledDefault
+							small
+							className="mr-3 mb-5 "
+							title={"Some Title"}
+							shortDesc={"Some Short Desc"}
+							creatorName={"Sean S.L."}
+							rating={4.5}
+							user={user}
+						/>
+					</div>
+				</div>
 
-					<StyledDefault
-						small
-						className="mr-3 mb-5 "
-						title={"Some Title"}
-						shortDesc={"Some Short Desc"}
-						creatorName={"Sean S.L."}
-						rating={4.5}
-						user={user}
-					/>
+				<div className="d-flex flex-column">
+					<StyledHeadingXS className="mb-2 ml-1">kelas saya</StyledHeadingXS>
 				</div>
 			</div>
 
