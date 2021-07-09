@@ -48,11 +48,34 @@ const RightContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 320px;
+
+	@media (max-width: 1024px) {
+		/*iPad Pro and below*/
+		display: none;
+	}
 `;
 
 const ComponentsContainer = styled.div`
 	bottom: 48px;
 	right: 16px;
+`;
+
+const OuterContainer = styled.div`
+	padding: 64px;
+	width: 100%;
+	padding-left: 32px;
+	padding-right: 32px;
+	display: flex;
+
+	@media (max-width: 1024px) {
+		padding-right: 48px;
+		width: 100%;
+		overflow: auto;
+	}
+
+	@media (max-width: 767px) {
+		padding: 16px;
+	}
 `;
 export default function Layout({
 	title = "Unbelieveable",
@@ -124,14 +147,17 @@ export default function Layout({
 				style={{ marginTop: withMargin ? `112px` : `0` }}
 			>
 				{mainApp && <SideMenu />}
+				{mainApp ? (
+					<OuterContainer>{children}</OuterContainer>
+				) : (
+					<>{children}</>
+				)}
 
-				{children}
 				{mainApp && (
 					<RightContainer>
 						<ComponentsContainer className="position-fixed">
 							<SideBlock className="mb-3" />
 							<SideBlock className="mb-3" />
-							<ReviewBlock />
 						</ComponentsContainer>
 					</RightContainer>
 				)}

@@ -7,6 +7,11 @@ const OuterContainer = styled.div`
 	height: 100vh;
 	margin-right: 200px;
 	margin-left: 64px;
+
+	@media (max-width: 1024px) {
+		/*iPad Pro and below*/
+		display: none;
+	}
 `;
 const MenuContainer = styled.div`
 	position: fixed;

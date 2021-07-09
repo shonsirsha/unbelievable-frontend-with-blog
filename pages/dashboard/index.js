@@ -10,7 +10,12 @@ import DefaultCourseCard from "components/Course/DefaultCourseCard";
 import SideBlock from "components/SideItems/SideBlock";
 import ReviewBlock from "components/SideItems/ReviewBlock";
 import styled from "styled-components";
-
+const StyledDefault = styled(DefaultCourseCard)`
+	@media (max-width: 1024px) {
+		/*iPad Pro and below*/
+		min-width: 215px;
+	}
+`;
 const OuterContainer = styled.div`
 	padding: 64px;
 	width: 100%;
@@ -72,44 +77,52 @@ const index = ({ token, onboardings, user, courses }) => {
 			withMargin
 			mainApp
 		>
-			<OuterContainer>
-				<div className="d-flex w-100">
-					<div className="d-flex flex-wrap w-100">
-						{allCourses.map((course) => (
-							<DefaultCourseCard
-								small
-								className="mr-3 mb-5 "
-								title={course.title}
-								shortDesc={course.short_desc}
-								img={course.image}
-								creatorName={course.content_creator.full_name}
-								rating={course.rating}
-								user={user}
-							/>
-						))}
-
-						<DefaultCourseCard
+			<div className="d-flex w-100">
+				<div className="d-flex flex-lg-wrap flex-nowrap w-100 overflow-lg-none overflow-auto px-2">
+					{allCourses.map((course) => (
+						<StyledDefault
 							small
 							className="mr-3 mb-5 "
-							title={"Some Title"}
-							shortDesc={"Some Short Desc"}
-							creatorName={"Sean S.L."}
-							rating={5}
+							title={course.title}
+							shortDesc={course.short_desc}
+							img={course.image}
+							creatorName={course.content_creator.full_name}
+							rating={course.rating}
 							user={user}
 						/>
+					))}
 
-						<DefaultCourseCard
-							small
-							className="mr-3 mb-5 "
-							title={"Some Title"}
-							shortDesc={"Some Short Desc"}
-							creatorName={"Sean S.L."}
-							rating={4.5}
-							user={user}
-						/>
-					</div>
+					<StyledDefault
+						small
+						className="mr-3 mb-5 "
+						title={"Some Title"}
+						shortDesc={"Some Short Desc"}
+						creatorName={"Sean S.L."}
+						rating={5}
+						user={user}
+					/>
+
+					<StyledDefault
+						small
+						className="mr-3 mb-5 "
+						title={"Some Title"}
+						shortDesc={"Some Short Desc"}
+						creatorName={"Sean S.L."}
+						rating={4.5}
+						user={user}
+					/>
+
+					<StyledDefault
+						small
+						className="mr-3 mb-5 "
+						title={"Some Title"}
+						shortDesc={"Some Short Desc"}
+						creatorName={"Sean S.L."}
+						rating={4.5}
+						user={user}
+					/>
 				</div>
-			</OuterContainer>
+			</div>
 
 			{/* <button className="mb-5" onClick={() => logout()}>
 				logout
