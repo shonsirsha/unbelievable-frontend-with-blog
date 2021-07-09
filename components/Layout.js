@@ -77,6 +77,16 @@ const OuterContainer = styled.div`
 		padding: 16px;
 	}
 `;
+const ReviewBlockContainer = styled.div`
+	position: fixed;
+	bottom: 48px;
+	left: 32px;
+
+	@media (max-width: 1024px) {
+		/*iPad Pro and below*/
+		display: none;
+	}
+`;
 export default function Layout({
 	title = "Unbelieveable",
 	keywords = "self development, lms",
@@ -147,6 +157,11 @@ export default function Layout({
 				style={{ marginTop: withMargin ? `112px` : `0` }}
 			>
 				{mainApp && <SideMenu />}
+				{mainApp && (
+					<ReviewBlockContainer>
+						<ReviewBlock />
+					</ReviewBlockContainer>
+				)}
 				{mainApp ? (
 					<OuterContainer>{children}</OuterContainer>
 				) : (
@@ -156,8 +171,14 @@ export default function Layout({
 				{mainApp && (
 					<RightContainer>
 						<ComponentsContainer className="position-fixed">
-							<SideBlock className="mb-3" />
-							<SideBlock className="mb-3" />
+							<SideBlock
+								content={"Wishlist Box (Work in progress..)"}
+								className="mb-3"
+							/>
+							<SideBlock
+								content={"Mission Box (Work in progress..)"}
+								className="mb-3"
+							/>
 						</ComponentsContainer>
 					</RightContainer>
 				)}
