@@ -21,7 +21,11 @@ export default function index({ courses }) {
 	}
 
 	return (
-		<Layout showBurger={false} scrollToSolid>
+		<Layout
+			showBurger={false}
+			title="Daftar Kelas | Unbelieveable"
+			scrollToSolid
+		>
 			<Showcase title="Daftar Kelas" />
 			<StyledContainer>
 				{courses.map((course) => (

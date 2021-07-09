@@ -1,13 +1,11 @@
 import { useContext, useState } from "react";
 import { parseCookies } from "utils/cookies";
-import { Container, Row, Col } from "react-bootstrap";
 import Router from "next/router";
 import AuthContext from "context/AuthContext";
 import { API_URL } from "config/index";
 import Layout from "components/Layout";
 import Onboarding from "components/Onboarding/Onboarding";
 import DefaultCourseCard from "components/Course/DefaultCourseCard";
-import SideBlock from "components/SideItems/SideBlock";
 import ReviewBlock from "components/SideItems/ReviewBlock";
 import styled from "styled-components";
 const StyledDefault = styled(DefaultCourseCard)`
@@ -16,22 +14,7 @@ const StyledDefault = styled(DefaultCourseCard)`
 		min-width: 215px;
 	}
 `;
-const OuterContainer = styled.div`
-	padding: 64px;
-	width: 100%;
-	padding-left: 128px;
-	paddin-right: 16px;
-	display: flex;
-`;
-const RightContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	width: 320px;
-`;
-const ComponentsContainer = styled.div`
-	bottom: 48px;
-	right: 16px;
-`;
+
 const index = ({ token, onboardings, user, courses }) => {
 	const { logout } = useContext(AuthContext);
 	const [allCourses] = useState(courses);

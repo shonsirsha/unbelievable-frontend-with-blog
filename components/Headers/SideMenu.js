@@ -18,12 +18,17 @@ const MenuContainer = styled.div`
 	display: flex;
 	top: 45%;
 	flex-direction: column;
+
+	a {
+		text-decoration: none;
+	}
 `;
 const StyledHeadingXXS = styled(HeadingXXS)`
 	font-family: MontserratRegular;
 	font-size: 19px;
 	padding-bottom: 9px;
 	padding-top: 15px;
+	margin-bottom: 0;
 	${(props) => props.active && `border-bottom: 2px solid #171B2D;`}
 	color: ${(props) => (props.active ? `#171B2D;` : `#8E8F91;`)}
     transition: 0.2s;
@@ -58,13 +63,14 @@ export default function SideMenu() {
 			<MenuContainer>
 				{routes.map((r) => (
 					<Link href={r.url}>
-						<StyledHeadingXXS
-							active={r.url === router.pathname}
-							className="text-black"
-							as="a"
-						>
-							{r.text}
-						</StyledHeadingXXS>
+						<a>
+							<StyledHeadingXXS
+								active={r.url === router.pathname}
+								className="text-black"
+							>
+								{r.text}
+							</StyledHeadingXXS>
+						</a>
 					</Link>
 				))}
 			</MenuContainer>
