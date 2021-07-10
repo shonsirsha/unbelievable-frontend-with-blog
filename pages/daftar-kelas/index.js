@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Layout from "components/Layout";
 import Showcase from "components/Showcase";
 import AuthContext from "context/AuthContext";
@@ -16,6 +16,24 @@ const StyledContainer = styled(Container)`
 `;
 export default function index({ courses }) {
 	const { loading, user } = useContext(AuthContext);
+	const [coursesState, setCoursesState] = useState([]);
+	useEffect(() => {
+		if (user && !loading) {
+			courses.map((course) => {
+				if (course.enrolled_users.length > 0) {
+					course.enrolled_users.map((i) => {
+						if (i.id === user.id) {
+							course.owned = true;
+						} else {
+							course.owned = false;
+						}
+					});
+				}
+			});
+			setCoursesState(courses);
+		}
+	}, [user, loading]);
+
 	if (loading) {
 		return <></>;
 	}
@@ -28,49 +46,22 @@ export default function index({ courses }) {
 		>
 			<Showcase title="Daftar Kelas" />
 			<StyledContainer>
-				{courses.map((course) => (
-					<DefaultCourseCard
-						className="mr-3 mb-5 "
-						title={course.title}
-						shortDesc={course.short_desc}
-						img={course.image}
-						creatorName={course.content_creator.full_name}
-						rating={course.rating}
-						user={user}
-					/>
-				))}
-				<DefaultCourseCard
-					className="mr-3 mb-5 "
-					title={"Some Title"}
-					shortDesc={"Some Short Desc"}
-					creatorName={"Sean S.L."}
-					rating={5}
-					user={user}
-				/>
-				<DefaultCourseCard
-					className="mr-3 mb-5 "
-					title={"Some Title"}
-					shortDesc={"Some Short Desc"}
-					creatorName={"Sean S.L."}
-					rating={5}
-					user={user}
-				/>
-				<DefaultCourseCard
-					className="mr-3 mb-5 "
-					title={"Some Title"}
-					shortDesc={"Some Short Desc"}
-					creatorName={"Sean S.L."}
-					rating={5}
-					user={user}
-				/>
-				<DefaultCourseCard
-					className="mr-3 mb-5 "
-					title={"Some Title"}
-					shortDesc={"Some Short Desc"}
-					creatorName={"Sean S.L."}
-					rating={5}
-					user={user}
-				/>
+				{coursesState &&
+					coursesState.map((course) => (
+						<div key={course.id}>
+							<DefaultCourseCard
+								key={course.id}
+								className="mr-3 mb-5 "
+								title={course.title}
+								shortDesc={course.short_desc}
+								img={course.image}
+								creatorName={course.content_creator.full_name}
+								rating={course.rating}
+								owned={course.owned ? 1 : 0}
+							/>
+							{course.owned}
+						</div>
+					))}
 			</StyledContainer>
 		</Layout>
 	);

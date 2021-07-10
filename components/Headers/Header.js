@@ -263,10 +263,10 @@ export default function Header({
 				{mainApp && <SpecialHamburger onClick={handleClickMenu} />}
 				<Logo
 					className={`logo`}
-					mainapp={mainApp}
-					showburger={showBurger}
-					backbtn={backBtn}
-					user={user ? true : false}
+					mainapp={mainApp ? 1 : 0}
+					showburger={showBurger ? 1 : 0}
+					backbtn={backBtn ? 1 : 0}
+					user={user ? 1 : 0}
 					onClick={handleClickLogo}
 					src="/images/logo.png"
 					alt="logo"

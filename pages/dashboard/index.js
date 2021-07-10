@@ -126,6 +126,7 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 					<div className="d-flex flex-lg-wrap flex-nowrap w-100 overflow-lg-none overflow-auto px-2">
 						{allCourses.map((course) => (
 							<StyledDefault
+								key={course.id}
 								small
 								enrollClass={() => {
 									enrollClass(course);
@@ -180,6 +181,7 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 							<StyledEnrolled
 								title={course.title}
 								user={user}
+								key={course.id}
 								className="mr-4 mb-4"
 								creatorName={course.content_creator.full_name}
 								img={course.image}

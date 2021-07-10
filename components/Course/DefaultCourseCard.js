@@ -25,7 +25,7 @@ const CardBody = styled.div`
 	padding-bottom: 48px;
 `;
 const StyledHeadingXXS = styled(HeadingXXS)`
-	font-size: 14px;
+	font-size: 13px;
 `;
 const CardHeader = styled(HeadingXXS)`
 	font-size: 14px;
@@ -95,6 +95,7 @@ export default function DefaultCourseCard({
 	small,
 	enrollClass,
 	user,
+	owned = false,
 	...props
 }) {
 	return (
@@ -138,11 +139,21 @@ export default function DefaultCourseCard({
 						/>
 					</div>
 					<div className="d-flex">
-						{[...Array(parseInt(rating ? rating : 0))].map(() => (
-							<Image width={17} height={16} src="/images/gold-star.png" />
+						{[...Array(parseInt(rating ? rating : 0))].map((ix) => (
+							<Image
+								key={ix}
+								width={17}
+								height={16}
+								src="/images/gold-star.png"
+							/>
 						))}
-						{[...Array(rating ? 5 - parseInt(rating) : 5)].map(() => (
-							<Image width={17} height={16} src="/images/gray-star.png" />
+						{[...Array(rating ? 5 - parseInt(rating) : 5)].map((ix) => (
+							<Image
+								key={ix}
+								width={17}
+								height={16}
+								src="/images/gray-star.png"
+							/>
 						))}
 					</div>
 				</div>
@@ -155,7 +166,9 @@ export default function DefaultCourseCard({
 						enrollClass();
 					}}
 				>
-					<StyledHeadingXXS as="p">enroll</StyledHeadingXXS>
+					<StyledHeadingXXS as="p">
+						{!owned ? "enroll" : "lanjutkan"}
+					</StyledHeadingXXS>
 				</EnrollBtn>
 			</CardBody>
 		</StyledCard>
