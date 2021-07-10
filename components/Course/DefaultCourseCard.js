@@ -1,9 +1,12 @@
 import { Card, Image, Button } from "react-bootstrap";
 import styled from "styled-components";
+import { API_URL } from "config";
+import { useRouter } from "next/router";
 import { HeadingXXS, HeadingXS } from "components/Typography/Headings";
 import { TextTertiary } from "components/Typography/Text";
 import { FaHeart } from "react-icons/fa";
 import { MdShare } from "react-icons/md";
+
 const EnrollBtn = styled(Button)`
 	border-radius: 40px;
 	border: none;
@@ -87,31 +90,55 @@ const TextDesc = styled(TextTertiary)`
 	font-size: ${(props) => (props.small ? `12px` : `14px`)};
 `;
 export default function DefaultCourseCard({
-	title,
-	shortDesc,
-	img,
-	creatorName,
-	rating,
+	course,
 	small,
-	enrollClass,
 	user,
+	token = null,
 	owned = false,
 	...props
 }) {
+	const { title, short_desc, content_creator, rating, image, slug, id } =
+		course;
+
+	const router = useRouter();
+
+	const enrollClass = async () => {
+		if (!owned) {
+			const res = await fetch(`${API_URL}/courses/${id}`, {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({
+					enrolled_users: [...course.enrolled_users, { id: user.id }],
+				}),
+			});
+
+			if (!res.ok) {
+				console.log(data.message);
+			} else {
+				router.push(`/kelas/${slug}`);
+			}
+		} else {
+			router.push(`/kelas/${slug}`);
+		}
+	};
+
 	return (
 		<StyledCard small={small} {...props} onClick={() => alert("Card clicked")}>
-			<ImageContainer small={small} img={img} />
+			<ImageContainer small={small} img={image} />
 
 			<CardBody>
 				<CardHeader as="p" className="mt-3">
 					{title}
 				</CardHeader>
 				<div className="d-flex mt-2">
-					<TextDesc small={small}>{shortDesc}</TextDesc>
+					<TextDesc small={small}>{short_desc}</TextDesc>
 				</div>
 
 				<StyledTextTertiary className="mt-auto">
-					{creatorName}
+					{content_creator.full_name}
 				</StyledTextTertiary>
 
 				<div className="d-flex ml-0 mt-4 ml-lg-auto justify-content-center align-items-center">

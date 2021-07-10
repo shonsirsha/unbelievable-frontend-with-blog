@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import { parseCookies } from "utils/cookies";
-import { useRouter } from "next/router";
 import Router from "next/router";
 import AuthContext from "context/AuthContext";
 import { API_URL } from "config/index";
@@ -50,28 +49,7 @@ const StyledEnrolled = styled(EnrolledCourseCard)`
 const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 	const { logout } = useContext(AuthContext);
 	const [allCourses] = useState(courses);
-	const router = useRouter();
 
-	const enrollClass = async (course) => {
-		const res = await fetch(`${API_URL}/courses/${course.id}`, {
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`,
-			},
-			body: JSON.stringify({
-				enrolled_users: [...course.enrolled_users, { id: user.id }],
-			}),
-		});
-
-		if (!res.ok) {
-			console.log(data.message);
-		} else {
-			router.reload();
-		}
-
-		//todo, get course.enrolled_users[] and do [..., {id: user.id}]
-	};
 	const handleFinishOnboarding = async () => {
 		const res = await fetch(`${API_URL}/users/me`, {
 			method: "PUT",
@@ -128,16 +106,10 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 							<StyledDefault
 								key={course.id}
 								small
-								enrollClass={() => {
-									enrollClass(course);
-								}}
-								className="mr-3 mb-5 "
-								title={course.title}
-								shortDesc={course.short_desc}
-								img={course.image}
-								creatorName={course.content_creator.full_name}
-								rating={course.rating}
 								user={user}
+								token={token}
+								course={course}
+								className="mr-3 mb-5 "
 							/>
 						))}
 						{/* 

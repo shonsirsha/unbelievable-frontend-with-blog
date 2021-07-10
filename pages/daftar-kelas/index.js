@@ -52,14 +52,10 @@ export default function index({ courses }) {
 							<DefaultCourseCard
 								key={course.id}
 								className="mr-3 mb-5 "
-								title={course.title}
-								shortDesc={course.short_desc}
-								img={course.image}
-								creatorName={course.content_creator.full_name}
-								rating={course.rating}
-								owned={course.owned ? 1 : 0}
+								user={user}
+								course={course}
+								owned={course.owned}
 							/>
-							{course.owned}
 						</div>
 					))}
 			</StyledContainer>

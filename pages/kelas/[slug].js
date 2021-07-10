@@ -1,7 +1,9 @@
 export default function Kelas({ slug }) {
 	return (
 		<div>
-			{slug} is a work in progress :)
+			Successfully enrolling for: <kbd>{slug}</kbd> class.
+			<br />
+			This page is a work in progress :)
 			<a href="/dashboard">Back home</a>
 		</div>
 	);
