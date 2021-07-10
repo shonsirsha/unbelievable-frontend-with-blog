@@ -153,6 +153,7 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 							<StyledEnrolled
 								title={course.title}
 								user={user}
+								slug={course.slug}
 								key={course.id}
 								className="mr-4 mb-4"
 								creatorName={course.content_creator.full_name}

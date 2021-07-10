@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Card, ProgressBar } from "react-bootstrap";
 import styled from "styled-components";
 import { HeadingXXS } from "components/Typography/Headings";
@@ -60,28 +61,33 @@ export default function EnrolledCourseCard({
 	rating,
 	small,
 	user,
+	slug,
 	totalProgress = 0,
 	...props
 }) {
 	return (
-		<StyledCard small={small} {...props} onClick={() => alert("Card clicked")}>
-			<ImageContainer small={small} img={img} />
+		<Link href={`kelas/${slug}`}>
+			<StyledCard small={small} {...props}>
+				<ImageContainer small={small} img={img} />
 
-			<CardBody>
-				<CardHeader as="p" className="mt-3">
-					{title}
-				</CardHeader>
+				<CardBody>
+					<CardHeader as="p" className="mt-3">
+						{title}
+					</CardHeader>
 
-				<StyledTextTertiary className="mt-2">{creatorName}</StyledTextTertiary>
-				<StyledProgressBar className="mt-3 shadow-sm" now={totalProgress} />
-				<div className="d-flex justify-content-between mt-2">
-					<StyledTextTertiary>{totalProgress}% complete</StyledTextTertiary>
-				</div>
-				<div className="mt-auto d-flex justify-content-between align-items-center">
-					<div className="d-flex"></div>
-					<div className="d-flex"></div>
-				</div>
-			</CardBody>
-		</StyledCard>
+					<StyledTextTertiary className="mt-2">
+						{creatorName}
+					</StyledTextTertiary>
+					<StyledProgressBar className="mt-3 shadow-sm" now={totalProgress} />
+					<div className="d-flex justify-content-between mt-2">
+						<StyledTextTertiary>{totalProgress}% complete</StyledTextTertiary>
+					</div>
+					<div className="mt-auto d-flex justify-content-between align-items-center">
+						<div className="d-flex"></div>
+						<div className="d-flex"></div>
+					</div>
+				</CardBody>
+			</StyledCard>
+		</Link>
 	);
 }
