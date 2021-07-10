@@ -155,10 +155,6 @@ const index = ({ token, onboardings, user, courses }) => {
 					/>
 				</ComponentsContainer>
 			</RightContainer>
-
-			{/* <button className="mb-5" onClick={() => logout()}>
-				logout
-			</button> */}
 		</Layout>
 	);
 };
