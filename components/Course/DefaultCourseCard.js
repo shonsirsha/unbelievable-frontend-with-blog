@@ -2,7 +2,7 @@ import { Card, Image, Button } from "react-bootstrap";
 import styled from "styled-components";
 import { HeadingXXS, HeadingXS } from "components/Typography/Headings";
 import { TextTertiary } from "components/Typography/Text";
-import { FaShareAlt, FaHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 import { MdShare } from "react-icons/md";
 const EnrollBtn = styled(Button)`
 	border-radius: 40px;
@@ -93,6 +93,7 @@ export default function DefaultCourseCard({
 	creatorName,
 	rating,
 	small,
+	enrollClass,
 	user,
 	...props
 }) {
@@ -151,7 +152,7 @@ export default function DefaultCourseCard({
 					small={small}
 					onClick={(e) => {
 						e.stopPropagation();
-						alert("enroll btn clicked");
+						enrollClass();
 					}}
 				>
 					<StyledHeadingXXS as="p">enroll</StyledHeadingXXS>

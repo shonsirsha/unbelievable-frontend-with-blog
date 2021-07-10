@@ -7,7 +7,7 @@ export default function index() {
 
 	return (
 		<Layout
-			title="Dashboard | Unbelieveable"
+			title="Profil | Unbelieveable"
 			background="#171b2d"
 			withMargin
 			mainApp

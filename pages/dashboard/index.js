@@ -1,11 +1,13 @@
 import { useContext, useState } from "react";
 import { parseCookies } from "utils/cookies";
+import { useRouter } from "next/router";
 import Router from "next/router";
 import AuthContext from "context/AuthContext";
 import { API_URL } from "config/index";
 import { HeadingXS, HeadingLG } from "components/Typography/Headings";
 import Layout from "components/Layout";
 import Onboarding from "components/Onboarding/Onboarding";
+import EnrolledCourseCard from "components/Course/EnrolledCourseCard";
 import DefaultCourseCard from "components/Course/DefaultCourseCard";
 import SideBlock from "components/SideItems/SideBlock";
 import styled from "styled-components";
@@ -38,9 +40,38 @@ const StyledHeadingLG = styled(HeadingLG)`
 const StyledHeadingXS = styled(HeadingXS)`
 	font-size: 21px;
 `;
-const index = ({ token, onboardings, user, courses }) => {
+
+const StyledEnrolled = styled(EnrolledCourseCard)`
+	@media (max-width: 1024px) {
+		/*iPad Pro and below*/
+		min-width: 280px;
+	}
+`;
+const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 	const { logout } = useContext(AuthContext);
 	const [allCourses] = useState(courses);
+	const router = useRouter();
+
+	const enrollClass = async (course) => {
+		const res = await fetch(`${API_URL}/courses/${course.id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				enrolled_users: [...course.enrolled_users, { id: user.id }],
+			}),
+		});
+
+		if (!res.ok) {
+			console.log(data.message);
+		} else {
+			router.reload();
+		}
+
+		//todo, get course.enrolled_users[] and do [..., {id: user.id}]
+	};
 	const handleFinishOnboarding = async () => {
 		const res = await fetch(`${API_URL}/users/me`, {
 			method: "PUT",
@@ -96,6 +127,9 @@ const index = ({ token, onboardings, user, courses }) => {
 						{allCourses.map((course) => (
 							<StyledDefault
 								small
+								enrollClass={() => {
+									enrollClass(course);
+								}}
 								className="mr-3 mb-5 "
 								title={course.title}
 								shortDesc={course.short_desc}
@@ -105,7 +139,7 @@ const index = ({ token, onboardings, user, courses }) => {
 								user={user}
 							/>
 						))}
-
+						{/* 
 						<StyledDefault
 							small
 							className="mr-3 mb-5 "
@@ -134,12 +168,25 @@ const index = ({ token, onboardings, user, courses }) => {
 							creatorName={"Sean S.L."}
 							rating={4.5}
 							user={user}
-						/>
+						/> */}
 					</div>
 				</div>
 
-				<div className="d-flex flex-column">
-					<StyledHeadingXS className="mb-2 ml-1">kelas saya</StyledHeadingXS>
+				<div className="d-flex flex-column mt-0 mt-lg-4">
+					<StyledHeadingXS className="mb-2 ml-1 ">kelas saya</StyledHeadingXS>
+
+					<div className="d-flex flex-lg-wrap flex-nowrap w-100 overflow-lg-none overflow-auto px-2 pb-2">
+						{coursesTaken.map((course) => (
+							<StyledEnrolled
+								title={course.title}
+								user={user}
+								className="mr-4 mb-4"
+								creatorName={course.content_creator.full_name}
+								img={course.image}
+								totalProgress={30}
+							/>
+						))}
+					</div>
 				</div>
 			</div>
 
@@ -185,13 +232,24 @@ export async function getServerSideProps({ req, _ }) {
 			},
 		});
 
-		const res3 = await fetch(`${API_URL}/courses`, {
+		const res3 = await fetch(`${API_URL}/courses-not-taken`, {
 			method: "GET",
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
+
+		const res4 = await fetch(`${API_URL}/courses-taken`, {
+			method: "GET",
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
 		});
 
 		const onboardings = await res.json();
 		const user = await res2.json();
 		const courses = await res3.json();
+		const coursesTaken = await res4.json();
 
 		return {
 			props: {
@@ -199,6 +257,7 @@ export async function getServerSideProps({ req, _ }) {
 				token,
 				user,
 				courses,
+				coursesTaken,
 			},
 		};
 	}
