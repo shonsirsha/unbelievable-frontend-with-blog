@@ -201,6 +201,25 @@ export default function Header({
 		}
 	};
 
+	const mainAppLinks = [
+		{
+			url: "/dashboard",
+			text: "dashboard",
+		},
+		{
+			url: "/profil",
+			text: "profil",
+		},
+		{
+			url: "/daftar-kelas",
+			text: "kelas",
+		},
+		{
+			url: "/pertanyaan",
+			text: "pertanyaan",
+		},
+	];
+
 	return (
 		<StyledContainer
 			background={background}
@@ -212,43 +231,66 @@ export default function Header({
 				<div className="d-flex flex-column align-items-start">
 					<HamburgerIcon className="hamburger" onClick={handleClickMenu} />
 
-					<Link href="/#hero">
-						<a onClick={handleClickMenu}>
-							<StyledTextPrimary
-								active={router.asPath === "/" || router.asPath === "/#hero"}
-							>
-								Home
-							</StyledTextPrimary>
-						</a>
-					</Link>
-					<Link href="/#about">
-						<a onClick={handleClickMenu}>
-							<StyledTextPrimary active={router.asPath === "/#about"}>
-								Tentang Kami
-							</StyledTextPrimary>
-						</a>
-					</Link>
-					<Link href="/daftar-kelas">
-						<a onClick={handleClickMenu}>
-							<StyledTextPrimary active={router.pathname === "/daftar-kelas"}>
-								Daftar Kelas
-							</StyledTextPrimary>
-						</a>
-					</Link>
-					<Link href="/menjadi-member">
-						<a onClick={handleClickMenu}>
-							<StyledTextPrimary active={router.pathname === "/menjadi-member"}>
-								Menjadi Member
-							</StyledTextPrimary>
-						</a>
-					</Link>
-					<Link href="/pertanyaan">
-						<a onClick={handleClickMenu}>
-							<StyledTextPrimary active={router.pathname === "/pertanyaan"}>
-								Pertanyaan
-							</StyledTextPrimary>
-						</a>
-					</Link>
+					{mainApp ? (
+						<>
+							{mainAppLinks.map((r, ix) => (
+								<Link key={ix} href={r.url}>
+									<a>
+										<StyledTextPrimary
+											active={r.url === router.pathname}
+											className="text-black text-capitalize"
+										>
+											{r.text}
+										</StyledTextPrimary>
+									</a>
+								</Link>
+							))}
+						</>
+					) : (
+						<>
+							<Link href="/#hero">
+								<a onClick={handleClickMenu}>
+									<StyledTextPrimary
+										active={router.asPath === "/" || router.asPath === "/#hero"}
+									>
+										Home
+									</StyledTextPrimary>
+								</a>
+							</Link>
+							<Link href="/#about">
+								<a onClick={handleClickMenu}>
+									<StyledTextPrimary active={router.asPath === "/#about"}>
+										Tentang Kami
+									</StyledTextPrimary>
+								</a>
+							</Link>
+							<Link href="/daftar-kelas">
+								<a onClick={handleClickMenu}>
+									<StyledTextPrimary
+										active={router.pathname === "/daftar-kelas"}
+									>
+										Daftar Kelas
+									</StyledTextPrimary>
+								</a>
+							</Link>
+							<Link href="/menjadi-member">
+								<a onClick={handleClickMenu}>
+									<StyledTextPrimary
+										active={router.pathname === "/menjadi-member"}
+									>
+										Menjadi Member
+									</StyledTextPrimary>
+								</a>
+							</Link>
+							<Link href="/pertanyaan">
+								<a onClick={handleClickMenu}>
+									<StyledTextPrimary active={router.pathname === "/pertanyaan"}>
+										Pertanyaan
+									</StyledTextPrimary>
+								</a>
+							</Link>
+						</>
+					)}
 				</div>
 			</MenuContainer>
 			<div className="d-flex align-items-center">
