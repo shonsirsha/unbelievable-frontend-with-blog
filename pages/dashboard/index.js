@@ -12,9 +12,15 @@ import SideBlock from "components/SideItems/SideBlock";
 import styled from "styled-components";
 
 const StyledDefault = styled(DefaultCourseCard)`
+	margin-right: 16px;
+	margin-bottom: 16px;
 	@media (max-width: 1024px) {
 		/*iPad Pro and below*/
 		min-width: 215px;
+
+		&:last-child {
+			margin-right: 0;
+		}
 	}
 `;
 const RightContainer = styled.div`
@@ -41,9 +47,16 @@ const StyledHeadingXS = styled(HeadingXS)`
 `;
 
 const StyledEnrolled = styled(EnrolledCourseCard)`
+	margin-right: 24px;
+	margin-bottom: 24px;
+
 	@media (max-width: 1024px) {
 		/*iPad Pro and below*/
 		min-width: 280px;
+
+		&:last-child {
+			margin-right: 0;
+		}
 	}
 `;
 const index = ({ token, onboardings, user, courses, coursesTaken }) => {
@@ -101,7 +114,7 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 				</StyledHeadingLG>
 				<div className="d-flex flex-column">
 					<StyledHeadingXS className="mb-2 ml-1">kelas populer</StyledHeadingXS>
-					<div className="d-flex flex-lg-wrap flex-nowrap w-100 overflow-lg-none overflow-auto px-2">
+					<div className="d-flex flex-lg-wrap flex-nowrap w-100 overflow-lg-none overflow-auto ">
 						{allCourses.map((course) => (
 							<StyledDefault
 								key={course.id}
@@ -109,53 +122,21 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 								user={user}
 								token={token}
 								course={course}
-								className="mr-3 mb-5 "
 							/>
 						))}
-						{/* 
-						<StyledDefault
-							small
-							className="mr-3 mb-5 "
-							title={"Some Title"}
-							shortDesc={"Some Short Desc"}
-							creatorName={"Sean S.L."}
-							rating={5}
-							user={user}
-						/>
-
-						<StyledDefault
-							small
-							className="mr-3 mb-5 "
-							title={"Some Title"}
-							shortDesc={"Some Short Desc"}
-							creatorName={"Sean S.L."}
-							rating={4.5}
-							user={user}
-						/>
-
-						<StyledDefault
-							small
-							className="mr-3 mb-5 "
-							title={"Some Title"}
-							shortDesc={"Some Short Desc"}
-							creatorName={"Sean S.L."}
-							rating={4.5}
-							user={user}
-						/> */}
 					</div>
 				</div>
 
-				<div className="d-flex flex-column mt-0 mt-lg-4">
+				<div className="d-flex flex-column mt-4">
 					<StyledHeadingXS className="mb-2 ml-1 ">kelas saya</StyledHeadingXS>
 
-					<div className="d-flex flex-lg-wrap flex-nowrap w-100 overflow-lg-none overflow-auto px-2 pb-2">
+					<div className="d-flex flex-lg-wrap flex-nowrap w-100 overflow-lg-none overflow-auto pb-2">
 						{coursesTaken.map((course) => (
 							<StyledEnrolled
 								title={course.title}
 								user={user}
 								slug={course.slug}
 								key={course.id}
-								className="mr-4 mb-4"
 								creatorName={course.content_creator.full_name}
 								img={course.image}
 								totalProgress={30}
