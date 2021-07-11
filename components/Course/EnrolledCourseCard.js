@@ -1,9 +1,10 @@
+import { useState } from "react";
 import Link from "next/link";
 import { Card, ProgressBar } from "react-bootstrap";
 import styled from "styled-components";
 import { HeadingXXS } from "components/Typography/Headings";
 import { TextTertiary } from "components/Typography/Text";
-
+import { FaStar } from "react-icons/fa";
 const CardBody = styled.div`
 	display: flex;
 	height: 40%;
@@ -51,8 +52,12 @@ const ImageContainer = styled.div`
 	border-bottom-right-radius: 0;
 `;
 
-const TextDesc = styled(TextTertiary)`
-	font-size: ${(props) => (props.small ? `12px` : `14px`)};
+const Star = styled(FaStar)`
+	color: #e8e8e8;
+	transition: 0.2s;
+	&.checked {
+		color: gold;
+	}
 `;
 export default function EnrolledCourseCard({
 	title,
@@ -65,6 +70,9 @@ export default function EnrolledCourseCard({
 	totalProgress = 0,
 	...props
 }) {
+	const [hoveredStar, setHoveredStar] = useState(-1);
+	const [selectedStar, setSelectedStar] = useState(-1);
+
 	return (
 		<Link href={`kelas/${slug}`}>
 			<StyledCard small={small} {...props}>
@@ -85,6 +93,23 @@ export default function EnrolledCourseCard({
 					<div className="mt-auto d-flex justify-content-between align-items-center">
 						<div className="d-flex"></div>
 						<div className="d-flex"></div>
+					</div>
+					<div className="d-flex">
+						{[...Array(5)].map((_, ix) => (
+							<Star
+								size={18}
+								onMouseEnter={() => setHoveredStar(ix)}
+								onMouseLeave={() => setHoveredStar(-1)}
+								onClick={(e) => {
+									e.stopPropagation();
+									setSelectedStar(ix);
+								}}
+								className={`mr-1 mt-2 ${
+									(hoveredStar >= ix || selectedStar >= ix) && `checked`
+								}`}
+								key={ix}
+							/>
+						))}
 					</div>
 				</CardBody>
 			</StyledCard>

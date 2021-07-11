@@ -8,6 +8,7 @@ import { HiMenuAlt4 } from "react-icons/hi";
 import { TextPrimary } from "components/Typography/Text";
 import { HeadingXXS } from "components/Typography/Headings";
 import { MdChevronLeft } from "react-icons/md";
+
 const StyledContainer = styled.div`
 	position: fixed;
 	top: 0;
