@@ -12,7 +12,9 @@ import { mediaBreakpoint } from "utils/breakpoints";
 import AuthContext from "context/AuthContext";
 import SideBlock from "./SideItems/SideBlock";
 import ReviewBlock from "./SideItems/ReviewBlock";
-
+import { FaHeart } from "react-icons/fa";
+import { BiTask } from "react-icons/bi";
+import { useRouter } from "next/router";
 const FlyingButtonsContainer = styled.div`
 	width: 0;
 	display: flex;
@@ -65,10 +67,21 @@ const ReviewBlockContainer = styled.div`
 	position: fixed;
 	bottom: 48px;
 	left: 32px;
-
-	@media (max-width: 1024px) {
-		/*iPad Pro and below*/
+	display: flex;
+	justify-content: space-between;
+	& > .responsiveSideBlock {
 		display: none;
+	}
+	@media (max-width: 1024px) {
+		width: 100%;
+		padding-right: 32px;
+		z-index: 10;
+		bottom: 16px;
+		left: 16px;
+		& > .responsiveSideBlock {
+			display: flex;
+		}
+		/*iPad Pro and below*/
 	}
 `;
 export default function Layout({
@@ -87,7 +100,7 @@ export default function Layout({
 	let backBtn = false;
 
 	const { user, loading } = useContext(AuthContext);
-
+	const router = useRouter();
 	// mainApp is when layout has the floating side menu...
 
 	if (!mainApp && user && user.onboarded && !showBurger) backBtn = true;
@@ -137,13 +150,26 @@ export default function Layout({
 				</FlyingButtonsContainer>
 			)}
 			<div
-				className={`${mainApp && `d-flex `}`}
+				className={`${mainApp && `d-flex position-relative`}`}
 				style={{ marginTop: withMargin ? `112px` : `0` }}
 			>
 				{mainApp && <SideMenu />}
 				{mainApp && (
 					<ReviewBlockContainer>
 						<ReviewBlock />
+						<div className="responsiveSideBlock">
+							{router.pathname === "/dashboard" && (
+								<>
+									<SideBlock
+										className="mr-2"
+										content={<FaHeart style={{ fontSize: "24px" }} />}
+									/>
+									<SideBlock
+										content={<BiTask style={{ fontSize: "24px" }} />}
+									/>
+								</>
+							)}
+						</div>
 					</ReviewBlockContainer>
 				)}
 				{mainApp ? (

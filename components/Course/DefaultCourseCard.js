@@ -126,7 +126,11 @@ export default function DefaultCourseCard({
 	};
 
 	return (
-		<StyledCard small={small} {...props} onClick={() => alert("Card clicked")}>
+		<StyledCard
+			small={small}
+			{...props}
+			onClick={() => alert("Card Clicked (WIP)")}
+		>
 			<ImageContainer small={small} img={image} />
 
 			<CardBody>
@@ -153,7 +157,7 @@ export default function DefaultCourseCard({
 							<Like
 								onClick={(e) => {
 									e.stopPropagation();
-									alert("liked");
+									alert("Wishlisted (WIP)");
 								}}
 								className="mr-2"
 							/>
@@ -161,7 +165,7 @@ export default function DefaultCourseCard({
 						<Share
 							onClick={(e) => {
 								e.stopPropagation();
-								alert("Share");
+								alert("Share (WIP)");
 							}}
 						/>
 					</div>
