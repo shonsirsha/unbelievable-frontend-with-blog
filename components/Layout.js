@@ -5,11 +5,16 @@ import Head from "next/head";
 import Link from "next/link";
 import Footer from "./Footer";
 import Header from "./Headers/Header";
+import SideMenu from "components/Headers/SideMenu";
 import RoundedBtnIcon from "./Buttons/RoundedBtnIcon";
 import styled from "styled-components";
 import { mediaBreakpoint } from "utils/breakpoints";
 import AuthContext from "context/AuthContext";
-
+import SideBlock from "./SideItems/SideBlock";
+import ReviewBlock from "./SideItems/ReviewBlock";
+import { FaHeart } from "react-icons/fa";
+import { BiTask } from "react-icons/bi";
+import { useRouter } from "next/router";
 const FlyingButtonsContainer = styled.div`
 	width: 0;
 	display: flex;
@@ -40,6 +45,45 @@ const FlyingButtonsContainer = styled.div`
 		}
 	}
 `;
+
+const OuterContainer = styled.div`
+	padding: 64px;
+	width: 100%;
+	padding-left: 32px;
+	padding-right: 32px;
+	display: flex;
+
+	@media (max-width: 1024px) {
+		padding-right: 48px;
+		width: 100%;
+		overflow: auto;
+	}
+
+	@media (max-width: 767px) {
+		padding: 16px;
+	}
+`;
+const ReviewBlockContainer = styled.div`
+	position: fixed;
+	bottom: 48px;
+	left: 32px;
+	display: flex;
+	justify-content: space-between;
+	& > .responsiveSideBlock {
+		display: none;
+	}
+	@media (max-width: 1024px) {
+		width: 100%;
+		padding-right: 32px;
+		z-index: 10;
+		bottom: 16px;
+		left: 16px;
+		& > .responsiveSideBlock {
+			display: flex;
+		}
+		/*iPad Pro and below*/
+	}
+`;
 export default function Layout({
 	title = "Unbelieveable",
 	keywords = "self development, lms",
@@ -48,10 +92,29 @@ export default function Layout({
 	landingPage = false,
 	withFB = false, // FB = FlyingButtons
 	withMargin = false,
+	showBurger = true,
 	scrollToSolid = false,
 	background = "transparent",
+	mainApp = false,
 }) {
+	let backBtn = false;
+
 	const { user, loading } = useContext(AuthContext);
+	const router = useRouter();
+	// mainApp is when layout has the floating side menu...
+
+	if (!mainApp && user && user.onboarded && !showBurger) backBtn = true;
+
+	if (mainApp) {
+		showBurger = false;
+	} else if (!user) {
+		showBurger = true;
+	}
+
+	if (loading) {
+		return <></>;
+	}
+
 	// const router = useRouter();
 	return (
 		<div>
@@ -62,10 +125,13 @@ export default function Layout({
 			</Head>
 			{!loading && (
 				<Header
+					showBurger={showBurger}
 					scrollToSolid={scrollToSolid}
 					landingPage={landingPage}
 					background={background}
 					user={user}
+					mainApp={mainApp}
+					backBtn={backBtn}
 				/>
 			)}
 
@@ -73,17 +139,45 @@ export default function Layout({
 				<FlyingButtonsContainer>
 					<Link href="#hero">
 						<a>
-							<RoundedBtnIcon img={`images/home.png`} />
+							<RoundedBtnIcon className="shadow" img={`images/home.png`} />
 						</a>
 					</Link>
 					<Link href="/">
 						<a>
-							<RoundedBtnIcon img={`images/smiley.png`} />
+							<RoundedBtnIcon className="shadow" img={`images/smiley.png`} />
 						</a>
 					</Link>
 				</FlyingButtonsContainer>
 			)}
-			<div style={{ marginTop: withMargin ? `112px` : `0` }}>{children}</div>
+			<div
+				className={`${mainApp && `d-flex position-relative`}`}
+				style={{ marginTop: withMargin ? `112px` : `0` }}
+			>
+				{mainApp && <SideMenu />}
+				{mainApp && (
+					<ReviewBlockContainer>
+						<ReviewBlock />
+						<div className="responsiveSideBlock">
+							{router.pathname === "/dashboard" && (
+								<>
+									<SideBlock
+										className="mr-2"
+										content={<FaHeart style={{ fontSize: "24px" }} />}
+									/>
+									<SideBlock
+										content={<BiTask style={{ fontSize: "24px" }} />}
+									/>
+								</>
+							)}
+						</div>
+					</ReviewBlockContainer>
+				)}
+				{mainApp ? (
+					<OuterContainer>{children}</OuterContainer>
+				) : (
+					<>{children}</>
+				)}
+			</div>
 			<Footer />
 		</div>
 	);

@@ -20,6 +20,6 @@ const StyledButton = styled(Button)`
 		outline: none;
 	}
 `;
-export default function RoundedBtnIcon({ img }) {
-	return <StyledButton img={img}></StyledButton>;
+export default function RoundedBtnIcon({ img, ...props }) {
+	return <StyledButton {...props} img={img}></StyledButton>;
 }

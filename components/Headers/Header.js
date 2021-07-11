@@ -7,6 +7,8 @@ import { mediaBreakpoint } from "utils/breakpoints";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { TextPrimary } from "components/Typography/Text";
 import { HeadingXXS } from "components/Typography/Headings";
+import { MdChevronLeft } from "react-icons/md";
+
 const StyledContainer = styled.div`
 	position: fixed;
 	top: 0;
@@ -36,8 +38,19 @@ const HamburgerIcon = styled(HiMenuAlt4)`
 	}
 `;
 
+const SpecialHamburger = styled(HamburgerIcon)`
+	display: none;
+
+	@media (max-width: 1024px) {
+		/*iPad Pro and below*/
+		display: block;
+	}
+`;
+
 const StyledTextPrimary = styled(TextPrimary)`
 	font-size: 21px;
+	padding-bottom: 8px;
+	${(props) => props.active && `border-bottom: 2px solid black;`}
 `;
 
 const MenuContainer = styled.div`
@@ -46,7 +59,9 @@ const MenuContainer = styled.div`
     left: -370px;
     position: absolute;
 	min-width: 370px;
+	z-index: 2;
 	transition: 0.35s;
+
 	background:#fff;
 	&.show{
 		left: 0;
@@ -88,23 +103,42 @@ const ProfileImage = styled(Image)`
 const Logo = styled(Image)`
 	width: 290px;
 	height: 31px;
-	${(props) => props.user && props.landing && `margin-left: 156px`};
+	position: absolute;
+	left: ${(props) => (props.showburger || props.backbtn ? `50%;` : `48px;`)}
+	${(props) =>
+		(props.showburger || props.backbtn) && `transform: translateX(-50%);`}
+
 	&:hover {
 		cursor: pointer;
 	}
+	@media (max-width: 1024px) {
+		/*iPad Pro and below*/
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
 	@media ${mediaBreakpoint.down.lg} {
 		margin-left: 0;
+			
 	}
 	@media ${mediaBreakpoint.down.md} {
 		height: 22.8px;
 		width: 210px;
+	
 	}
+`;
+const Back = styled(MdChevronLeft)`
+	font-size: 48px;
+	color: #fff;
 `;
 export default function Header({
 	landingPage,
 	background,
 	user = null,
+	showBurger,
 	scrollToSolid,
+	mainApp,
+	backBtn,
 }) {
 	const router = useRouter();
 	const [navbarClass, setNavbarClass] = useState("");
@@ -157,6 +191,9 @@ export default function Header({
 	const handleClickLogo = () => {
 		router.push("/");
 	};
+	const handleClickBack = () => {
+		router.push("/dashboard");
+	};
 	const handleClickMenu = () => {
 		if (menuShown === "") {
 			setMenuShown("show");
@@ -164,6 +201,26 @@ export default function Header({
 			setMenuShown("");
 		}
 	};
+
+	const mainAppLinks = [
+		{
+			url: "/dashboard",
+			text: "dashboard",
+		},
+		{
+			url: "/profil",
+			text: "profil",
+		},
+		{
+			url: "/daftar-kelas",
+			text: "kelas",
+		},
+		{
+			url: "/pertanyaan",
+			text: "pertanyaan",
+		},
+	];
+
 	return (
 		<StyledContainer
 			background={background}
@@ -172,48 +229,92 @@ export default function Header({
 		>
 			{menuShown === "show" && <Overlay onClick={handleClickMenu} />}
 			<MenuContainer className={menuShown}>
-				<div className="d-flex flex-column">
+				<div className="d-flex flex-column align-items-start">
 					<HamburgerIcon className="hamburger" onClick={handleClickMenu} />
 
-					<Link href="/">
-						<a onClick={handleClickMenu}>
-							<StyledTextPrimary>Home</StyledTextPrimary>
-						</a>
-					</Link>
-					<Link href="/#about">
-						<a onClick={handleClickMenu}>
-							<StyledTextPrimary>Tentang Kami</StyledTextPrimary>
-						</a>
-					</Link>
-					<Link href="/">
-						<a onClick={handleClickMenu}>
-							<StyledTextPrimary>Daftar Kelas</StyledTextPrimary>
-						</a>
-					</Link>
-					<Link href="/">
-						<a onClick={handleClickMenu}>
-							<StyledTextPrimary>Menjadi Member</StyledTextPrimary>
-						</a>
-					</Link>
-					<Link href="/">
-						<a onClick={handleClickMenu}>
-							<StyledTextPrimary>Pertanyaan</StyledTextPrimary>
-						</a>
-					</Link>
+					{mainApp ? (
+						<>
+							{mainAppLinks.map((r, ix) => (
+								<Link key={ix} href={r.url}>
+									<a>
+										<StyledTextPrimary
+											active={r.url === router.pathname}
+											className="text-black text-capitalize"
+										>
+											{r.text}
+										</StyledTextPrimary>
+									</a>
+								</Link>
+							))}
+						</>
+					) : (
+						<>
+							<Link href="/#hero">
+								<a onClick={handleClickMenu}>
+									<StyledTextPrimary
+										active={router.asPath === "/" || router.asPath === "/#hero"}
+									>
+										Home
+									</StyledTextPrimary>
+								</a>
+							</Link>
+							<Link href="/#about">
+								<a onClick={handleClickMenu}>
+									<StyledTextPrimary active={router.asPath === "/#about"}>
+										Tentang Kami
+									</StyledTextPrimary>
+								</a>
+							</Link>
+							<Link href="/daftar-kelas">
+								<a onClick={handleClickMenu}>
+									<StyledTextPrimary
+										active={router.pathname === "/daftar-kelas"}
+									>
+										Daftar Kelas
+									</StyledTextPrimary>
+								</a>
+							</Link>
+							<Link href="/menjadi-member">
+								<a onClick={handleClickMenu}>
+									<StyledTextPrimary
+										active={router.pathname === "/menjadi-member"}
+									>
+										Menjadi Member
+									</StyledTextPrimary>
+								</a>
+							</Link>
+							<Link href="/pertanyaan">
+								<a onClick={handleClickMenu}>
+									<StyledTextPrimary active={router.pathname === "/pertanyaan"}>
+										Pertanyaan
+									</StyledTextPrimary>
+								</a>
+							</Link>
+						</>
+					)}
 				</div>
 			</MenuContainer>
-			<div className="d-flex justify-content-between align-items-center">
-				{landingPage && <HamburgerIcon onClick={handleClickMenu} />}
-
+			<div className="d-flex align-items-center">
+				{!backBtn ? (
+					<HamburgerIcon
+						className={`${!showBurger && `d-none`}`}
+						onClick={handleClickMenu}
+					/>
+				) : (
+					<Back role="button" onClick={handleClickBack} />
+				)}
+				{mainApp && <SpecialHamburger onClick={handleClickMenu} />}
 				<Logo
 					className={`logo`}
-					landing={landingPage}
-					user={user ? true : false}
+					mainapp={mainApp ? 1 : 0}
+					showburger={showBurger ? 1 : 0}
+					backbtn={backBtn ? 1 : 0}
+					user={user ? 1 : 0}
 					onClick={handleClickLogo}
 					src="/images/logo.png"
 					alt="logo"
 				/>
-				<div className="d-flex align-items-center">
+				<div className="ml-auto d-flex align-items-center">
 					<ProfileImage
 						onClick={() => {
 							if (user) {
@@ -227,6 +328,7 @@ export default function Header({
 						width={43}
 						height={43}
 					/>
+
 					<HeadingXXS as="p" className="text-white ml-3 d-lg-block d-none">
 						{user && `${user.first_name} ${user.last_name}`}
 					</HeadingXXS>
