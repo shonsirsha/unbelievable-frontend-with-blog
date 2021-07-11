@@ -87,29 +87,26 @@ export default function EnrolledCourseCard({
 						{creatorName}
 					</StyledTextTertiary>
 					<StyledProgressBar className="mt-3 shadow-sm" now={totalProgress} />
-					<div className="d-flex justify-content-between mt-2">
+					<div className="d-flex justify-content-between mt-3">
 						<StyledTextTertiary>{totalProgress}% complete</StyledTextTertiary>
-					</div>
-					<div className="mt-auto d-flex justify-content-between align-items-center">
-						<div className="d-flex"></div>
-						<div className="d-flex"></div>
-					</div>
-					<div className="d-flex">
-						{[...Array(5)].map((_, ix) => (
-							<Star
-								size={18}
-								onMouseEnter={() => setHoveredStar(ix)}
-								onMouseLeave={() => setHoveredStar(-1)}
-								onClick={(e) => {
-									e.stopPropagation();
-									setSelectedStar(ix);
-								}}
-								className={`mr-1 mt-2 ${
-									(hoveredStar >= ix || selectedStar >= ix) && `checked`
-								}`}
-								key={ix}
-							/>
-						))}
+
+						<div className="d-flex">
+							{[...Array(5)].map((_, ix) => (
+								<Star
+									size={18}
+									onMouseEnter={() => setHoveredStar(ix)}
+									onMouseLeave={() => setHoveredStar(-1)}
+									onClick={(e) => {
+										e.stopPropagation();
+										setSelectedStar(ix);
+									}}
+									className={`mr-1 ${
+										(hoveredStar >= ix || selectedStar >= ix) && `checked`
+									}`}
+									key={ix}
+								/>
+							))}
+						</div>
 					</div>
 				</CardBody>
 			</StyledCard>

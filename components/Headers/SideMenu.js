@@ -61,8 +61,8 @@ export default function SideMenu() {
 	return (
 		<OuterContainer>
 			<MenuContainer>
-				{routes.map((r) => (
-					<Link href={r.url}>
+				{routes.map((r, ix) => (
+					<Link key={ix} href={r.url}>
 						<a>
 							<StyledHeadingXXS
 								active={r.url === router.pathname}

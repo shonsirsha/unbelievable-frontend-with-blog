@@ -127,7 +127,7 @@ export default function DefaultCourseCard({
 
 	return (
 		<StyledCard
-			small={small}
+			small={small ? 1 : 0}
 			{...props}
 			onClick={() => alert("Card Clicked (WIP)")}
 		>
@@ -191,7 +191,7 @@ export default function DefaultCourseCard({
 
 				<EnrollBtn
 					className="bg-primary1"
-					small={small}
+					small={small ? 1 : 0}
 					onClick={(e) => {
 						e.stopPropagation();
 						enrollClass();
