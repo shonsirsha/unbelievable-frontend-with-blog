@@ -16,9 +16,9 @@ const StyledContainer = styled(Container)`
 `;
 export default function index({ courses }) {
 	const { loading, user } = useContext(AuthContext);
-	const [coursesState, setCoursesState] = useState([]);
+	const [coursesState, setCoursesState] = useState(courses);
 	useEffect(() => {
-		if (user && !loading) {
+		if (user) {
 			courses.map((course) => {
 				if (course.enrolled_users.length > 0) {
 					course.enrolled_users.map((i) => {
