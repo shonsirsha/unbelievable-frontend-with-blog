@@ -29,7 +29,7 @@ const LeftContainer = styled.div`
 const RightContainer = styled.div`
 	padding-left: 80px;
 	img {
-		height: 154.93px;
+		height: 100%;
 	}
 	@media ${mediaBreakpoint.down.md} {
 		padding-left: 0;
