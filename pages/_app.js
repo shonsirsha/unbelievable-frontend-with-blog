@@ -9,6 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "video.js/dist/video-js.css";
 import Router from "next/router";
 import { AuthProvider } from "context/AuthContext";
+import { CourseProvider } from "context/CourseContext";
 
 function Application({ Component, pageProps }) {
 	NProgress.configure({
@@ -23,7 +24,9 @@ function Application({ Component, pageProps }) {
 	Router.events.on("routeChangeError", () => NProgress.done());
 	return (
 		<AuthProvider>
-			<Component {...pageProps} />
+			<CourseProvider>
+				<Component {...pageProps} />
+			</CourseProvider>
 		</AuthProvider>
 	);
 }

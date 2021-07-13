@@ -1,11 +1,12 @@
+import { useContext } from "react";
 import { Card, Image, Button } from "react-bootstrap";
 import styled from "styled-components";
-import { API_URL } from "config";
 import { useRouter } from "next/router";
 import { HeadingXXS, HeadingXS } from "components/Typography/Headings";
 import { TextTertiary } from "components/Typography/Text";
 import { FaHeart } from "react-icons/fa";
 import { MdShare } from "react-icons/md";
+import CourseContext from "context/CourseContext";
 
 const EnrollBtn = styled(Button)`
 	border-radius: 40px;
@@ -97,37 +98,9 @@ export default function DefaultCourseCard({
 	owned = false,
 	...props
 }) {
-	const { title, short_desc, content_creator, rating, image, slug, id } =
-		course;
-
-	const router = useRouter();
+	const { title, short_desc, content_creator, rating, image } = course;
 	token = token ? token : user.token;
-
-	const enrollClass = async () => {
-		if (!owned) {
-			const res = await fetch(`${API_URL}/courses/${id}`, {
-				method: "PUT",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${token}`,
-				},
-				body: JSON.stringify({
-					enrolled_users: [...course.enrolled_users, { id: user.id }],
-				}),
-			});
-
-			const data = await res.json();
-
-			if (!res.ok) {
-				console.log(data.message);
-			} else {
-				router.push(`/kelas/${slug}`);
-			}
-		} else {
-			router.push(`/kelas/${slug}`);
-		}
-	};
-
+	const { enrollClassLoading, enrollClass } = useContext(CourseContext);
 	return (
 		<StyledCard
 			small={small ? 1 : 0}
@@ -194,10 +167,11 @@ export default function DefaultCourseCard({
 
 				<EnrollBtn
 					className="bg-primary1"
+					disabled={enrollClassLoading}
 					small={small ? 1 : 0}
 					onClick={(e) => {
 						e.stopPropagation();
-						enrollClass();
+						enrollClass(course, user.id, token);
 					}}
 				>
 					<StyledHeadingXXS as="p">
