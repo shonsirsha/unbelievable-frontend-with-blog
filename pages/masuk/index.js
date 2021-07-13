@@ -139,7 +139,7 @@ const index = () => {
 						<HeadingXS>Masuk</HeadingXS>
 						<ToastContainer />
 
-						<Form autoComplete={false} className="w-100 mt-3">
+						<Form className="w-100 mt-3">
 							<FormGroup>
 								<FormLabel>E-mail</FormLabel>
 								<StyledFormControl

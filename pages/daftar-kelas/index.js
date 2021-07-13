@@ -17,7 +17,9 @@ const StyledContainer = styled(Container)`
 export default function index({ courses }) {
 	const { loading, user } = useContext(AuthContext);
 	const [coursesState, setCoursesState] = useState(courses);
+	const [localLoading, setLocalLoading] = useState(true);
 	useEffect(() => {
+		setLocalLoading(true);
 		if (user) {
 			courses.map((course) => {
 				if (course.enrolled_users.length > 0) {
@@ -32,7 +34,12 @@ export default function index({ courses }) {
 			});
 			setCoursesState(courses);
 		}
+		setLocalLoading(false);
 	}, [user, loading]);
+
+	useEffect(() => {
+		console.log(coursesState);
+	}, [coursesState]);
 
 	if (loading) {
 		return <></>;
@@ -45,20 +52,22 @@ export default function index({ courses }) {
 			scrollToSolid
 		>
 			<Showcase title="Daftar Kelas" />
-			<StyledContainer>
-				{coursesState &&
-					coursesState.map((course) => (
-						<div key={course.id}>
-							<DefaultCourseCard
-								key={course.id}
-								className="mr-3 mb-5 "
-								user={user}
-								course={course}
-								owned={course.owned}
-							/>
-						</div>
-					))}
-			</StyledContainer>
+			{!localLoading && (
+				<StyledContainer>
+					{coursesState &&
+						coursesState.map((course) => (
+							<div key={course.id}>
+								<DefaultCourseCard
+									key={course.id}
+									className="mr-3 mb-5 "
+									user={user}
+									course={course}
+									owned={course.owned}
+								/>
+							</div>
+						))}
+				</StyledContainer>
+			)}
 		</Layout>
 	);
 }
