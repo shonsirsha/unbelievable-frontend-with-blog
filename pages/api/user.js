@@ -15,8 +15,8 @@ export default async (req, res) => {
 				Authorization: `Bearer ${token}`,
 			},
 		});
-		const user = await strapiRes.json();
-
+		let user = await strapiRes.json();
+		user.token = token;
 		if (strapiRes.ok) {
 			res.status(200).json({ user });
 		} else {

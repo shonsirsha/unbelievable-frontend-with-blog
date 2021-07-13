@@ -101,6 +101,7 @@ export default function DefaultCourseCard({
 		course;
 
 	const router = useRouter();
+	token = token ? token : user.token;
 
 	const enrollClass = async () => {
 		if (!owned) {
@@ -114,6 +115,8 @@ export default function DefaultCourseCard({
 					enrolled_users: [...course.enrolled_users, { id: user.id }],
 				}),
 			});
+
+			const data = await res.json();
 
 			if (!res.ok) {
 				console.log(data.message);

@@ -37,10 +37,6 @@ export default function index({ courses }) {
 		setLocalLoading(false);
 	}, [user, loading]);
 
-	useEffect(() => {
-		console.log(coursesState);
-	}, [coursesState]);
-
 	if (loading) {
 		return <></>;
 	}
