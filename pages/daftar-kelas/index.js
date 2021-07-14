@@ -19,6 +19,7 @@ const StyledContainer = styled(Container)`
 export default function index({ courses }) {
 	const { userLoading, user } = useContext(AuthContext);
 	const [coursesState, setCoursesState] = useState(courses);
+	const [localLoading, setLocalLoading] = useState(false);
 	NProgress.configure({
 		minimum: 0.3,
 		easing: "ease",
@@ -49,7 +50,7 @@ export default function index({ courses }) {
 			});
 			setCoursesState(courses);
 		}
-	}, [user]);
+	}, [user, userLoading]);
 
 	const cardUser = (
 		<>
@@ -86,6 +87,9 @@ export default function index({ courses }) {
 	);
 
 	const content = user ? cardUser : cardNonUser;
+	if (userLoading) {
+		return <></>;
+	}
 
 	return (
 		<Layout

@@ -101,8 +101,8 @@ export default function DefaultCourseCard({
 	const { title, short_desc, content_creator, rating, image } = course;
 	// const token = user.token;
 	const { enrollClassLoading, enrollClass } = useContext(CourseContext);
-	const { loading, token } = useContext(AuthContext);
-
+	const { token } = useContext(AuthContext);
+	const router = useRouter();
 	return (
 		<StyledCard
 			small={small ? 1 : 0}
@@ -176,7 +176,7 @@ export default function DefaultCourseCard({
 						if (token) {
 							enrollClass(course, user.id, token);
 						} else {
-							alert("asuuu");
+							router.push("/masuk");
 						}
 					}}
 				>
