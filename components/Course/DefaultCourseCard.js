@@ -7,6 +7,7 @@ import { TextTertiary } from "components/Typography/Text";
 import { FaHeart } from "react-icons/fa";
 import { MdShare } from "react-icons/md";
 import CourseContext from "context/CourseContext";
+import AuthContext from "context/AuthContext";
 
 const EnrollBtn = styled(Button)`
 	border-radius: 40px;
@@ -94,13 +95,14 @@ export default function DefaultCourseCard({
 	course,
 	small,
 	user,
-	token = null,
 	owned = false,
 	...props
 }) {
 	const { title, short_desc, content_creator, rating, image } = course;
-	token = token ? token : user.token;
+	// const token = user.token;
 	const { enrollClassLoading, enrollClass } = useContext(CourseContext);
+	const { loading, token } = useContext(AuthContext);
+
 	return (
 		<StyledCard
 			small={small ? 1 : 0}
@@ -171,7 +173,11 @@ export default function DefaultCourseCard({
 					small={small ? 1 : 0}
 					onClick={(e) => {
 						e.stopPropagation();
-						enrollClass(course, user.id, token);
+						if (token) {
+							enrollClass(course, user.id, token);
+						} else {
+							alert("asuuu");
+						}
 					}}
 				>
 					<StyledHeadingXXS as="p">

@@ -1,6 +1,7 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import { API_URL } from "config/index";
+import AuthContext from "./AuthContext";
 
 const CourseContext = createContext();
 
@@ -10,6 +11,7 @@ export const CourseProvider = ({ children }) => {
 
 	const enrollClass = async (course, userId, token) => {
 		setEnrollClassLoading(true);
+
 		const { owned, id, slug } = course;
 		if (!owned) {
 			const res = await fetch(`${API_URL}/courses/${id}`, {

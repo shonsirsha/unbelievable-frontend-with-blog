@@ -6,6 +6,8 @@ import { Container } from "react-bootstrap";
 import styled from "styled-components";
 import { API_URL } from "config";
 import DefaultCourseCard from "components/Course/DefaultCourseCard";
+import NProgress from "nprogress";
+
 const StyledContainer = styled(Container)`
 	display: flex;
 	flex-wrap: wrap;
@@ -15,11 +17,24 @@ const StyledContainer = styled(Container)`
 	padding-bottom: 56px;
 `;
 export default function index({ courses }) {
-	const { loading, user } = useContext(AuthContext);
+	const { userLoading, user } = useContext(AuthContext);
 	const [coursesState, setCoursesState] = useState(courses);
-	const [localLoading, setLocalLoading] = useState(true);
+	NProgress.configure({
+		minimum: 0.3,
+		easing: "ease",
+		speed: 800,
+		showSpinner: false,
+	});
+
 	useEffect(() => {
-		setLocalLoading(true);
+		if (userLoading) {
+			NProgress.start();
+		} else {
+			NProgress.done();
+		}
+	}, [userLoading]);
+
+	useEffect(() => {
 		if (user) {
 			courses.map((course) => {
 				if (course.enrolled_users.length > 0) {
@@ -34,12 +49,43 @@ export default function index({ courses }) {
 			});
 			setCoursesState(courses);
 		}
-		setLocalLoading(false);
-	}, [user, loading]);
+	}, [user]);
 
-	if (loading) {
-		return <></>;
-	}
+	const cardUser = (
+		<>
+			{coursesState &&
+				coursesState.map((course) => (
+					<div key={course.id}>
+						<DefaultCourseCard
+							key={course.id}
+							className="mr-3 mb-5 "
+							user={user}
+							course={course}
+							owned={course.owned}
+						/>
+					</div>
+				))}
+		</>
+	);
+
+	const cardNonUser = (
+		<>
+			{coursesState &&
+				coursesState.map((course) => (
+					<div key={course.id}>
+						<DefaultCourseCard
+							key={course.id}
+							className="mr-3 mb-5 "
+							user={user}
+							course={course}
+							owned={false}
+						/>
+					</div>
+				))}
+		</>
+	);
+
+	const content = user ? cardUser : cardNonUser;
 
 	return (
 		<Layout
@@ -48,22 +94,7 @@ export default function index({ courses }) {
 			scrollToSolid
 		>
 			<Showcase title="Daftar Kelas" />
-			{!localLoading && (
-				<StyledContainer>
-					{coursesState &&
-						coursesState.map((course) => (
-							<div key={course.id}>
-								<DefaultCourseCard
-									key={course.id}
-									className="mr-3 mb-5 "
-									user={user}
-									course={course}
-									owned={course.owned}
-								/>
-							</div>
-						))}
-				</StyledContainer>
-			)}
+			<StyledContainer>{!userLoading && <>{content}</>}</StyledContainer>
 		</Layout>
 	);
 }

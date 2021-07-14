@@ -114,17 +114,18 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 				</StyledHeadingLG>
 				<div className="d-flex flex-column">
 					<StyledHeadingXS className="mb-2 ml-1">kelas populer</StyledHeadingXS>
-					<div className="d-flex flex-lg-wrap flex-nowrap w-100 overflow-lg-none overflow-auto ">
-						{allCourses.map((course) => (
-							<StyledDefault
-								key={course.id}
-								small
-								user={user}
-								token={token}
-								course={course}
-							/>
-						))}
-					</div>
+					{user.token && (
+						<div className="d-flex flex-lg-wrap flex-nowrap w-100 overflow-lg-none overflow-auto ">
+							{allCourses.map((course) => (
+								<StyledDefault
+									key={course.id}
+									small
+									user={user}
+									course={course}
+								/>
+							))}
+						</div>
+					)}
 				</div>
 
 				<div className="d-flex flex-column mt-4">
@@ -203,7 +204,8 @@ export async function getServerSideProps({ req, _ }) {
 		});
 
 		const onboardings = await res.json();
-		const user = await res2.json();
+		let user = await res2.json();
+		user.token = token;
 		const courses = await res3.json();
 		const coursesTaken = await res4.json();
 
