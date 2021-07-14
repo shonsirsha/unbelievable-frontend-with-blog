@@ -120,7 +120,7 @@ export default function DefaultCourseCard({
 				</div>
 
 				<StyledTextTertiary className="mt-auto">
-					{content_creator.full_name}
+					{content_creator && content_creator.full_name}
 				</StyledTextTertiary>
 
 				<div className="d-flex ml-0 mt-4 ml-lg-auto justify-content-center align-items-center">
