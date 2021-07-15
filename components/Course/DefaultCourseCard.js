@@ -91,6 +91,7 @@ const TextDesc = styled(TextTertiary)`
 	height: ${(props) => (props.small ? `56px` : `32px`)};
 	font-size: ${(props) => (props.small ? `12px` : `14px`)};
 `;
+
 export default function DefaultCourseCard({
 	course,
 	small,
@@ -103,12 +104,9 @@ export default function DefaultCourseCard({
 	const { enrollClassLoading, enrollClass } = useContext(CourseContext);
 	const { token } = useContext(AuthContext);
 	const router = useRouter();
+
 	return (
-		<StyledCard
-			small={small ? 1 : 0}
-			{...props}
-			onClick={() => alert("Card Clicked (WIP)")}
-		>
+		<StyledCard small={small ? 1 : 0} {...props} onClick={() => {}}>
 			<ImageContainer small={small} img={image} />
 
 			<CardBody>

@@ -10,6 +10,7 @@ import EnrolledCourseCard from "components/Course/EnrolledCourseCard";
 import DefaultCourseCard from "components/Course/DefaultCourseCard";
 import SideBlock from "components/SideItems/SideBlock";
 import styled from "styled-components";
+import PreviewModal from "components/Course/PreviewModal";
 
 const StyledDefault = styled(DefaultCourseCard)`
 	margin-right: 16px;
@@ -59,9 +60,11 @@ const StyledEnrolled = styled(EnrolledCourseCard)`
 		}
 	}
 `;
+
 const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 	const { logout } = useContext(AuthContext);
 	const [allCourses] = useState(courses);
+	const [modalShow, setModalShow] = useState(true);
 
 	const handleFinishOnboarding = async () => {
 		const res = await fetch(`${API_URL}/users/me`, {
@@ -105,6 +108,7 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 			withMargin
 			mainApp
 		>
+			<PreviewModal show={modalShow} onHide={() => setModalShow(false)} />
 			<div className="d-flex w-100 flex-column">
 				<HeadingXS className="text-gray mb-2">
 					selamat datang kembali,

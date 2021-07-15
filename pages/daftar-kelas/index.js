@@ -17,15 +17,18 @@ const StyledContainer = styled(Container)`
 	padding-bottom: 56px;
 `;
 export default function index({ courses }) {
-	const { userLoading, user } = useContext(AuthContext);
+	const { userLoading, user, checkUserLoggedIn } = useContext(AuthContext);
 	const [coursesState, setCoursesState] = useState(courses);
-	const [localLoading, setLocalLoading] = useState(false);
 	NProgress.configure({
 		minimum: 0.3,
 		easing: "ease",
 		speed: 800,
 		showSpinner: false,
 	});
+
+	useEffect(() => {
+		checkUserLoggedIn();
+	}, []);
 
 	useEffect(() => {
 		if (userLoading) {
@@ -50,7 +53,7 @@ export default function index({ courses }) {
 			});
 			setCoursesState(courses);
 		}
-	}, [user, userLoading]);
+	}, [user]);
 
 	const cardUser = (
 		<>
