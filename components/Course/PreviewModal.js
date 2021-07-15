@@ -60,6 +60,7 @@ const StyledHeadingXXS = styled(HeadingXXS)`
 const PreviewModal = (props) => {
 	const { selectedPreviewCourse, enrollClass } = useContext(CourseContext);
 	const { token, user } = useContext(AuthContext);
+
 	if (!selectedPreviewCourse) {
 		return <></>;
 	}
@@ -149,11 +150,11 @@ const PreviewModal = (props) => {
 						<EnrollBtn
 							onClick={(e) => {
 								e.stopPropagation();
-								if (token) {
-									enrollClass(selectedPreviewCourse, user.id, token);
-								} else {
-									router.push("/masuk");
-								}
+								enrollClass(
+									selectedPreviewCourse,
+									user ? user.id : null,
+									token ? token : null
+								);
 							}}
 							className="bg-cyan align-self-center mt-4"
 						>

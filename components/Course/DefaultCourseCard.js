@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { Card, Image, Button } from "react-bootstrap";
 import styled from "styled-components";
-import { useRouter } from "next/router";
 import { HeadingXXS, HeadingXS } from "components/Typography/Headings";
 import { TextTertiary } from "components/Typography/Text";
 import { FaHeart } from "react-icons/fa";
@@ -108,16 +107,22 @@ export default function DefaultCourseCard({
 		setSelectedPreviewCourse,
 	} = useContext(CourseContext);
 	const { token } = useContext(AuthContext);
-	const router = useRouter();
+
+	const openModal = () => {
+		setPreviewModalOpen(true);
+		setSelectedPreviewCourse(course);
+	};
 
 	return (
 		<StyledCard
 			small={small ? 1 : 0}
 			{...props}
 			onClick={() => {
-				setPreviewModalOpen(true);
-				console.log(course);
-				setSelectedPreviewCourse(course);
+				if (!owned || !token) {
+					openModal();
+				} else {
+					enrollClass(course, user.id, token);
+				}
 			}}
 		>
 			<ImageContainer small={small} img={image} />
@@ -184,11 +189,7 @@ export default function DefaultCourseCard({
 					small={small ? 1 : 0}
 					onClick={(e) => {
 						e.stopPropagation();
-						if (token) {
-							enrollClass(course, user.id, token);
-						} else {
-							router.push("/masuk");
-						}
+						enrollClass(course, user ? user.id : null, token ? token : null);
 					}}
 				>
 					<StyledHeadingXXS as="p">

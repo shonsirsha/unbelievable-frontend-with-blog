@@ -13,30 +13,33 @@ export const CourseProvider = ({ children }) => {
 	const enrollClass = async (course, userId, token) => {
 		setEnrollClassLoading(true);
 
-		const { owned, id, slug } = course;
-		if (!owned) {
-			const res = await fetch(`${API_URL}/courses/${id}`, {
-				method: "PUT",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${token}`,
-				},
-				body: JSON.stringify({
-					enrolled_users: [...course.enrolled_users, { id: userId }],
-				}),
-			});
+		if (!token) {
+			router.push(`/masuk`);
+		} else {
+			const { owned, id, slug } = course;
+			if (!owned) {
+				const res = await fetch(`${API_URL}/courses/${id}`, {
+					method: "PUT",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+					body: JSON.stringify({
+						enrolled_users: [...course.enrolled_users, { id: userId }],
+					}),
+				});
 
-			const data = await res.json();
+				const data = await res.json();
 
-			if (!res.ok) {
-				console.log(data.message);
+				if (!res.ok) {
+					console.log(data.message);
+				} else {
+					router.push(`/kelas/${slug}`);
+				}
 			} else {
 				router.push(`/kelas/${slug}`);
 			}
-		} else {
-			router.push(`/kelas/${slug}`);
 		}
-
 		setEnrollClassLoading(false);
 	};
 
