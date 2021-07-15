@@ -2,11 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import Layout from "components/Layout";
 import Showcase from "components/Showcase";
 import AuthContext from "context/AuthContext";
+import CourseContext from "context/CourseContext";
 import { Container } from "react-bootstrap";
 import styled from "styled-components";
 import { API_URL } from "config";
 import DefaultCourseCard from "components/Course/DefaultCourseCard";
 import NProgress from "nprogress";
+import PreviewModal from "components/Course/PreviewModal";
 
 const StyledContainer = styled(Container)`
 	display: flex;
@@ -18,6 +20,8 @@ const StyledContainer = styled(Container)`
 `;
 export default function index({ courses }) {
 	const { userLoading, user, checkUserLoggedIn } = useContext(AuthContext);
+	const { previewModalOpen, setPreviewModalOpen } = useContext(CourseContext);
+
 	const [coursesState, setCoursesState] = useState(courses);
 	NProgress.configure({
 		minimum: 0.3,
@@ -100,6 +104,10 @@ export default function index({ courses }) {
 			title="Daftar Kelas | Unbelieveable"
 			scrollToSolid
 		>
+			<PreviewModal
+				show={previewModalOpen}
+				onHide={() => setPreviewModalOpen(false)}
+			/>
 			<Showcase title="Daftar Kelas" />
 			<StyledContainer>{!userLoading && <>{content}</>}</StyledContainer>
 		</Layout>

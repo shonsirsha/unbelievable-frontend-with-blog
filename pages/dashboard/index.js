@@ -67,7 +67,6 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 	const { previewModalOpen, setPreviewModalOpen } = useContext(CourseContext);
 
 	const [allCourses] = useState(courses);
-	const [modalShow, setModalShow] = useState(false);
 
 	const handleFinishOnboarding = async () => {
 		const res = await fetch(`${API_URL}/users/me`, {
