@@ -8,7 +8,8 @@ const CourseContext = createContext();
 export const CourseProvider = ({ children }) => {
 	const router = useRouter();
 	const [enrollClassLoading, setEnrollClassLoading] = useState(false);
-
+	const [previewModalOpen, setPreviewModalOpen] = useState(false);
+	const [selectedPreviewCourse, setSelectedPreviewCourse] = useState(null);
 	const enrollClass = async (course, userId, token) => {
 		setEnrollClassLoading(true);
 
@@ -44,6 +45,10 @@ export const CourseProvider = ({ children }) => {
 			value={{
 				enrollClass,
 				enrollClassLoading,
+				previewModalOpen,
+				setPreviewModalOpen,
+				selectedPreviewCourse,
+				setSelectedPreviewCourse,
 			}}
 		>
 			{children}

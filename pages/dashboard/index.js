@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { parseCookies } from "utils/cookies";
 import Router from "next/router";
 import AuthContext from "context/AuthContext";
+import CourseContext from "context/CourseContext";
 import { API_URL } from "config/index";
 import { HeadingXS, HeadingLG } from "components/Typography/Headings";
 import Layout from "components/Layout";
@@ -63,8 +64,10 @@ const StyledEnrolled = styled(EnrolledCourseCard)`
 
 const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 	const { logout } = useContext(AuthContext);
+	const { previewModalOpen, setPreviewModalOpen } = useContext(CourseContext);
+
 	const [allCourses] = useState(courses);
-	const [modalShow, setModalShow] = useState(true);
+	const [modalShow, setModalShow] = useState(false);
 
 	const handleFinishOnboarding = async () => {
 		const res = await fetch(`${API_URL}/users/me`, {
@@ -108,7 +111,10 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 			withMargin
 			mainApp
 		>
-			<PreviewModal show={modalShow} onHide={() => setModalShow(false)} />
+			<PreviewModal
+				show={previewModalOpen}
+				onHide={() => setPreviewModalOpen(false)}
+			/>
 			<div className="d-flex w-100 flex-column">
 				<HeadingXS className="text-gray mb-2">
 					selamat datang kembali,

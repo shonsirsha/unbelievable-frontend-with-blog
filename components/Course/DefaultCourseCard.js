@@ -101,12 +101,25 @@ export default function DefaultCourseCard({
 }) {
 	const { title, short_desc, content_creator, rating, image } = course;
 	// const token = user.token;
-	const { enrollClassLoading, enrollClass } = useContext(CourseContext);
+	const {
+		enrollClassLoading,
+		enrollClass,
+		setPreviewModalOpen,
+		setSelectedPreviewCourse,
+	} = useContext(CourseContext);
 	const { token } = useContext(AuthContext);
 	const router = useRouter();
 
 	return (
-		<StyledCard small={small ? 1 : 0} {...props} onClick={() => {}}>
+		<StyledCard
+			small={small ? 1 : 0}
+			{...props}
+			onClick={() => {
+				setPreviewModalOpen(true);
+				console.log(course);
+				setSelectedPreviewCourse(course);
+			}}
+		>
 			<ImageContainer small={small} img={image} />
 
 			<CardBody>
