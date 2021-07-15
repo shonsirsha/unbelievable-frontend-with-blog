@@ -21,6 +21,12 @@ const StyledModal = styled(Modal)`
 		border-radius: 16px;
 		padding: 0;
 	}
+
+	@media ${mediaBreakpoint.up.md} {
+		.modal-dialog {
+			max-width: 60%;
+		}
+	}
 `;
 const StyledModalBody = styled(ModalBody)`
 	border-radius: 16px;
@@ -72,7 +78,7 @@ const PreviewModal = (props) => {
 			centered
 		>
 			<StyledModalBody className="d-flex flex-lg-row bg-primary1 flex-column">
-				<div className="d-flex left">top shagger</div>
+				<div className="d-flex left"></div>
 				<div className="d-flex flex-column right">
 					<HeadingXS as="p" className="text-white">
 						{selectedPreviewCourse.title}
