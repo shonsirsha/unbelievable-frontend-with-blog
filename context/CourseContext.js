@@ -12,7 +12,6 @@ export const CourseProvider = ({ children }) => {
 	const [selectedPreviewCourse, setSelectedPreviewCourse] = useState(null);
 	const enrollClass = async (course, userId, token) => {
 		setEnrollClassLoading(true);
-
 		if (!token) {
 			router.push(`/masuk`);
 		} else {
@@ -32,6 +31,8 @@ export const CourseProvider = ({ children }) => {
 				const data = await res.json();
 
 				if (!res.ok) {
+					router.push(`/masuk`);
+
 					console.log(data.message);
 				} else {
 					router.push(`/kelas/${slug}`);
