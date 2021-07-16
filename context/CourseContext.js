@@ -33,7 +33,7 @@ export const CourseProvider = ({ children }) => {
 				if (!res.ok) {
 					router.push(`/masuk`);
 
-					console.log(data.message);
+					// console.log(data.message);
 				} else {
 					router.push(`/kelas/${slug}`);
 				}
@@ -49,10 +49,8 @@ export const CourseProvider = ({ children }) => {
 			router.push(`/masuk`);
 		} else {
 			console.log("rating...");
-			console.log(rate), console.log(userId);
-			console.log(course);
+
 			const { id } = course;
-			console.log(id);
 
 			const newRating = course.rating.filter((rate) => {
 				return rate.user.id !== userId;
@@ -73,7 +71,8 @@ export const CourseProvider = ({ children }) => {
 			const data = await res.json();
 
 			if (!res.ok) {
-				console.log(data.message);
+				console.log("failed...");
+				// console.log(data.message);
 			} else {
 				console.log("rated");
 			}

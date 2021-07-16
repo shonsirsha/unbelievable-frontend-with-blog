@@ -42,23 +42,16 @@ export default function index({ courses }) {
 		}
 	}, [userLoading]);
 
+	useEffect(async () => {
+		const res = await fetch(`${API_URL}/courses`);
+		const courses = await res.json();
+		setCoursesState(courses);
+	}, []);
+
 	useEffect(() => {
-		if (user) {
-			courses.map((course) => {
-				if (course.enrolled_users.length > 0) {
-					course.enrolled_users.map((i) => {
-						if (i.id === user.id) {
-							course.owned = true;
-						} else {
-							course.owned = false;
-						}
-					});
-				}
-			});
-			setCoursesState(courses);
-			console.log(courses);
-		}
-	}, [user]);
+		console.log("re-fetched!");
+		console.log(coursesState);
+	}, [user, coursesState]);
 
 	const cardUser = (
 		<>
@@ -70,7 +63,14 @@ export default function index({ courses }) {
 							className="mr-3 mb-5 "
 							user={user}
 							course={course}
-							owned={course.owned}
+							owned={
+								user &&
+								course.enrolled_users.findIndex((u) => {
+									return u.id == user.id;
+								}) >= 0
+									? 1
+									: 0
+							}
 						/>
 					</div>
 				))}
