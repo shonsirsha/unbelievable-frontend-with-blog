@@ -1,6 +1,8 @@
 import { useContext, useState } from "react";
 import { parseCookies } from "utils/cookies";
-import Router from "next/router";
+import { useRouter } from "next/router";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import AuthContext from "context/AuthContext";
 import CourseContext from "context/CourseContext";
 import { API_URL } from "config/index";
@@ -63,6 +65,8 @@ const StyledEnrolled = styled(EnrolledCourseCard)`
 `;
 
 const index = ({ token, onboardings, user, courses, coursesTaken }) => {
+	const router = useRouter();
+
 	const { logout } = useContext(AuthContext);
 	const { previewModalOpen, setPreviewModalOpen } = useContext(CourseContext);
 
@@ -77,7 +81,6 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 			},
 			body: JSON.stringify({ onboarded: true }),
 		});
-
 		if (!res.ok) {
 			if (res.status === 403 || res.status === 401) {
 				toast.error("Terjadi Kesalahan Mohon Coba Lagi (403)");
@@ -85,7 +88,7 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 			}
 			toast.error("Terjadi Kesalahan Mohon Coba Lagi");
 		} else {
-			Router.push("/dashboard");
+			router.push("/dashboard");
 		}
 	};
 
@@ -110,6 +113,8 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 			withMargin
 			mainApp
 		>
+			<ToastContainer />
+
 			<PreviewModal
 				show={previewModalOpen}
 				onHide={() => setPreviewModalOpen(false)}
@@ -143,12 +148,9 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 					<div className="d-flex flex-lg-wrap flex-nowrap w-100 overflow-lg-none overflow-auto pb-2">
 						{coursesTaken.map((course) => (
 							<StyledEnrolled
-								title={course.title}
 								user={user}
-								slug={course.slug}
 								key={course.id}
-								creatorName={course.content_creator.full_name}
-								img={course.image}
+								course={course}
 								totalProgress={30}
 							/>
 						))}

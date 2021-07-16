@@ -43,6 +43,43 @@ export const CourseProvider = ({ children }) => {
 		setEnrollClassLoading(false);
 	};
 
+	const rateClass = async (course, userId, token, rate) => {
+		if (!token) {
+			router.push(`/masuk`);
+		} else {
+			console.log("rating...");
+			console.log(rate), console.log(userId);
+			console.log(course);
+			const { id } = course;
+			console.log(id);
+
+			const newRating = course.rating.filter((rate) => {
+				return rate.user.id !== userId;
+			});
+
+			const res = await fetch(`${API_URL}/courses/${id}`, {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+
+				body: JSON.stringify({
+					rating: [...newRating, { rate, user: { id: userId } }],
+				}),
+			});
+
+			const data = await res.json();
+
+			if (!res.ok) {
+				console.log(data.message);
+				console.log(data);
+			} else {
+				console.log("rated");
+			}
+		}
+	};
+
 	return (
 		<CourseContext.Provider
 			value={{
@@ -52,6 +89,7 @@ export const CourseProvider = ({ children }) => {
 				setPreviewModalOpen,
 				selectedPreviewCourse,
 				setSelectedPreviewCourse,
+				rateClass,
 			}}
 		>
 			{children}

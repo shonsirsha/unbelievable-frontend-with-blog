@@ -98,7 +98,7 @@ export default function DefaultCourseCard({
 	owned = false,
 	...props
 }) {
-	const { title, short_desc, content_creator, rating, image } = course;
+	const { title, short_desc, content_creator, total_rating, image } = course;
 	// const token = user.token;
 	const {
 		enrollClassLoading,
@@ -141,7 +141,7 @@ export default function DefaultCourseCard({
 
 				<div className="d-flex ml-0 mt-4 ml-lg-auto justify-content-center align-items-center">
 					<HeadingXS className="text-primary1 mr-1 ">
-						{rating ? rating : "-"}
+						{total_rating ? total_rating : "-"}
 					</HeadingXS>
 					<TotalRating>/ 5</TotalRating>
 				</div>
@@ -164,7 +164,7 @@ export default function DefaultCourseCard({
 						/>
 					</div>
 					<div className="d-flex">
-						{[...Array(parseInt(rating ? rating : 0))].map((ix) => (
+						{[...Array(parseInt(total_rating ? total_rating : 0))].map((ix) => (
 							<Image
 								key={ix}
 								width={17}
@@ -172,14 +172,16 @@ export default function DefaultCourseCard({
 								src="/images/gold-star.png"
 							/>
 						))}
-						{[...Array(rating ? 5 - parseInt(rating) : 5)].map((ix) => (
-							<Image
-								key={ix}
-								width={17}
-								height={16}
-								src="/images/gray-star.png"
-							/>
-						))}
+						{[...Array(total_rating ? 5 - parseInt(total_rating) : 5)].map(
+							(ix) => (
+								<Image
+									key={ix}
+									width={17}
+									height={16}
+									src="/images/gray-star.png"
+								/>
+							)
+						)}
 					</div>
 				</div>
 

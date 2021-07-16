@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import { Card, ProgressBar } from "react-bootstrap";
 import styled from "styled-components";
 import { HeadingXXS } from "components/Typography/Headings";
 import { TextTertiary } from "components/Typography/Text";
 import { FaStar } from "react-icons/fa";
+import CourseContext from "context/CourseContext";
+import AuthContext from "context/AuthContext";
 const CardBody = styled.div`
 	display: flex;
 	height: 40%;
@@ -60,23 +62,36 @@ const Star = styled(FaStar)`
 	}
 `;
 export default function EnrolledCourseCard({
-	title,
-	img,
-	creatorName,
-	rating,
 	small,
 	user,
-	slug,
 	totalProgress = 0,
+	course,
 	...props
 }) {
 	const [hoveredStar, setHoveredStar] = useState(-1);
 	const [selectedStar, setSelectedStar] = useState(-1);
+	const { title, slug, id, content_creator, image, total_rating, rating } =
+		course;
+	const { rateClass } = useContext(CourseContext);
+	const { token } = useContext(AuthContext);
 
+	useEffect(() => {
+		const x = rating.findIndex((x) => {
+			return x.user.id == user.id;
+		});
+		if (x >= 0) {
+			setSelectedStar(rating[x].rate);
+		}
+	}, [rating]);
+	const handleClickStars = (ix) => {
+		console.log(course.id);
+		setSelectedStar(ix + 1);
+		rateClass(course, user.id, token, ix + 1);
+	};
 	return (
 		<Link href={`kelas/${slug}`}>
 			<StyledCard small={small} {...props}>
-				<ImageContainer small={small} img={img} />
+				<ImageContainer small={small} img={image} />
 
 				<CardBody>
 					<CardHeader as="p" className="mt-3">
@@ -84,7 +99,7 @@ export default function EnrolledCourseCard({
 					</CardHeader>
 
 					<StyledTextTertiary className="mt-2">
-						{creatorName}
+						{content_creator && content_creator.full_name}
 					</StyledTextTertiary>
 					<StyledProgressBar className="mt-3 shadow-sm" now={totalProgress} />
 					<div className="d-flex justify-content-between mt-3">
@@ -94,14 +109,15 @@ export default function EnrolledCourseCard({
 							{[...Array(5)].map((_, ix) => (
 								<Star
 									size={18}
-									onMouseEnter={() => setHoveredStar(ix)}
+									onMouseEnter={() => setHoveredStar(ix + 1)}
 									onMouseLeave={() => setHoveredStar(-1)}
 									onClick={(e) => {
 										e.stopPropagation();
-										setSelectedStar(ix);
+										handleClickStars(ix);
 									}}
 									className={`mr-1 ${
-										(hoveredStar >= ix || selectedStar >= ix) && `checked`
+										(hoveredStar >= ix + 1 || selectedStar >= ix + 1) &&
+										`checked`
 									}`}
 									key={ix}
 								/>
