@@ -70,16 +70,17 @@ export default function EnrolledCourseCard({
 }) {
 	const [hoveredStar, setHoveredStar] = useState(-1);
 	const [selectedStar, setSelectedStar] = useState(-1);
-	const { title, slug, id, content_creator, image, rating } = course;
+	const { title, slug, content_creator, image, rating } = course;
 	const { rateClass } = useContext(CourseContext);
 	const { token } = useContext(AuthContext);
 
 	useEffect(() => {
-		const x = rating.findIndex((x) => {
-			return x.user.id == user.id;
+		const userRatedIndex = rating.findIndex((rating) => {
+			return rating.user.id == user.id;
 		});
-		if (x >= 0) {
-			setSelectedStar(rating[x].rate);
+		if (userRatedIndex >= 0) {
+			// if user is there, it will ahve an Index
+			setSelectedStar(rating[userRatedIndex].rate);
 		}
 	}, [rating]);
 	const handleClickStars = (ix) => {

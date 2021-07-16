@@ -7,6 +7,8 @@ import { TextTertiary, TextSecondary } from "components/Typography/Text";
 import styled from "styled-components";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { mediaBreakpoint } from "utils/breakpoints";
+import { FaHeart } from "react-icons/fa";
+import { MdShare } from "react-icons/md";
 
 const EnrollBtn = styled(Button)`
 	border-radius: 40px;
@@ -63,6 +65,26 @@ const StyledTextTertiary = styled(TextTertiary)`
 const StyledHeadingXXS = styled(HeadingXXS)`
 	font-size: 14px;
 `;
+
+const Like = styled(FaHeart)`
+	font-size: 24px;
+	color: white;
+	transition: 0.25s;
+
+	&:hover {
+		color: #f2f2f2;
+	}
+`;
+
+const Share = styled(MdShare)`
+	font-size: 26px;
+	color: white;
+	transition: 0.25s;
+
+	&:hover {
+		color: #f2f2f2;
+	}
+`;
 const PreviewModal = (props) => {
 	const { selectedPreviewCourse, enrollClass } = useContext(CourseContext);
 	const { token, user } = useContext(AuthContext);
@@ -83,11 +105,30 @@ const PreviewModal = (props) => {
 					<HeadingXS as="p" className="text-white">
 						{selectedPreviewCourse.title}
 					</HeadingXS>
-					<div className="d-flex mt-3 align-items-center">
-						<Clock className="text-white mr-2" />
-						<StyledTextTertiary className="text-white ">
-							{selectedPreviewCourse.videos.length} hari
-						</StyledTextTertiary>
+					<div className="d-flex justify-content-between mt-3 align-items-center">
+						<div className="d-flex">
+							<Clock className="text-white mr-2" />
+							<StyledTextTertiary className="text-white ">
+								{selectedPreviewCourse.videos.length} hari
+							</StyledTextTertiary>
+						</div>
+						<div className="d-flex">
+							<Like
+								role="button"
+								className="mr-2"
+								onClick={(e) => {
+									e.stopPropagation();
+									alert("Wishlisted (WIP)");
+								}}
+							/>
+							<Share
+								role="button"
+								onClick={(e) => {
+									e.stopPropagation();
+									alert("Share (WIP)");
+								}}
+							/>
+						</div>
 					</div>
 					<div className="d-flex mt-2 align-items-center">
 						<StyledTextTertiary className="text-white mr-3">
