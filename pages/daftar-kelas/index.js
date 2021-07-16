@@ -56,6 +56,7 @@ export default function index({ courses }) {
 				}
 			});
 			setCoursesState(courses);
+			console.log(courses);
 		}
 	}, [user]);
 

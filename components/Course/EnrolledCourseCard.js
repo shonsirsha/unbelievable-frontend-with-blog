@@ -70,8 +70,7 @@ export default function EnrolledCourseCard({
 }) {
 	const [hoveredStar, setHoveredStar] = useState(-1);
 	const [selectedStar, setSelectedStar] = useState(-1);
-	const { title, slug, id, content_creator, image, total_rating, rating } =
-		course;
+	const { title, slug, id, content_creator, image, rating } = course;
 	const { rateClass } = useContext(CourseContext);
 	const { token } = useContext(AuthContext);
 

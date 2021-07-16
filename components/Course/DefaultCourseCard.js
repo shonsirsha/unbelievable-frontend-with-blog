@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Card, Image, Button } from "react-bootstrap";
 import styled from "styled-components";
 import { HeadingXXS, HeadingXS } from "components/Typography/Headings";
@@ -98,8 +98,9 @@ export default function DefaultCourseCard({
 	owned = false,
 	...props
 }) {
-	const { title, short_desc, content_creator, total_rating, image } = course;
+	const { title, short_desc, content_creator, image, rating } = course;
 	// const token = user.token;
+	const [totalRating, setTotalRating] = useState(0);
 	const {
 		enrollClassLoading,
 		enrollClass,
@@ -112,6 +113,18 @@ export default function DefaultCourseCard({
 		setPreviewModalOpen(true);
 		setSelectedPreviewCourse(course);
 	};
+
+	useEffect(() => {
+		if (rating.length > 1) {
+			setTotalRating(
+				rating.reduce((a, b) => ({ rate: a.rate + b.rate }.rate)) /
+					rating.length
+			);
+		}
+		if (rating.length === 1) {
+			setTotalRating(rating[0].rate);
+		}
+	}, []);
 
 	return (
 		<StyledCard
@@ -141,7 +154,7 @@ export default function DefaultCourseCard({
 
 				<div className="d-flex ml-0 mt-4 ml-lg-auto justify-content-center align-items-center">
 					<HeadingXS className="text-primary1 mr-1 ">
-						{total_rating ? total_rating : "-"}
+						{rating.length > 0 ? totalRating : "-"}
 					</HeadingXS>
 					<TotalRating>/ 5</TotalRating>
 				</div>
@@ -164,15 +177,17 @@ export default function DefaultCourseCard({
 						/>
 					</div>
 					<div className="d-flex">
-						{[...Array(parseInt(total_rating ? total_rating : 0))].map((ix) => (
-							<Image
-								key={ix}
-								width={17}
-								height={16}
-								src="/images/gold-star.png"
-							/>
-						))}
-						{[...Array(total_rating ? 5 - parseInt(total_rating) : 5)].map(
+						{[...Array(parseInt(rating.length > 0 ? totalRating : 0))].map(
+							(ix) => (
+								<Image
+									key={ix}
+									width={17}
+									height={16}
+									src="/images/gold-star.png"
+								/>
+							)
+						)}
+						{[...Array(rating.length > 0 ? 5 - parseInt(totalRating) : 5)].map(
 							(ix) => (
 								<Image
 									key={ix}

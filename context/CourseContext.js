@@ -73,7 +73,6 @@ export const CourseProvider = ({ children }) => {
 
 			if (!res.ok) {
 				console.log(data.message);
-				console.log(data);
 			} else {
 				console.log("rated");
 			}
