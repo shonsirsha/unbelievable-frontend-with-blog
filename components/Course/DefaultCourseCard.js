@@ -117,8 +117,10 @@ export default function DefaultCourseCard({
 	useEffect(() => {
 		if (rating.length > 1) {
 			setTotalRating(
-				rating.reduce((a, b) => ({ rate: a.rate + b.rate }.rate)) /
+				(
+					rating.map((r) => r.rate).reduce((prev, curr) => prev + curr, 0) /
 					rating.length
+				).toPrecision(2)
 			);
 		}
 		if (rating.length === 1) {
