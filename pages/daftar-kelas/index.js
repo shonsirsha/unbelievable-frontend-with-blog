@@ -60,7 +60,7 @@ export default function index({ courses }) {
 					<div key={course.id}>
 						<DefaultCourseCard
 							key={course.id}
-							className="mr-3 mb-5 "
+							className="mr-xl-3 mr-lg-3 mr-md-3 mr-0 mb-5 "
 							user={user}
 							course={course}
 							owned={
@@ -84,7 +84,7 @@ export default function index({ courses }) {
 					<div key={course.id}>
 						<DefaultCourseCard
 							key={course.id}
-							className="mr-3 mb-5 "
+							className="mr-xl-3 mr-lg-3 mr-md-3 mr-0 mb-5 "
 							user={user}
 							course={course}
 							owned={false}
