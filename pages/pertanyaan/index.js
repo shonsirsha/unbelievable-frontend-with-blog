@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Layout from "components/Layout";
 import Showcase from "components/Showcase";
 import { Container, Row, Col } from "react-bootstrap";
@@ -8,6 +9,8 @@ import { MdHeadsetMic } from "react-icons/md";
 import { BsEnvelope } from "react-icons/bs";
 import Link from "next/link";
 import SearchBar from "components/Search/SearchBar";
+import { whitespace } from "utils/whitespace";
+
 const TitleText = styled(TextPrimary)`
 	font-size: 22px;
 `;
@@ -38,13 +41,24 @@ const StyledRow = styled(Row)`
 	margin-right: 0;
 `;
 export default function index({ categories }) {
+	const [categoriesState, setCategoriesState] = useState(categories);
+	const handleChange = (e) => {
+		if (!whitespace(e.target.value)) {
+			const filteredCategories = categories.filter((cat) =>
+				cat.name.toLowerCase().includes(e.target.value)
+			);
+			setCategoriesState(filteredCategories);
+		} else {
+			setCategoriesState(categories);
+		}
+	};
 	return (
 		<Layout showBurger={false} title="Pertanyaan | Unbelieveable" scrollToSolid>
 			<Showcase title="Pertanyaan" />
 			<StyledContainer>
 				<StyledRow className="w-100 mb-5">
 					<Col xl={12} className="d-flex justify-content-center">
-						<SearchBar placeholder="Cari..." />
+						<SearchBar onChange={handleChange} placeholder="Cari..." />
 					</Col>
 				</StyledRow>
 				<StyledRow className="w-100 mb-5">
@@ -55,7 +69,7 @@ export default function index({ categories }) {
 					</Col>
 				</StyledRow>
 				<StyledRow className="w-100">
-					{categories.map((category, ix) => (
+					{categoriesState.map((category, ix) => (
 						<Col key={ix} className="mb-4" xl={4} md={6} sm={12}>
 							<Link href={`/pertanyaan/topik/${category.slug}`}>
 								<a>
