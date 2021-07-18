@@ -1,11 +1,12 @@
+import { useContext, useState, useEffect } from "react";
 import { Card, Image, Button } from "react-bootstrap";
 import styled from "styled-components";
-import { API_URL } from "config";
-import { useRouter } from "next/router";
 import { HeadingXXS, HeadingXS } from "components/Typography/Headings";
 import { TextTertiary } from "components/Typography/Text";
 import { FaHeart } from "react-icons/fa";
 import { MdShare } from "react-icons/md";
+import CourseContext from "context/CourseContext";
+import AuthContext from "context/AuthContext";
 
 const EnrollBtn = styled(Button)`
 	border-radius: 40px;
@@ -89,47 +90,53 @@ const TextDesc = styled(TextTertiary)`
 	height: ${(props) => (props.small ? `56px` : `32px`)};
 	font-size: ${(props) => (props.small ? `12px` : `14px`)};
 `;
+
 export default function DefaultCourseCard({
 	course,
 	small,
 	user,
-	token = null,
 	owned = false,
 	...props
 }) {
-	const { title, short_desc, content_creator, rating, image, slug, id } =
-		course;
+	const { title, short_desc, content_creator, image, rating } = course;
+	// const token = user.token;
+	const [totalRating, setTotalRating] = useState(0);
+	const {
+		enrollClassLoading,
+		enrollClass,
+		setPreviewModalOpen,
+		setSelectedPreviewCourse,
+	} = useContext(CourseContext);
+	const { token } = useContext(AuthContext);
 
-	const router = useRouter();
-
-	const enrollClass = async () => {
-		if (!owned) {
-			const res = await fetch(`${API_URL}/courses/${id}`, {
-				method: "PUT",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${token}`,
-				},
-				body: JSON.stringify({
-					enrolled_users: [...course.enrolled_users, { id: user.id }],
-				}),
-			});
-
-			if (!res.ok) {
-				console.log(data.message);
-			} else {
-				router.push(`/kelas/${slug}`);
-			}
-		} else {
-			router.push(`/kelas/${slug}`);
-		}
+	const openModal = () => {
+		setPreviewModalOpen(true);
+		setSelectedPreviewCourse(course);
 	};
+
+	useEffect(() => {
+		if (rating.length > 1) {
+			setTotalRating(
+				rating.reduce((a, b) => ({ rate: a.rate + b.rate }.rate)) /
+					rating.length
+			);
+		}
+		if (rating.length === 1) {
+			setTotalRating(rating[0].rate);
+		}
+	}, []);
 
 	return (
 		<StyledCard
 			small={small ? 1 : 0}
 			{...props}
-			onClick={() => alert("Card Clicked (WIP)")}
+			onClick={() => {
+				if (!owned || !token) {
+					openModal();
+				} else {
+					enrollClass(course, user.id, token);
+				}
+			}}
 		>
 			<ImageContainer small={small} img={image} />
 
@@ -142,12 +149,12 @@ export default function DefaultCourseCard({
 				</div>
 
 				<StyledTextTertiary className="mt-auto">
-					{content_creator.full_name}
+					{content_creator && content_creator.full_name}
 				</StyledTextTertiary>
 
 				<div className="d-flex ml-0 mt-4 ml-lg-auto justify-content-center align-items-center">
 					<HeadingXS className="text-primary1 mr-1 ">
-						{rating ? rating : "-"}
+						{rating.length > 0 ? totalRating : "-"}
 					</HeadingXS>
 					<TotalRating>/ 5</TotalRating>
 				</div>
@@ -170,31 +177,36 @@ export default function DefaultCourseCard({
 						/>
 					</div>
 					<div className="d-flex">
-						{[...Array(parseInt(rating ? rating : 0))].map((ix) => (
-							<Image
-								key={ix}
-								width={17}
-								height={16}
-								src="/images/gold-star.png"
-							/>
-						))}
-						{[...Array(rating ? 5 - parseInt(rating) : 5)].map((ix) => (
-							<Image
-								key={ix}
-								width={17}
-								height={16}
-								src="/images/gray-star.png"
-							/>
-						))}
+						{[...Array(parseInt(rating.length > 0 ? totalRating : 0))].map(
+							(ix) => (
+								<Image
+									key={ix}
+									width={17}
+									height={16}
+									src="/images/gold-star.png"
+								/>
+							)
+						)}
+						{[...Array(rating.length > 0 ? 5 - parseInt(totalRating) : 5)].map(
+							(ix) => (
+								<Image
+									key={ix}
+									width={17}
+									height={16}
+									src="/images/gray-star.png"
+								/>
+							)
+						)}
 					</div>
 				</div>
 
 				<EnrollBtn
 					className="bg-primary1"
+					disabled={enrollClassLoading}
 					small={small ? 1 : 0}
 					onClick={(e) => {
 						e.stopPropagation();
-						enrollClass();
+						enrollClass(course, user ? user.id : null, token ? token : null);
 					}}
 				>
 					<StyledHeadingXXS as="p">

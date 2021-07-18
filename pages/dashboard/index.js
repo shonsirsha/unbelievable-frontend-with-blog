@@ -1,7 +1,10 @@
 import { useContext, useState } from "react";
 import { parseCookies } from "utils/cookies";
-import Router from "next/router";
+import { useRouter } from "next/router";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import AuthContext from "context/AuthContext";
+import CourseContext from "context/CourseContext";
 import { API_URL } from "config/index";
 import { HeadingXS, HeadingLG } from "components/Typography/Headings";
 import Layout from "components/Layout";
@@ -10,6 +13,7 @@ import EnrolledCourseCard from "components/Course/EnrolledCourseCard";
 import DefaultCourseCard from "components/Course/DefaultCourseCard";
 import SideBlock from "components/SideItems/SideBlock";
 import styled from "styled-components";
+import PreviewModal from "components/Course/PreviewModal";
 
 const StyledDefault = styled(DefaultCourseCard)`
 	margin-right: 16px;
@@ -59,8 +63,13 @@ const StyledEnrolled = styled(EnrolledCourseCard)`
 		}
 	}
 `;
+
 const index = ({ token, onboardings, user, courses, coursesTaken }) => {
+	const router = useRouter();
+
 	const { logout } = useContext(AuthContext);
+	const { previewModalOpen, setPreviewModalOpen } = useContext(CourseContext);
+
 	const [allCourses] = useState(courses);
 
 	const handleFinishOnboarding = async () => {
@@ -72,7 +81,6 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 			},
 			body: JSON.stringify({ onboarded: true }),
 		});
-
 		if (!res.ok) {
 			if (res.status === 403 || res.status === 401) {
 				toast.error("Terjadi Kesalahan Mohon Coba Lagi (403)");
@@ -80,7 +88,7 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 			}
 			toast.error("Terjadi Kesalahan Mohon Coba Lagi");
 		} else {
-			Router.push("/dashboard");
+			router.push("/dashboard");
 		}
 	};
 
@@ -105,6 +113,12 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 			withMargin
 			mainApp
 		>
+			<ToastContainer />
+
+			<PreviewModal
+				show={previewModalOpen}
+				onHide={() => setPreviewModalOpen(false)}
+			/>
 			<div className="d-flex w-100 flex-column">
 				<HeadingXS className="text-gray mb-2">
 					selamat datang kembali,
@@ -114,17 +128,18 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 				</StyledHeadingLG>
 				<div className="d-flex flex-column">
 					<StyledHeadingXS className="mb-2 ml-1">kelas populer</StyledHeadingXS>
-					<div className="d-flex flex-lg-wrap flex-nowrap w-100 overflow-lg-none overflow-auto ">
-						{allCourses.map((course) => (
-							<StyledDefault
-								key={course.id}
-								small
-								user={user}
-								token={token}
-								course={course}
-							/>
-						))}
-					</div>
+					{user.token && (
+						<div className="d-flex flex-lg-wrap flex-nowrap w-100 overflow-lg-none overflow-auto ">
+							{allCourses.map((course) => (
+								<StyledDefault
+									key={course.id}
+									small
+									user={user}
+									course={course}
+								/>
+							))}
+						</div>
+					)}
 				</div>
 
 				<div className="d-flex flex-column mt-4">
@@ -133,12 +148,9 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 					<div className="d-flex flex-lg-wrap flex-nowrap w-100 overflow-lg-none overflow-auto pb-2">
 						{coursesTaken.map((course) => (
 							<StyledEnrolled
-								title={course.title}
 								user={user}
-								slug={course.slug}
 								key={course.id}
-								creatorName={course.content_creator.full_name}
-								img={course.image}
+								course={course}
 								totalProgress={30}
 							/>
 						))}
@@ -203,7 +215,8 @@ export async function getServerSideProps({ req, _ }) {
 		});
 
 		const onboardings = await res.json();
-		const user = await res2.json();
+		let user = await res2.json();
+		user.token = token;
 		const courses = await res3.json();
 		const coursesTaken = await res4.json();
 

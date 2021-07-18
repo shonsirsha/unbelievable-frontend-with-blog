@@ -144,11 +144,11 @@ export default function Header({
 	const [navbarClass, setNavbarClass] = useState("");
 	const [menuShown, setMenuShown] = useState("");
 	useEffect(() => {
-		if (landingPage) {
+		if (landingPage && window) {
 			window.addEventListener("scroll", handleScroll);
 		}
 
-		if (scrollToSolid) {
+		if (scrollToSolid && window) {
 			window.addEventListener("scroll", handleScroll2);
 		}
 	}, []);

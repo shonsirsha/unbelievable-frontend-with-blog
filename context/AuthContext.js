@@ -9,10 +9,13 @@ export const AuthProvider = ({ children }) => {
 	const [err, setErr] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [authLoading, setAuthLoading] = useState(false);
+	const [userLoading, setUserLoading] = useState(false);
+	const [token, setToken] = useState(null);
 
 	const router = useRouter();
 	useEffect(() => {
 		checkUserLoggedIn();
+		getToken();
 	}, []);
 	//Register a user
 	const register = async (user) => {
@@ -80,7 +83,7 @@ export const AuthProvider = ({ children }) => {
 	//Check if user is logged in
 
 	const checkUserLoggedIn = async () => {
-		setLoading(true);
+		setUserLoading(true);
 		const res = await fetch(`${NEXT_URL}/api/user`);
 
 		const data = await res.json();
@@ -89,6 +92,20 @@ export const AuthProvider = ({ children }) => {
 			setUser(data.user);
 		} else {
 			setUser(null);
+		}
+		setUserLoading(false);
+	};
+
+	const getToken = async () => {
+		setLoading(true);
+		const res = await fetch(`${NEXT_URL}/api/token`);
+
+		const data = await res.json();
+
+		if (res.ok) {
+			setToken(data.token);
+		} else {
+			setToken(null);
 		}
 		setLoading(false);
 	};
@@ -104,6 +121,8 @@ export const AuthProvider = ({ children }) => {
 				checkUserLoggedIn,
 				loading,
 				authLoading,
+				userLoading,
+				token,
 			}}
 		>
 			{children}
