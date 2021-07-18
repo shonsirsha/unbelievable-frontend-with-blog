@@ -69,19 +69,20 @@ export default function index({ categories }) {
 					</Col>
 				</StyledRow>
 				<StyledRow className="w-100">
-					{categoriesState.map((category, ix) => (
-						<Col key={ix} className="mb-4" xl={4} md={6} sm={12}>
-							<Link href={`/pertanyaan/topik/${category.slug}`}>
-								<a>
-									<TopicContainer>
-										<TextTertiary className="text-gray2">
-											{category.name}
-										</TextTertiary>
-									</TopicContainer>
-								</a>
-							</Link>
-						</Col>
-					))}
+					{categoriesState &&
+						categoriesState.map((category, ix) => (
+							<Col key={ix} className="mb-4" xl={4} md={6} sm={12}>
+								<Link href={`/pertanyaan/topik/${category.slug}`}>
+									<a>
+										<TopicContainer>
+											<TextTertiary className="text-gray2">
+												{category.name}
+											</TextTertiary>
+										</TopicContainer>
+									</a>
+								</Link>
+							</Col>
+						))}
 				</StyledRow>
 				<StyledRow className="w-100 mt-4">
 					<Col xl={12}>
