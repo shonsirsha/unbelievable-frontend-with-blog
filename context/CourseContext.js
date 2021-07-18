@@ -1,7 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import { API_URL } from "config/index";
-import AuthContext from "./AuthContext";
 
 const CourseContext = createContext();
 

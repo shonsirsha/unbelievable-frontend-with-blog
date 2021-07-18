@@ -18,11 +18,12 @@ const StyledContainer = styled(Container)`
 	padding-top: 120px;
 	padding-bottom: 56px;
 `;
-export default function index({ courses }) {
+export default function index() {
 	const { userLoading, user, checkUserLoggedIn } = useContext(AuthContext);
 	const { previewModalOpen, setPreviewModalOpen } = useContext(CourseContext);
 
-	const [coursesState, setCoursesState] = useState(courses);
+	const [coursesState, setCoursesState] = useState(null);
+	const [loading, setLoading] = useState(true);
 	NProgress.configure({
 		minimum: 0.3,
 		easing: "ease",
@@ -43,10 +44,17 @@ export default function index({ courses }) {
 	}, [userLoading]);
 
 	useEffect(async () => {
+		setLoading(true);
 		const res = await fetch(`${API_URL}/courses`);
 		const courses = await res.json();
 		setCoursesState(courses);
+		setLoading(false);
 	}, []);
+
+	useEffect(() => {
+		console.log("refetched");
+		console.log(coursesState);
+	}, [coursesState]);
 
 	const cardUser = (
 		<>
@@ -90,7 +98,7 @@ export default function index({ courses }) {
 	);
 
 	const content = user ? cardUser : cardNonUser;
-	if (userLoading) {
+	if (userLoading || loading) {
 		return <></>;
 	}
 
@@ -108,15 +116,4 @@ export default function index({ courses }) {
 			<StyledContainer>{!userLoading && <>{content}</>}</StyledContainer>
 		</Layout>
 	);
-}
-
-export async function getStaticProps() {
-	const res = await fetch(`${API_URL}/courses`);
-	const courses = await res.json();
-	return {
-		props: {
-			courses,
-		},
-		revalidate: 1,
-	};
 }
