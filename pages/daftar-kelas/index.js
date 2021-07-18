@@ -48,6 +48,11 @@ export default function index({ courses }) {
 		setCoursesState(courses);
 	}, []);
 
+	useEffect(() => {
+		console.log("refetched");
+		console.log(coursesState);
+	}, [coursesState]);
+
 	const cardUser = (
 		<>
 			{coursesState &&
