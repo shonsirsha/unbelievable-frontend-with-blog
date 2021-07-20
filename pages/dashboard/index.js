@@ -97,7 +97,6 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 			<>
 				<Onboarding
 					handleFinishOnboarding={handleFinishOnboarding}
-					token={token}
 					user={user}
 					onboardings={onboardings}
 				/>
