@@ -92,6 +92,7 @@ const Overlay = styled.div`
 	height: 100vh;
 	top: 0;
 	left: 0;
+	z-index: 2;
 
 	background: #000000b0;
 `;
