@@ -70,7 +70,7 @@ export default function EnrolledCourseCard({
 }) {
 	const [hoveredStar, setHoveredStar] = useState(-1);
 	const [selectedStar, setSelectedStar] = useState(-1);
-	const { title, slug, content_creator, image, rating } = course;
+	const { title, slug, content_creator, image, rating, videos } = course;
 	const { rateClass } = useContext(CourseContext);
 	const { token } = useContext(AuthContext);
 
@@ -84,12 +84,12 @@ export default function EnrolledCourseCard({
 		}
 	}, [rating]);
 	const handleClickStars = (ix) => {
-		console.log(course.id);
 		setSelectedStar(ix + 1);
 		rateClass(course, user.id, token, ix + 1);
 	};
+
 	return (
-		<Link href={`kelas/${slug}`}>
+		<Link href={`kelas/${slug}?c=${videos[0].video.upload_id}`}>
 			<StyledCard small={small} {...props}>
 				<ImageContainer small={small} img={image} />
 

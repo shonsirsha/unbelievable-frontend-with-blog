@@ -98,7 +98,7 @@ export default function DefaultCourseCard({
 	owned = false,
 	...props
 }) {
-	const { title, short_desc, content_creator, image, rating } = course;
+	const { title, short_desc, content_creator, image, rating, videos } = course;
 	// const token = user.token;
 	const [totalRating, setTotalRating] = useState(0);
 	const {
