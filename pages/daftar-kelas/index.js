@@ -9,6 +9,7 @@ import { API_URL } from "config";
 import DefaultCourseCard from "components/Course/DefaultCourseCard";
 import NProgress from "nprogress";
 import PreviewModal from "components/Course/PreviewModal";
+import BuyModal from "components/Course/BuyModal";
 
 const StyledContainer = styled(Container)`
 	display: flex;
@@ -20,7 +21,12 @@ const StyledContainer = styled(Container)`
 `;
 export default function index() {
 	const { userLoading, user, checkUserLoggedIn } = useContext(AuthContext);
-	const { previewModalOpen, setPreviewModalOpen } = useContext(CourseContext);
+	const {
+		previewModalOpen,
+		setPreviewModalOpen,
+		buyModalOpen,
+		setBuyModalOpen,
+	} = useContext(CourseContext);
 
 	const [coursesState, setCoursesState] = useState(null);
 	const [loading, setLoading] = useState(true);
@@ -112,6 +118,7 @@ export default function index() {
 				show={previewModalOpen}
 				onHide={() => setPreviewModalOpen(false)}
 			/>
+			<BuyModal show={buyModalOpen} onHide={() => setBuyModalOpen(false)} />
 			<Showcase title="Daftar Kelas" />
 			<StyledContainer>{!userLoading && <>{content}</>}</StyledContainer>
 		</Layout>

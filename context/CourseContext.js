@@ -8,7 +8,9 @@ export const CourseProvider = ({ children }) => {
 	const router = useRouter();
 	const [enrollClassLoading, setEnrollClassLoading] = useState(false);
 	const [previewModalOpen, setPreviewModalOpen] = useState(false);
+	const [buyModalOpen, setBuyModalOpen] = useState(false);
 	const [selectedPreviewCourse, setSelectedPreviewCourse] = useState(null);
+
 	const enrollClass = async (course, userId, token) => {
 		setEnrollClassLoading(true);
 		if (!token) {
@@ -82,12 +84,14 @@ export const CourseProvider = ({ children }) => {
 		<CourseContext.Provider
 			value={{
 				enrollClass,
-				enrollClassLoading,
-				previewModalOpen,
 				setPreviewModalOpen,
-				selectedPreviewCourse,
 				setSelectedPreviewCourse,
 				rateClass,
+				setBuyModalOpen,
+				enrollClassLoading,
+				previewModalOpen,
+				selectedPreviewCourse,
+				buyModalOpen,
 			}}
 		>
 			{children}

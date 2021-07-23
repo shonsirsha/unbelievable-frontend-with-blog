@@ -86,7 +86,12 @@ const Share = styled(MdShare)`
 	}
 `;
 const PreviewModal = (props) => {
-	const { selectedPreviewCourse, enrollClass } = useContext(CourseContext);
+	const {
+		selectedPreviewCourse,
+		enrollClass,
+		setPreviewModalOpen,
+		setBuyModalOpen,
+	} = useContext(CourseContext);
 	const { token, user } = useContext(AuthContext);
 
 	if (!selectedPreviewCourse) {
@@ -141,7 +146,10 @@ const PreviewModal = (props) => {
 							setelah menyelesaikan kelas ini
 						</StyledTextTertiary>
 						<StyledTextTertiary className="text-white">
-							Rp. 400.000,00.-
+							{new Intl.NumberFormat("id-ID", {
+								style: "currency",
+								currency: "IDR",
+							}).format(selectedPreviewCourse.price)}
 						</StyledTextTertiary>
 					</div>
 					<div className="mt-2">
@@ -197,15 +205,18 @@ const PreviewModal = (props) => {
 						<EnrollBtn
 							onClick={(e) => {
 								e.stopPropagation();
-								enrollClass(
-									selectedPreviewCourse,
-									user ? user.id : null,
-									token ? token : null
-								);
+								// enrollClass(
+								// 	selectedPreviewCourse,
+								// 	user ? user.id : null,
+								// 	token ? token : null
+								// );
+								setPreviewModalOpen(false);
+								setTimeout(800);
+								setBuyModalOpen(true);
 							}}
 							className="bg-cyan align-self-center mt-4"
 						>
-							<StyledHeadingXXS>enroll</StyledHeadingXXS>
+							<StyledHeadingXXS>beli kelas</StyledHeadingXXS>
 						</EnrollBtn>
 					</div>
 				</div>
