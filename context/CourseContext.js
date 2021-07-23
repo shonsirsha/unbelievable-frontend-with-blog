@@ -9,7 +9,43 @@ export const CourseProvider = ({ children }) => {
 	const [enrollClassLoading, setEnrollClassLoading] = useState(false);
 	const [previewModalOpen, setPreviewModalOpen] = useState(false);
 	const [buyModalOpen, setBuyModalOpen] = useState(false);
+
 	const [selectedPreviewCourse, setSelectedPreviewCourse] = useState(null);
+	const [invoiceUrl, setInvoiceUrl] = useState(null);
+
+	const getInvoiceUrl = async (course, user, token) => {
+		setEnrollClassLoading(true);
+		//call to xendit API via Strapi
+		if (!token) {
+			router.push(`/masuk`);
+		}
+
+		const { slug, price, title } = course;
+		const { id, email } = user;
+
+		const res = await fetch(`${API_URL}/xendit`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				external_id: `${slug}-${Date.now() * 2}`,
+				amount: price,
+				payer_email: email,
+				description: `Beli Kelas: ${title}`,
+			}),
+		});
+
+		const inv = await res.json();
+		if (res.ok) {
+			setInvoiceUrl(inv.invoice_url);
+		} else {
+			alert("Terjadi kesalahan. Mohon ulangi lagi.");
+		}
+
+		setEnrollClassLoading(false);
+	};
 
 	const enrollClass = async (course, userId, token) => {
 		setEnrollClassLoading(true);
@@ -29,7 +65,7 @@ export const CourseProvider = ({ children }) => {
 					}),
 				});
 
-				const data = await res.json();
+				// const data = await res.json();
 
 				if (!res.ok) {
 					router.push(`/masuk`);
@@ -88,6 +124,9 @@ export const CourseProvider = ({ children }) => {
 				setSelectedPreviewCourse,
 				rateClass,
 				setBuyModalOpen,
+				getInvoiceUrl,
+				setInvoiceUrl,
+				invoiceUrl,
 				enrollClassLoading,
 				previewModalOpen,
 				selectedPreviewCourse,

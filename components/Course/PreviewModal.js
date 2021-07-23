@@ -88,15 +88,27 @@ const Share = styled(MdShare)`
 const PreviewModal = (props) => {
 	const {
 		selectedPreviewCourse,
-		enrollClass,
+		getInvoiceUrl,
 		setPreviewModalOpen,
 		setBuyModalOpen,
+		enrollClassLoading,
 	} = useContext(CourseContext);
 	const { token, user } = useContext(AuthContext);
 
 	if (!selectedPreviewCourse) {
 		return <></>;
 	}
+	const onClickEnrollBtn = async (e) => {
+		e.stopPropagation();
+		await getInvoiceUrl(selectedPreviewCourse, user, token);
+		setPreviewModalOpen(false);
+		setBuyModalOpen(true);
+		// enrollClass(
+		// 	selectedPreviewCourse,
+		// 	user ? user.id : null,
+		// 	token ? token : null
+		// );
+	};
 	return (
 		<StyledModal
 			{...props}
@@ -203,20 +215,13 @@ const PreviewModal = (props) => {
 							<HeadingXXS className="text-white">Bonus Consultation</HeadingXXS>
 						</div>
 						<EnrollBtn
-							onClick={(e) => {
-								e.stopPropagation();
-								// enrollClass(
-								// 	selectedPreviewCourse,
-								// 	user ? user.id : null,
-								// 	token ? token : null
-								// );
-								setPreviewModalOpen(false);
-								setTimeout(800);
-								setBuyModalOpen(true);
-							}}
+							disabled={enrollClassLoading}
+							onClick={onClickEnrollBtn}
 							className="bg-cyan align-self-center mt-4"
 						>
-							<StyledHeadingXXS>beli kelas</StyledHeadingXXS>
+							<StyledHeadingXXS>
+								{enrollClassLoading ? "menunggu..." : "beli kelas"}
+							</StyledHeadingXXS>
 						</EnrollBtn>
 					</div>
 				</div>

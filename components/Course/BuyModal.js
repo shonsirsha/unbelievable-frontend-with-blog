@@ -26,9 +26,11 @@ const StyledModalBody = styled(ModalBody)`
 	}
 `;
 const BuyModal = (props) => {
-	// const { , enrollClass } = useContext(CourseContext);
+	const { invoiceUrl } = useContext(CourseContext);
 	// const { token, user } = useContext(AuthContext);
-
+	if (!invoiceUrl) {
+		return <></>;
+	}
 	return (
 		<StyledModal
 			{...props}
@@ -37,7 +39,7 @@ const BuyModal = (props) => {
 			centered
 		>
 			<StyledModalBody className="d-flex flex-lg-row flex-column">
-				<iframe src="https://checkout-staging.xendit.co/web/60faa3e88693e8e36ca46472"></iframe>
+				<iframe src={`${invoiceUrl}`}></iframe>
 			</StyledModalBody>
 		</StyledModal>
 	);
