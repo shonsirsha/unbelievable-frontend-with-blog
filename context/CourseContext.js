@@ -22,7 +22,7 @@ export const CourseProvider = ({ children }) => {
 			}
 
 			const { slug, price, title } = course;
-			const { id, email } = user;
+			const { email } = user;
 			const external_id = `${slug}-${Date.now() * 2}`;
 			const res = await fetch(`${API_URL}/xendit`, {
 				method: "POST",
@@ -32,6 +32,7 @@ export const CourseProvider = ({ children }) => {
 				},
 				body: JSON.stringify({
 					external_id,
+					courseId: course.id,
 					amount: price,
 					payer_email: email,
 					description: `Beli Kelas: ${title}`,
@@ -41,25 +42,10 @@ export const CourseProvider = ({ children }) => {
 
 			const inv = await res.json();
 			if (res.ok) {
-				const res2 = await fetch(`${API_URL}/waiting-payments`, {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`,
-					},
-					body: JSON.stringify({
-						ex_id: external_id,
-						user,
-						course,
-					}),
-				});
-				if (res2.ok) {
-					setInvoiceUrl(inv.invoice_url);
-				}
+				setInvoiceUrl(inv.invoice_url);
 			} else {
-				alert("Terjadi kesalahan. Mohon ulangi lagi.");
+				alert("Maaf, telah terjadi kesalahan. Mohon coba lagi.");
 			}
-
 			setEnrollClassLoading(false);
 		}
 	};
