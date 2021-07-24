@@ -25,7 +25,6 @@ export async function getServerSideProps(ctx) {
 		};
 	}
 	const { slug, c } = ctx.query;
-	console.log(slug);
 	//c should be upload_id.
 	//upload_id may come from videos[0].video.upload_id
 

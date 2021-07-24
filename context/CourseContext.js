@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useState } from "react";
 import { useRouter } from "next/router";
 import { API_URL } from "config/index";
 
@@ -14,37 +14,54 @@ export const CourseProvider = ({ children }) => {
 	const [invoiceUrl, setInvoiceUrl] = useState(null);
 
 	const getInvoiceUrl = async (course, user, token) => {
-		setEnrollClassLoading(true);
-		//call to xendit API via Strapi
-		if (!token) {
-			router.push(`/masuk`);
+		if (window) {
+			setEnrollClassLoading(true);
+			//call to xendit API via Strapi
+			if (!token) {
+				router.push(`/masuk`);
+			}
+
+			const { slug, price, title } = course;
+			const { id, email } = user;
+			const external_id = `${slug}-${Date.now() * 2}`;
+			const res = await fetch(`${API_URL}/xendit`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({
+					external_id,
+					amount: price,
+					payer_email: email,
+					description: `Beli Kelas: ${title}`,
+					redirect_url: `${window.location.origin}/redir/${slug}`,
+				}),
+			});
+
+			const inv = await res.json();
+			if (res.ok) {
+				const res2 = await fetch(`${API_URL}/waiting-payments`, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+					body: JSON.stringify({
+						ex_id: external_id,
+						user,
+						course,
+					}),
+				});
+				if (res2.ok) {
+					setInvoiceUrl(inv.invoice_url);
+				}
+			} else {
+				alert("Terjadi kesalahan. Mohon ulangi lagi.");
+			}
+
+			setEnrollClassLoading(false);
 		}
-
-		const { slug, price, title } = course;
-		const { id, email } = user;
-
-		const res = await fetch(`${API_URL}/xendit`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`,
-			},
-			body: JSON.stringify({
-				external_id: `${slug}-${Date.now() * 2}`,
-				amount: price,
-				payer_email: email,
-				description: `Beli Kelas: ${title}`,
-			}),
-		});
-
-		const inv = await res.json();
-		if (res.ok) {
-			setInvoiceUrl(inv.invoice_url);
-		} else {
-			alert("Terjadi kesalahan. Mohon ulangi lagi.");
-		}
-
-		setEnrollClassLoading(false);
 	};
 
 	const enrollClass = async (course, userId, token) => {
@@ -105,7 +122,7 @@ export const CourseProvider = ({ children }) => {
 				}),
 			});
 
-			const data = await res.json();
+			// const data = await res.json();
 
 			if (!res.ok) {
 				console.log("failed...");

@@ -22,8 +22,6 @@ export async function getServerSideProps(ctx) {
 	}
 	const { slug } = ctx.query;
 
-	console.log(slug);
-
 	const res = await fetch(`${API_URL}/courses?slug=${slug}`, {
 		method: "GET",
 		headers: {
