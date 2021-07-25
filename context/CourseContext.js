@@ -13,10 +13,35 @@ export const CourseProvider = ({ children }) => {
 	const [selectedPreviewCourse, setSelectedPreviewCourse] = useState(null);
 	const [invoiceUrl, setInvoiceUrl] = useState(null);
 
+	const checkIfInvoiceValid = async (courseId, token) => {
+		if (!token) {
+			router.push(`/masuk`);
+		}
+		const res = await fetch(`${API_URL}/waiting-payments/singular/me`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				courseId: courseId,
+			}),
+		});
+
+		if (res.ok) {
+			const invoiceValid = await res.json();
+			if (invoiceValid.valid) {
+				setInvoiceUrl(invoiceValid.invoice_url);
+			}
+			return invoiceValid.valid;
+		} else {
+			alert("Maaf, telah terjadi kesalahan. Mohon coba lagi. (conf)");
+		}
+	};
+
 	const getInvoiceUrl = async (course, user, token) => {
 		if (window) {
 			setEnrollClassLoading(true);
-			//call to xendit API via Strapi
 			if (!token) {
 				router.push(`/masuk`);
 			}
@@ -24,6 +49,9 @@ export const CourseProvider = ({ children }) => {
 			const { slug, price, title } = course;
 			const { email } = user;
 			const external_id = `${slug}-${Date.now() * 2}`;
+			// `/xendit` endpoint does:
+			//1 . Call xendit API to create a new invoice_url
+			//2. Create a new entry of waiting_payment with the corresponding: user, course, external_id, and invoice_url
 			const res = await fetch(`${API_URL}/xendit`, {
 				method: "POST",
 				headers: {
@@ -129,6 +157,7 @@ export const CourseProvider = ({ children }) => {
 				setBuyModalOpen,
 				getInvoiceUrl,
 				setInvoiceUrl,
+				checkIfInvoiceValid,
 				invoiceUrl,
 				enrollClassLoading,
 				previewModalOpen,

@@ -91,6 +91,7 @@ const PreviewModal = (props) => {
 		getInvoiceUrl,
 		setPreviewModalOpen,
 		setBuyModalOpen,
+		checkIfInvoiceValid,
 		enrollClassLoading,
 	} = useContext(CourseContext);
 	const { token, user } = useContext(AuthContext);
@@ -100,9 +101,16 @@ const PreviewModal = (props) => {
 	}
 	const onClickEnrollBtn = async (e) => {
 		e.stopPropagation();
-		await getInvoiceUrl(selectedPreviewCourse, user, token);
-		setPreviewModalOpen(false);
+		const invoiceIsValid = await checkIfInvoiceValid(
+			selectedPreviewCourse.id,
+			token
+		); // exists and not expiring soon/expired yet
+		if (!invoiceIsValid) {
+			await getInvoiceUrl(selectedPreviewCourse, user, token);
+			setPreviewModalOpen(false);
+		}
 		setBuyModalOpen(true);
+
 		// enrollClass(
 		// 	selectedPreviewCourse,
 		// 	user ? user.id : null,
