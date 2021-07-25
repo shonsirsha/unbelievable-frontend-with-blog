@@ -107,8 +107,8 @@ const PreviewModal = (props) => {
 		); // exists and not expiring soon/expired yet
 		if (!invoiceIsValid) {
 			await getInvoiceUrl(selectedPreviewCourse, user, token);
-			setPreviewModalOpen(false);
 		}
+		setPreviewModalOpen(false);
 		setBuyModalOpen(true);
 
 		// enrollClass(

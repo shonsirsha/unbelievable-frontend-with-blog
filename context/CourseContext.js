@@ -14,6 +14,8 @@ export const CourseProvider = ({ children }) => {
 	const [invoiceUrl, setInvoiceUrl] = useState(null);
 
 	const checkIfInvoiceValid = async (courseId, token) => {
+		setEnrollClassLoading(true);
+
 		if (!token) {
 			router.push(`/masuk`);
 		}
@@ -33,8 +35,12 @@ export const CourseProvider = ({ children }) => {
 			if (invoiceValid.valid) {
 				setInvoiceUrl(invoiceValid.invoice_url);
 			}
+			setEnrollClassLoading(false);
+
 			return invoiceValid.valid;
 		} else {
+			setEnrollClassLoading(false);
+
 			alert("Maaf, telah terjadi kesalahan. Mohon coba lagi. (conf)");
 		}
 	};
@@ -80,7 +86,7 @@ export const CourseProvider = ({ children }) => {
 
 	const enrollClass = async (course, userId, token) => {
 		setEnrollClassLoading(true);
-		if (!token) {
+		if (!userId) {
 			router.push(`/masuk`);
 		} else {
 			const { owned, id, slug } = course;
