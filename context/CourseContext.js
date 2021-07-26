@@ -86,7 +86,7 @@ export const CourseProvider = ({ children }) => {
 
 	const enrollClass = async (course, userId, token) => {
 		setEnrollClassLoading(true);
-		if (!userId) {
+		if (!token) {
 			router.push(`/masuk`);
 		} else {
 			const { owned, id, slug } = course;

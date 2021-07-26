@@ -95,7 +95,7 @@ export default function DefaultCourseCard({
 	course,
 	small,
 	user,
-	owned = false,
+	enrolled = false,
 	...props
 }) {
 	const { title, short_desc, content_creator, image, rating, videos } = course;
@@ -133,7 +133,7 @@ export default function DefaultCourseCard({
 			small={small ? 1 : 0}
 			{...props}
 			onClick={() => {
-				if (!owned || !token) {
+				if (!enrolled || !token) {
 					openModal();
 				} else {
 					enrollClass(course, user.id, token);
@@ -212,7 +212,7 @@ export default function DefaultCourseCard({
 					}}
 				>
 					<StyledHeadingXXS as="p">
-						{!owned ? "enroll" : "lanjutkan"}
+						{!enrolled ? "enroll" : "lanjutkan"}
 					</StyledHeadingXXS>
 				</EnrollBtn>
 			</CardBody>
