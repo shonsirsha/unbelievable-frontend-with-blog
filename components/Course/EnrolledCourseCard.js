@@ -69,7 +69,6 @@ export default function EnrolledCourseCard({
 	...props
 }) {
 	const [hoveredStar, setHoveredStar] = useState(-1);
-	const [selectedStar, setSelectedStar] = useState(-1);
 	const {
 		title,
 		slug,
@@ -82,10 +81,8 @@ export default function EnrolledCourseCard({
 	} = course;
 	const { rateClass } = useContext(CourseContext);
 	const { token } = useContext(AuthContext);
+	const [selectedStar, setSelectedStar] = useState(my_rating);
 
-	useEffect(() => {
-		setSelectedStar(my_rating);
-	}, [rating]);
 	const handleClickStars = (ix) => {
 		// console.log(course);
 

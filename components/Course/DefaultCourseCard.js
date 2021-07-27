@@ -98,9 +98,9 @@ export default function DefaultCourseCard({
 	enrolled = false,
 	...props
 }) {
-	const { title, short_desc, content_creator, image, rating, videos } = course;
+	const { title, short_desc, content_creator, image, videos, total_rating } =
+		course;
 	// const token = user.token;
-	const [totalRating, setTotalRating] = useState(0);
 	const {
 		enrollClassLoading,
 		enrollClass,
@@ -113,20 +113,6 @@ export default function DefaultCourseCard({
 		setPreviewModalOpen(true);
 		setSelectedPreviewCourse(course);
 	};
-
-	useEffect(() => {
-		if (rating.length > 1) {
-			setTotalRating(
-				(
-					rating.map((r) => r.rate).reduce((prev, curr) => prev + curr, 0) /
-					rating.length
-				).toPrecision(2)
-			);
-		}
-		if (rating.length === 1) {
-			setTotalRating(rating[0].rate);
-		}
-	}, []);
 
 	return (
 		<StyledCard
@@ -156,7 +142,7 @@ export default function DefaultCourseCard({
 
 				<div className="d-flex ml-0 mt-4 ml-lg-auto justify-content-center align-items-center">
 					<HeadingXS className="text-primary1 mr-1 ">
-						{rating.length > 0 ? totalRating : "-"}
+						{total_rating > 0 ? total_rating : "-"}
 					</HeadingXS>
 					<TotalRating>/ 5</TotalRating>
 				</div>
@@ -179,7 +165,7 @@ export default function DefaultCourseCard({
 						/>
 					</div>
 					<div className="d-flex">
-						{[...Array(parseInt(rating.length > 0 ? totalRating : 0))].map(
+						{[...Array(parseInt(total_rating > 0 ? total_rating : 0))].map(
 							(ix) => (
 								<Image
 									key={ix}
@@ -189,7 +175,7 @@ export default function DefaultCourseCard({
 								/>
 							)
 						)}
-						{[...Array(rating.length > 0 ? 5 - parseInt(totalRating) : 5)].map(
+						{[...Array(total_rating > 0 ? 5 - parseInt(total_rating) : 5)].map(
 							(ix) => (
 								<Image
 									key={ix}

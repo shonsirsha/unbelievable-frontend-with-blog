@@ -106,6 +106,7 @@ const PreviewModal = (props) => {
 			token
 		); // exists and not expiring soon/expired yet
 		if (!invoiceIsValid) {
+			console.log("getting new url (call to xendit)...");
 			await getInvoiceUrl(selectedPreviewCourse, user, token);
 		}
 		setPreviewModalOpen(false);
