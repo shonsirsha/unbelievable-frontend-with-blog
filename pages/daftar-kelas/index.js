@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { parseCookies } from "utils/cookies";
 import Layout from "components/Layout";
 import Showcase from "components/Showcase";
@@ -8,7 +8,6 @@ import { Container } from "react-bootstrap";
 import styled from "styled-components";
 import { API_URL } from "config";
 import DefaultCourseCard from "components/Course/DefaultCourseCard";
-import NProgress from "nprogress";
 import PreviewModal from "components/Course/PreviewModal";
 import BuyModal from "components/Course/BuyModal";
 

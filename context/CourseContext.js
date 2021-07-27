@@ -87,24 +87,24 @@ export const CourseProvider = ({ children }) => {
 	const enrollClass = async (course, userId, token) => {
 		setEnrollClassLoading(true);
 		if (!token) {
+			console.log("Wx");
 			router.push(`/masuk`);
 		} else {
-			const { owned, id, slug } = course;
-			if (!owned) {
-				const res = await fetch(`${API_URL}/courses/${id}`, {
+			console.log("W");
+			const { enrolled, id, slug, uuid } = course;
+			if (!enrolled) {
+				const res = await fetch(`${API_URL}/courses/enroll/${uuid}`, {
 					method: "PUT",
 					headers: {
 						"Content-Type": "application/json",
 						Authorization: `Bearer ${token}`,
 					},
-					body: JSON.stringify({
-						enrolled_users: [...course.enrolled_users, { id: userId }],
-					}),
 				});
 
 				// const data = await res.json();
-
+				console.log(res);
 				if (!res.ok) {
+					console.log("Wdx");
 					router.push(`/masuk`);
 
 					// console.log(data.message);
