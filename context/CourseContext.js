@@ -118,19 +118,15 @@ export const CourseProvider = ({ children }) => {
 		setEnrollClassLoading(false);
 	};
 
-	const rateClass = async (course, userId, token, rate) => {
+	const rateClass = async (course, token, rate) => {
 		if (!token) {
 			router.push(`/masuk`);
 		} else {
 			console.log("rating...");
 
-			const { id } = course;
+			const { uuid } = course;
 
-			const newRating = course.rating.filter((rate) => {
-				return rate.user.id !== userId;
-			});
-
-			const res = await fetch(`${API_URL}/courses/${id}`, {
+			const res = await fetch(`${API_URL}/courses/rate/${uuid}`, {
 				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",
@@ -138,7 +134,7 @@ export const CourseProvider = ({ children }) => {
 				},
 
 				body: JSON.stringify({
-					rating: [...newRating, { rate, user: { id: userId } }],
+					rate,
 				}),
 			});
 

@@ -90,7 +90,7 @@ export default function EnrolledCourseCard({
 			alert("cant rate");
 		} else {
 			setSelectedStar(ix + 1);
-			rateClass(course, user.id, token, ix + 1);
+			rateClass(course, token, ix + 1);
 		}
 	};
 
