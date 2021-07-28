@@ -87,11 +87,9 @@ export const CourseProvider = ({ children }) => {
 	const enrollClass = async (course, userId, token) => {
 		setEnrollClassLoading(true);
 		if (!token) {
-			console.log("Wx");
 			router.push(`/masuk`);
 		} else {
-			console.log("W");
-			const { enrolled, id, slug, uuid } = course;
+			const { enrolled, slug, uuid } = course;
 			if (!enrolled) {
 				const res = await fetch(`${API_URL}/courses/enroll/${uuid}`, {
 					method: "PUT",
@@ -102,11 +100,8 @@ export const CourseProvider = ({ children }) => {
 				});
 
 				// const data = await res.json();
-				console.log(res);
 				if (!res.ok) {
-					console.log("Wdx");
 					router.push(`/masuk`);
-
 					// console.log(data.message);
 				} else {
 					router.push(`/kelas/${slug}`);

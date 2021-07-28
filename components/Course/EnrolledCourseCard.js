@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import Link from "next/link";
 import { Card, ProgressBar } from "react-bootstrap";
 import styled from "styled-components";
