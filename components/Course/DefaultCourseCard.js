@@ -122,7 +122,7 @@ export default function DefaultCourseCard({
 				if (!enrolled || !token) {
 					openModal();
 				} else {
-					enrollClass(course, user.id, token);
+					enrollClass(course, token);
 				}
 			}}
 		>
@@ -194,7 +194,7 @@ export default function DefaultCourseCard({
 					small={small ? 1 : 0}
 					onClick={(e) => {
 						e.stopPropagation();
-						enrollClass(course, user ? user.id : null, token ? token : null);
+						enrollClass(course, token ? token : null);
 					}}
 				>
 					<StyledHeadingXXS as="p">

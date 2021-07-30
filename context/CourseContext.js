@@ -91,6 +91,8 @@ export const CourseProvider = ({ children }) => {
 		} else {
 			const { enrolled, slug, uuid } = course;
 			if (!enrolled) {
+				console.log(token);
+
 				const res = await fetch(`${API_URL}/courses/enroll/${uuid}`, {
 					method: "PUT",
 					headers: {
