@@ -58,7 +58,7 @@ export const CourseProvider = ({ children }) => {
 			// `/xendit` endpoint does:
 			//1 . Call xendit API to create a new invoice_url
 			//2. Create a new entry of waiting_payment with the corresponding: user, course, external_id, and invoice_url
-			const res = await fetch(`${API_URL}/xendit`, {
+			const res = await fetch(`https://unb-backend.herokuapp.com/xendit`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -74,10 +74,13 @@ export const CourseProvider = ({ children }) => {
 				}),
 			});
 
+			console.log(external_id);
+
 			const inv = await res.json();
 			if (res.ok) {
 				setInvoiceUrl(inv.invoice_url);
 			} else {
+				console.log(res);
 				alert("Maaf, telah terjadi kesalahan. Mohon coba lagi.");
 			}
 			setEnrollClassLoading(false);

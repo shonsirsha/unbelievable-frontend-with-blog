@@ -68,6 +68,7 @@ const StyledTextSecondary = styled(TextSecondary)``;
 export default function Kelas({ slug, currentCourse }) {
 	const { paid, title } = currentCourse;
 	const { video, day_title } = currentCourse.currentVideo;
+	console.log(video);
 
 	return (
 		<Layout
@@ -83,9 +84,7 @@ export default function Kelas({ slug, currentCourse }) {
 				<div className="d-flex w-100 mt-4">
 					<VideoContainer>
 						<VideoPlayerHLS
-							liveURL={
-								"https://stream.mux.com/GLPOjYyeXb9M021IzATjHaczVPGC02H501o9KaYkxu5dbM.m3u8"
-							}
+							liveURL={`https://stream.mux.com/${video.playback_id}.m3u8`}
 						/>
 					</VideoContainer>
 					<VideosListContainer className="bg-primary1">
