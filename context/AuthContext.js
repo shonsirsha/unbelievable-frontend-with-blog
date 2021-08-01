@@ -33,6 +33,7 @@ export const AuthProvider = ({ children }) => {
 		if (res.ok) {
 			setUser(data.user);
 			router.push("/dashboard");
+			router.reload();
 		} else {
 			setErr(data.message);
 			setErr(null);
@@ -60,6 +61,7 @@ export const AuthProvider = ({ children }) => {
 		if (res.ok) {
 			setUser(data.user);
 			router.push("/dashboard");
+			router.reload();
 		} else {
 			setErr(data.message);
 			setErr(null);
@@ -84,7 +86,7 @@ export const AuthProvider = ({ children }) => {
 
 	const checkUserLoggedIn = async () => {
 		setUserLoading(true);
-		const res = await fetch(`${NEXT_URL}/api/user`);
+		const res = await fetch(`${NEXT_URL}/api/user`, { method: "POST" });
 
 		const data = await res.json();
 
@@ -98,7 +100,7 @@ export const AuthProvider = ({ children }) => {
 
 	const getToken = async () => {
 		setLoading(true);
-		const res = await fetch(`${NEXT_URL}/api/token`);
+		const res = await fetch(`${NEXT_URL}/api/token`, { method: "POST" });
 
 		const data = await res.json();
 

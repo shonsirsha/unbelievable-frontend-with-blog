@@ -83,18 +83,9 @@ const StyledP = styled.p`
 `;
 export default function Onboarding({
 	onboardings,
-	token,
 	user,
 	handleFinishOnboarding,
 }) {
-	const onVideoFinished = () => {
-		setBtnDisplayed(true);
-	};
-
-	const onClickNextBtn = () => {
-		setStage(stage + 1);
-	};
-
 	const [stage, setStage] = useState(1);
 	const bgArr = [
 		"#02a0e1",
@@ -102,6 +93,12 @@ export default function Onboarding({
 		"#007474",
 		"linear-gradient(#1022a4, #31a4fa)",
 	];
+
+	const onVideoFinished = () => {
+		setBtnDisplayed(true);
+	};
+
+	const [loadingFinishBtn, setLoadingFinishBtn] = useState(false);
 	const [btnDisplayed, setBtnDisplayed] = useState(false);
 	const [firstName, setFirstName] = useState("");
 	const [url, setUrl] = useState(onboardings[0][`video_intro_1`].url);
@@ -114,6 +111,19 @@ export default function Onboarding({
 	useEffect(() => {
 		setFirstName(user.first_name);
 	}, [user]);
+
+	const onClickNextBtn = () => {
+		setStage(stage + 1);
+	};
+
+	const onClickFinishBtn = async () => {
+		setVP(
+			<HeadingXS as="p" className="mt-3 text-white">
+				Mohon Menunggu...
+			</HeadingXS>
+		);
+		await handleFinishOnboarding();
+	};
 
 	const headingText = [
 		<>
@@ -207,7 +217,7 @@ export default function Onboarding({
 						will become fuel for building my best life one day at the time
 					</HighHeadingSM>
 					<FinishBtn
-						onClick={handleFinishOnboarding}
+						onClick={onClickFinishBtn}
 						className="mt-4 mx-auto bg-primary1"
 					>
 						<HeadingXS as="p">Ya, saya siap berkomitmen!</HeadingXS>

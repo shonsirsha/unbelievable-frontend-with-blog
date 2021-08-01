@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useState } from "react";
 import { useRouter } from "next/router";
 import { API_URL } from "config/index";
 
@@ -8,30 +8,105 @@ export const CourseProvider = ({ children }) => {
 	const router = useRouter();
 	const [enrollClassLoading, setEnrollClassLoading] = useState(false);
 	const [previewModalOpen, setPreviewModalOpen] = useState(false);
+	const [buyModalOpen, setBuyModalOpen] = useState(false);
+
 	const [selectedPreviewCourse, setSelectedPreviewCourse] = useState(null);
-	const enrollClass = async (course, userId, token) => {
+	const [invoiceUrl, setInvoiceUrl] = useState(null);
+
+	const checkIfInvoiceValid = async (courseId, token) => {
+		setEnrollClassLoading(true);
+
+		if (!token) {
+			router.push(`/masuk`);
+		}
+		const res = await fetch(`${API_URL}/waiting-payments/singular/me`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				courseId: courseId,
+			}),
+		});
+
+		if (res.ok) {
+			const invoiceValid = await res.json();
+			if (invoiceValid.valid) {
+				setInvoiceUrl(invoiceValid.invoice_url);
+			}
+			setEnrollClassLoading(false);
+
+			return invoiceValid.valid;
+		} else {
+			setEnrollClassLoading(false);
+
+			alert("Maaf, telah terjadi kesalahan. Mohon coba lagi. (conf)");
+		}
+	};
+
+	const getInvoiceUrl = async (course, user, token) => {
+		if (window) {
+			setEnrollClassLoading(true);
+			if (!token) {
+				router.push(`/masuk`);
+			}
+
+			const { slug, price, title } = course;
+			const { email } = user;
+			const external_id = `${slug}-${Date.now() * 2}`;
+			// `/xendit` endpoint does:
+			//1 . Call xendit API to create a new invoice_url
+			//2. Create a new entry of waiting_payment with the corresponding: user, course, external_id, and invoice_url
+			const res = await fetch(`https://unb-backend.herokuapp.com/xendit`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({
+					external_id,
+					courseId: course.id,
+					amount: price,
+					payer_email: email,
+					description: `Beli Kelas: ${title}`,
+					redirect_url: `${window.location.origin}/redir/${slug}`,
+				}),
+			});
+
+			console.log(external_id);
+
+			const inv = await res.json();
+			if (res.ok) {
+				setInvoiceUrl(inv.invoice_url);
+			} else {
+				console.log(res);
+				alert("Maaf, telah terjadi kesalahan. Mohon coba lagi.");
+			}
+			setEnrollClassLoading(false);
+		}
+	};
+
+	const enrollClass = async (course, token) => {
 		setEnrollClassLoading(true);
 		if (!token) {
 			router.push(`/masuk`);
 		} else {
-			const { owned, id, slug } = course;
-			if (!owned) {
-				const res = await fetch(`${API_URL}/courses/${id}`, {
+			const { enrolled, slug, uuid } = course;
+			if (!enrolled) {
+				console.log(token);
+
+				const res = await fetch(`${API_URL}/courses/enroll/${uuid}`, {
 					method: "PUT",
 					headers: {
 						"Content-Type": "application/json",
 						Authorization: `Bearer ${token}`,
 					},
-					body: JSON.stringify({
-						enrolled_users: [...course.enrolled_users, { id: userId }],
-					}),
 				});
 
-				const data = await res.json();
-
+				// const data = await res.json();
 				if (!res.ok) {
 					router.push(`/masuk`);
-
 					// console.log(data.message);
 				} else {
 					router.push(`/kelas/${slug}`);
@@ -43,19 +118,15 @@ export const CourseProvider = ({ children }) => {
 		setEnrollClassLoading(false);
 	};
 
-	const rateClass = async (course, userId, token, rate) => {
+	const rateClass = async (course, token, rate) => {
 		if (!token) {
 			router.push(`/masuk`);
 		} else {
 			console.log("rating...");
 
-			const { id } = course;
+			const { uuid } = course;
 
-			const newRating = course.rating.filter((rate) => {
-				return rate.user.id !== userId;
-			});
-
-			const res = await fetch(`${API_URL}/courses/${id}`, {
+			const res = await fetch(`${API_URL}/courses/rate/${uuid}`, {
 				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",
@@ -63,11 +134,11 @@ export const CourseProvider = ({ children }) => {
 				},
 
 				body: JSON.stringify({
-					rating: [...newRating, { rate, user: { id: userId } }],
+					rate,
 				}),
 			});
 
-			const data = await res.json();
+			// const data = await res.json();
 
 			if (!res.ok) {
 				console.log("failed...");
@@ -82,12 +153,18 @@ export const CourseProvider = ({ children }) => {
 		<CourseContext.Provider
 			value={{
 				enrollClass,
-				enrollClassLoading,
-				previewModalOpen,
 				setPreviewModalOpen,
-				selectedPreviewCourse,
 				setSelectedPreviewCourse,
 				rateClass,
+				setBuyModalOpen,
+				getInvoiceUrl,
+				setInvoiceUrl,
+				checkIfInvoiceValid,
+				invoiceUrl,
+				enrollClassLoading,
+				previewModalOpen,
+				selectedPreviewCourse,
+				buyModalOpen,
 			}}
 		>
 			{children}

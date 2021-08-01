@@ -68,6 +68,8 @@ $info: $cyan !default;
 $warning: $yellow !default;
 $danger: $red !default;
 
+$specialGray: #545454;
+
 // $input-placeholder-color: $black-200;
 
 $theme-colors: () !default;
@@ -96,6 +98,7 @@ $theme-colors: map-merge(
 		"palegreen": $paleGreen,
 		"darkpalegreen": $darkPaleGreen,
 		"cyan": $cyan,
+		"specialgray": $specialGray,
 	),
 	$theme-colors
 );

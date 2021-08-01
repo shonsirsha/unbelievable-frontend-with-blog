@@ -86,12 +86,38 @@ const Share = styled(MdShare)`
 	}
 `;
 const PreviewModal = (props) => {
-	const { selectedPreviewCourse, enrollClass } = useContext(CourseContext);
+	const {
+		selectedPreviewCourse,
+		getInvoiceUrl,
+		setPreviewModalOpen,
+		setBuyModalOpen,
+		checkIfInvoiceValid,
+		enrollClassLoading,
+	} = useContext(CourseContext);
 	const { token, user } = useContext(AuthContext);
 
 	if (!selectedPreviewCourse) {
 		return <></>;
 	}
+	const onClickEnrollBtn = async (e) => {
+		e.stopPropagation();
+		const invoiceIsValid = await checkIfInvoiceValid(
+			selectedPreviewCourse.id,
+			token
+		); // exists and not expiring soon/expired yet
+		if (!invoiceIsValid) {
+			console.log("getting new url (call to xendit)...");
+			await getInvoiceUrl(selectedPreviewCourse, user, token);
+		}
+		setPreviewModalOpen(false);
+		setBuyModalOpen(true);
+
+		// enrollClass(
+		// 	selectedPreviewCourse,
+		// 	user ? user.id : null,
+		// 	token ? token : null
+		// );
+	};
 	return (
 		<StyledModal
 			{...props}
@@ -141,7 +167,10 @@ const PreviewModal = (props) => {
 							setelah menyelesaikan kelas ini
 						</StyledTextTertiary>
 						<StyledTextTertiary className="text-white">
-							Rp. 400.000,00.-
+							{new Intl.NumberFormat("id-ID", {
+								style: "currency",
+								currency: "IDR",
+							}).format(selectedPreviewCourse.price)}
 						</StyledTextTertiary>
 					</div>
 					<div className="mt-2">
@@ -195,17 +224,13 @@ const PreviewModal = (props) => {
 							<HeadingXXS className="text-white">Bonus Consultation</HeadingXXS>
 						</div>
 						<EnrollBtn
-							onClick={(e) => {
-								e.stopPropagation();
-								enrollClass(
-									selectedPreviewCourse,
-									user ? user.id : null,
-									token ? token : null
-								);
-							}}
+							disabled={enrollClassLoading}
+							onClick={onClickEnrollBtn}
 							className="bg-cyan align-self-center mt-4"
 						>
-							<StyledHeadingXXS>enroll</StyledHeadingXXS>
+							<StyledHeadingXXS>
+								{enrollClassLoading ? "beli kelas..." : "beli kelas"}
+							</StyledHeadingXXS>
 						</EnrollBtn>
 					</div>
 				</div>

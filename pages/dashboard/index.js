@@ -14,6 +14,7 @@ import DefaultCourseCard from "components/Course/DefaultCourseCard";
 import SideBlock from "components/SideItems/SideBlock";
 import styled from "styled-components";
 import PreviewModal from "components/Course/PreviewModal";
+import BuyModal from "components/Course/BuyModal";
 
 const StyledDefault = styled(DefaultCourseCard)`
 	margin-right: 16px;
@@ -68,7 +69,12 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 	const router = useRouter();
 
 	const { logout } = useContext(AuthContext);
-	const { previewModalOpen, setPreviewModalOpen } = useContext(CourseContext);
+	const {
+		previewModalOpen,
+		setPreviewModalOpen,
+		buyModalOpen,
+		setBuyModalOpen,
+	} = useContext(CourseContext);
 
 	const [allCourses] = useState(courses);
 
@@ -97,7 +103,6 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 			<>
 				<Onboarding
 					handleFinishOnboarding={handleFinishOnboarding}
-					token={token}
 					user={user}
 					onboardings={onboardings}
 				/>
@@ -119,6 +124,9 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 				show={previewModalOpen}
 				onHide={() => setPreviewModalOpen(false)}
 			/>
+
+			<BuyModal show={buyModalOpen} onHide={() => setBuyModalOpen(false)} />
+
 			<div className="d-flex w-100 flex-column">
 				<HeadingXS className="text-gray mb-2">
 					selamat datang kembali,
@@ -144,15 +152,18 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 
 				<div className="d-flex flex-column mt-4">
 					<StyledHeadingXS className="mb-2 ml-1 ">kelas saya</StyledHeadingXS>
-
 					<div className="d-flex flex-lg-wrap flex-nowrap w-100 overflow-lg-none overflow-auto pb-2">
 						{coursesTaken.map((course) => (
-							<StyledEnrolled
-								user={user}
-								key={course.id}
-								course={course}
-								totalProgress={30}
-							/>
+							<>
+								{course.videos.length > 0 && (
+									<StyledEnrolled
+										user={user}
+										key={course.id}
+										course={course}
+										totalProgress={30}
+									/>
+								)}
+							</>
 						))}
 					</div>
 				</div>
@@ -219,6 +230,7 @@ export async function getServerSideProps({ req, _ }) {
 		user.token = token;
 		const courses = await res3.json();
 		const coursesTaken = await res4.json();
+		console.log(coursesTaken);
 
 		return {
 			props: {
