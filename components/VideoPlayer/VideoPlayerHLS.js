@@ -24,6 +24,7 @@ const VideoPlayerHLS = ({ liveURL }) => {
 			sources: [
 				{
 					src: liveURL,
+					type: "application/x-mpegURL",
 				},
 			],
 		};

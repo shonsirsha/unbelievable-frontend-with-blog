@@ -316,19 +316,21 @@ export default function Header({
 					alt="logo"
 				/>
 				<div className="ml-auto d-flex align-items-center">
-					<ProfileImage
-						onClick={() => {
-							if (user) {
-								router.push("/dashboard");
-							} else {
-								router.push("/masuk");
-							}
-						}}
-						src="images/profile.png"
-						alt="Profile"
-						width={43}
-						height={43}
-					/>
+					{window && (
+						<ProfileImage
+							onClick={() => {
+								if (user) {
+									router.push("/dashboard");
+								} else {
+									router.push("/masuk");
+								}
+							}}
+							src={`${window.location.origin}/images/profile.png`}
+							alt="Profile"
+							width={43}
+							height={43}
+						/>
+					)}
 
 					<HeadingXXS as="p" className="text-white ml-3 d-lg-block d-none">
 						{user && `${user.first_name} ${user.last_name}`}

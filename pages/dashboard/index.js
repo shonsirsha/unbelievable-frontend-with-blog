@@ -155,12 +155,14 @@ const index = ({ token, onboardings, user, courses, coursesTaken }) => {
 					<div className="d-flex flex-lg-wrap flex-nowrap w-100 overflow-lg-none overflow-auto pb-2">
 						{coursesTaken.map((course) => (
 							<>
-								<StyledEnrolled
-									user={user}
-									key={course.id}
-									course={course}
-									totalProgress={30}
-								/>
+								{course.videos.length > 0 && (
+									<StyledEnrolled
+										user={user}
+										key={course.id}
+										course={course}
+										totalProgress={30}
+									/>
+								)}
 							</>
 						))}
 					</div>
@@ -228,6 +230,8 @@ export async function getServerSideProps({ req, _ }) {
 		user.token = token;
 		const courses = await res3.json();
 		const coursesTaken = await res4.json();
+		console.log(coursesTaken);
+
 		return {
 			props: {
 				onboardings,
