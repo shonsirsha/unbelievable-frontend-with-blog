@@ -17,7 +17,7 @@ const VideoPlayerHLS = ({ liveURL }) => {
 	useEffect(() => {
 		const videoJsOptions = {
 			preload: "auto",
-			autoplay: "any",
+			autoplay: false,
 			controls: true,
 			fluid: true,
 			responsive: true,
@@ -50,6 +50,12 @@ const VideoPlayerHLS = ({ liveURL }) => {
 		<div data-vjs-player>
 			<video
 				ref={videoRef}
+				onLoadedMetadata={(e, px) => {
+					console.log(e.target.duration);
+				}}
+				onTimeUpdate={(e) => {
+					console.log(e.target.currentTime);
+				}}
 				className="video-js vjs-default-skin vjs-big-play-centered"
 			></video>
 		</div>

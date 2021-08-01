@@ -8,29 +8,43 @@ import {
 	HeadingSM,
 	HeadingXXS,
 } from "components/Typography/Headings";
-import { TextSecondary } from "components/Typography/Text";
+import { TextSecondary, TextTertiary } from "components/Typography/Text";
 import { MdLockOutline } from "react-icons/md";
 import { AiOutlineClockCircle } from "react-icons/ai";
-import { useRouter } from "next/router";
 import VideoPlayerHLS from "components/VideoPlayer/VideoPlayerHLS";
+import { mediaBreakpoint } from "utils/breakpoints";
 
 const StyledContainer = styled.div`
 	display: flex;
 	padding: 32px 0;
+	padding-bottom: 0;
 	a:hover {
 		text-decoration: none;
+	}
+
+	@media ${mediaBreakpoint.down.md} {
+		padding-top: 0;
 	}
 `;
 const VideoContainer = styled.div`
 	width: 65%;
-	background: pink;
+	background: transparent;
+	display: flex;
+	flex-direction: column;
 	min-height: 320px;
+
+	@media ${mediaBreakpoint.down.md} {
+		width: 100%;
+	}
 `;
 
 const VideosListContainer = styled.div`
 	width: 35%;
 	min-height: 320px;
 	padding: 32px 0;
+	@media ${mediaBreakpoint.down.md} {
+		width: 100%;
+	}
 `;
 
 const StyledHeadingSM = styled(HeadingSM)`
@@ -64,11 +78,26 @@ const TimeText = styled(HeadingXXS)`
 const Clock = styled(AiOutlineClockCircle)`
 	font-size: 14px;
 `;
+
+const MiscContainer = styled.div``;
+const MiscHeaderContainer = styled.div`
+	display: flex;
+	border-bottom: 1px #d1d1d1 solid;
+	align-items: center;
+	padding: 24px;
+	padding-bottom: 24px;
+`;
+const StyledTextTertiary = styled(TextTertiary)`
+	font-size: 12px;
+`;
+const MiscBodyContainer = styled.div`
+	padding: 24px;
+`;
 const StyledTextSecondary = styled(TextSecondary)``;
 export default function Kelas({ slug, currentCourse }) {
 	const { paid, title } = currentCourse;
 	const { video, day_title } = currentCourse.currentVideo;
-	console.log(video);
+	console.log(currentCourse);
 
 	return (
 		<Layout
@@ -81,11 +110,23 @@ export default function Kelas({ slug, currentCourse }) {
 				<div className="d-flex w-100 justify-content-center">
 					<HeadingXS>{title}</HeadingXS>
 				</div>
-				<div className="d-flex w-100 mt-4">
+				<div className="d-flex flex-md-row flex-column w-100 mt-4">
 					<VideoContainer>
 						<VideoPlayerHLS
 							liveURL={`https://stream.mux.com/${video.playback_id}.m3u8`}
 						/>
+						<MiscContainer>
+							<MiscHeaderContainer>
+								<HeadingXXS as="p" className="text-primary1">
+									Tentang course
+								</HeadingXXS>
+							</MiscHeaderContainer>
+							<MiscBodyContainer>
+								<StyledTextTertiary className="text-primary1">
+									{currentCourse.short_desc}
+								</StyledTextTertiary>
+							</MiscBodyContainer>
+						</MiscContainer>
 					</VideoContainer>
 					<VideosListContainer className="bg-primary1">
 						<StyledHeadingSM as="p" className="text-white mb-3">
