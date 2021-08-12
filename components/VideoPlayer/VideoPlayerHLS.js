@@ -4,7 +4,7 @@ import videojs from "video.js";
 import qualitySelector from "videojs-hls-quality-selector";
 import qualityLevels from "videojs-contrib-quality-levels";
 
-const VideoPlayerHLS = ({ liveURL }) => {
+const VideoPlayerHLS = ({ liveURL, videoId }) => {
 	const videoRef = useRef();
 	const [player, setPlayer] = useState(undefined);
 
@@ -13,12 +13,12 @@ const VideoPlayerHLS = ({ liveURL }) => {
 			player.src([liveURL]);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [liveURL]);
+	}, [videoId, liveURL]);
 
 	useEffect(() => {
 		const videoJsOptions = {
 			preload: "auto",
-			autoplay: false,
+			autoplay: true,
 			controls: true,
 			fluid: true,
 			responsive: true,
