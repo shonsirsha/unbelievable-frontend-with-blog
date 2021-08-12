@@ -12,6 +12,7 @@ const VideoPlayerHLS = ({ liveURL }) => {
 		if (player) {
 			player.src([liveURL]);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [liveURL]);
 
 	useEffect(() => {
@@ -41,6 +42,7 @@ const VideoPlayerHLS = ({ liveURL }) => {
 		return () => {
 			if (player) player.dispose();
 		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {

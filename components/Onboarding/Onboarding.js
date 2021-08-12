@@ -149,7 +149,8 @@ export default function Onboarding({
 		</>,
 		<>
 			<HeadingSM as="h1" className="text-white">
-				{firstName}'s Contract
+				{firstName}
+				{"'"}s Contract
 			</HeadingSM>
 		</>,
 	];
@@ -226,6 +227,7 @@ export default function Onboarding({
 			);
 			setBtnDisplayed(false);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [stage]);
 
 	useEffect(() => {
@@ -245,6 +247,7 @@ export default function Onboarding({
 			}, 300);
 			setBtnDisplayed(false);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [url]);
 
 	return (

@@ -168,6 +168,7 @@ export default function DefaultCourseCard({
 						{[...Array(parseInt(total_rating > 0 ? total_rating : 0))].map(
 							(ix) => (
 								<Image
+									alt="star"
 									key={ix}
 									width={17}
 									height={16}
@@ -178,6 +179,7 @@ export default function DefaultCourseCard({
 						{[...Array(total_rating > 0 ? 5 - parseInt(total_rating) : 5)].map(
 							(ix) => (
 								<Image
+									alt="star"
 									key={ix}
 									width={17}
 									height={16}

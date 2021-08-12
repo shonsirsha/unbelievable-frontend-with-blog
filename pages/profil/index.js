@@ -2,7 +2,7 @@ import { useContext } from "react";
 import AuthContext from "context/AuthContext";
 import Layout from "components/Layout";
 
-export default function index() {
+export default function Index() {
 	const { logout } = useContext(AuthContext);
 
 	return (

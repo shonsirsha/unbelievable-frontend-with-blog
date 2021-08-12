@@ -19,7 +19,7 @@ const StyledContainer = styled(Container)`
 	padding-top: 120px;
 	padding-bottom: 56px;
 `;
-export default function index({ courses }) {
+export default function Index({ courses }) {
 	const { user } = useContext(AuthContext);
 	const {
 		previewModalOpen,

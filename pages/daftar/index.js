@@ -109,7 +109,7 @@ const GreenCharacter = styled(Image)`
 		}
 	}
 `;
-const index = () => {
+const Index = () => {
 	const [signUpDetails, setSignUpDetails] = useState({
 		email: "",
 		first_name: "",
@@ -164,9 +164,8 @@ const index = () => {
 										type="text"
 										onBlur={() => setFocus("")}
 										onFocus={() => setFocus("focus")}
-										className={"shadow-none"}
 										name="first_name"
-										className="mr-xl-2 mb-3"
+										className="mr-xl-2 mb-3 shadow-none"
 										onChange={handleChange}
 										value={first_name}
 										placeholder="Nama Depan"
@@ -244,4 +243,4 @@ const index = () => {
 	);
 };
 
-export default mustBeUnauthed(index);
+export default mustBeUnauthed(Index);

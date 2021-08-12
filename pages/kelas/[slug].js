@@ -1,5 +1,5 @@
 import { parseCookies } from "utils/cookies";
-import { API_URL } from "config";
+import { API_URL, USE_FALLBACK_VID } from "config";
 import Link from "next/link";
 import Layout from "components/Layout";
 import styled from "styled-components";
@@ -135,6 +135,7 @@ export default function Kelas({ slug, currentCourse }) {
 
 						{currentCourse.videos.map((video) => (
 							<Link
+								key={video.video.upload_id}
 								href={
 									video.video.upload_id
 										? `/kelas/${slug}?c=${video.video.upload_id}`
