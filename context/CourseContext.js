@@ -18,6 +18,7 @@ export const CourseProvider = ({ children }) => {
 
 		if (!token) {
 			router.push(`/masuk`);
+			return;
 		}
 		const res = await fetch(`${API_URL}/waiting-payments/singular/me`, {
 			method: "POST",
@@ -50,6 +51,7 @@ export const CourseProvider = ({ children }) => {
 			setEnrollClassLoading(true);
 			if (!token) {
 				router.push(`/masuk`);
+				return;
 			}
 
 			const { slug, price, title } = course;
@@ -91,6 +93,7 @@ export const CourseProvider = ({ children }) => {
 		setEnrollClassLoading(true);
 		if (!token) {
 			router.push(`/masuk`);
+			return;
 		} else {
 			const { enrolled, slug, uuid } = course;
 			if (!enrolled) {
@@ -121,31 +124,31 @@ export const CourseProvider = ({ children }) => {
 	const rateClass = async (course, token, rate) => {
 		if (!token) {
 			router.push(`/masuk`);
+			return;
+		}
+		console.log("rating...");
+
+		const { uuid } = course;
+
+		const res = await fetch(`${API_URL}/courses/rate/${uuid}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+
+			body: JSON.stringify({
+				rate,
+			}),
+		});
+
+		// const data = await res.json();
+
+		if (!res.ok) {
+			console.log("failed...");
+			// console.log(data.message);
 		} else {
-			console.log("rating...");
-
-			const { uuid } = course;
-
-			const res = await fetch(`${API_URL}/courses/rate/${uuid}`, {
-				method: "PUT",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${token}`,
-				},
-
-				body: JSON.stringify({
-					rate,
-				}),
-			});
-
-			// const data = await res.json();
-
-			if (!res.ok) {
-				console.log("failed...");
-				// console.log(data.message);
-			} else {
-				console.log("rated");
-			}
+			console.log("rated");
 		}
 	};
 

@@ -1,8 +1,9 @@
 import React, { useRef, useState, useEffect } from "react";
 import videojs from "video.js";
+import _ from "videojs-contrib-quality-levels";
+
 // those imports are important
 import qualitySelector from "videojs-hls-quality-selector";
-import qualityLevels from "videojs-contrib-quality-levels";
 
 const VideoPlayerHLS = ({ liveURL, videoId }) => {
 	const videoRef = useRef();

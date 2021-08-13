@@ -1,6 +1,6 @@
 import { parseCookies } from "utils/cookies";
 import { API_URL, USE_FALLBACK_VID } from "config";
-import Link from "next/link";
+import { useRouter } from "next/router";
 import Layout from "components/Layout";
 import styled from "styled-components";
 import {
@@ -9,7 +9,7 @@ import {
 	HeadingXXS,
 } from "components/Typography/Headings";
 import { TextSecondary, TextTertiary } from "components/Typography/Text";
-import { MdLockOutline } from "react-icons/md";
+import { MdLockOutline, MdWarning } from "react-icons/md";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import VideoPlayerHLS from "components/VideoPlayer/VideoPlayerHLS";
 import { mediaBreakpoint } from "utils/breakpoints";
@@ -79,6 +79,10 @@ const Clock = styled(AiOutlineClockCircle)`
 	font-size: 14px;
 `;
 
+const Warning = styled(MdWarning)`
+	font-size: 18px;
+`;
+
 const MiscContainer = styled.div``;
 const MiscHeaderContainer = styled.div`
 	display: flex;
@@ -95,13 +99,28 @@ const MiscBodyContainer = styled.div`
 `;
 const StyledTextSecondary = styled(TextSecondary)``;
 export default function Kelas({ slug, currentCourse }) {
-	const { paid, title } = currentCourse;
-	const { video, day_title } = currentCourse.currentVideo;
+	const router = useRouter();
+	const { paid, title, bought_day_diff } = currentCourse;
+	const { video } = currentCourse.currentVideo;
+
+	const handleClickedVideoDay = (video, video_day) => {
+		if (bought_day_diff >= video_day) {
+			router.push(
+				`${
+					video.video.upload_id
+						? `/kelas/${slug}?c=${video.video.upload_id}`
+						: `#`
+				}`
+			);
+		} else {
+			alert("gabisa");
+		}
+	};
 
 	return (
 		<Layout
 			showBurger={false}
-			title="Daftar Kelas | Unbelieveable"
+			title={`${title} | Unbelieveable`}
 			background="#171b2d"
 			withMargin
 		>
@@ -137,14 +156,10 @@ export default function Kelas({ slug, currentCourse }) {
 							Course content
 						</StyledHeadingSM>
 
-						{currentCourse.videos.map((video) => (
-							<Link
+						{currentCourse.videos.map((video, ix) => (
+							<div
 								key={video.video.upload_id}
-								href={
-									video.video.upload_id
-										? `/kelas/${slug}?c=${video.video.upload_id}`
-										: `#`
-								}
+								onClick={() => handleClickedVideoDay(video, ix)}
 							>
 								<a>
 									<CourseDayContainer
@@ -152,25 +167,47 @@ export default function Kelas({ slug, currentCourse }) {
 										current={currentCourse.currentVideo.id === video.id}
 										className="d-flex flex-column "
 									>
-										<StyledHeadingXS as="p" className="text-white mb-1">
-											{video.day_title}
-										</StyledHeadingXS>
+										<div className="d-flex align-items-center">
+											{!(bought_day_diff >= ix) && (
+												<Warning className="text-lighterDarkGray mr-1 mb-1" />
+											)}
+											<StyledHeadingXS
+												as="p"
+												className={`text-${
+													bought_day_diff >= ix ? `white` : "lighterDarkGray"
+												} mb-1`}
+											>
+												{video.day_title}
+											</StyledHeadingXS>
+										</div>
+
 										<div className="d-flex align-items-center mb-2">
 											<Clock className="text-white mr-1" />
-											<TimeText className="text-white">6 min</TimeText>
+											<TimeText
+												className={`text-${
+													bought_day_diff >= ix ? `white` : "lighterDarkGray"
+												}`}
+											>
+												6 min
+											</TimeText>
 										</div>
 
 										<div className="d-flex align-items-center">
 											{!video.video.upload_id && (
 												<Lock className="text-white mr-1" />
 											)}
-											<StyledTextSecondary className="text-white">
+
+											<StyledTextSecondary
+												className={`text-${
+													bought_day_diff >= ix ? `white` : "lighterDarkGray"
+												}`}
+											>
 												{video.video.title}
 											</StyledTextSecondary>
 										</div>
 									</CourseDayContainer>
 								</a>
-							</Link>
+							</div>
 						))}
 					</VideosListContainer>
 				</div>
@@ -200,6 +237,8 @@ export async function getServerSideProps(ctx) {
 		},
 	});
 	const course = await res.json();
+	console.log(course);
+
 	if (course.length < 1) {
 		return {
 			redirect: {
@@ -236,8 +275,7 @@ export async function getServerSideProps(ctx) {
 			props: {},
 		};
 	}
-
-	const currentVideo = course[0].videos.find((crs) => {
+	let currentVideo = course[0].videos.find((crs, ix) => {
 		return crs.video.upload_id === c;
 	});
 	const currentCourse = {
