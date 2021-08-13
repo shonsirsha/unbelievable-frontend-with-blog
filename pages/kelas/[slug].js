@@ -15,6 +15,7 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 import VideoPlayerHLS from "components/VideoPlayer/VideoPlayerHLS";
 import { mediaBreakpoint } from "utils/breakpoints";
 import Swal from "sweetalert2";
+import { dateDiffInDays } from "utils/dateDiffInDays";
 const StyledContainer = styled.div`
 	display: flex;
 	padding: 32px 0;
@@ -117,12 +118,13 @@ export default function Kelas({ slug, currentCourse }) {
 				{currentCourse.pengumuman.length > 0 ? (
 					<>
 						{[...currentCourse.pengumuman].reverse().map((p) => (
-							<div key={p.id} className=" mb-3">
+							<div key={p.id} className=" mb-4">
 								<StyledTextTertiary className="text-info1 mb-2">
 									{currentCourse.content_creator.full_name}
 								</StyledTextTertiary>
 								<StyledTextTertiary className="text-primary1 mb-2">
-									Memposting pengumuman
+									Memposting pengumuman {"-"}{" "}
+									{dateDiffInDays(new Date(p.date), new Date())}
 								</StyledTextTertiary>
 
 								<StyledTextTertiary className="text-primary1 ">
@@ -147,7 +149,7 @@ export default function Kelas({ slug, currentCourse }) {
 					<>papu</>
 				) : (
 					<StyledTextTertiary className="text-primary1 ">
-						Misi akan terbuka setelah kamu menyelesaikan video ini
+						Misi akan terbuka setelah kamu selesai menonton video ini
 					</StyledTextTertiary>
 				)}
 			</>
