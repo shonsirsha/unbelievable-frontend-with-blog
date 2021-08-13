@@ -165,7 +165,7 @@ export default function DefaultCourseCard({
 						/>
 					</div>
 					<div className="d-flex">
-						{[...Array(parseInt(total_rating > 0 ? total_rating : 0))].map(
+						{[...Array(Math.round(total_rating > 0 ? total_rating : 0))].map(
 							(ix) => (
 								<Image
 									alt="star"
@@ -176,17 +176,17 @@ export default function DefaultCourseCard({
 								/>
 							)
 						)}
-						{[...Array(total_rating > 0 ? 5 - parseInt(total_rating) : 5)].map(
-							(ix) => (
-								<Image
-									alt="star"
-									key={ix}
-									width={17}
-									height={16}
-									src="/images/gray-star.png"
-								/>
-							)
-						)}
+						{[
+							...Array(total_rating > 0 ? 5 - Math.round(total_rating) : 5),
+						].map((ix) => (
+							<Image
+								alt="star"
+								key={ix}
+								width={17}
+								height={16}
+								src="/images/gray-star.png"
+							/>
+						))}
 					</div>
 				</div>
 

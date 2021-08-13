@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { parseCookies } from "utils/cookies";
 import { API_URL, USE_FALLBACK_VID } from "config";
 import { useRouter } from "next/router";
@@ -9,7 +10,7 @@ import {
 	HeadingXXS,
 } from "components/Typography/Headings";
 import { TextSecondary, TextTertiary } from "components/Typography/Text";
-import { MdLockOutline, MdWarning } from "react-icons/md";
+import { MdLockOutline } from "react-icons/md";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import VideoPlayerHLS from "components/VideoPlayer/VideoPlayerHLS";
 import { mediaBreakpoint } from "utils/breakpoints";
@@ -79,10 +80,6 @@ const Clock = styled(AiOutlineClockCircle)`
 	font-size: 14px;
 `;
 
-const Warning = styled(MdWarning)`
-	font-size: 18px;
-`;
-
 const MiscContainer = styled.div``;
 const MiscHeaderContainer = styled.div`
 	display: flex;
@@ -100,8 +97,62 @@ const MiscBodyContainer = styled.div`
 const StyledTextSecondary = styled(TextSecondary)``;
 export default function Kelas({ slug, currentCourse }) {
 	const router = useRouter();
+
 	const { paid, title, bought_day_diff } = currentCourse;
-	const { video } = currentCourse.currentVideo;
+	const { video, finished_watching } = currentCourse.currentVideo;
+	const [renderedDescContext, setRenderedDescContext] = useState(
+		<StyledTextTertiary className="text-primary1 mb">
+			{currentCourse.short_desc}
+		</StyledTextTertiary>
+	);
+	const [finishedWatching, setFinishedWatching] = useState(finished_watching);
+
+	useEffect(() => {
+		setFinishedWatching(finished_watching);
+	}, [finished_watching]);
+
+	const PengumumanBlock = () => {
+		return (
+			<div className="d-flex flex-column w-50">
+				{currentCourse.pengumuman.length > 0 ? (
+					<>
+						{[...currentCourse.pengumuman].reverse().map((p) => (
+							<div key={p.id} className=" mb-3">
+								<StyledTextTertiary className="text-info1 mb-2">
+									{currentCourse.content_creator.full_name}
+								</StyledTextTertiary>
+								<StyledTextTertiary className="text-primary1 mb-2">
+									Memposting pengumuman
+								</StyledTextTertiary>
+
+								<StyledTextTertiary className="text-primary1 ">
+									{p.text}
+								</StyledTextTertiary>
+							</div>
+						))}
+					</>
+				) : (
+					<StyledTextTertiary className="text-primary1 ">
+						Belum ada pengumuman
+					</StyledTextTertiary>
+				)}
+			</div>
+		);
+	};
+
+	const MisiBlock = () => {
+		return (
+			<>
+				{finishedWatching ? (
+					<>papu</>
+				) : (
+					<StyledTextTertiary className="text-primary1 ">
+						Misi akan terbuka setelah kamu menyelesaikan video ini
+					</StyledTextTertiary>
+				)}
+			</>
+		);
+	};
 
 	const goToVideo = (video) => {
 		router.push(
@@ -117,10 +168,15 @@ export default function Kelas({ slug, currentCourse }) {
 		if (paid) {
 			if (bought_day_diff >= video_day) {
 				goToVideo(video);
+				setRenderedDescContext(
+					<StyledTextTertiary className="text-primary1">
+						{currentCourse.short_desc}
+					</StyledTextTertiary>
+				);
 			} else {
 				Swal.fire({
 					title: "Pemberitahuan",
-					text: "Menonton lebih dari 1 video dalam satu hari tidak disarankan. Apakah Anda tetap ingin melanjutkan?",
+					text: "Menonton lebih dari 1 video dalam satu hari tidak disarankan. Apakah kamu tetap ingin melanjutkan?",
 					icon: "warning",
 					showCancelButton: true,
 					confirmButtonColor: "#171b2d",
@@ -220,22 +276,46 @@ export default function Kelas({ slug, currentCourse }) {
 						<VideoPlayerHLS
 							videoId={video.id}
 							liveURL={
+								// https://content.jwplatform.com/manifests/yp34SRmf.m3u8
 								USE_FALLBACK_VID
-									? `https://content.jwplatform.com/manifests/yp34SRmf.m3u8`
+									? ``
 									: `https://stream.mux.com/${video.playback_id}.m3u8`
 							}
 						/>
 						<MiscContainer>
 							<MiscHeaderContainer>
-								<HeadingXXS as="p" className="text-primary1">
+								<HeadingXXS
+									onClick={() =>
+										setRenderedDescContext(
+											<StyledTextTertiary className="text-primary1">
+												{currentCourse.short_desc}
+											</StyledTextTertiary>
+										)
+									}
+									role="button"
+									as="p"
+									className="text-primary1 mr-5"
+								>
 									Tentang course
 								</HeadingXXS>
+								<HeadingXXS
+									onClick={() => setRenderedDescContext(<PengumumanBlock />)}
+									role="button"
+									as="p"
+									className="text-primary1 mr-5"
+								>
+									Pengumuman
+								</HeadingXXS>
+								<HeadingXXS
+									onClick={() => setRenderedDescContext(<MisiBlock />)}
+									role="button"
+									as="p"
+									className="text-primary1"
+								>
+									Misi
+								</HeadingXXS>
 							</MiscHeaderContainer>
-							<MiscBodyContainer>
-								<StyledTextTertiary className="text-primary1">
-									{currentCourse.short_desc}
-								</StyledTextTertiary>
-							</MiscBodyContainer>
+							<MiscBodyContainer>{renderedDescContext}</MiscBodyContainer>
 						</MiscContainer>
 					</VideoContainer>
 					<VideosListContainer className="bg-primary1">
