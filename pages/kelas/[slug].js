@@ -13,7 +13,7 @@ import { MdLockOutline, MdWarning } from "react-icons/md";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import VideoPlayerHLS from "components/VideoPlayer/VideoPlayerHLS";
 import { mediaBreakpoint } from "utils/breakpoints";
-
+import Swal from "sweetalert2";
 const StyledContainer = styled.div`
 	display: flex;
 	padding: 32px 0;
@@ -103,18 +103,105 @@ export default function Kelas({ slug, currentCourse }) {
 	const { paid, title, bought_day_diff } = currentCourse;
 	const { video } = currentCourse.currentVideo;
 
+	const goToVideo = (video) => {
+		router.push(
+			`${
+				video.video.upload_id
+					? `/kelas/${slug}?c=${video.video.upload_id}`
+					: `#`
+			}`
+		);
+	};
+
 	const handleClickedVideoDay = (video, video_day) => {
-		if (bought_day_diff >= video_day) {
-			router.push(
-				`${
-					video.video.upload_id
-						? `/kelas/${slug}?c=${video.video.upload_id}`
-						: `#`
-				}`
-			);
+		if (paid) {
+			if (bought_day_diff >= video_day) {
+				goToVideo(video);
+			} else {
+				Swal.fire({
+					title: "Pemberitahuan",
+					text: "Menonton lebih dari 1 video dalam satu hari tidak disarankan. Apakah Anda tetap ingin melanjutkan?",
+					icon: "warning",
+					showCancelButton: true,
+					confirmButtonColor: "#171b2d",
+					cancelButtonColor: "#d52f89",
+					confirmButtonText: "Ya, lanjutkan!",
+					cancelButtonText: "Batal",
+				}).then((result) => {
+					if (result.isConfirmed) {
+						goToVideo(video);
+					}
+				});
+			}
 		} else {
-			alert("gabisa");
+			alert("beli dulu buskuh");
 		}
+	};
+
+	const VideoDetailPaid = ({ video, ix }) => {
+		return (
+			<>
+				<div className="d-flex align-items-center">
+					<StyledHeadingXS
+						as="p"
+						className={`text-${
+							bought_day_diff >= ix ? `white` : "lighterDarkGray"
+						} mb-1`}
+					>
+						{video.day_title}
+					</StyledHeadingXS>
+				</div>
+
+				<div className="d-flex align-items-center mb-2">
+					<Clock
+						className={`text-${
+							bought_day_diff >= ix ? `white` : "lighterDarkGray"
+						} mr-1`}
+					/>
+					<TimeText
+						className={`text-${
+							bought_day_diff >= ix ? `white` : "lighterDarkGray"
+						}`}
+					>
+						6 min
+					</TimeText>
+				</div>
+
+				<div className="d-flex align-items-center">
+					<StyledTextSecondary
+						className={`text-${
+							bought_day_diff >= ix ? `white` : "lighterDarkGray"
+						}`}
+					>
+						{video.video.title}
+					</StyledTextSecondary>
+				</div>
+			</>
+		);
+	};
+
+	const VideoDetailUnpaid = ({ video, ix }) => {
+		return (
+			<>
+				<div className="d-flex align-items-center">
+					<StyledHeadingXS as="p" className={`text-white mb-1`}>
+						{video.day_title}
+					</StyledHeadingXS>
+				</div>
+
+				<div className="d-flex align-items-center mb-2">
+					<Clock className="text-white mr-1" />
+					<TimeText className={`text-white`}>6 min</TimeText>
+				</div>
+
+				<div className="d-flex align-items-center">
+					{ix > 0 && <Lock className="text-white mr-1" />}
+					<StyledTextSecondary className={`text-white`}>
+						{video.video.title}
+					</StyledTextSecondary>
+				</div>
+			</>
+		);
 	};
 
 	return (
@@ -167,44 +254,12 @@ export default function Kelas({ slug, currentCourse }) {
 										current={currentCourse.currentVideo.id === video.id}
 										className="d-flex flex-column "
 									>
-										<div className="d-flex align-items-center">
-											{!(bought_day_diff >= ix) && (
-												<Warning className="text-lighterDarkGray mr-1 mb-1" />
-											)}
-											<StyledHeadingXS
-												as="p"
-												className={`text-${
-													bought_day_diff >= ix ? `white` : "lighterDarkGray"
-												} mb-1`}
-											>
-												{video.day_title}
-											</StyledHeadingXS>
-										</div>
-
-										<div className="d-flex align-items-center mb-2">
-											<Clock className="text-white mr-1" />
-											<TimeText
-												className={`text-${
-													bought_day_diff >= ix ? `white` : "lighterDarkGray"
-												}`}
-											>
-												6 min
-											</TimeText>
-										</div>
-
-										<div className="d-flex align-items-center">
-											{!video.video.upload_id && (
-												<Lock className="text-white mr-1" />
-											)}
-
-											<StyledTextSecondary
-												className={`text-${
-													bought_day_diff >= ix ? `white` : "lighterDarkGray"
-												}`}
-											>
-												{video.video.title}
-											</StyledTextSecondary>
-										</div>
+										{/* <VideoDetailPaid video={video} ix={ix} /> */}
+										{paid ? (
+											<VideoDetailPaid video={video} ix={ix} />
+										) : (
+											<VideoDetailUnpaid video={video} ix={ix} />
+										)}
 									</CourseDayContainer>
 								</a>
 							</div>
@@ -237,7 +292,6 @@ export async function getServerSideProps(ctx) {
 		},
 	});
 	const course = await res.json();
-	console.log(course);
 
 	if (course.length < 1) {
 		return {
