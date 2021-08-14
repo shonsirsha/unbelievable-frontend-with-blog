@@ -9,6 +9,7 @@ import {
 	HeadingSM,
 	HeadingXXS,
 } from "components/Typography/Headings";
+import MisiBlock from "components/Kelas/MisiBlock";
 import { TextSecondary, TextTertiary } from "components/Typography/Text";
 import { MdLockOutline } from "react-icons/md";
 import { AiOutlineClockCircle } from "react-icons/ai";
@@ -95,21 +96,27 @@ const StyledTextTertiary = styled(TextTertiary)`
 const MiscBodyContainer = styled.div`
 	padding: 24px;
 `;
+const StyledHeadingXXS = styled(HeadingXXS)`
+	${(props) => props.opened && `text-decoration: underline;`}
+`;
 const StyledTextSecondary = styled(TextSecondary)``;
 export default function Kelas({ slug, currentCourse }) {
 	const router = useRouter();
 
 	const { paid, title, bought_day_diff } = currentCourse;
-	const { video, finished_watching } = currentCourse.currentVideo;
+	const { video, finished_watching, missions } = currentCourse.currentVideo;
+	console.log(currentCourse);
 	const [renderedDescContext, setRenderedDescContext] = useState(
 		<StyledTextTertiary className="text-primary1 mb">
 			{currentCourse.short_desc}
 		</StyledTextTertiary>
 	);
 	const [finishedWatching, setFinishedWatching] = useState(finished_watching);
-
+	const [currentlyOpened, setCurrentlyOpened] = useState("desc");
 	useEffect(() => {
+		setCurrentlyOpened("desc");
 		setFinishedWatching(finished_watching);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [finished_watching]);
 
 	const PengumumanBlock = () => {
@@ -126,7 +133,6 @@ export default function Kelas({ slug, currentCourse }) {
 									Memposting pengumuman {"-"}{" "}
 									{dateDiffInDays(new Date(p.date), new Date())}
 								</StyledTextTertiary>
-
 								<StyledTextTertiary className="text-primary1 ">
 									{p.text}
 								</StyledTextTertiary>
@@ -139,20 +145,6 @@ export default function Kelas({ slug, currentCourse }) {
 					</StyledTextTertiary>
 				)}
 			</div>
-		);
-	};
-
-	const MisiBlock = () => {
-		return (
-			<>
-				{finishedWatching ? (
-					<>papu</>
-				) : (
-					<StyledTextTertiary className="text-primary1 ">
-						Misi akan terbuka setelah kamu selesai menonton video ini
-					</StyledTextTertiary>
-				)}
-			</>
 		);
 	};
 
@@ -286,36 +278,51 @@ export default function Kelas({ slug, currentCourse }) {
 						/>
 						<MiscContainer>
 							<MiscHeaderContainer>
-								<HeadingXXS
-									onClick={() =>
+								<StyledHeadingXXS
+									opened={currentlyOpened === "desc"}
+									onClick={() => {
 										setRenderedDescContext(
 											<StyledTextTertiary className="text-primary1">
 												{currentCourse.short_desc}
 											</StyledTextTertiary>
-										)
-									}
+										);
+										setCurrentlyOpened("desc");
+									}}
 									role="button"
 									as="p"
 									className="text-primary1 mr-5"
 								>
 									Tentang course
-								</HeadingXXS>
-								<HeadingXXS
-									onClick={() => setRenderedDescContext(<PengumumanBlock />)}
+								</StyledHeadingXXS>
+								<StyledHeadingXXS
+									opened={currentlyOpened === "pengumuman"}
+									onClick={() => {
+										setRenderedDescContext(<PengumumanBlock />);
+										setCurrentlyOpened("pengumuman");
+									}}
 									role="button"
 									as="p"
 									className="text-primary1 mr-5"
 								>
 									Pengumuman
-								</HeadingXXS>
-								<HeadingXXS
-									onClick={() => setRenderedDescContext(<MisiBlock />)}
+								</StyledHeadingXXS>
+								<StyledHeadingXXS
+									opened={currentlyOpened === "misi"}
+									onClick={() => {
+										setRenderedDescContext(
+											<MisiBlock
+												finishedWatching={finishedWatching}
+												missions={missions}
+											/>
+										);
+										setCurrentlyOpened("misi");
+									}}
 									role="button"
 									as="p"
 									className="text-primary1"
 								>
 									Misi
-								</HeadingXXS>
+								</StyledHeadingXXS>
 							</MiscHeaderContainer>
 							<MiscBodyContainer>{renderedDescContext}</MiscBodyContainer>
 						</MiscContainer>

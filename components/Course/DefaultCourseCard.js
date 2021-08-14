@@ -100,7 +100,6 @@ export default function DefaultCourseCard({
 }) {
 	const { title, short_desc, content_creator, image, videos, total_rating } =
 		course;
-	// const token = user.token;
 	const {
 		enrollClassLoading,
 		enrollClass,
