@@ -100,7 +100,6 @@ export default function DefaultCourseCard({
 }) {
 	const { title, short_desc, content_creator, image, videos, total_rating } =
 		course;
-	// const token = user.token;
 	const {
 		enrollClassLoading,
 		enrollClass,
@@ -165,9 +164,10 @@ export default function DefaultCourseCard({
 						/>
 					</div>
 					<div className="d-flex">
-						{[...Array(parseInt(total_rating > 0 ? total_rating : 0))].map(
+						{[...Array(Math.round(total_rating > 0 ? total_rating : 0))].map(
 							(ix) => (
 								<Image
+									alt="star"
 									key={ix}
 									width={17}
 									height={16}
@@ -175,16 +175,17 @@ export default function DefaultCourseCard({
 								/>
 							)
 						)}
-						{[...Array(total_rating > 0 ? 5 - parseInt(total_rating) : 5)].map(
-							(ix) => (
-								<Image
-									key={ix}
-									width={17}
-									height={16}
-									src="/images/gray-star.png"
-								/>
-							)
-						)}
+						{[
+							...Array(total_rating > 0 ? 5 - Math.round(total_rating) : 5),
+						].map((ix) => (
+							<Image
+								alt="star"
+								key={ix}
+								width={17}
+								height={16}
+								src="/images/gray-star.png"
+							/>
+						))}
 					</div>
 				</div>
 

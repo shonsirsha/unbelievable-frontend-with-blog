@@ -152,6 +152,7 @@ export default function Header({
 		if (scrollToSolid && window) {
 			window.addEventListener("scroll", handleScroll2);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const handleScroll = () => {

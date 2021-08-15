@@ -135,7 +135,12 @@ export default function Testimonial({ testimonials }) {
 const TestimonialCard = ({ nama, status, testimonial }) => {
 	return (
 		<CardBody className="shadow bg-tan">
-			<Image src="/images/plcholder.png" width={160} roundedCircle />
+			<Image
+				alt="placeholder"
+				src="/images/plcholder.png"
+				width={160}
+				roundedCircle
+			/>
 
 			<StyledHeadingXS>
 				{nama}

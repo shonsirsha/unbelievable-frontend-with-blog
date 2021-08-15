@@ -65,7 +65,7 @@ const StyledEnrolled = styled(EnrolledCourseCard)`
 	}
 `;
 
-const index = ({ token, onboardings, user, courses, coursesTaken }) => {
+const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 	const router = useRouter();
 
 	const { logout } = useContext(AuthContext);
@@ -230,7 +230,6 @@ export async function getServerSideProps({ req, _ }) {
 		user.token = token;
 		const courses = await res3.json();
 		const coursesTaken = await res4.json();
-		console.log(coursesTaken);
 
 		return {
 			props: {
@@ -244,4 +243,4 @@ export async function getServerSideProps({ req, _ }) {
 	}
 }
 
-export default index;
+export default Index;

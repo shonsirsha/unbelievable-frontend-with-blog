@@ -20,6 +20,7 @@ export default function VideoPlayerNonHLS({ liveUrl, onVideoFinished }) {
 		if (finished) {
 			onVideoFinished();
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [finished]);
 
 	useEffect(() => {
@@ -28,6 +29,7 @@ export default function VideoPlayerNonHLS({ liveUrl, onVideoFinished }) {
 				setFinished(true);
 			}
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [sec]);
 
 	return (

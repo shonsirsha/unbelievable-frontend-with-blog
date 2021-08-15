@@ -1,23 +1,38 @@
 import React, { useRef, useState, useEffect } from "react";
 import videojs from "video.js";
+import _ from "videojs-contrib-quality-levels";
+
 // those imports are important
 import qualitySelector from "videojs-hls-quality-selector";
-import qualityLevels from "videojs-contrib-quality-levels";
 
-const VideoPlayerHLS = ({ liveURL }) => {
+const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo }) => {
 	const videoRef = useRef();
 	const [player, setPlayer] = useState(undefined);
-
+	const [callFinishVideoAPI, setCallFinishVideoAPI] = useState(false);
+	const [vidDuration, setVidDuration] = useState(0);
 	useEffect(() => {
 		if (player) {
 			player.src([liveURL]);
+			setCallFinishVideoAPI(false);
 		}
-	}, [liveURL]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [videoId, liveURL]);
+
+	// useEffect(() => {
+	// 	console.log("wuwu");
+	// 	console.log(vidDuration);
+	// }, [vidDuration]);
+
+	useEffect(() => {
+		if (callFinishVideoAPI) {
+			finishesVideo(videoId);
+		}
+	}, [callFinishVideoAPI]);
 
 	useEffect(() => {
 		const videoJsOptions = {
 			preload: "auto",
-			autoplay: false,
+			autoplay: true,
 			controls: true,
 			fluid: true,
 			responsive: true,
@@ -29,11 +44,10 @@ const VideoPlayerHLS = ({ liveURL }) => {
 			],
 		};
 
-		videojs.registerPlugin("hlsQualitySelector", qualitySelector);
 		const p = videojs(
 			videoRef.current,
 			videoJsOptions,
-			function onPlayerReaady() {
+			function onPlayerReady() {
 				// console.log('onPlayerReady');
 			}
 		);
@@ -41,6 +55,7 @@ const VideoPlayerHLS = ({ liveURL }) => {
 		return () => {
 			if (player) player.dispose();
 		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
@@ -51,10 +66,12 @@ const VideoPlayerHLS = ({ liveURL }) => {
 			<video
 				ref={videoRef}
 				onLoadedMetadata={(e, px) => {
-					console.log(e.target.duration);
+					setVidDuration(e.target.duration);
 				}}
 				onTimeUpdate={(e) => {
-					console.log(e.target.currentTime);
+					if (e.target.currentTime >= vidDuration - 10) {
+						setCallFinishVideoAPI(true);
+					}
 				}}
 				className="video-js vjs-default-skin vjs-big-play-centered"
 			></video>

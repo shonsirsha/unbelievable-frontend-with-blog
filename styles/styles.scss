@@ -64,11 +64,12 @@ $colorBottom: #31a4fa;
 $primary: #171b2d;
 $secondary: #d52f89;
 $success: $green !default;
-$info: $cyan !default;
+$info1: #0b37b2;
 $warning: $yellow !default;
 $danger: $red !default;
 
 $specialGray: #545454;
+$lighterDarkGray: #b6b6b6;
 
 // $input-placeholder-color: $black-200;
 
@@ -79,7 +80,7 @@ $theme-colors: map-merge(
 		"primary1": $primary1,
 		"secondary": $secondary,
 		"success": $success,
-		"info": $info,
+		"info1": $info1,
 		"warning": $warning,
 		"danger": $danger,
 		"darkblue": $darkBlue,
@@ -98,6 +99,7 @@ $theme-colors: map-merge(
 		"palegreen": $paleGreen,
 		"darkpalegreen": $darkPaleGreen,
 		"cyan": $cyan,
+		"lighterDarkGray": $lighterDarkGray,
 		"specialgray": $specialGray,
 	),
 	$theme-colors
@@ -116,6 +118,7 @@ $border-radius-sm: 8px !default;
 
 :export {
 	primary: $primary;
+	primary1: $primary1;
 	secondary: $secondary;
 	slate: $slate;
 }

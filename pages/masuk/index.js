@@ -104,7 +104,7 @@ const GreenCharacter = styled(Image)`
 		}
 	}
 `;
-const index = () => {
+const Index = () => {
 	const [loginDetails, setLoginDetails] = useState({
 		email: "",
 		password: "",
@@ -197,4 +197,4 @@ const index = () => {
 	);
 };
 
-export default mustBeUnauthed(index);
+export default mustBeUnauthed(Index);

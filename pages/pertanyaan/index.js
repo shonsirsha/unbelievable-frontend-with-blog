@@ -40,7 +40,7 @@ const StyledRow = styled(Row)`
 	margin-left: 0;
 	margin-right: 0;
 `;
-export default function index({ categories }) {
+export default function Index({ categories }) {
 	const [categoriesState, setCategoriesState] = useState(categories);
 	const handleChange = (e) => {
 		if (!whitespace(e.target.value)) {

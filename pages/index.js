@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Layout from "components/Layout";
 import Hero from "components/LandingPage/Hero";
 import TentangKami from "components/LandingPage/TentangKami";

@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-export default function index({ slug }) {
+export default function Index({ slug }) {
 	const router = useRouter();
 	useEffect(() => {
 		setTimeout(() => {
 			router.push(`/kelas/${slug}`);
-		}, 1000);
+		}, 500);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	return <div>Mengalihkan...</div>;
 }
