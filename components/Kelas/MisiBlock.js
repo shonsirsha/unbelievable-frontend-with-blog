@@ -80,14 +80,15 @@ export default function MisiBlock({ finishedWatching, missions, loading }) {
 											<Form.Check.Input
 												type="checkbox"
 												name={m.id}
-												checked={m.completed}
-												onClick={(e) => {
+												checked={missionsState.completed}
+												onClick={() => {
 													setMissionsState(
 														[...missionsState].map((object) => {
 															if (object.id === m.id) {
+																console.log(m);
 																return {
 																	...object,
-																	completed: !m.completed,
+																	completed: !missionsState.completed,
 																};
 															} else return object;
 														})

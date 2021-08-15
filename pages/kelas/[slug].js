@@ -103,6 +103,8 @@ const StyledTextSecondary = styled(TextSecondary)``;
 export default function Kelas({ slug, currentCourse, token }) {
 	const router = useRouter();
 
+	// console.log(currentCourse.currentVideo);
+
 	const { paid, title, bought_day_diff } = currentCourse;
 	const { video, finished_watching, missions } = currentCourse.currentVideo;
 	const [renderedDescContext, setRenderedDescContext] = useState(
@@ -190,6 +192,8 @@ export default function Kelas({ slug, currentCourse, token }) {
 		if (!res.ok) {
 			console.log("failed fetching missions...");
 		} else {
+			console.log("fetched mission: ");
+			console.log(fetchedMissions);
 			setLocalMissions(fetchedMissions);
 		}
 	};
