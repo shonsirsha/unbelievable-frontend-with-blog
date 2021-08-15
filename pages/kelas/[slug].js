@@ -103,10 +103,11 @@ const StyledTextSecondary = styled(TextSecondary)``;
 export default function Kelas({ slug, currentCourse, token }) {
 	const router = useRouter();
 
-	// console.log(currentCourse.currentVideo);
+	console.log(currentCourse);
 
-	const { paid, title, bought_day_diff } = currentCourse;
-	const { video, finished_watching, missions } = currentCourse.currentVideo;
+	const { paid, title, bought_day_diff, videos } = currentCourse;
+	const { finished_watching, missions, all_missions_completed } =
+		currentCourse.currentVideo;
 	const [renderedDescContext, setRenderedDescContext] = useState(
 		<StyledTextTertiary className="text-primary1 mb">
 			{currentCourse.short_desc}
@@ -237,8 +238,20 @@ export default function Kelas({ slug, currentCourse, token }) {
 		);
 	};
 
-	const handleClickedVideoDay = (video, video_day) => {
-		if (paid) {
+	const isGoingNext = (currentDay, targetDay) => {
+		if (currentDay === targetDay) return;
+
+		const current = videos.findIndex((vid) => vid.id === currentDay);
+		const target = videos.findIndex((vid) => vid.id === targetDay);
+		if (target > current) {
+			return true;
+		}
+		return false;
+		//false means user goes to previous day
+	};
+
+	const goToTheNextDay = (video, video_day) => {
+		if (all_missions_completed) {
 			if (bought_day_diff >= video_day) {
 				goToVideo(video);
 				setRenderedDescContext(
@@ -261,6 +274,31 @@ export default function Kelas({ slug, currentCourse, token }) {
 						goToVideo(video);
 					}
 				});
+			}
+		} else {
+			Swal.fire({
+				title: "Ups...",
+				text: "Mohon kerjakan semua misi dari video ini untuk melanjutkan ke video selanjutnya",
+				icon: "error",
+				confirmButtonColor: "#171b2d",
+				confirmButtonText: "Tutup",
+			});
+		}
+	};
+
+	const goToPrevDay = (video, video_day) => {
+		goToVideo(video);
+	};
+
+	const handleClickedVideoDay = (video, video_day) => {
+		if (paid) {
+			if (currentCourse.currentVideo.id !== video.id) {
+				const goNextDay = isGoingNext(currentCourse.currentVideo.id, video.id);
+				if (goNextDay) {
+					goToTheNextDay(video, video_day);
+				} else {
+					goToVideo(video);
+				}
 			}
 		} else {
 			alert("beli dulu buskuh");
@@ -333,6 +371,64 @@ export default function Kelas({ slug, currentCourse, token }) {
 		);
 	};
 
+	const VideoDetailNotCompleted = ({ video, currentlyWatchedVideo, ix }) => {
+		// {
+		// 	videos.findIndex((vid) => vid.ix);
+		// }
+		// const thisVidIndex =
+		return (
+			<>
+				<div className="d-flex align-items-center">
+					<StyledHeadingXS
+						as="p"
+						className={`text-${
+							bought_day_diff >= ix ? `white` : "lighterDarkGray"
+						} mb-1`}
+					>
+						{video.day_title}
+					</StyledHeadingXS>
+				</div>
+				<div className="d-flex align-items-center mb-2">
+					<Clock
+						className={`text-${
+							bought_day_diff >= ix ? `white` : "lighterDarkGray"
+						} mr-1`}
+					/>
+					<TimeText
+						className={`text-${
+							bought_day_diff >= ix ? `white` : "lighterDarkGray"
+						}`}
+					>
+						6 min
+					</TimeText>
+				</div>
+
+				<div className="d-flex align-items-center">
+					{/* {currentlyWatchedVideo ? (
+						<>
+							{all_missions_completed && ix && <Lock className="text-white mr-1" />}
+						</>
+					) : (
+						<>
+							{all_missions_completed && <Lock className="text-white mr-1" />}
+						</>
+					)} */}
+					{!all_missions_completed && !currentlyWatchedVideo && (
+						<Lock className="text-white mr-1" />
+					)}
+					{/* {ix > 0 && } */}
+					<StyledTextSecondary
+						className={`text-${
+							bought_day_diff >= ix ? `white` : "lighterDarkGray"
+						}`}
+					>
+						{video.video.title}
+					</StyledTextSecondary>
+				</div>
+			</>
+		);
+	};
+
 	return (
 		<Layout
 			showBurger={false}
@@ -353,7 +449,7 @@ export default function Kelas({ slug, currentCourse, token }) {
 								// https://content.jwplatform.com/manifests/yp34SRmf.m3u8
 								USE_FALLBACK_VID
 									? `https://content.jwplatform.com/manifests/yp34SRmf.m3u8`
-									: `https://stream.mux.com/${video.playback_id}.m3u8`
+									: `https://stream.mux.com/${currentCourse.currentVideo.video.playback_id}.m3u8`
 							}
 						/>
 						<MiscContainer>
@@ -412,20 +508,33 @@ export default function Kelas({ slug, currentCourse, token }) {
 							Course content
 						</StyledHeadingSM>
 
-						{currentCourse.videos.map((video, ix) => (
+						{currentCourse.videos.map((vid, ix) => (
 							<div
-								key={video.video.upload_id}
-								onClick={() => handleClickedVideoDay(video, ix)}
+								key={vid.video.upload_id}
+								onClick={() => handleClickedVideoDay(vid, ix)}
 							>
 								<a>
 									<CourseDayContainer
-										key={video.id}
-										current={currentCourse.currentVideo.id === video.id}
+										key={vid.id}
+										current={currentCourse.currentVideo.id === vid.id}
 										className="d-flex flex-column "
 									>
 										{/* <VideoDetailPaid video={video} ix={ix} /> */}
 										{paid ? (
-											<VideoDetailPaid video={video} ix={ix} />
+											<>
+												{/* {all_missions_completed ? (
+													<VideoDetailPaid video={video} ix={ix} />
+												) : (
+													<VideoDetailNotCompleted video={video} ix={ix} />
+												)} */}
+												<VideoDetailNotCompleted
+													video={vid}
+													currentlyWatchedVideo={
+														currentCourse.currentVideo.id === vid.id
+													}
+													ix={ix}
+												/>
+											</>
 										) : (
 											<VideoDetailUnpaid video={video} ix={ix} />
 										)}
@@ -476,7 +585,7 @@ export async function getServerSideProps(ctx) {
 		if (crs.video) {
 			return crs.video.upload_id === c;
 		} else {
-			return false; // if .video prop isnt available (user hasnt bought the course / course has not even 1 video)
+			return false; // if user hasnt bought the course / course has not even 1 video
 		}
 	});
 	if (!validUploadId) {

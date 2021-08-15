@@ -44,7 +44,6 @@ const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo }) => {
 			],
 		};
 
-		videojs.registerPlugin("hlsQualitySelector", qualitySelector);
 		const p = videojs(
 			videoRef.current,
 			videoJsOptions,

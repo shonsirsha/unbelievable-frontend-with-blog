@@ -54,10 +54,9 @@ const StyledHeadingXXS = styled(HeadingXXS)`
 
 export default function MisiBlock({ finishedWatching, missions, loading }) {
 	const [missionsState, setMissionsState] = useState(missions);
-
 	useEffect(() => {
 		setMissionsState(missions);
-	}, [missionsState, missions]);
+	}, [missions]);
 	return (
 		<OuterContainer>
 			{finishedWatching ? (
@@ -66,7 +65,7 @@ export default function MisiBlock({ finishedWatching, missions, loading }) {
 						Misi Video Ini
 					</HeadingXS>
 					<TextTertiary className="text-gray mb-3">
-						Jalankan (centang dan simpan) misi-misi dibawah ini untuk dapat
+						Jalankan (centang dan simpan) misi-misi dibawah ini untuk
 						melanjutkan ke video selanjutnya.
 					</TextTertiary>
 					{loading ? (
@@ -80,15 +79,14 @@ export default function MisiBlock({ finishedWatching, missions, loading }) {
 											<Form.Check.Input
 												type="checkbox"
 												name={m.id}
-												checked={missionsState.completed}
+												checked={m.completed}
 												onClick={() => {
 													setMissionsState(
 														[...missionsState].map((object) => {
 															if (object.id === m.id) {
-																console.log(m);
 																return {
 																	...object,
-																	completed: !missionsState.completed,
+																	completed: !m.completed,
 																};
 															} else return object;
 														})
