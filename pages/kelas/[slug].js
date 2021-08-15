@@ -100,12 +100,11 @@ const StyledHeadingXXS = styled(HeadingXXS)`
 	${(props) => props.opened && `text-decoration: underline;`}
 `;
 const StyledTextSecondary = styled(TextSecondary)``;
-export default function Kelas({ slug, currentCourse }) {
+export default function Kelas({ slug, currentCourse, token }) {
 	const router = useRouter();
 
 	const { paid, title, bought_day_diff } = currentCourse;
 	const { video, finished_watching, missions } = currentCourse.currentVideo;
-	console.log(currentCourse);
 	const [renderedDescContext, setRenderedDescContext] = useState(
 		<StyledTextTertiary className="text-primary1 mb">
 			{currentCourse.short_desc}
@@ -113,11 +112,86 @@ export default function Kelas({ slug, currentCourse }) {
 	);
 	const [finishedWatching, setFinishedWatching] = useState(finished_watching);
 	const [currentlyOpened, setCurrentlyOpened] = useState("desc");
+	const [localMissions, setLocalMissions] = useState(missions);
+
+	const [loadingFetchMission, setLoadingFetchMission] = useState(true);
+
 	useEffect(() => {
 		setCurrentlyOpened("desc");
 		setFinishedWatching(finished_watching);
+	}, [currentCourse.currentVideo]);
+
+	useEffect(() => {
+		if (finishedWatching) {
+			console.log("ASD");
+			setRenderedDescContext(
+				<MisiBlock
+					finishedWatching
+					missions={localMissions ? localMissions : []}
+					loading={loadingFetchMission}
+				/>
+			);
+			setCurrentlyOpened("misi");
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [finished_watching]);
+	}, [finishedWatching]);
+
+	useEffect(() => {
+		if (localMissions.length !== 0) {
+			setRenderedDescContext(
+				<MisiBlock finishedWatching missions={localMissions} loading={false} />
+			);
+			setLoadingFetchMission(false);
+		}
+	}, [localMissions]);
+
+	const finishesVideo = async (videoId) => {
+		console.log("finishing...");
+
+		if (!finishedWatching) {
+			const res = await fetch(
+				`${API_URL}/courses/finish/${currentCourse.uuid}/${videoId}`,
+				{
+					method: "PUT",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+
+			if (!res.ok) {
+				console.log("failed...");
+			} else {
+				setFinishedWatching(true);
+				console.log("finished video");
+				await fetchCurrentVideoMissions(videoId);
+			}
+		} else {
+			console.log("No further actions (done anyway)");
+		}
+	};
+
+	const fetchCurrentVideoMissions = async (videoId) => {
+		const res = await fetch(
+			`${API_URL}/courses/current-mission/${currentCourse.uuid}/${videoId}`,
+			{
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+			}
+		);
+
+		const fetchedMissions = await res.json();
+
+		if (!res.ok) {
+			console.log("failed fetching missions...");
+		} else {
+			setLocalMissions(fetchedMissions);
+		}
+	};
 
 	const PengumumanBlock = () => {
 		return (
@@ -268,11 +342,12 @@ export default function Kelas({ slug, currentCourse }) {
 				<div className="d-flex flex-md-row flex-column w-100 mt-4">
 					<VideoContainer>
 						<VideoPlayerHLS
-							videoId={video.id}
+							videoId={currentCourse.currentVideo.id}
+							finishesVideo={finishesVideo}
 							liveURL={
 								// https://content.jwplatform.com/manifests/yp34SRmf.m3u8
 								USE_FALLBACK_VID
-									? ``
+									? `https://content.jwplatform.com/manifests/yp34SRmf.m3u8`
 									: `https://stream.mux.com/${video.playback_id}.m3u8`
 							}
 						/>
@@ -430,6 +505,7 @@ export async function getServerSideProps(ctx) {
 		props: {
 			slug,
 			currentCourse,
+			token,
 		},
 	};
 }

@@ -5,16 +5,29 @@ import _ from "videojs-contrib-quality-levels";
 // those imports are important
 import qualitySelector from "videojs-hls-quality-selector";
 
-const VideoPlayerHLS = ({ liveURL, videoId }) => {
+const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo }) => {
 	const videoRef = useRef();
 	const [player, setPlayer] = useState(undefined);
-
+	const [callFinishVideoAPI, setCallFinishVideoAPI] = useState(false);
+	const [vidDuration, setVidDuration] = useState(0);
 	useEffect(() => {
 		if (player) {
 			player.src([liveURL]);
+			setCallFinishVideoAPI(false);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [videoId, liveURL]);
+
+	// useEffect(() => {
+	// 	console.log("wuwu");
+	// 	console.log(vidDuration);
+	// }, [vidDuration]);
+
+	useEffect(() => {
+		if (callFinishVideoAPI) {
+			finishesVideo(videoId);
+		}
+	}, [callFinishVideoAPI]);
 
 	useEffect(() => {
 		const videoJsOptions = {
@@ -35,7 +48,7 @@ const VideoPlayerHLS = ({ liveURL, videoId }) => {
 		const p = videojs(
 			videoRef.current,
 			videoJsOptions,
-			function onPlayerReaady() {
+			function onPlayerReady() {
 				// console.log('onPlayerReady');
 			}
 		);
@@ -54,10 +67,12 @@ const VideoPlayerHLS = ({ liveURL, videoId }) => {
 			<video
 				ref={videoRef}
 				onLoadedMetadata={(e, px) => {
-					console.log(e.target.duration);
+					setVidDuration(e.target.duration);
 				}}
 				onTimeUpdate={(e) => {
-					console.log(e.target.currentTime);
+					if (e.target.currentTime >= vidDuration - 10) {
+						setCallFinishVideoAPI(true);
+					}
 				}}
 				className="video-js vjs-default-skin vjs-big-play-centered"
 			></video>

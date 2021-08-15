@@ -1,6 +1,7 @@
-import { HeadingXS } from "components/Typography/Headings";
+import { useState, useEffect } from "react";
+import { HeadingXS, HeadingXXS } from "components/Typography/Headings";
 import { TextTertiary, TextSecondary } from "components/Typography/Text";
-import { Form } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import styled from "styled-components";
 const StyledTextTertiary = styled(TextTertiary)`
 	font-size: 12px;
@@ -38,29 +39,77 @@ const CheckBoxWrapper = styled.div`
 const OuterContainer = styled.div`
 	min-height: 140px;
 `;
-export default function MisiBlock({ finishedWatching, missions }) {
+
+const EnrollBtn = styled(Button)`
+	border-radius: 40px;
+	border: none;
+	padding: 8px 24px;
+
+	width: 116px;
+`;
+
+const StyledHeadingXXS = styled(HeadingXXS)`
+	font-size: 12px;
+`;
+
+export default function MisiBlock({ finishedWatching, missions, loading }) {
+	const [missionsState, setMissionsState] = useState(missions);
+
+	useEffect(() => {
+		setMissionsState(missions);
+	}, [missionsState, missions]);
 	return (
 		<OuterContainer>
 			{finishedWatching ? (
-				<div className="d-flex flex-column">
-					<HeadingXS as="p" className="text-primary1 mb-3">
-						Misi Video Ini:
+				<div className="d-flex flex-column align-items-center">
+					<HeadingXS as="p" className="text-primary1 mb-1">
+						Misi Video Ini
 					</HeadingXS>
-					{missions.map((m) => (
-						<div key={m.id} className="d-flex align-items-center mb-1">
-							<CheckBoxWrapper className="mr-2">
-								<Form.Check type="checkbox">
-									<Form.Check.Input
-										type="checkbox"
-										name="allCategories"
-										onChange={(e) => {}}
-										value="allCategories"
-									/>
-								</Form.Check>
-							</CheckBoxWrapper>
-							<TextSecondary>{m.text}</TextSecondary>
+					<TextTertiary className="text-gray mb-3">
+						Jalankan (centang dan simpan) misi-misi dibawah ini untuk dapat
+						melanjutkan ke video selanjutnya.
+					</TextTertiary>
+					{loading ? (
+						<TextSecondary>Menunggu...</TextSecondary>
+					) : (
+						<div className="d-flex flex-column ">
+							{missionsState.map((m) => (
+								<div key={m.id} className="d-flex align-items-center mb-1">
+									<CheckBoxWrapper className="mr-2">
+										<Form.Check type="checkbox">
+											<Form.Check.Input
+												type="checkbox"
+												name={m.id}
+												checked={m.completed}
+												onClick={(e) => {
+													setMissionsState(
+														[...missionsState].map((object) => {
+															if (object.id === m.id) {
+																return {
+																	...object,
+																	completed: !m.completed,
+																};
+															} else return object;
+														})
+													);
+												}}
+												onChange={(e) => {}}
+											/>
+										</Form.Check>
+									</CheckBoxWrapper>
+									<TextSecondary>{m.text}</TextSecondary>
+								</div>
+							))}
+							<EnrollBtn
+								className="bg-primary1 mt-3 align-self-center"
+								onClick={(e) => {
+									e.stopPropagation();
+								}}
+							>
+								<StyledHeadingXXS as="p">Simpan</StyledHeadingXXS>
+							</EnrollBtn>
 						</div>
-					))}
+					)}
 				</div>
 			) : (
 				<StyledTextTertiary className="text-primary1 ">
