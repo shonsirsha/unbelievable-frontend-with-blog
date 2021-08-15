@@ -177,6 +177,13 @@ export default function Kelas({ slug, currentCourse, token }) {
 						})
 					);
 					setMissionsCompleted(true);
+					Swal.fire({
+						title: "Kerja Bagus!",
+						text: "Kamu telah berhasil menyelesaikan misi video ini!",
+						icon: "success",
+						confirmButtonColor: "#171b2d",
+						confirmButtonText: "Tutup notifikasi",
+					});
 				}
 			}
 		}

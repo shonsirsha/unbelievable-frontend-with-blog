@@ -100,7 +100,7 @@ export default function MisiBlock({
 						Misi Video Ini
 					</HeadingXS>
 					<TextTertiary className="text-gray mb-3">
-						Jalankan (centang dan simpan) misi-misi dibawah ini untuk
+						Kerjakan (centang dan simpan) misi-misi dibawah ini untuk
 						melanjutkan ke video selanjutnya.
 					</TextTertiary>
 					{loading ? (
