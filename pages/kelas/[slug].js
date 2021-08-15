@@ -105,7 +105,7 @@ export default function Kelas({ slug, currentCourse, token }) {
 
 	console.log(currentCourse);
 
-	const { paid, title, bought_day_diff, videos } = currentCourse;
+	const { paid, title, bought_day_diff } = currentCourse;
 	const { finished_watching, missions, all_missions_completed } =
 		currentCourse.currentVideo;
 	const [renderedDescContext, setRenderedDescContext] = useState(
@@ -241,8 +241,12 @@ export default function Kelas({ slug, currentCourse, token }) {
 	const isGoingNext = (currentDay, targetDay) => {
 		if (currentDay === targetDay) return;
 
-		const current = videos.findIndex((vid) => vid.id === currentDay);
-		const target = videos.findIndex((vid) => vid.id === targetDay);
+		const current = currentCourse.videos.findIndex(
+			(vid) => vid.id === currentDay
+		);
+		const target = currentCourse.videos.findIndex(
+			(vid) => vid.id === targetDay
+		);
 		if (target > current) {
 			return true;
 		}
@@ -286,10 +290,6 @@ export default function Kelas({ slug, currentCourse, token }) {
 		}
 	};
 
-	const goToPrevDay = (video, video_day) => {
-		goToVideo(video);
-	};
-
 	const handleClickedVideoDay = (video, video_day) => {
 		if (paid) {
 			if (currentCourse.currentVideo.id !== video.id) {
@@ -301,7 +301,13 @@ export default function Kelas({ slug, currentCourse, token }) {
 				}
 			}
 		} else {
-			alert("beli dulu buskuh");
+			Swal.fire({
+				title: "Pemberitahuan",
+				text: "Kamu harus membeli kelas ini untuk melanjutkan",
+				icon: "warning",
+				confirmButtonColor: "#171b2d",
+				confirmButtonText: "Tutup",
+			});
 		}
 	};
 
@@ -371,11 +377,20 @@ export default function Kelas({ slug, currentCourse, token }) {
 		);
 	};
 
-	const VideoDetailNotCompleted = ({ video, currentlyWatchedVideo, ix }) => {
-		// {
-		// 	videos.findIndex((vid) => vid.ix);
-		// }
-		// const thisVidIndex =
+	const VideoDetail = ({ video, currentlyWatchedVideo, ix }) => {
+		const isFirstVideo =
+			currentCourse.videos.findIndex((v) => v.id === video.id) === 0; // first video of the course
+
+		const isPrevVideoFinished = () => {
+			if (ix !== 0) {
+				const currentVideoIx = currentCourse.videos.findIndex(
+					(v) => v.id === video.id
+				);
+				const prevVideoIx = currentVideoIx - 1;
+				return currentCourse.videos[prevVideoIx].all_missions_completed;
+			}
+			return true;
+		};
 		return (
 			<>
 				<div className="d-flex align-items-center">
@@ -385,7 +400,7 @@ export default function Kelas({ slug, currentCourse, token }) {
 							bought_day_diff >= ix ? `white` : "lighterDarkGray"
 						} mb-1`}
 					>
-						{video.day_title}
+						{video.day_title}{" "}
 					</StyledHeadingXS>
 				</div>
 				<div className="d-flex align-items-center mb-2">
@@ -413,9 +428,11 @@ export default function Kelas({ slug, currentCourse, token }) {
 							{all_missions_completed && <Lock className="text-white mr-1" />}
 						</>
 					)} */}
-					{!all_missions_completed && !currentlyWatchedVideo && (
+
+					{!isFirstVideo && !isPrevVideoFinished() && (
 						<Lock className="text-white mr-1" />
 					)}
+
 					{/* {ix > 0 && } */}
 					<StyledTextSecondary
 						className={`text-${
@@ -519,15 +536,9 @@ export default function Kelas({ slug, currentCourse, token }) {
 										current={currentCourse.currentVideo.id === vid.id}
 										className="d-flex flex-column "
 									>
-										{/* <VideoDetailPaid video={video} ix={ix} /> */}
 										{paid ? (
 											<>
-												{/* {all_missions_completed ? (
-													<VideoDetailPaid video={video} ix={ix} />
-												) : (
-													<VideoDetailNotCompleted video={video} ix={ix} />
-												)} */}
-												<VideoDetailNotCompleted
+												<VideoDetail
 													video={vid}
 													currentlyWatchedVideo={
 														currentCourse.currentVideo.id === vid.id
@@ -536,7 +547,7 @@ export default function Kelas({ slug, currentCourse, token }) {
 												/>
 											</>
 										) : (
-											<VideoDetailUnpaid video={video} ix={ix} />
+											<VideoDetailUnpaid video={vid} ix={ix} />
 										)}
 									</CourseDayContainer>
 								</a>
