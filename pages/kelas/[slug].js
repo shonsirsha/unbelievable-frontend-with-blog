@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { parseCookies } from "utils/cookies";
 import { API_URL, USE_FALLBACK_VID } from "config";
 import { useRouter } from "next/router";
@@ -17,6 +17,8 @@ import VideoPlayerHLS from "components/VideoPlayer/VideoPlayerHLS";
 import { mediaBreakpoint } from "utils/breakpoints";
 import Swal from "sweetalert2";
 import { dateDiffInDays } from "utils/dateDiffInDays";
+import CourseContext from "context/CourseContext";
+
 const StyledContainer = styled.div`
 	display: flex;
 	padding: 32px 0;
@@ -113,41 +115,93 @@ export default function Kelas({ slug, currentCourse, token }) {
 			{currentCourse.short_desc}
 		</StyledTextTertiary>
 	);
+	const {
+		setMissionsCtx,
+		missionsCtx,
+		setMissionsCompleted,
+		setMissionIdsDoneFromAPI,
+	} = useContext(CourseContext);
 	const [finishedWatching, setFinishedWatching] = useState(finished_watching);
 	const [currentlyOpened, setCurrentlyOpened] = useState("desc");
-	const [localMissions, setLocalMissions] = useState(missions);
-
+	const [missionIdsToAPI, setMissionIdsToAPI] = useState([]);
+	const [missionHook, setMissionHook] = useState(false);
 	const [loadingFetchMission, setLoadingFetchMission] = useState(true);
+	const [videosState, setVideosState] = useState(currentCourse.videos);
 
 	useEffect(() => {
-		setCurrentlyOpened("desc");
-		setFinishedWatching(finished_watching);
+		setMissionsCtx(missions);
+		setMissionsCompleted(all_missions_completed);
+		let misObj = missions.filter((m) => m.completed === true);
+		let ary = [];
+		misObj.forEach((m) => {
+			ary.push(m.id);
+		});
+		setMissionIdsDoneFromAPI(ary);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentCourse.currentVideo]);
 
 	useEffect(() => {
+		async function handleMissionsSave() {
+			console.log("doing mission...");
+			const res = await fetch(
+				`${API_URL}/courses/do-mission/${currentCourse.uuid}/${currentCourse.currentVideo.id}`,
+				{
+					method: "PUT",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+
+					body: JSON.stringify({
+						missionIds: missionIdsToAPI,
+					}),
+				}
+			);
+
+			// const data = await res.json();
+			console.log(res);
+			if (!res.ok) {
+				console.log("failed...");
+				// console.log(data.message);
+			} else {
+				console.log("mission done");
+				if (missionsCtx.length === missionIdsToAPI.length) {
+					setVideosState(
+						[...videosState].map((vidObj) => {
+							if (vidObj.id === currentCourse.currentVideo.id) {
+								return {
+									...vidObj,
+									all_missions_completed: true,
+								};
+							} else return vidObj;
+						})
+					);
+					setMissionsCompleted(true);
+				}
+			}
+		}
+		if (missionHook) {
+			handleMissionsSave();
+			setMissionHook(!missionHook);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [missionHook]);
+
+	useEffect(() => {
 		if (finishedWatching) {
-			console.log("ASD");
 			setRenderedDescContext(
 				<MisiBlock
 					finishedWatching
-					missions={localMissions ? localMissions : []}
 					loading={loadingFetchMission}
+					setMissionIdsToAPI={setMissionIdsToAPI}
+					setMissionHook={setMissionHook}
 				/>
 			);
 			setCurrentlyOpened("misi");
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [finishedWatching]);
-
-	useEffect(() => {
-		if (localMissions.length !== 0) {
-			setRenderedDescContext(
-				<MisiBlock finishedWatching missions={localMissions} loading={false} />
-			);
 			setLoadingFetchMission(false);
 		}
-	}, [localMissions]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [finishedWatching, missionsCtx]);
 
 	const finishesVideo = async (videoId) => {
 		console.log("finishing...");
@@ -195,9 +249,20 @@ export default function Kelas({ slug, currentCourse, token }) {
 		} else {
 			console.log("fetched mission: ");
 			console.log(fetchedMissions);
-			setLocalMissions(fetchedMissions);
+			setMissionsCtx(fetchedMissions);
 		}
 	};
+
+	useEffect(() => {
+		setCurrentlyOpened("desc");
+		setFinishedWatching(finished_watching);
+		setRenderedDescContext(
+			<StyledTextTertiary className="text-primary1 mb">
+				{currentCourse.short_desc}
+			</StyledTextTertiary>
+		);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [currentCourse.currentVideo]);
 
 	const PengumumanBlock = () => {
 		return (
@@ -241,12 +306,8 @@ export default function Kelas({ slug, currentCourse, token }) {
 	const isGoingNext = (currentDay, targetDay) => {
 		if (currentDay === targetDay) return;
 
-		const current = currentCourse.videos.findIndex(
-			(vid) => vid.id === currentDay
-		);
-		const target = currentCourse.videos.findIndex(
-			(vid) => vid.id === targetDay
-		);
+		const current = videosState.findIndex((vid) => vid.id === currentDay);
+		const target = videosState.findIndex((vid) => vid.id === targetDay);
 		if (target > current) {
 			return true;
 		}
@@ -255,7 +316,10 @@ export default function Kelas({ slug, currentCourse, token }) {
 	};
 
 	const goToTheNextDay = (video, video_day) => {
-		if (all_missions_completed) {
+		const previousOfClickedVideoIx =
+			videosState.findIndex((v) => v.id === video.id) - 1;
+
+		if (videosState[previousOfClickedVideoIx].all_missions_completed) {
 			if (bought_day_diff >= video_day) {
 				goToVideo(video);
 				setRenderedDescContext(
@@ -295,8 +359,10 @@ export default function Kelas({ slug, currentCourse, token }) {
 			if (currentCourse.currentVideo.id !== video.id) {
 				const goNextDay = isGoingNext(currentCourse.currentVideo.id, video.id);
 				if (goNextDay) {
+					console.log("ASDASD");
 					goToTheNextDay(video, video_day);
 				} else {
+					console.log("asd");
 					goToVideo(video);
 				}
 			}
@@ -378,16 +444,13 @@ export default function Kelas({ slug, currentCourse, token }) {
 	};
 
 	const VideoDetail = ({ video, currentlyWatchedVideo, ix }) => {
-		const isFirstVideo =
-			currentCourse.videos.findIndex((v) => v.id === video.id) === 0; // first video of the course
+		const isFirstVideo = videosState.findIndex((v) => v.id === video.id) === 0; // first video of the course
 
 		const isPrevVideoFinished = () => {
 			if (ix !== 0) {
-				const currentVideoIx = currentCourse.videos.findIndex(
-					(v) => v.id === video.id
-				);
+				const currentVideoIx = videosState.findIndex((v) => v.id === video.id);
 				const prevVideoIx = currentVideoIx - 1;
-				return currentCourse.videos[prevVideoIx].all_missions_completed;
+				return videosState[prevVideoIx].all_missions_completed;
 			}
 			return true;
 		};
@@ -430,7 +493,11 @@ export default function Kelas({ slug, currentCourse, token }) {
 					)} */}
 
 					{!isFirstVideo && !isPrevVideoFinished() && (
-						<Lock className="text-white mr-1" />
+						<Lock
+							className={`text-${
+								bought_day_diff >= ix ? `white` : "lighterDarkGray"
+							} mr-1`}
+						/>
 					)}
 
 					{/* {ix > 0 && } */}
@@ -505,10 +572,12 @@ export default function Kelas({ slug, currentCourse, token }) {
 										setRenderedDescContext(
 											<MisiBlock
 												finishedWatching={finishedWatching}
-												missions={missions}
+												setMissionIdsToAPI={setMissionIdsToAPI}
+												setMissionHook={setMissionHook}
 											/>
 										);
 										setCurrentlyOpened("misi");
+										console.log(missions);
 									}}
 									role="button"
 									as="p"
@@ -525,7 +594,7 @@ export default function Kelas({ slug, currentCourse, token }) {
 							Course content
 						</StyledHeadingSM>
 
-						{currentCourse.videos.map((vid, ix) => (
+						{videosState.map((vid, ix) => (
 							<div
 								key={vid.video.upload_id}
 								onClick={() => handleClickedVideoDay(vid, ix)}
@@ -617,6 +686,23 @@ export async function getServerSideProps(ctx) {
 			},
 			props: {},
 		};
+	}
+	let currentVideoIndexInVideosArray = course[0].videos.findIndex((crs, ix) => {
+		return crs.video.upload_id === c;
+	});
+	if (currentVideoIndexInVideosArray > 0) {
+		let prevVideoMissionsCompleted =
+			course[0].videos[currentVideoIndexInVideosArray - 1]
+				.all_missions_completed;
+		if (!prevVideoMissionsCompleted) {
+			return {
+				redirect: {
+					permanent: false,
+					destination: `/kelas/${slug}?c=${course[0].videos[0].video.upload_id}`,
+				},
+				props: {},
+			};
+		}
 	}
 	let currentVideo = course[0].videos.find((crs, ix) => {
 		return crs.video.upload_id === c;

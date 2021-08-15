@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { HeadingXS, HeadingXXS } from "components/Typography/Headings";
 import { TextTertiary, TextSecondary } from "components/Typography/Text";
 import { Form, Button } from "react-bootstrap";
 import styled from "styled-components";
+import CourseContext from "context/CourseContext";
+
 const StyledTextTertiary = styled(TextTertiary)`
 	font-size: 12px;
 `;
@@ -23,7 +25,7 @@ const CheckBoxWrapper = styled.div`
 	}
 
 	input[type="checkbox"]:checked {
-		background: #171b2d;
+		background: #${(props) => (props.done ? `7e8298` : `171b2d`)};
 	}
 
 	input[type="checkbox"]:checked:after {
@@ -40,7 +42,7 @@ const OuterContainer = styled.div`
 	min-height: 140px;
 `;
 
-const EnrollBtn = styled(Button)`
+const SaveBtn = styled(Button)`
 	border-radius: 40px;
 	border: none;
 	padding: 8px 24px;
@@ -52,11 +54,44 @@ const StyledHeadingXXS = styled(HeadingXXS)`
 	font-size: 12px;
 `;
 
-export default function MisiBlock({ finishedWatching, missions, loading }) {
-	const [missionsState, setMissionsState] = useState(missions);
+export default function MisiBlock({
+	finishedWatching,
+	loading,
+	setMissionIdsToAPI,
+	setMissionHook,
+}) {
+	const [missionIds, setMissionIds] = useState([]);
+	const [alreadySetIds, setAlreadySetIds] = useState([]);
+	const {
+		missionsCtx,
+		setMissionsCtx,
+		missionsCompleted,
+		setPersistedMissionIds,
+		persistedMissionIds,
+		missionIdsDoneFromAPI,
+	} = useContext(CourseContext);
+
+	const [locaMis, setLocalMis] = useState([]);
+
 	useEffect(() => {
-		setMissionsState(missions);
-	}, [missions]);
+		let ary = [];
+
+		missionsCtx.forEach((m) => {
+			if (m.completed) {
+				ary.push(m.id);
+			}
+		});
+		setMissionIds(ary);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+	useEffect(() => {
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [missionIds]);
+	useEffect(() => {
+		console.log(missionIds);
+	}, [missionIds]);
+
 	return (
 		<OuterContainer>
 			{finishedWatching ? (
@@ -72,41 +107,78 @@ export default function MisiBlock({ finishedWatching, missions, loading }) {
 						<TextSecondary>Menunggu...</TextSecondary>
 					) : (
 						<div className="d-flex flex-column ">
-							{missionsState.map((m) => (
-								<div key={m.id} className="d-flex align-items-center mb-1">
-									<CheckBoxWrapper className="mr-2">
+							{missionsCtx.map((m) => (
+								<div key={m.id} className="d-flex align-items-center  mb-1">
+									<CheckBoxWrapper
+										done={
+											alreadySetIds.includes(m.id) ||
+											persistedMissionIds.includes(m.id) ||
+											missionIdsDoneFromAPI.includes(m.id)
+										}
+										className="mr-2"
+									>
 										<Form.Check type="checkbox">
 											<Form.Check.Input
 												type="checkbox"
 												name={m.id}
 												checked={m.completed}
 												onClick={() => {
-													setMissionsState(
-														[...missionsState].map((object) => {
-															if (object.id === m.id) {
-																return {
-																	...object,
-																	completed: !m.completed,
-																};
-															} else return object;
-														})
-													);
+													if (
+														!alreadySetIds.includes(m.id) &&
+														!persistedMissionIds.includes(m.id) &&
+														!missionIdsDoneFromAPI.includes(m.id)
+													) {
+														setMissionsCtx(
+															[...missionsCtx].map((object) => {
+																if (object.id === m.id) {
+																	return {
+																		...object,
+																		completed: !m.completed,
+																	};
+																} else return object;
+															})
+														);
+													}
 												}}
-												onChange={(e) => {}}
+												onChange={(e) => {
+													const checked = e.target.checked;
+													if (
+														!alreadySetIds.includes(m.id) &&
+														!persistedMissionIds.includes(m.id) &&
+														!missionIdsDoneFromAPI.includes(m.id)
+													) {
+														if (checked) {
+															if (!missionIds.includes(m.id)) {
+																setMissionIds([...missionIds, m.id]);
+															}
+														} else if (!checked) {
+															if (missionIds.includes(m.id)) {
+																setMissionIds(
+																	missionIds.filter((id) => id !== m.id)
+																);
+															}
+														}
+													}
+												}}
 											/>
 										</Form.Check>
 									</CheckBoxWrapper>
 									<TextSecondary>{m.text}</TextSecondary>
 								</div>
 							))}
-							<EnrollBtn
-								className="bg-primary1 mt-3 align-self-center"
-								onClick={(e) => {
-									e.stopPropagation();
-								}}
-							>
-								<StyledHeadingXXS as="p">Simpan</StyledHeadingXXS>
-							</EnrollBtn>
+							{!missionsCompleted && (
+								<SaveBtn
+									className="bg-primary1 mt-3 align-self-center"
+									onClick={async () => {
+										setMissionIdsToAPI(missionIds);
+										setAlreadySetIds(missionIds);
+										setPersistedMissionIds(missionIds);
+										setMissionHook(true);
+									}}
+								>
+									<StyledHeadingXXS as="p">Simpan</StyledHeadingXXS>
+								</SaveBtn>
+							)}
 						</div>
 					)}
 				</div>

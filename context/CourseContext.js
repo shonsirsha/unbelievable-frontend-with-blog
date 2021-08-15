@@ -13,6 +13,10 @@ export const CourseProvider = ({ children }) => {
 	const [selectedPreviewCourse, setSelectedPreviewCourse] = useState(null);
 	const [invoiceUrl, setInvoiceUrl] = useState(null);
 
+	const [missionsCtx, setMissionsCtx] = useState([]);
+	const [missionsCompleted, setMissionsCompleted] = useState(false);
+	const [persistedMissionIds, setPersistedMissionIds] = useState([]);
+	const [missionIdsDoneFromAPI, setMissionIdsDoneFromAPI] = useState([]);
 	const checkIfInvoiceValid = async (courseId, token) => {
 		setEnrollClassLoading(true);
 
@@ -163,6 +167,14 @@ export const CourseProvider = ({ children }) => {
 				getInvoiceUrl,
 				setInvoiceUrl,
 				checkIfInvoiceValid,
+				setMissionsCtx,
+				setMissionsCompleted,
+				setPersistedMissionIds,
+				setMissionIdsDoneFromAPI,
+				missionIdsDoneFromAPI,
+				persistedMissionIds,
+				missionsCompleted,
+				missionsCtx,
 				invoiceUrl,
 				enrollClassLoading,
 				previewModalOpen,
