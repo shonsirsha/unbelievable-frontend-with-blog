@@ -230,7 +230,6 @@ export async function getServerSideProps({ req, _ }) {
 		user.token = token;
 		const courses = await res3.json();
 		const coursesTaken = await res4.json();
-		console.log(coursesTaken);
 
 		return {
 			props: {

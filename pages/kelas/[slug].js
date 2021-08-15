@@ -119,6 +119,7 @@ export default function Kelas({ slug, currentCourse, token }) {
 	useEffect(() => {
 		setCurrentlyOpened("desc");
 		setFinishedWatching(finished_watching);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentCourse.currentVideo]);
 
 	useEffect(() => {
