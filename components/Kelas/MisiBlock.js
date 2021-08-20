@@ -85,12 +85,6 @@ export default function MisiBlock({
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-	useEffect(() => {
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [missionIds]);
-	useEffect(() => {
-		console.log(missionIds);
-	}, [missionIds]);
 
 	return (
 		<OuterContainer>

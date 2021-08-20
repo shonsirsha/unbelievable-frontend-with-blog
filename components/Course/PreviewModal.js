@@ -111,12 +111,6 @@ const PreviewModal = (props) => {
 		}
 		setPreviewModalOpen(false);
 		setBuyModalOpen(true);
-
-		// enrollClass(
-		// 	selectedPreviewCourse,
-		// 	user ? user.id : null,
-		// 	token ? token : null
-		// );
 	};
 	return (
 		<StyledModal

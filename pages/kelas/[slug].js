@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import CourseContext from "context/CourseContext";
 import { parseCookies } from "utils/cookies";
 import { API_URL, USE_FALLBACK_VID } from "config";
 import { useRouter } from "next/router";
@@ -17,7 +18,7 @@ import VideoPlayerHLS from "components/VideoPlayer/VideoPlayerHLS";
 import { mediaBreakpoint } from "utils/breakpoints";
 import Swal from "sweetalert2";
 import { dateDiffInDays } from "utils/dateDiffInDays";
-import CourseContext from "context/CourseContext";
+import BuyModal from "components/Course/BuyModal";
 
 const StyledContainer = styled.div`
 	display: flex;
@@ -32,7 +33,7 @@ const StyledContainer = styled.div`
 	}
 `;
 const VideoContainer = styled.div`
-	width: 65%;
+	width: 60%;
 	background: transparent;
 	display: flex;
 	flex-direction: column;
@@ -45,7 +46,7 @@ const VideoContainer = styled.div`
 `;
 
 const VideosListContainer = styled.div`
-	width: 35%;
+	width: 40%;
 	min-height: 320px;
 	padding: 32px 0;
 	@media ${mediaBreakpoint.down.lg} {
@@ -103,7 +104,7 @@ const StyledHeadingXXS = styled(HeadingXXS)`
 	${(props) => props.opened && `text-decoration: underline;`}
 `;
 const StyledTextSecondary = styled(TextSecondary)``;
-export default function Kelas({ slug, currentCourse, token }) {
+export default function Kelas({ slug, currentCourse, token, user }) {
 	const router = useRouter();
 
 	console.log(currentCourse);
@@ -121,6 +122,10 @@ export default function Kelas({ slug, currentCourse, token }) {
 		missionsCtx,
 		setMissionsCompleted,
 		setMissionIdsDoneFromAPI,
+		checkIfInvoiceValid,
+		setBuyModalOpen,
+		buyModalOpen,
+		getInvoiceUrl,
 	} = useContext(CourseContext);
 	const [finishedWatching, setFinishedWatching] = useState(finished_watching);
 	const [currentlyOpened, setCurrentlyOpened] = useState("desc");
@@ -227,6 +232,7 @@ export default function Kelas({ slug, currentCourse, token }) {
 			);
 
 			if (!res.ok) {
+				console.log(res);
 				console.log("failed...");
 			} else {
 				setFinishedWatching(true);
@@ -355,7 +361,7 @@ export default function Kelas({ slug, currentCourse, token }) {
 		} else {
 			Swal.fire({
 				title: "Ups...",
-				text: "Mohon kerjakan semua misi dari video ini untuk melanjutkan ke video selanjutnya",
+				text: "Mohon kerjakan terlebih dahulu semua misi yang diperlukan untuk dapat melanjutkan ke video ini",
 				icon: "error",
 				confirmButtonColor: "#171b2d",
 				confirmButtonText: "Tutup",
@@ -380,10 +386,25 @@ export default function Kelas({ slug, currentCourse, token }) {
 				title: "Pemberitahuan",
 				text: "Kamu harus membeli kelas ini untuk melanjutkan",
 				icon: "warning",
+				showCancelButton: true,
 				confirmButtonColor: "#171b2d",
-				confirmButtonText: "Tutup",
-			});
+				cancelButtonColor: "#d52f89",
+				confirmButtonText: "Beli Kelas",
+				cancelButtonText: "Tutup",
+				preConfirm: async (email) => {
+					await onClickBuyButton();
+				},
+			}).then(async (result) => {});
 		}
+	};
+
+	const onClickBuyButton = async () => {
+		const invoiceIsValid = await checkIfInvoiceValid(currentCourse.id, token); // exists and not expiring soon/expired yet
+		if (!invoiceIsValid) {
+			console.log("getting new url (call to xendit)...");
+			await getInvoiceUrl(currentCourse, user, token);
+		}
+		setBuyModalOpen(true);
 	};
 
 	const VideoDetailUnpaid = ({ video, ix }) => {
@@ -556,6 +577,8 @@ export default function Kelas({ slug, currentCourse, token }) {
 			background="#171b2d"
 			withMargin
 		>
+			<BuyModal show={buyModalOpen} onHide={() => setBuyModalOpen(false)} />
+
 			<StyledContainer className="flex-column">
 				<div className="d-flex w-100 justify-content-center">
 					<HeadingXS>{title}</HeadingXS>
@@ -698,11 +721,21 @@ export async function getServerSideProps(ctx) {
 		...course[0],
 	};
 
+	const res2 = await fetch(`${API_URL}/users/me`, {
+		method: "GET",
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	});
+
+	let user = await res2.json();
+
 	return {
 		props: {
 			slug,
 			currentCourse,
 			token,
+			user,
 		},
 	};
 }
