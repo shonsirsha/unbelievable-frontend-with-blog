@@ -76,6 +76,8 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 		setBuyModalOpen,
 	} = useContext(CourseContext);
 
+	console.log(coursesTaken);
+
 	const [allCourses] = useState(courses);
 
 	const handleFinishOnboarding = async () => {
@@ -156,12 +158,7 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 						{coursesTaken.map((course) => (
 							<>
 								{course.videos.length > 0 && (
-									<StyledEnrolled
-										user={user}
-										key={course.id}
-										course={course}
-										totalProgress={30}
-									/>
+									<StyledEnrolled user={user} key={course.id} course={course} />
 								)}
 							</>
 						))}

@@ -78,16 +78,18 @@ const PopoverContainer = styled.div`
 	}
 `;
 
-export default function EnrolledCourseCard({
-	small,
-	user,
-	totalProgress = 0,
-	course,
-	...props
-}) {
+export default function EnrolledCourseCard({ small, user, course, ...props }) {
 	const [hoveredStar, setHoveredStar] = useState(-1);
-	const { title, slug, content_creator, image, videos, my_rating, paid } =
-		course;
+	const {
+		title,
+		slug,
+		content_creator,
+		image,
+		videos,
+		my_rating,
+		paid,
+		percentage_course_finished,
+	} = course;
 	const { rateClass, setPreviewModalOpen, setSelectedPreviewCourse } =
 		useContext(CourseContext);
 	const { token } = useContext(AuthContext);
@@ -132,9 +134,14 @@ export default function EnrolledCourseCard({
 					<StyledTextTertiary className="mt-2">
 						{content_creator && content_creator.full_name}
 					</StyledTextTertiary>
-					<StyledProgressBar className="mt-3 shadow-sm" now={totalProgress} />
+					<StyledProgressBar
+						className="mt-3 shadow-sm"
+						now={percentage_course_finished}
+					/>
 					<div className="d-flex justify-content-between mt-3">
-						<StyledTextTertiary>{totalProgress}% complete</StyledTextTertiary>
+						<StyledTextTertiary>
+							{percentage_course_finished}% complete
+						</StyledTextTertiary>
 						<div className="d-flex flex-column">
 							<Popover
 								isOpen={isPopoverOpen}
