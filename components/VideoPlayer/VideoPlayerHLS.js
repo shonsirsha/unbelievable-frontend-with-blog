@@ -27,6 +27,7 @@ const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo }) => {
 		if (callFinishVideoAPI) {
 			finishesVideo(videoId);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [callFinishVideoAPI]);
 
 	useEffect(() => {
