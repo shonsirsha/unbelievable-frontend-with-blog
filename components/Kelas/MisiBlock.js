@@ -99,7 +99,7 @@ export default function MisiBlock({
 					<HeadingXS as="p" className="text-primary1 mb-1">
 						Misi Video Ini
 					</HeadingXS>
-					<TextTertiary className="text-gray mb-3">
+					<TextTertiary className="text-gray mb-3 text-center">
 						Kerjakan (centang dan simpan) misi-misi dibawah ini untuk
 						melanjutkan ke video selanjutnya.
 					</TextTertiary>

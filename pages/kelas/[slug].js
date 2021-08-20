@@ -11,7 +11,7 @@ import {
 } from "components/Typography/Headings";
 import MisiBlock from "components/Kelas/MisiBlock";
 import { TextSecondary, TextTertiary } from "components/Typography/Text";
-import { MdLockOutline } from "react-icons/md";
+import { MdLockOutline, MdCheck } from "react-icons/md";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import VideoPlayerHLS from "components/VideoPlayer/VideoPlayerHLS";
 import { mediaBreakpoint } from "utils/breakpoints";
@@ -179,7 +179,7 @@ export default function Kelas({ slug, currentCourse, token }) {
 					setMissionsCompleted(true);
 					Swal.fire({
 						title: "Kerja Bagus!",
-						text: "Kamu telah berhasil menyelesaikan misi video ini!",
+						text: "Kamu telah berhasil menyelesaikan semua misi video ini!",
 						icon: "success",
 						confirmButtonColor: "#171b2d",
 						confirmButtonText: "Tutup notifikasi",
@@ -272,11 +272,12 @@ export default function Kelas({ slug, currentCourse, token }) {
 	}, [currentCourse.currentVideo]);
 
 	const PengumumanBlock = () => {
+		console.log(currentCourse);
 		return (
-			<div className="d-flex flex-column w-50">
-				{currentCourse.pengumuman.length > 0 ? (
+			<div className="d-flex flex-column w-100">
+				{currentCourse.announcement ? (
 					<>
-						{[...currentCourse.pengumuman].reverse().map((p) => (
+						{[...currentCourse.announcement.pengumuman].reverse().map((p) => (
 							<div key={p.id} className=" mb-4">
 								<StyledTextTertiary className="text-info1 mb-2">
 									{currentCourse.content_creator.full_name}
@@ -384,48 +385,6 @@ export default function Kelas({ slug, currentCourse, token }) {
 		}
 	};
 
-	const VideoDetailPaid = ({ video, ix }) => {
-		return (
-			<>
-				<div className="d-flex align-items-center">
-					<StyledHeadingXS
-						as="p"
-						className={`text-${
-							bought_day_diff >= ix ? `white` : "lighterDarkGray"
-						} mb-1`}
-					>
-						{video.day_title}
-					</StyledHeadingXS>
-				</div>
-
-				<div className="d-flex align-items-center mb-2">
-					<Clock
-						className={`text-${
-							bought_day_diff >= ix ? `white` : "lighterDarkGray"
-						} mr-1`}
-					/>
-					<TimeText
-						className={`text-${
-							bought_day_diff >= ix ? `white` : "lighterDarkGray"
-						}`}
-					>
-						6 min
-					</TimeText>
-				</div>
-
-				<div className="d-flex align-items-center">
-					<StyledTextSecondary
-						className={`text-${
-							bought_day_diff >= ix ? `white` : "lighterDarkGray"
-						}`}
-					>
-						{video.video.title}
-					</StyledTextSecondary>
-				</div>
-			</>
-		);
-	};
-
 	const VideoDetailUnpaid = ({ video, ix }) => {
 		return (
 			<>
@@ -460,6 +419,10 @@ export default function Kelas({ slug, currentCourse, token }) {
 				return videosState[prevVideoIx].all_missions_completed;
 			}
 			return true;
+		};
+		const isVideoFinished = () => {
+			const currentVideoIx = videosState.findIndex((v) => v.id === video.id);
+			return videosState[currentVideoIx].all_missions_completed;
 		};
 		return (
 			<>
@@ -507,6 +470,14 @@ export default function Kelas({ slug, currentCourse, token }) {
 						/>
 					)}
 
+					{isVideoFinished() && (
+						<MdCheck
+							className={`text-${
+								bought_day_diff >= ix ? `white` : "lighterDarkGray"
+							} mr-1`}
+						/>
+					)}
+
 					{/* {ix > 0 && } */}
 					<StyledTextSecondary
 						className={`text-${
@@ -516,6 +487,63 @@ export default function Kelas({ slug, currentCourse, token }) {
 						{video.video.title}
 					</StyledTextSecondary>
 				</div>
+			</>
+		);
+	};
+
+	const MiscContainer = () => {
+		return (
+			<>
+				<MiscHeaderContainer className="justify-content-md-start justify-content-between">
+					<StyledHeadingXXS
+						opened={currentlyOpened === "desc"}
+						onClick={() => {
+							setRenderedDescContext(
+								<StyledTextTertiary className="text-primary1">
+									{currentCourse.short_desc}
+								</StyledTextTertiary>
+							);
+							setCurrentlyOpened("desc");
+						}}
+						role="button"
+						as="p"
+						className="text-center text-primary1 mx-md-2 mx-0"
+					>
+						Tentang course
+					</StyledHeadingXXS>
+					<StyledHeadingXXS
+						opened={currentlyOpened === "pengumuman"}
+						onClick={() => {
+							setRenderedDescContext(<PengumumanBlock />);
+							setCurrentlyOpened("pengumuman");
+						}}
+						role="button"
+						as="p"
+						className="text-center text-primary1 mx-md-2 mx-0"
+					>
+						Pengumuman
+					</StyledHeadingXXS>
+					<StyledHeadingXXS
+						opened={currentlyOpened === "misi"}
+						onClick={() => {
+							setRenderedDescContext(
+								<MisiBlock
+									finishedWatching={finishedWatching}
+									setMissionIdsToAPI={setMissionIdsToAPI}
+									setMissionHook={setMissionHook}
+								/>
+							);
+							setCurrentlyOpened("misi");
+							console.log(missions);
+						}}
+						role="button"
+						as="p"
+						className="text-center text-primary1 mx-md-2 mx-0"
+					>
+						Misi
+					</StyledHeadingXXS>
+				</MiscHeaderContainer>
+				<MiscBodyContainer>{renderedDescContext}</MiscBodyContainer>
 			</>
 		);
 	};
@@ -543,58 +571,6 @@ export default function Kelas({ slug, currentCourse, token }) {
 									: `https://stream.mux.com/${currentCourse.currentVideo.video.playback_id}.m3u8`
 							}
 						/>
-						<MiscContainer>
-							<MiscHeaderContainer>
-								<StyledHeadingXXS
-									opened={currentlyOpened === "desc"}
-									onClick={() => {
-										setRenderedDescContext(
-											<StyledTextTertiary className="text-primary1">
-												{currentCourse.short_desc}
-											</StyledTextTertiary>
-										);
-										setCurrentlyOpened("desc");
-									}}
-									role="button"
-									as="p"
-									className="text-primary1 mr-5"
-								>
-									Tentang course
-								</StyledHeadingXXS>
-								<StyledHeadingXXS
-									opened={currentlyOpened === "pengumuman"}
-									onClick={() => {
-										setRenderedDescContext(<PengumumanBlock />);
-										setCurrentlyOpened("pengumuman");
-									}}
-									role="button"
-									as="p"
-									className="text-primary1 mr-5"
-								>
-									Pengumuman
-								</StyledHeadingXXS>
-								<StyledHeadingXXS
-									opened={currentlyOpened === "misi"}
-									onClick={() => {
-										setRenderedDescContext(
-											<MisiBlock
-												finishedWatching={finishedWatching}
-												setMissionIdsToAPI={setMissionIdsToAPI}
-												setMissionHook={setMissionHook}
-											/>
-										);
-										setCurrentlyOpened("misi");
-										console.log(missions);
-									}}
-									role="button"
-									as="p"
-									className="text-primary1"
-								>
-									Misi
-								</StyledHeadingXXS>
-							</MiscHeaderContainer>
-							<MiscBodyContainer>{renderedDescContext}</MiscBodyContainer>
-						</MiscContainer>
 					</VideoContainer>
 					<VideosListContainer className="bg-primary1">
 						<StyledHeadingSM as="p" className="text-white mb-3">
@@ -631,6 +607,8 @@ export default function Kelas({ slug, currentCourse, token }) {
 						))}
 					</VideosListContainer>
 				</div>
+
+				<MiscContainer />
 			</StyledContainer>
 		</Layout>
 	);

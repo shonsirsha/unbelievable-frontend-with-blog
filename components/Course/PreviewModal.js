@@ -170,7 +170,11 @@ const PreviewModal = (props) => {
 							{new Intl.NumberFormat("id-ID", {
 								style: "currency",
 								currency: "IDR",
-							}).format(selectedPreviewCourse.price)}
+							}).format(
+								selectedPreviewCourse.course_price
+									? selectedPreviewCourse.course_price.price
+									: 0
+							)}
 						</StyledTextTertiary>
 					</div>
 					<div className="mt-2">
@@ -187,9 +191,7 @@ const PreviewModal = (props) => {
 								alt="Checkmark"
 								className="mr-2"
 							/>
-							<HeadingXXS className="text-white">
-								30+ Video Course How to be confident
-							</HeadingXXS>
+							<HeadingXXS className="text-white">30+ Video Course</HeadingXXS>
 						</div>
 						<div className="d-flex align-items-center mb-3">
 							<Image
