@@ -38,7 +38,8 @@ const VideoContainer = styled.div`
 	flex-direction: column;
 	min-height: 320px;
 
-	@media ${mediaBreakpoint.down.md} {
+	@media ${mediaBreakpoint.down.lg} {
+		min-height: 0;
 		width: 100%;
 	}
 `;
@@ -47,7 +48,8 @@ const VideosListContainer = styled.div`
 	width: 35%;
 	min-height: 320px;
 	padding: 32px 0;
-	@media ${mediaBreakpoint.down.md} {
+	@media ${mediaBreakpoint.down.lg} {
+		min-height: 0;
 		width: 100%;
 	}
 `;
@@ -84,7 +86,6 @@ const Clock = styled(AiOutlineClockCircle)`
 	font-size: 14px;
 `;
 
-const MiscContainer = styled.div``;
 const MiscHeaderContainer = styled.div`
 	display: flex;
 	border-bottom: 1px #d1d1d1 solid;
@@ -494,7 +495,7 @@ export default function Kelas({ slug, currentCourse, token }) {
 	const MiscContainer = () => {
 		return (
 			<>
-				<MiscHeaderContainer className="justify-content-md-start justify-content-between">
+				<MiscHeaderContainer className="justify-content-sm-start justify-content-between">
 					<StyledHeadingXXS
 						opened={currentlyOpened === "desc"}
 						onClick={() => {
@@ -507,7 +508,7 @@ export default function Kelas({ slug, currentCourse, token }) {
 						}}
 						role="button"
 						as="p"
-						className="text-center text-primary1 mx-md-2 mx-0"
+						className="text-center text-primary1 mx-sm-2 mx-0"
 					>
 						Tentang course
 					</StyledHeadingXXS>
@@ -519,7 +520,7 @@ export default function Kelas({ slug, currentCourse, token }) {
 						}}
 						role="button"
 						as="p"
-						className="text-center text-primary1 mx-md-2 mx-0"
+						className="text-center text-primary1 mx-sm-2 mx-0"
 					>
 						Pengumuman
 					</StyledHeadingXXS>
@@ -538,7 +539,7 @@ export default function Kelas({ slug, currentCourse, token }) {
 						}}
 						role="button"
 						as="p"
-						className="text-center text-primary1 mx-md-2 mx-0"
+						className="text-center text-primary1 mx-sm-2 mx-0"
 					>
 						Misi
 					</StyledHeadingXXS>
@@ -559,7 +560,7 @@ export default function Kelas({ slug, currentCourse, token }) {
 				<div className="d-flex w-100 justify-content-center">
 					<HeadingXS>{title}</HeadingXS>
 				</div>
-				<div className="d-flex flex-md-row flex-column w-100 mt-4">
+				<div className="d-flex flex-lg-row flex-column w-100 mt-4">
 					<VideoContainer>
 						<VideoPlayerHLS
 							videoId={currentCourse.currentVideo.id}
@@ -571,6 +572,8 @@ export default function Kelas({ slug, currentCourse, token }) {
 									: `https://stream.mux.com/${currentCourse.currentVideo.video.playback_id}.m3u8`
 							}
 						/>
+
+						<MiscContainer />
 					</VideoContainer>
 					<VideosListContainer className="bg-primary1">
 						<StyledHeadingSM as="p" className="text-white mb-3">
@@ -607,8 +610,6 @@ export default function Kelas({ slug, currentCourse, token }) {
 						))}
 					</VideosListContainer>
 				</div>
-
-				<MiscContainer />
 			</StyledContainer>
 		</Layout>
 	);
