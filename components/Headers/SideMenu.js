@@ -65,7 +65,9 @@ export default function SideMenu() {
 					<Link key={ix} href={r.url}>
 						<a>
 							<StyledHeadingXXS
-								active={r.url === router.pathname}
+								active={
+									r.url === router.pathname || router.pathname.includes(r.url)
+								}
 								className="text-black"
 							>
 								{r.text}
