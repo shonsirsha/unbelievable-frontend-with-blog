@@ -4,7 +4,7 @@ import { TextTertiary, TextSecondary } from "components/Typography/Text";
 import { Form, Button } from "react-bootstrap";
 import styled from "styled-components";
 import CourseContext from "context/CourseContext";
-
+import Loading from "components/Loading/Loading";
 const StyledTextTertiary = styled(TextTertiary)`
 	font-size: 12px;
 `;
@@ -98,7 +98,7 @@ export default function MisiBlock({
 						melanjutkan ke video selanjutnya.
 					</TextTertiary>
 					{loading ? (
-						<TextSecondary>Menunggu...</TextSecondary>
+						<Loading className="mt-4" fixed={false} />
 					) : (
 						<div className="d-flex flex-column ">
 							{missionsCtx.map((m) => (

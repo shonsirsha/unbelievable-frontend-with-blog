@@ -9,6 +9,7 @@ import Layout from "components/Layout";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 import { whitespace } from "utils/whitespace";
+import withAuth from "utils/withAuth";
 
 const OuterContainer = styled.div`
 	max-width: 60%;
@@ -66,7 +67,7 @@ const EnrollBtn = styled(Button)`
 	max-width: 180px;
 `;
 
-export default function Masukkan({ categories }) {
+const Masukkan = ({ categories }) => {
 	const { token } = useContext(AuthContext);
 	const [categoriesId, setCategoriesId] = useState([
 		categories ? categories[0].id : null,
@@ -174,8 +175,8 @@ export default function Masukkan({ categories }) {
 			</OuterContainer>
 		</Layout>
 	);
-}
-
+};
+export default withAuth(Masukkan);
 export async function getStaticProps() {
 	const res = await fetch(`${API_URL}/feedback-categories`);
 	const categories = await res.json();

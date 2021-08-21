@@ -13,6 +13,7 @@ import ReviewBlock from "./SideItems/ReviewBlock";
 import { FaHeart } from "react-icons/fa";
 import { BiTask } from "react-icons/bi";
 import { useRouter } from "next/router";
+import Loading from "./Loading/Loading";
 const FlyingButtonsContainer = styled.div`
 	width: 0;
 	display: flex;
@@ -111,7 +112,7 @@ export default function Layout({
 	}
 
 	if (loading) {
-		return <>Menunggu...</>;
+		return <Loading />;
 	}
 
 	return (

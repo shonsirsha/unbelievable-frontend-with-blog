@@ -1,14 +1,14 @@
 import { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import AuthContext from "context/AuthContext";
-
+import Loading from "components/Loading/Loading";
 const mustBeUnauthed = (Component) => {
 	const Auth = (props) => {
 		const { user, loading } = useContext(AuthContext);
 		const router = useRouter();
 
 		if (loading) {
-			return "loading..."; // loading svg..
+			return <Loading />; // loading svg..
 		}
 
 		// Login data added to props via redux-store (or use react context for example)
