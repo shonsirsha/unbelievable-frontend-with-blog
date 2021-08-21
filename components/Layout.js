@@ -94,6 +94,7 @@ export default function Layout({
 	scrollToSolid = false,
 	background = "transparent",
 	mainApp = false,
+	showReviewBlock = true,
 }) {
 	let backBtn = false;
 
@@ -152,7 +153,7 @@ export default function Layout({
 				style={{ marginTop: withMargin ? `112px` : `0` }}
 			>
 				{mainApp && <SideMenu />}
-				{mainApp && (
+				{mainApp && showReviewBlock && (
 					<ReviewBlockContainer>
 						<ReviewBlock />
 						<div className="responsiveSideBlock">

@@ -40,7 +40,7 @@ const Feedback = styled(MdRateReview)`
 `;
 export default function ReviewBlock() {
 	const content = (
-		<Link href="/review">
+		<Link href="/profil/feedback">
 			<a>
 				<ContentContainer
 					role="button"
@@ -48,13 +48,13 @@ export default function ReviewBlock() {
 				>
 					<div className="d-flex flex-column">
 						<StyledHeadingXXS as="p" className="text-center">
-							tulis review
+							tulis masukkan
 						</StyledHeadingXXS>
 						<TextTertiary className="mt-1 text-center mb-2">
 							disini!
 						</TextTertiary>
 					</div>
-					<Image src="images/character2.png" alt="Character" />
+					<Image src="/images/character2.png" alt="Character" />
 				</ContentContainer>
 				<Feedback />
 			</a>
