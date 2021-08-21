@@ -2,6 +2,7 @@ import { useContext, useRef, useState } from "react";
 import { HeadingSM, HeadingXXS } from "components/Typography/Headings";
 import { TextPrimary } from "components/Typography/Text";
 import { FormLabel, FormGroup, Form, Button } from "react-bootstrap";
+import { mediaBreakpoint } from "utils/breakpoints";
 import { API_URL } from "config";
 import AuthContext from "context/AuthContext";
 import Layout from "components/Layout";
@@ -11,6 +12,9 @@ import { whitespace } from "utils/whitespace";
 
 const OuterContainer = styled.div`
 	max-width: 60%;
+	@media ${mediaBreakpoint.down.lg} {
+		max-width: 100%;
+	}
 `;
 const StyledFormLabel = styled(FormLabel)`
 	font-size: 14px;
@@ -37,12 +41,11 @@ const Select = styled(Form)`
 	padding: 10px;
 	border-radius: 8px;
 	border: none;
-	background: #F6F6F6;
+	background: #f6f6f6;
 	background-image: url("/images/dropdown-caret.svg");
-    background-repeat: no-repeat;
-    background-position-x: 97%;
-    background-position-y: 13px;
-	width: 50%;
+	background-repeat: no-repeat;
+	background-position-x: 97%;
+	background-position-y: 13px;
 	font-size: 14px;
 	&:-webkit-autofill,
 	&:-webkit-autofill:hover,
@@ -50,10 +53,9 @@ const Select = styled(Form)`
 	&:-webkit-autofill:active {
 		-webkit-box-shadow: 0 0 0 30px #f4f4f7 inset !important;
 	}
-	&:focus{
+	&:focus {
 		outline: none;
 	}
-}
 `;
 
 const EnrollBtn = styled(Button)`
@@ -126,7 +128,7 @@ export default function Masukkan({ categories }) {
 			<OuterContainer className="d-flex flex-column">
 				<>
 					<HeadingSM className="mb-2">tulis masukkan</HeadingSM>
-					<TextPrimary className="mt-5 specialgray">
+					<TextPrimary className="mt-3 mt-lg-5 specialgray">
 						Terima kasih, Heroes! Karena kamu akan membuat platform ini menjadi
 						lebih baik lagi dengan memberikan masukkan dan saran kepada kami
 						agar lebih baik lagi ke depannya!

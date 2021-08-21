@@ -240,7 +240,10 @@ export default function Header({
 								<Link key={ix} href={r.url}>
 									<a>
 										<StyledTextPrimary
-											active={r.url === router.pathname}
+											active={
+												r.url === router.pathname ||
+												router.pathname.includes(r.url)
+											}
 											className="text-black text-capitalize"
 										>
 											{r.text}
