@@ -1,13 +1,10 @@
-import { useState } from "react";
 import Layout from "components/Layout";
 import Showcase from "components/Showcase";
 import { Container } from "react-bootstrap";
 import { TextPrimary, TextTertiary } from "components/Typography/Text";
-import { API_URL } from "config";
 import styled from "styled-components";
 import Link from "next/link";
 import { HeadingXS, HeadingXXS } from "components/Typography/Headings";
-import { whitespace } from "utils/whitespace";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { BsCheck } from "react-icons/bs";
 

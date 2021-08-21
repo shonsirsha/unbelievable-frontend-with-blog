@@ -111,10 +111,9 @@ export default function Layout({
 	}
 
 	if (loading) {
-		return <></>;
+		return <>Menunggu...</>;
 	}
 
-	// const router = useRouter();
 	return (
 		<div>
 			<Head>
