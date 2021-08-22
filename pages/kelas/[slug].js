@@ -189,6 +189,14 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 						icon: "success",
 						confirmButtonColor: "#171b2d",
 						confirmButtonText: "Tutup notifikasi",
+					}).then((result) => {
+						if (result.isConfirmed || result.dismiss) {
+							if (window) {
+								setTimeout(() => {
+									window.scrollTo(0, 0);
+								}, 500);
+							}
+						}
 					});
 				}
 			}
