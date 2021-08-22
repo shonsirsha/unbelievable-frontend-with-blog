@@ -26,15 +26,15 @@ const Callback = () => {
 				console.log(data);
 				if (data.message.id === "Auth.form.error.email.taken") {
 					Swal.fire({
-						title: "Maaf",
-						html: "Akun dengan E-mail yang sama telah terdaftar tanpa menggunakan Google. <br/><br/> Silakan masuk tanpa menggunakan Google.",
+						title: "Ups...",
+						html: "User dengan alamat E-mail ini tidak mendaftar melalui Google. <br/><br/> Mohon kembali masuk tanpa menggunakan Google.",
 						confirmButtonColor: "#171b2d",
 						confirmButtonText: "Masuk",
-						icon: "warning",
+						icon: "info",
 						timer: 10000,
 						timerProgressBar: true,
 					}).then((result) => {
-						if (result.isConfirmed) {
+						if (result.isConfirmed || result.dismiss) {
 							router.push("/masuk");
 						}
 					});
