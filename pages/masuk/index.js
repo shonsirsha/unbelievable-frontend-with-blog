@@ -14,10 +14,11 @@ import {
 	Button,
 	Image,
 } from "react-bootstrap";
-import { HeadingXS } from "components/Typography/Headings";
+import { HeadingXS, HeadingXXS } from "components/Typography/Headings";
 import { TextSecondary } from "components/Typography/Text";
 import mustBeUnauthed from "utils/mustBeUnauthed";
 import { mediaBreakpoint } from "utils/breakpoints";
+import { API_URL } from "config";
 
 const OuterContainer = styled.div`
 	background: #fff;
@@ -41,6 +42,14 @@ const FormContainer = styled.div`
 	border-radius: 10px;
 	align-items: center;
 	position: absolute;
+
+	a:hover {
+		text-decoration: none;
+	}
+
+	a.nostyle {
+		color: inherit;
+	}
 
 	@media ${mediaBreakpoint.down.lg} {
 		max-width: 90%;
@@ -185,11 +194,31 @@ const Index = () => {
 								sekarang!
 							</TextSecondary>
 						</Form>
-						<GreenCharacter
+						{/* <GreenCharacter
 							className={`${focus}`}
 							src="/images/green.png"
 							alt="Green"
-						/>
+						/> */}
+						<HeadingXXS as="p" className="mt-4">
+							Atau
+						</HeadingXXS>
+
+						<Link href={`${API_URL}/connect/google`}>
+							<a
+								className="shadow mt-3 d-flex w-100 justify-content-center nostyle"
+								style={{ borderRadius: "16px", padding: "14px" }}
+							>
+								<Image
+									width={26}
+									height={26}
+									src="/images/google-icon.svg"
+									alt="Google"
+								/>
+								<TextSecondary className="ml-3">
+									Lanjutkan dengan Google
+								</TextSecondary>
+							</a>
+						</Link>
 					</FormContainer>
 				</StyledContainer>
 			</OuterContainer>

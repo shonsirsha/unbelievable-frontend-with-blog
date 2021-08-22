@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { parseCookies } from "utils/cookies";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
@@ -68,7 +68,7 @@ const StyledEnrolled = styled(EnrolledCourseCard)`
 const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 	const router = useRouter();
 
-	const { logout } = useContext(AuthContext);
+	const { logout, checkUserLoggedIn } = useContext(AuthContext);
 	const {
 		previewModalOpen,
 		setPreviewModalOpen,
@@ -99,6 +99,13 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 			router.push("/dashboard");
 		}
 	};
+
+	useEffect(() => {
+		if (!user.onboarded) {
+			checkUserLoggedIn();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	if (!user.onboarded) {
 		return (
