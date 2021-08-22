@@ -72,49 +72,55 @@ const Masukkan = ({ categories }) => {
 	const [categoriesId, setCategoriesId] = useState([
 		categories ? categories[0].id : null,
 	]);
-
+	const [loading, setLoading] = useState(false);
 	const textAreaRef = useRef();
 
 	const handleSubmit = async () => {
-		if (!whitespace(textAreaRef.current.value)) {
-			const res = await fetch(`${API_URL}/feedbacks`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${token}`,
-				},
-				body: JSON.stringify({
-					feedback_text: textAreaRef.current.value,
-					category: { id: categoriesId ? categoriesId : -1 },
-				}),
-			});
-
-			if (res.ok) {
-				textAreaRef.current.value = "";
-				Swal.fire({
-					title: "Masukkan Terkirim!",
-					text: "Terima kasih karena kamu akan membuat platform ini menjadi lebih baik lagi",
-					icon: "success",
-					confirmButtonColor: "#171b2d",
-					confirmButtonText: "Tutup",
+		if (!loading) {
+			setLoading(true);
+			if (!whitespace(textAreaRef.current.value)) {
+				const res = await fetch(`${API_URL}/feedbacks`, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+					body: JSON.stringify({
+						feedback_text: textAreaRef.current.value,
+						category: { id: categoriesId ? categoriesId : -1 },
+					}),
 				});
+
+				if (res.ok) {
+					textAreaRef.current.value = "";
+					Swal.fire({
+						title: "Masukkan Terkirim!",
+						text: "Terima kasih karena kamu akan membuat platform ini menjadi lebih baik lagi",
+						icon: "success",
+						confirmButtonColor: "#171b2d",
+						confirmButtonText: "Tutup",
+					});
+					setLoading(false);
+				} else {
+					setLoading(false);
+					Swal.fire({
+						title: "Ups...",
+						text: "Mohon maaf telah terjadi kesalahan dalam mengirim masukan. Mohon coba lagi dan hubungi admin jika kesalahan ini tetap terjadi. Terima kasih.",
+						icon: "error",
+						confirmButtonColor: "#171b2d",
+						confirmButtonText: "Tutup",
+					});
+				}
 			} else {
+				setLoading(false);
 				Swal.fire({
-					title: "Ups...",
-					text: "Mohon maaf telah terjadi kesalahan dalam mengirim masukan. Mohon coba lagi dan hubungi admin jika kesalahan ini tetap terjadi. Terima kasih.",
-					icon: "error",
+					title: "Pemberitahuan",
+					text: "Kolom teks masukkan tidak dapat kosong",
+					icon: "warning",
 					confirmButtonColor: "#171b2d",
 					confirmButtonText: "Tutup",
 				});
 			}
-		} else {
-			Swal.fire({
-				title: "Pemberitahuan",
-				text: "Kolom teks masukkan tidak dapat kosong",
-				icon: "warning",
-				confirmButtonColor: "#171b2d",
-				confirmButtonText: "Tutup",
-			});
 		}
 	};
 
@@ -168,7 +174,11 @@ const Masukkan = ({ categories }) => {
 							placeholder="Silahkan tulis masukkan dan pendapat Anda"
 						/>
 					</FormGroup>
-					<EnrollBtn onClick={handleSubmit} className="bg-primary1">
+					<EnrollBtn
+						disabled={loading}
+						onClick={handleSubmit}
+						className="bg-primary1"
+					>
 						<HeadingXXS>Submit</HeadingXXS>
 					</EnrollBtn>
 				</>

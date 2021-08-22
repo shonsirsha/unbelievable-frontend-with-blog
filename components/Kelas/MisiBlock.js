@@ -71,7 +71,7 @@ export default function MisiBlock({
 		missionIdsDoneFromAPI,
 	} = useContext(CourseContext);
 
-	const [locaMis, setLocalMis] = useState([]);
+	const [loadingSave, setLoadingSave] = useState(false);
 
 	useEffect(() => {
 		let ary = [];
@@ -162,12 +162,16 @@ export default function MisiBlock({
 							))}
 							{!missionsCompleted && (
 								<SaveBtn
+									disabled={loadingSave}
 									className="bg-primary1 mt-3 align-self-center"
-									onClick={async () => {
-										setMissionIdsToAPI(missionIds);
-										setAlreadySetIds(missionIds);
-										setPersistedMissionIds(missionIds);
-										setMissionHook(true);
+									onClick={() => {
+										if (!loadingSave) {
+											setLoadingSave(true);
+											setMissionIdsToAPI(missionIds);
+											setAlreadySetIds(missionIds);
+											setPersistedMissionIds(missionIds);
+											setMissionHook(true);
+										}
 									}}
 								>
 									<StyledHeadingXXS as="p">Simpan</StyledHeadingXXS>

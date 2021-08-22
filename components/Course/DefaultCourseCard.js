@@ -194,8 +194,10 @@ export default function DefaultCourseCard({
 					disabled={enrollClassLoading}
 					small={small ? 1 : 0}
 					onClick={(e) => {
-						e.stopPropagation();
-						enrollClass(course, token ? token : null);
+						if (!enrollClassLoading) {
+							e.stopPropagation();
+							enrollClass(course, token ? token : null);
+						}
 					}}
 				>
 					<StyledHeadingXXS as="p">

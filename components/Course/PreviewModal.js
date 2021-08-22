@@ -100,17 +100,19 @@ const PreviewModal = (props) => {
 		return <></>;
 	}
 	const onClickEnrollBtn = async (e) => {
-		e.stopPropagation();
-		const invoiceIsValid = await checkIfInvoiceValid(
-			selectedPreviewCourse.id,
-			token
-		); // exists and not expiring soon/expired yet
-		if (!invoiceIsValid) {
-			console.log("getting new url (call to xendit)...");
-			await getInvoiceUrl(selectedPreviewCourse, user, token);
+		if (!enrollClassLoading) {
+			e.stopPropagation();
+			const invoiceIsValid = await checkIfInvoiceValid(
+				selectedPreviewCourse.id,
+				token
+			); // exists and not expiring soon/expired yet
+			if (!invoiceIsValid) {
+				console.log("getting new url (call to xendit)...");
+				await getInvoiceUrl(selectedPreviewCourse, user, token);
+			}
+			setPreviewModalOpen(false);
+			setBuyModalOpen(true);
 		}
-		setPreviewModalOpen(false);
-		setBuyModalOpen(true);
 	};
 	return (
 		<StyledModal
