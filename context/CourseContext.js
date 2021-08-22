@@ -17,6 +17,8 @@ export const CourseProvider = ({ children }) => {
 	const [missionsCompleted, setMissionsCompleted] = useState(false);
 	const [persistedMissionIds, setPersistedMissionIds] = useState([]);
 	const [missionIdsDoneFromAPI, setMissionIdsDoneFromAPI] = useState([]);
+
+	const [missionSaveLoading, setMissionSaveLoading] = useState(false);
 	const checkIfInvoiceValid = async (courseId, token) => {
 		setEnrollClassLoading(true);
 
@@ -171,6 +173,7 @@ export const CourseProvider = ({ children }) => {
 				setMissionsCompleted,
 				setPersistedMissionIds,
 				setMissionIdsDoneFromAPI,
+				setMissionSaveLoading,
 				missionIdsDoneFromAPI,
 				persistedMissionIds,
 				missionsCompleted,
@@ -180,6 +183,7 @@ export const CourseProvider = ({ children }) => {
 				previewModalOpen,
 				selectedPreviewCourse,
 				buyModalOpen,
+				missionSaveLoading,
 			}}
 		>
 			{children}

@@ -69,6 +69,8 @@ export default function MisiBlock({
 		setPersistedMissionIds,
 		persistedMissionIds,
 		missionIdsDoneFromAPI,
+		missionSaveLoading,
+		setMissionSaveLoading,
 	} = useContext(CourseContext);
 
 	const [loadingSave, setLoadingSave] = useState(false);
@@ -157,16 +159,18 @@ export default function MisiBlock({
 											/>
 										</Form.Check>
 									</CheckBoxWrapper>
-									<TextSecondary>{m.text}</TextSecondary>
+									<TextSecondary>
+										{m.text} {missionSaveLoading.toString()}
+									</TextSecondary>
 								</div>
 							))}
-							{!missionsCompleted && (
+							{!missionsCompleted && !loading && (
 								<SaveBtn
-									disabled={loadingSave}
+									disabled={missionSaveLoading}
 									className="bg-primary1 mt-3 align-self-center"
 									onClick={() => {
-										if (!loadingSave) {
-											setLoadingSave(true);
+										if (!missionSaveLoading) {
+											setMissionSaveLoading(true);
 											setMissionIdsToAPI(missionIds);
 											setAlreadySetIds(missionIds);
 											setPersistedMissionIds(missionIds);
