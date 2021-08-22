@@ -159,9 +159,7 @@ export default function MisiBlock({
 											/>
 										</Form.Check>
 									</CheckBoxWrapper>
-									<TextSecondary>
-										{m.text} {missionSaveLoading.toString()}
-									</TextSecondary>
+									<TextSecondary>{m.text}</TextSecondary>
 								</div>
 							))}
 							{!missionsCompleted && !loading && (

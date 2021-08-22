@@ -126,6 +126,7 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 		setBuyModalOpen,
 		buyModalOpen,
 		getInvoiceUrl,
+		setMissionSaveLoading,
 	} = useContext(CourseContext);
 	const [finishedWatching, setFinishedWatching] = useState(finished_watching);
 	const [currentlyOpened, setCurrentlyOpened] = useState("desc");
@@ -196,6 +197,7 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 									window.scrollTo(0, 0);
 								}, 500);
 							}
+							setMissionSaveLoading(false);
 						}
 					});
 				}
