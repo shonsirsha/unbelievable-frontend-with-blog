@@ -68,7 +68,7 @@ const StyledEnrolled = styled(EnrolledCourseCard)`
 const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 	const router = useRouter();
 
-	const { logout, checkUserLoggedIn } = useContext(AuthContext);
+	const { logout, checkUserLoggedIn, getToken } = useContext(AuthContext);
 	const {
 		previewModalOpen,
 		setPreviewModalOpen,
@@ -103,6 +103,7 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 	useEffect(() => {
 		if (router.query.r == "1") {
 			checkUserLoggedIn();
+			getToken();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

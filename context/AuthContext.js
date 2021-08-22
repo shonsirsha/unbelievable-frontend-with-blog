@@ -99,6 +99,7 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	const getToken = async () => {
+		console.log("AWW");
 		setLoading(true);
 		const res = await fetch(`${NEXT_URL}/api/token`, { method: "POST" });
 
@@ -107,6 +108,7 @@ export const AuthProvider = ({ children }) => {
 		if (res.ok) {
 			setToken(data.token);
 		} else {
+			console.log(data);
 			setToken(null);
 		}
 		setLoading(false);
@@ -121,6 +123,7 @@ export const AuthProvider = ({ children }) => {
 				login,
 				logout,
 				checkUserLoggedIn,
+				getToken,
 				loading,
 				authLoading,
 				userLoading,
