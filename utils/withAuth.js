@@ -1,18 +1,19 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import AuthContext from "context/AuthContext";
 import Loading from "components/Loading/Loading";
 const withAuth = (Component) => {
 	const Auth = (props) => {
-		const { user, loading } = useContext(AuthContext);
+		const { user, userLoading } = useContext(AuthContext);
+
 		const router = useRouter();
 
-		if (loading) {
+		if (userLoading) {
 			return <Loading />; // loading svg..
 		}
 
 		// Login data added to props via redux-store (or use react context for example)
-		if (!loading) {
+		if (!userLoading) {
 			// If user is not logged in, return login component
 			if (!user) {
 				router.push("/masuk");

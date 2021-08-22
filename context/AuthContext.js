@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
 	const [err, setErr] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [authLoading, setAuthLoading] = useState(false);
-	const [userLoading, setUserLoading] = useState(false);
+	const [userLoading, setUserLoading] = useState(true);
 	const [token, setToken] = useState(null);
 
 	const router = useRouter();
@@ -85,6 +85,7 @@ export const AuthProvider = ({ children }) => {
 	//Check if user is logged in
 
 	const checkUserLoggedIn = async () => {
+		console.log("wa");
 		setUserLoading(true);
 		const res = await fetch(`${NEXT_URL}/api/user`, { method: "POST" });
 
@@ -99,7 +100,6 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	const getToken = async () => {
-		console.log("AWW");
 		setLoading(true);
 		const res = await fetch(`${NEXT_URL}/api/token`, { method: "POST" });
 
