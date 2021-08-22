@@ -38,6 +38,20 @@ const Callback = () => {
 							router.push("/masuk");
 						}
 					});
+				} else {
+					Swal.fire({
+						title: "Ups...",
+						html: "Mohon maaf, telah terjadi kesalahan dalam proses masuk. Mohon ulangi lagi.",
+						confirmButtonColor: "#171b2d",
+						confirmButtonText: "Ulang",
+						icon: "warning",
+						timer: 5000,
+						timerProgressBar: true,
+					}).then((result) => {
+						if (result.isConfirmed || result.dismiss) {
+							router.push("/masuk");
+						}
+					});
 				}
 			}
 		}
