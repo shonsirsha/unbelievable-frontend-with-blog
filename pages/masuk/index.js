@@ -23,6 +23,12 @@ import { API_URL } from "config";
 const OuterContainer = styled.div`
 	background: #fff;
 	height: 80vh;
+
+	@media ${mediaBreakpoint.down.md} {
+		height: auto;
+		min-height: 80vh;
+		padding-bottom: 64px;
+	}
 `;
 
 const StyledContainer = styled(Container)`
@@ -53,6 +59,10 @@ const FormContainer = styled.div`
 
 	@media ${mediaBreakpoint.down.lg} {
 		max-width: 90%;
+	}
+
+	@media ${mediaBreakpoint.down.md} {
+		position: static;
 	}
 `;
 const StyledFormControl = styled(FormControl)`
@@ -185,23 +195,19 @@ const Index = () => {
 							>
 								<TextSecondary>Masuk</TextSecondary>
 							</StyledSubmitBtn>
-
-							<TextSecondary className="mt-3">
-								Belum punya akun?{" "}
-								<Link href="/daftar">
-									<a>Daftar</a>
-								</Link>{" "}
-								sekarang!
-							</TextSecondary>
 						</Form>
 						{/* <GreenCharacter
 							className={`${focus}`}
 							src="/images/green.png"
 							alt="Green"
 						/> */}
-						<HeadingXXS as="p" className="mt-4">
-							Atau
-						</HeadingXXS>
+						<div className="d-flex mt-3 align-items-center w-100">
+							<hr width="100%" />
+							<HeadingXXS className="mx-3" as="p">
+								Atau
+							</HeadingXXS>
+							<hr width="100%" />
+						</div>
 
 						<Link href={`${API_URL}/connect/google`}>
 							<a
@@ -219,6 +225,14 @@ const Index = () => {
 								</TextSecondary>
 							</a>
 						</Link>
+
+						<TextSecondary className="mt-3">
+							Belum punya akun?{" "}
+							<Link href="/daftar">
+								<a>Daftar</a>
+							</Link>{" "}
+							sekarang!
+						</TextSecondary>
 					</FormContainer>
 				</StyledContainer>
 			</OuterContainer>

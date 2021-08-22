@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { NEXT_URL } from "config";
 import LoadingCallback from "components/Loading/LoadingCallback";
+import Swal from "sweetalert2";
 const Callback = () => {
 	const router = useRouter();
 	useEffect(() => {
@@ -16,10 +17,28 @@ const Callback = () => {
 				}),
 			});
 
+			const data = await res.json();
+
 			if (res.ok) {
 				router.push("/dashboard?r=1");
 			} else {
-				router.push("/masuk");
+				console.log(res);
+				console.log(data);
+				if (data.message.id === "Auth.form.error.email.taken") {
+					Swal.fire({
+						title: "Maaf",
+						html: "Akun dengan E-mail yang sama telah terdaftar tanpa menggunakan Google. <br/><br/> Silakan masuk tanpa menggunakan Google.",
+						confirmButtonColor: "#171b2d",
+						confirmButtonText: "Masuk",
+						icon: "warning",
+						timer: 10000,
+						timerProgressBar: true,
+					}).then((result) => {
+						if (result.isConfirmed) {
+							router.push("/masuk");
+						}
+					});
+				}
 			}
 		}
 		googleAuth();

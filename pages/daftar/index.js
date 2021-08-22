@@ -15,11 +15,12 @@ import {
 	FormText,
 	Image,
 } from "react-bootstrap";
-import { HeadingXS } from "components/Typography/Headings";
+import { HeadingXS, HeadingXXS } from "components/Typography/Headings";
 import { TextSecondary } from "components/Typography/Text";
 import mustBeUnauthed from "utils/mustBeUnauthed";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { checkPassword } from "utils/checkPassword";
+import { API_URL } from "config";
 
 const OuterContainer = styled.div`
 	background: #fff;
@@ -27,6 +28,11 @@ const OuterContainer = styled.div`
 
 	display: flex;
 	@media ${mediaBreakpoint.down.lg} {
+	}
+	@media ${mediaBreakpoint.down.md} {
+		height: auto;
+		min-height: 100vh;
+		padding-bottom: 64px;
 	}
 `;
 
@@ -47,8 +53,16 @@ const FormContainer = styled.div`
 	align-items: center;
 	position: absolute;
 
+	a.nostyle {
+		color: inherit;
+	}
+
 	@media ${mediaBreakpoint.down.lg} {
 		max-width: 90%;
+	}
+
+	@media ${mediaBreakpoint.down.md} {
+		position: static;
 	}
 `;
 const StyledFormControl = styled(FormControl)`
@@ -223,19 +237,43 @@ const Index = () => {
 							>
 								<TextSecondary>Daftar</TextSecondary>
 							</StyledSubmitBtn>
-
-							<TextSecondary className="mt-3">
-								Sudah punya akun?{" "}
-								<Link href="/masuk">
-									<a>Masuk</a>
-								</Link>{" "}
-							</TextSecondary>
 						</Form>
-						<GreenCharacter
+						{/* <GreenCharacter
 							className={`${focus}`}
 							src="/images/green.png"
 							alt="Green"
-						/>
+						/> */}
+						<div className="d-flex mt-3 align-items-center w-100">
+							<hr width="100%" />
+							<HeadingXXS className="mx-3" as="p">
+								Atau
+							</HeadingXXS>
+							<hr width="100%" />
+						</div>
+
+						<Link href={`${API_URL}/connect/google`}>
+							<a
+								className="shadow mt-3 d-flex w-100 justify-content-center nostyle"
+								style={{ borderRadius: "16px", padding: "14px" }}
+							>
+								<Image
+									width={26}
+									height={26}
+									src="/images/google-icon.svg"
+									alt="Google"
+								/>
+								<TextSecondary className="ml-3">
+									Lanjutkan dengan Google
+								</TextSecondary>
+							</a>
+						</Link>
+
+						<TextSecondary className="mt-3">
+							Sudah punya akun?{" "}
+							<Link href="/masuk">
+								<a>Masuk</a>
+							</Link>{" "}
+						</TextSecondary>
 					</FormContainer>
 				</StyledContainer>
 			</OuterContainer>

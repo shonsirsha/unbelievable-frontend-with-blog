@@ -31,9 +31,10 @@ export default async function login(req, res) {
 				user: data.user,
 			});
 		} else {
+			console.log(data);
 			res
 				.status(data.statusCode)
-				.json({ message: data.message[0].messages[0].message });
+				.json({ message: data.message[0].messages[0] });
 		}
 	} else {
 		res.setHeader("Allow", ["POST"]);
