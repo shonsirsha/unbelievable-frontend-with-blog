@@ -56,6 +56,9 @@ const FormContainer = styled.div`
 	a.nostyle {
 		color: inherit;
 	}
+	a:hover {
+		text-decoration: none;
+	}
 
 	@media ${mediaBreakpoint.down.lg} {
 		max-width: 90%;

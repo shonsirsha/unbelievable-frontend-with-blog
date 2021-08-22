@@ -138,12 +138,12 @@ export default function Layout({
 				<FlyingButtonsContainer>
 					<Link href="#hero">
 						<a>
-							<RoundedBtnIcon className="shadow" img={`images/home.png`} />
+							<RoundedBtnIcon className="shadow" img={`/images/home.png`} />
 						</a>
 					</Link>
 					<Link href="/">
 						<a>
-							<RoundedBtnIcon className="shadow" img={`images/smiley.png`} />
+							<RoundedBtnIcon className="shadow" img={`/images/smiley.png`} />
 						</a>
 					</Link>
 				</FlyingButtonsContainer>

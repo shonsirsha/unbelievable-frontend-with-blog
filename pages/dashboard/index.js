@@ -101,7 +101,7 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 	};
 
 	useEffect(() => {
-		if (!user.onboarded) {
+		if (router.query.r == "1") {
 			checkUserLoggedIn();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
