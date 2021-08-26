@@ -4,7 +4,7 @@ import Link from "next/link";
 import styled from "styled-components";
 const OuterContainer = styled.div`
 	display: flex;
-	height: 100vh;
+	/*height: 100vh;*/
 	margin-right: 200px;
 	margin-left: 64px;
 

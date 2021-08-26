@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
 	const [authLoading, setAuthLoading] = useState(false);
 	const [userLoading, setUserLoading] = useState(true);
 	const [token, setToken] = useState(null);
+	const [success, setSuccess] = useState(false);
 
 	const router = useRouter();
 	useEffect(() => {
@@ -82,10 +83,31 @@ export const AuthProvider = ({ children }) => {
 		}
 	};
 
+	const changePassword = async (detail) => {
+		setAuthLoading(true);
+		const res = await fetch(`${NEXT_URL}/api/change-password`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(detail),
+		});
+
+		const data = await res.json();
+		if (res.ok) {
+			setToken(data.jwt);
+			setSuccess(true);
+		} else {
+			setErr(data.data.error);
+			setErr(null);
+		}
+		setSuccess(false);
+		setAuthLoading(false);
+	};
+
 	//Check if user is logged in
 
 	const checkUserLoggedIn = async () => {
-		console.log("wa");
 		setUserLoading(true);
 		const res = await fetch(`${NEXT_URL}/api/user`, { method: "POST" });
 
@@ -124,10 +146,12 @@ export const AuthProvider = ({ children }) => {
 				logout,
 				checkUserLoggedIn,
 				getToken,
+				changePassword,
 				loading,
 				authLoading,
 				userLoading,
 				token,
+				success,
 			}}
 		>
 			{children}
