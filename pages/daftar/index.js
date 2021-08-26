@@ -132,6 +132,7 @@ const Index = () => {
 		first_name: "",
 		last_name: "",
 		password: "",
+		dob: "",
 	});
 	const [focus, setFocus] = useState("");
 
@@ -150,7 +151,7 @@ const Index = () => {
 	const handleChange = (e) => {
 		setSignUpDetails({ ...signUpDetails, [e.target.name]: e.target.value });
 	};
-	const { email, password, first_name, last_name } = signUpDetails;
+	const { email, password, first_name, last_name, dob } = signUpDetails;
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setFocus("");
@@ -162,9 +163,16 @@ const Index = () => {
 				password,
 				first_name,
 				last_name,
+				dob,
 			});
 		}
 	};
+	const datex = new Date();
+	const today = `${datex.getFullYear()}-${
+		datex.getMonth() + 1 < 10
+			? `0${datex.getMonth() + 1}`
+			: datex.getMonth() + 1
+	}-${datex.getDate()}`;
 	return (
 		<Layout background="#171b2d" withMargin>
 			<OuterContainer>
@@ -196,6 +204,23 @@ const Index = () => {
 										value={last_name}
 										onChange={handleChange}
 										placeholder="Nama Belakang"
+									/>
+								</div>
+							</FormGroup>
+
+							<FormGroup>
+								<FormLabel>Tanggal Lahir</FormLabel>
+								<div className="d-flex flex-xl-row flex-column">
+									<StyledFormControl
+										type="date"
+										onBlur={() => setFocus("")}
+										onFocus={() => setFocus("focus")}
+										name="dob"
+										className="mr-xl-2 mb-3 shadow-none"
+										onChange={handleChange}
+										value={dob}
+										max={today}
+										placeholder="Date"
 									/>
 								</div>
 							</FormGroup>
