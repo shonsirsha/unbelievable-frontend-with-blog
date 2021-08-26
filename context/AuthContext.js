@@ -86,7 +86,7 @@ export const AuthProvider = ({ children }) => {
 	const changePassword = async (detail) => {
 		setAuthLoading(true);
 		const res = await fetch(`${NEXT_URL}/api/change-password`, {
-			method: "POST",
+			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
 			},
@@ -95,7 +95,6 @@ export const AuthProvider = ({ children }) => {
 
 		const data = await res.json();
 		if (res.ok) {
-			setToken(data.jwt);
 			setSuccess(true);
 		} else {
 			setErr(data.data.error);
@@ -147,6 +146,7 @@ export const AuthProvider = ({ children }) => {
 				checkUserLoggedIn,
 				getToken,
 				changePassword,
+				setErr,
 				loading,
 				authLoading,
 				userLoading,

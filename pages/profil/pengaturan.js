@@ -11,7 +11,7 @@ import {
 	FormControl,
 } from "react-bootstrap";
 import { mediaBreakpoint } from "utils/breakpoints";
-import { NEXT_URL } from "config";
+import { checkPassword } from "utils/checkPassword";
 import AuthContext from "context/AuthContext";
 import Layout from "components/Layout";
 import styled from "styled-components";
@@ -72,7 +72,8 @@ const StyledFormControl = styled(FormControl)`
 	}
 `;
 const Pengaturan = () => {
-	const { changePassword, user, err, success } = useContext(AuthContext);
+	const { changePassword, user, err, success, setErr } =
+		useContext(AuthContext);
 
 	const [loading, setLoading] = useState(false);
 	const [details, setDetails] = useState({
@@ -80,7 +81,6 @@ const Pengaturan = () => {
 		newPassword: "",
 	});
 	const { password, newPassword } = details;
-	const textAreaRef = useRef();
 
 	useEffect(() => {
 		if (err === "wrong.password") {
@@ -106,12 +106,16 @@ const Pengaturan = () => {
 		if (!loading) {
 			setLoading(true);
 			if (!whitespace(password) && !whitespace(newPassword)) {
-				changePassword({
-					identifier: user.email,
-					password,
-					newPassword,
-					confirmPassword: newPassword,
-				});
+				if (!checkPassword(newPassword)) {
+					setErr("Password baru tidak memenuhi kriteria");
+				} else {
+					changePassword({
+						identifier: user.email,
+						password,
+						newPassword,
+						confirmPassword: newPassword,
+					});
+				}
 			} else {
 				setLoading(false);
 				Swal.fire({
@@ -131,7 +135,6 @@ const Pengaturan = () => {
 			background="#171b2d"
 			withMargin
 			mainApp
-			showReviewBlock={false}
 		>
 			<OuterContainer className="d-flex flex-column">
 				<>
@@ -170,7 +173,7 @@ const Pengaturan = () => {
 					<EnrollBtn
 						disabled={loading}
 						onClick={handleSubmit}
-						className="bg-primary1"
+						className="bg-primary1 shadow"
 					>
 						<HeadingXXS>Ganti</HeadingXXS>
 					</EnrollBtn>
