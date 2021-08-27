@@ -89,11 +89,17 @@ const Pengaturan = () => {
 			toast.error(err);
 		}
 		setLoading(false);
+		setErr(null);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [err]);
 
 	useEffect(() => {
 		if (success) {
 			toast.success("Password berhasil diganti");
+			setDetails({
+				password: "",
+				newPassword: "",
+			});
 		}
 		setLoading(false);
 	}, [success]);
@@ -118,13 +124,7 @@ const Pengaturan = () => {
 				}
 			} else {
 				setLoading(false);
-				Swal.fire({
-					title: "Pemberitahuan",
-					text: "Kolom teks masukkan tidak dapat kosong",
-					icon: "warning",
-					confirmButtonColor: "#171b2d",
-					confirmButtonText: "Tutup",
-				});
+				setErr("Password baru tidak memenuhi kriteria");
 			}
 		}
 	};
