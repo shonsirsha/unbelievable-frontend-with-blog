@@ -154,17 +154,19 @@ const Index = () => {
 	const { email, password, first_name, last_name, dob } = signUpDetails;
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		setFocus("");
-		if (!checkPassword(password)) {
-			toast.error("Password tidak memenuhi kriteria");
-		} else {
-			register({
-				email,
-				password,
-				first_name,
-				last_name,
-				dob,
-			});
+		if (!authLoading) {
+			setFocus("");
+			if (!checkPassword(password)) {
+				toast.error("Password tidak memenuhi kriteria");
+			} else {
+				register({
+					email,
+					password,
+					first_name,
+					last_name,
+					dob,
+				});
+			}
 		}
 	};
 	const datex = new Date();

@@ -15,7 +15,7 @@ export default function Loading({ fixed = true, ...props }) {
 	return (
 		<StyledImage
 			className={className}
-			fixed={fixed}
+			fixed={fixed ? 1 : 0}
 			src="/images/loading.gif"
 			alt="Loading..."
 		/>

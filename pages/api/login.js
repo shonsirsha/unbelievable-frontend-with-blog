@@ -34,7 +34,7 @@ export default async function login(req, res) {
 		} else {
 			res
 				.status(data.statusCode)
-				.json({ message: data.message[0].messages[0].message });
+				.json({ message: data.message[0].messages[0].id });
 		}
 	} else {
 		res.setHeader("Allow", ["POST"]);

@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { NEXT_URL } from "config/index";
+import { NEXT_URL, API_URL } from "config/index";
 
 const AuthContext = createContext();
 
@@ -64,6 +64,7 @@ export const AuthProvider = ({ children }) => {
 			router.push("/dashboard");
 			router.reload();
 		} else {
+			console.log(data);
 			setErr(data.message);
 			setErr(null);
 		}
@@ -102,6 +103,48 @@ export const AuthProvider = ({ children }) => {
 		}
 		setSuccess(false);
 		setAuthLoading(false);
+	};
+
+	const checkIfProviderLocal = async ({ email }) => {
+		setAuthLoading(true);
+		const res = await fetch(`${API_URL}/users/is-local-provider`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ email }),
+		});
+
+		const data = await res.json();
+
+		if (res.ok) {
+			setAuthLoading(false);
+			return data.localProvider;
+		} else {
+			setAuthLoading(false);
+			return false;
+		}
+	};
+
+	const forgotPassword = async ({ email }) => {
+		setAuthLoading(true);
+		const res = await fetch(`${API_URL}/auth/forgot-password`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ email }),
+		});
+
+		const data = await res.json();
+
+		if (res.ok) {
+			setAuthLoading(false);
+			return data.ok;
+		} else {
+			setAuthLoading(false);
+			return false;
+		}
 	};
 
 	//Check if user is logged in
@@ -147,6 +190,8 @@ export const AuthProvider = ({ children }) => {
 				getToken,
 				changePassword,
 				setErr,
+				checkIfProviderLocal,
+				forgotPassword,
 				loading,
 				authLoading,
 				userLoading,
