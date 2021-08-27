@@ -1,8 +1,9 @@
 import { useContext } from "react";
 import AuthContext from "context/AuthContext";
 import Layout from "components/Layout";
+import withAuth from "utils/withAuth";
 
-export default function Index() {
+const Profil = () => {
 	const { logout } = useContext(AuthContext);
 
 	return (
@@ -20,5 +21,6 @@ export default function Index() {
 			</div>
 		</Layout>
 	);
-}
+};
 ``;
+export default withAuth(Profil);

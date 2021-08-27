@@ -384,10 +384,8 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 			if (currentCourse.currentVideo.id !== video.id) {
 				const goNextDay = isGoingNext(currentCourse.currentVideo.id, video.id);
 				if (goNextDay) {
-					console.log("ASDASD");
 					goToTheNextDay(video, video_day);
 				} else {
-					console.log("asd");
 					goToVideo(video);
 				}
 			}

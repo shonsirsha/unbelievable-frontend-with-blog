@@ -39,14 +39,14 @@ const StyledTextArea = styled(Form.Control)`
 `;
 const Select = styled(Form)`
 	appearance: none;
-	padding: 10px;
+	padding: 16px;
 	border-radius: 8px;
 	border: none;
 	background: #f6f6f6;
 	background-image: url("/images/dropdown-caret.svg");
 	background-repeat: no-repeat;
-	background-position-x: 97%;
-	background-position-y: 13px;
+	background-position-x: 98%;
+	background-position-y: 21px;
 	font-size: 14px;
 	&:-webkit-autofill,
 	&:-webkit-autofill:hover,
