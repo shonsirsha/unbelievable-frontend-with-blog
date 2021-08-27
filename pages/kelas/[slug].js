@@ -739,6 +739,16 @@ export async function getServerSideProps(ctx) {
 
 	let user = await res2.json();
 
+	if (!user.onboarded) {
+		return {
+			redirect: {
+				permanent: false,
+				destination: `/dashboard`,
+			},
+			props: {},
+		};
+	}
+
 	return {
 		props: {
 			slug,
