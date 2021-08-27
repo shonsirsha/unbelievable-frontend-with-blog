@@ -172,6 +172,8 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 				// console.log(data.message);
 			} else {
 				console.log("mission done");
+				setMissionSaveLoading(false);
+
 				if (missionsCtx.length === missionIdsToAPI.length) {
 					setVideosState(
 						[...videosState].map((vidObj) => {
@@ -197,7 +199,6 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 									window.scrollTo(0, 0);
 								}, 500);
 							}
-							setMissionSaveLoading(false);
 						}
 					});
 				}
