@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { NEXT_URL, API_URL } from "config/index";
+import { FaTruckMonster } from "react-icons/fa";
 
 const AuthContext = createContext();
 
@@ -97,12 +98,13 @@ export const AuthProvider = ({ children }) => {
 		const data = await res.json();
 		if (res.ok) {
 			setSuccess(true);
+			setAuthLoading(false);
 		} else {
 			setErr(data.data.error);
 			setErr(null);
+			setAuthLoading(false);
 		}
 		setSuccess(false);
-		setAuthLoading(false);
 	};
 
 	const checkIfProviderLocal = async ({ email }) => {
@@ -147,6 +149,33 @@ export const AuthProvider = ({ children }) => {
 		}
 	};
 
+	const resetPassword = async ({ code, password }) => {
+		setAuthLoading(true);
+		const res = await fetch(`${API_URL}/auth/reset-password`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				code,
+				password,
+				passwordConfirmation: password,
+			}),
+		});
+
+		const data = await res.json();
+
+		if (res.ok) {
+			setAuthLoading(false);
+			setSuccess(true);
+		} else {
+			setErr(data.message[0].messages[0].id);
+			setErr(null);
+			setAuthLoading(false);
+		}
+		setSuccess(false);
+	};
+
 	//Check if user is logged in
 
 	const checkUserLoggedIn = async () => {
@@ -172,7 +201,6 @@ export const AuthProvider = ({ children }) => {
 		if (res.ok) {
 			setToken(data.token);
 		} else {
-			console.log(data);
 			setToken(null);
 		}
 		setLoading(false);
@@ -192,6 +220,7 @@ export const AuthProvider = ({ children }) => {
 				setErr,
 				checkIfProviderLocal,
 				forgotPassword,
+				resetPassword,
 				loading,
 				authLoading,
 				userLoading,

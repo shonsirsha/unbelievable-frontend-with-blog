@@ -6,16 +6,15 @@ import { TextSecondary } from "components/Typography/Text";
 import {
 	FormLabel,
 	FormGroup,
-	Form,
 	Button,
 	FormControl,
+	FormText,
 } from "react-bootstrap";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { checkPassword } from "utils/checkPassword";
 import AuthContext from "context/AuthContext";
 import Layout from "components/Layout";
 import styled from "styled-components";
-import Swal from "sweetalert2";
 import { whitespace } from "utils/whitespace";
 import withAuth from "utils/withAuth";
 
@@ -27,23 +26,6 @@ const OuterContainer = styled.div`
 `;
 const StyledFormLabel = styled(FormLabel)`
 	font-size: 14px;
-`;
-const StyledTextArea = styled(Form.Control)`
-	border-radius: 8px;
-	height: 180px;
-	width: 100%;
-	padding: 10px;
-	font-size: 14px;
-
-	&:-webkit-autofill,
-	&:-webkit-autofill:hover,
-	&:-webkit-autofill:focus,
-	&:-webkit-autofill:active {
-		-webkit-box-shadow: 0 0 0 30px #f4f4f7 inset !important;
-	}
-	&:focus {
-		outline: none;
-	}
 `;
 
 const EnrollBtn = styled(Button)`
@@ -168,6 +150,11 @@ const Pengaturan = () => {
 							onChange={handleChange}
 							placeholder="Password baru"
 						/>
+
+						<FormText className="mt-2 text-muted">
+							Password harus minimal 8 karakter, dengan huruf besar, huruf
+							kecil, nomer, dan simbol.
+						</FormText>
 					</FormGroup>
 
 					<EnrollBtn
