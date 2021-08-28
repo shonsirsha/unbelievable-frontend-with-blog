@@ -9,7 +9,7 @@ import { API_URL } from "config";
 
 export default function Home({ testimonials }) {
 	return (
-		<Layout landingPage withFB>
+		<Layout id="asd" landingPage withFB>
 			<Hero />
 			<TentangKami />
 			<CaraKerja />

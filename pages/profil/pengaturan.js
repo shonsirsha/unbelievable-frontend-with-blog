@@ -118,6 +118,7 @@ const Pengaturan = () => {
 			background="#171b2d"
 			withMargin
 			mainApp
+			showLogout
 		>
 			<OuterContainer className="d-flex flex-column">
 				<>

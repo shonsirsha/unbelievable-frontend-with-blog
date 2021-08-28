@@ -13,12 +13,7 @@ const Profil = () => {
 			withMargin
 			mainApp
 		>
-			<div>
-				Profile page (Work in progress)
-				<button className="mb-5" onClick={() => logout()}>
-					logout
-				</button>
-			</div>
+			<div>Profile page (Work in progress)</div>
 		</Layout>
 	);
 };

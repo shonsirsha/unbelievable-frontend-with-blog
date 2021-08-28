@@ -83,6 +83,12 @@ const ReviewBlockContainer = styled.div`
 		/*iPad Pro and below*/
 	}
 `;
+const LayoutWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+`;
+
 export default function Layout({
 	title = "Unbelieveable",
 	keywords = "self development, lms",
@@ -95,6 +101,7 @@ export default function Layout({
 	scrollToSolid = false,
 	background = "transparent",
 	mainApp = false,
+	showLogout = false,
 	showReviewBlock = true,
 }) {
 	let backBtn = false;
@@ -116,7 +123,7 @@ export default function Layout({
 	}
 
 	return (
-		<div>
+		<LayoutWrapper>
 			<Head>
 				<title>{title}</title>
 				<meta name="description" content={description} />
@@ -124,6 +131,7 @@ export default function Layout({
 			</Head>
 			{!loading && (
 				<Header
+					showLogout={showLogout}
 					showBurger={showBurger}
 					scrollToSolid={scrollToSolid}
 					landingPage={landingPage}
@@ -178,6 +186,6 @@ export default function Layout({
 				)}
 			</div>
 			<Footer />
-		</div>
+		</LayoutWrapper>
 	);
 }

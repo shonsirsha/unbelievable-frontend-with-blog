@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Image } from "react-bootstrap";
 import styled from "styled-components";
 import Link from "next/link";
+import AuthContext from "context/AuthContext";
 import { useRouter } from "next/router";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { HiMenuAlt4 } from "react-icons/hi";
-import { TextPrimary } from "components/Typography/Text";
+import { TextPrimary, TextTertiary } from "components/Typography/Text";
 import { HeadingXXS } from "components/Typography/Headings";
 import { MdChevronLeft } from "react-icons/md";
 
@@ -132,6 +133,21 @@ const Back = styled(MdChevronLeft)`
 	font-size: 48px;
 	color: #fff;
 `;
+
+const LogoutContainer = styled.div`
+	background: #5f6475;
+	padding: 16px 24px;
+
+	border-radius: 8px;
+	margin-left: 16px;
+	@media ${mediaBreakpoint.down.md} {
+		padding: 0;
+		background: transparent;
+	}
+`;
+const StyledTextTertiary = styled(TextTertiary)`
+	font-size: 12px;
+`;
 export default function Header({
 	landingPage,
 	background,
@@ -139,11 +155,13 @@ export default function Header({
 	showBurger,
 	scrollToSolid,
 	mainApp,
+	showLogout,
 	backBtn,
 }) {
 	const router = useRouter();
 	const [navbarClass, setNavbarClass] = useState("");
 	const [menuShown, setMenuShown] = useState("");
+	const { logout } = useContext(AuthContext);
 	useEffect(() => {
 		if (landingPage && window) {
 			window.addEventListener("scroll", handleScroll);
@@ -320,7 +338,18 @@ export default function Header({
 					alt="logo"
 				/>
 				<div className="ml-auto d-flex align-items-center">
-					{window && (
+					{window && !user && (
+						<ProfileImage
+							onClick={() => {
+								router.push("/masuk");
+							}}
+							src={`${window.location.origin}/images/profile.png`}
+							alt="Profile"
+							width={43}
+							height={43}
+						/>
+					)}
+					{window && user && !showLogout && (
 						<ProfileImage
 							onClick={() => {
 								if (user) {
@@ -329,16 +358,53 @@ export default function Header({
 									router.push("/masuk");
 								}
 							}}
-							src={`${window.location.origin}/images/profile.png`}
+							src={`${window.location.origin}/images/profile-main.png`}
 							alt="Profile"
-							width={43}
-							height={43}
+							width={24}
+							height={24}
 						/>
 					)}
-
-					<HeadingXXS as="p" className="text-white ml-3 d-lg-block d-none">
-						{user && `${user.first_name} ${user.last_name}`}
-					</HeadingXXS>
+					{showLogout ? (
+						<LogoutContainer className="d-flex ml-4 flex-column align-items-lg-end align-items-center">
+							<div className="d-flex mb-1 align-items-center">
+								<ProfileImage
+									onClick={() => {
+										if (user) {
+											router.push("/dashboard");
+										} else {
+											router.push("/masuk");
+										}
+									}}
+									src={`${window.location.origin}/images/profile-main.png`}
+									alt="Profile"
+									width={24}
+									height={24}
+								/>
+								<HeadingXXS
+									as="p"
+									className="ml-2 text-white d-lg-block d-none "
+								>
+									{user && `${user.first_name} ${user.last_name}`}
+								</HeadingXXS>
+							</div>
+							<Link href="#">
+								<a onClick={logout} className="ml-auto">
+									<StyledTextTertiary className="text-white ">
+										Log out
+									</StyledTextTertiary>
+								</a>
+							</Link>
+						</LogoutContainer>
+					) : (
+						<>
+							<HeadingXXS
+								as="p"
+								className="text-white ml-2 d-lg-block d-none mb-1"
+							>
+								{user && `${user.first_name} ${user.last_name}`}
+							</HeadingXXS>
+						</>
+					)}
 				</div>
 			</div>
 		</StyledContainer>
