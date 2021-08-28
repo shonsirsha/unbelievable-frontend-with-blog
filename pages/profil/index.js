@@ -2,13 +2,14 @@ import { useContext } from "react";
 import Link from "next/link";
 import AuthContext from "context/AuthContext";
 import Layout from "components/Layout";
-import withAuth from "utils/withAuth";
+import { parseCookies } from "utils/cookies";
 import { HeadingXL, HeadingMD } from "components/Typography/Headings";
 import { TextTertiary, TextPrimary } from "components/Typography/Text";
 import { Image } from "react-bootstrap";
 import { MdEdit, MdFeedback, MdSettings } from "react-icons/md";
 import styled from "styled-components";
 import { mediaBreakpoint } from "utils/breakpoints";
+import { API_URL } from "config";
 
 const OptionButton = styled.div`
 	background: #f6f6f6;
@@ -31,11 +32,13 @@ const OptionButton = styled.div`
 `;
 
 const ButtonsContainer = styled.div`
-	margin-left: -8px;
+	margin-left: -24px;
 	margin-top: 32px;
 
 	a {
 		width: 50%;
+		padding-right: -16px;
+		padding-left: 16px;
 	}
 
 	a {
@@ -48,13 +51,13 @@ const ButtonsContainer = styled.div`
 	@media ${mediaBreakpoint.down.lg} {
 		a {
 			width: 100%;
+			margin-left: 0;
 		}
 	}
 `;
 
-const Profil = () => {
-	const { logout, user } = useContext(AuthContext);
-	console.log(user);
+const Profil = ({ courseCount }) => {
+	const { user } = useContext(AuthContext);
 	return (
 		<Layout
 			title="Profil | Unbelieveable"
@@ -67,7 +70,7 @@ const Profil = () => {
 					<HeadingXL as="p" className="text-primary1 text-md-left text-center">
 						Halo,
 						<br />
-						{user.first_name}
+						{user && user.first_name}!
 					</HeadingXL>
 					<Image
 						src="/images/green.png"
@@ -78,7 +81,7 @@ const Profil = () => {
 					/>
 					<div className="d-flex flex-column align-items-center mr-md-5 mr-0 mt-md-0 mt-4">
 						<HeadingMD as="p" className="text-primary1">
-							2
+							{courseCount}
 						</HeadingMD>
 						<TextTertiary className="text-primary1 text-center">
 							kelas berjalan
@@ -96,7 +99,7 @@ const Profil = () => {
 				</div>
 				<ButtonsContainer className="d-flex flex-wrap">
 					<Link href="/profil/edit">
-						<a className="d-flex ">
+						<a className="d-flex">
 							<OptionButton
 								as="button"
 								className="d-flex flex-md-row flex-column align-items-center shadow-sm"
@@ -107,7 +110,7 @@ const Profil = () => {
 						</a>
 					</Link>
 					<Link href="/profil/feedback">
-						<a className="d-flex ">
+						<a className="d-flex">
 							<OptionButton
 								as="button"
 								className="d-flex flex-md-row flex-column align-items-center shadow-sm"
@@ -138,5 +141,30 @@ const Profil = () => {
 		</Layout>
 	);
 };
+export async function getServerSideProps(ctx) {
+	const { token } = parseCookies(ctx.req);
+	if (!token) {
+		return {
+			redirect: {
+				permanent: false,
+				destination: "/masuk",
+			},
+			props: {},
+		};
+	}
 
-export default withAuth(Profil);
+	const res = await fetch(`${API_URL}/courses-taken`, {
+		method: "GET",
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	});
+
+	const course = await res.json();
+	return {
+		props: {
+			courseCount: course.length,
+		},
+	};
+}
+export default Profil;
