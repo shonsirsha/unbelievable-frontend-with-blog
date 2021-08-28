@@ -100,7 +100,7 @@ export default function Onboarding({
 
 	const [loadingFinishBtn, setLoadingFinishBtn] = useState(false);
 	const [btnDisplayed, setBtnDisplayed] = useState(false);
-	const [firstName, setFirstName] = useState("");
+	const [userName, setUserName] = useState("");
 	const [url, setUrl] = useState(onboardings[0][`video_intro_1`].url);
 	const [VP, setVP] = useState(
 		<VideoContainer className="mt-4">
@@ -109,7 +109,7 @@ export default function Onboarding({
 	);
 
 	useEffect(() => {
-		setFirstName(user.first_name);
+		setUserName(`${user.first_name} ${user.last_name}`);
 	}, [user]);
 
 	const onClickNextBtn = () => {
@@ -144,12 +144,12 @@ export default function Onboarding({
 		</>,
 		<>
 			<HighHeadingSM as="h1" className="text-white">
-				{firstName}, do you copy?{" "}
+				Hi {userName}!
 			</HighHeadingSM>
 		</>,
 		<>
 			<HeadingSM as="h1" className="text-white">
-				{firstName}
+				{userName}
 				{"'"}s Contract
 			</HeadingSM>
 		</>,
@@ -162,10 +162,12 @@ export default function Onboarding({
 			setVP(
 				<>
 					<StyledP className="text-center mt-5 text-white">
-						It’s me, future {firstName}. I’m calling from 2022 because today is
-						an important
+						Surat ini aku bikin khusus buat kamu! Aku tau sekrang kamu baru mau
+						mulai petualangan yang bakal kamu inget seumur hidup!
 						<br />
-						day for you - for us!
+						<br />
+						Kenapa aku tau? karena aku {user.first_name} dari{" "}
+						{parseInt(moment(user.created_at).format("yyyy")) + 1}
 					</StyledP>
 					<HighHeadingSM
 						as="p"
@@ -187,7 +189,7 @@ export default function Onboarding({
 						as="p"
 						className="mt-1 ml-auto mr-auto mr-lg-5 text-white"
 					>
-						future {firstName}
+						future {userName}
 					</HighHeadingSM>
 
 					<Blob className={`teal`} src={"/images/blueblob.png"} alt="Blob" />
@@ -203,13 +205,13 @@ export default function Onboarding({
 			setVP(
 				<div className="d-flex flex-column">
 					<p className="text-center mt-5 text-white">
-						It’s me, future {firstName}. I’m calling from 2022 because today is
+						It’s me, future {userName}. I’m calling from 2022 because today is
 						an important
 						<br />
 						day for you - for us!
 					</p>
 					<HighHeadingSM as="p" className="text-center text-yellow2 mt-3">
-						I, {firstName}, will make the most of tommorow.
+						I, {userName}, will make the most of tommorow.
 						<br />
 						I will always remember that I will not live forever.
 						<br />

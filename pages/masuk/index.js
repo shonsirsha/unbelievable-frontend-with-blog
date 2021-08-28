@@ -24,6 +24,9 @@ import { validateEmail } from "utils/validateEmail";
 const OuterContainer = styled.div`
 	background: #fff;
 	height: 80vh;
+	justify-content: center;
+	display: flex;
+	align-items: center;
 
 	@media ${mediaBreakpoint.down.md} {
 		height: auto;

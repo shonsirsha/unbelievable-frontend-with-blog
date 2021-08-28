@@ -35,17 +35,28 @@ const StyledModalBody = styled(ModalBody)`
 	padding: 0;
 
 	.left {
-		width: 60%;
+		border-radius: 16px;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+		background: ${(props) =>
+			props.img ? `url(${props.img}) no-repeat` : `gray`};
+		background-position: center;
+		background-size: cover;
+		width: 55%;
 	}
 
 	.right {
-		width: 40%;
-		padding: 24px 16px;
+		width: 45%;
+		padding: 24px 48px;
+		padding-right: 32px;
 	}
 
 	@media ${mediaBreakpoint.down.lg} {
 		display: none;
 		.left {
+			min-height: 240px;
+			border-bottom-left-radius: 0;
+			border-top-right-radius: 16px;
 			width: 100%;
 		}
 		.right {
@@ -114,6 +125,7 @@ const PreviewModal = (props) => {
 			setBuyModalOpen(true);
 		}
 	};
+	console.log(selectedPreviewCourse);
 	return (
 		<StyledModal
 			{...props}
@@ -121,7 +133,10 @@ const PreviewModal = (props) => {
 			aria-labelledby="contained-modal-title-vcenter"
 			centered
 		>
-			<StyledModalBody className="d-flex flex-lg-row bg-primary1 flex-column">
+			<StyledModalBody
+				img={selectedPreviewCourse.image}
+				className="d-flex flex-lg-row bg-primary1 flex-column"
+			>
 				<div className="d-flex left"></div>
 				<div className="d-flex flex-column right">
 					<HeadingXS as="p" className="text-white">

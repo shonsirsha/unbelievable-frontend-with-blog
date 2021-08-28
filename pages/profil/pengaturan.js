@@ -6,6 +6,7 @@ import { TextSecondary } from "components/Typography/Text";
 import {
 	FormLabel,
 	FormGroup,
+	Form,
 	Button,
 	FormControl,
 	FormText,
@@ -122,10 +123,8 @@ const Pengaturan = () => {
 				<>
 					<ToastContainer />
 
-					<HeadingSM className="mb-5">pengaturan umum</HeadingSM>
-					<TextSecondary className="text-gray2 mt-1">
-						Ganti Password
-					</TextSecondary>
+					<HeadingSM className="mb-4">pengaturan umum</HeadingSM>
+					<TextSecondary className="text-gray2">Ganti Password</TextSecondary>
 					<FormGroup>
 						<StyledFormLabel className="text-gray2 mt-4 mb-3">
 							Password saat ini
