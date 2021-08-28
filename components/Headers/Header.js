@@ -397,10 +397,7 @@ export default function Header({
 						</LogoutContainer>
 					) : (
 						<>
-							<HeadingXXS
-								as="p"
-								className="text-white ml-2 d-lg-block d-none mb-1"
-							>
+							<HeadingXXS as="p" className="text-white ml-2 d-lg-block d-none ">
 								{user && `${user.first_name} ${user.last_name}`}
 							</HeadingXXS>
 						</>
