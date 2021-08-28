@@ -3,6 +3,8 @@ import { API_URL } from "config/index";
 
 export default async function register(req, res) {
 	if (req.method === "PUT") {
+		console.log("asd");
+
 		const { identifier, password, newPassword } = req.body;
 		const { token } = cookie.parse(req.headers.cookie);
 
@@ -21,7 +23,7 @@ export default async function register(req, res) {
 		});
 
 		const data = await strapiRes.json();
-
+		console.log(data);
 		if (strapiRes.ok) {
 			res.setHeader(
 				"Set-Cookie",

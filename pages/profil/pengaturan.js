@@ -99,7 +99,7 @@ const Pengaturan = () => {
 					setErr("Password baru tidak memenuhi kriteria");
 				} else {
 					changePassword({
-						identifier: user.email,
+						identifier: user.uuid,
 						password,
 						newPassword,
 						confirmPassword: newPassword,
