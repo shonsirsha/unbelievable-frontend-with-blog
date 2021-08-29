@@ -18,6 +18,8 @@ export const CourseProvider = ({ children }) => {
 	const [persistedMissionIds, setPersistedMissionIds] = useState([]);
 	const [missionIdsDoneFromAPI, setMissionIdsDoneFromAPI] = useState([]);
 
+	const [wishlistCourses, setWishlistCourses] = useState(null);
+
 	const [missionSaveLoading, setMissionSaveLoading] = useState(false);
 	const checkIfInvoiceValid = async (courseId, token) => {
 		setEnrollClassLoading(true);
@@ -127,6 +129,13 @@ export const CourseProvider = ({ children }) => {
 		setEnrollClassLoading(false);
 	};
 
+	const removeWishlist = async (courseUuid) => {
+		console.log(courseUuid);
+		setWishlistCourses(
+			wishlistCourses.filter((c) => c.course.uuid !== courseUuid)
+		);
+	};
+
 	const rateClass = async (course, token, rate) => {
 		if (!token) {
 			router.push(`/masuk`);
@@ -174,6 +183,8 @@ export const CourseProvider = ({ children }) => {
 				setPersistedMissionIds,
 				setMissionIdsDoneFromAPI,
 				setMissionSaveLoading,
+				setWishlistCourses,
+				removeWishlist,
 				missionIdsDoneFromAPI,
 				persistedMissionIds,
 				missionsCompleted,
@@ -184,6 +195,7 @@ export const CourseProvider = ({ children }) => {
 				selectedPreviewCourse,
 				buyModalOpen,
 				missionSaveLoading,
+				wishlistCourses,
 			}}
 		>
 			{children}

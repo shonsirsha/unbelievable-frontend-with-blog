@@ -15,6 +15,7 @@ import SideBlock from "components/SideItems/SideBlock";
 import styled from "styled-components";
 import PreviewModal from "components/Course/PreviewModal";
 import BuyModal from "components/Course/BuyModal";
+import Wishlist from "components/Wishlist/Wishlist";
 
 const StyledDefault = styled(DefaultCourseCard)`
 	margin-right: 16px;
@@ -76,7 +77,8 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 		setBuyModalOpen,
 	} = useContext(CourseContext);
 
-	console.log(coursesTaken);
+	// console.log(coursesTaken);
+	// console.log(user.wishlist);
 
 	const [allCourses] = useState(courses);
 
@@ -177,7 +179,10 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 			<RightContainer>
 				<ComponentsContainer className="position-fixed">
 					<SideBlock
-						content={"Wishlist Box (Work in progress..)"}
+						content={<Wishlist />}
+						// content={wishlistCourses.map((c) => (
+						// 	<>{c.course.title}</>
+						// ))}
 						className="mb-3"
 					/>
 					<SideBlock
