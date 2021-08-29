@@ -98,8 +98,15 @@ export default function DefaultCourseCard({
 	enrolled = false,
 	...props
 }) {
-	const { title, short_desc, content_creator, image, videos, total_rating } =
-		course;
+	const {
+		title,
+		short_desc,
+		content_creator,
+		image,
+		videos,
+		total_rating,
+		paid,
+	} = course;
 	const {
 		enrollClassLoading,
 		enrollClass,
@@ -147,7 +154,7 @@ export default function DefaultCourseCard({
 				</div>
 				<div className="mt-auto d-flex justify-content-between align-items-center">
 					<div className="d-flex">
-						{user && (
+						{user && !paid && (
 							<Like
 								onClick={(e) => {
 									e.stopPropagation();

@@ -112,6 +112,50 @@ const Pengaturan = () => {
 		}
 	};
 
+	const PasswordResetForm = (
+		<>
+			<TextSecondary className="text-gray2">Ganti Password</TextSecondary>
+			<FormGroup>
+				<StyledFormLabel className="text-gray2 mt-4 mb-3">
+					Password saat ini
+				</StyledFormLabel>
+				<StyledFormControl
+					type="password"
+					name="password"
+					className="mr-xl-2 mb-3 shadow-none"
+					value={password}
+					onChange={handleChange}
+					placeholder="Password saat ini"
+				/>
+
+				<StyledFormLabel className="text-gray2 mt-4 mb-3">
+					Password baru
+				</StyledFormLabel>
+				<StyledFormControl
+					type="password"
+					name="newPassword"
+					className="mr-xl-2 mb-3 shadow-none"
+					value={newPassword}
+					onChange={handleChange}
+					placeholder="Password baru"
+				/>
+
+				<FormText className="mt-2 text-muted">
+					Password harus minimal 8 karakter, dengan huruf besar, huruf kecil,
+					nomer, dan simbol.
+				</FormText>
+			</FormGroup>
+
+			<EnrollBtn
+				disabled={loading}
+				onClick={handleSubmit}
+				className="bg-primary1 shadow"
+			>
+				<HeadingXXS>Ganti</HeadingXXS>
+			</EnrollBtn>
+		</>
+	);
+
 	return (
 		<Layout
 			title="Masukkan | Unbelieveable"
@@ -125,51 +169,7 @@ const Pengaturan = () => {
 					<ToastContainer />
 
 					<HeadingSM className="mb-4">pengaturan umum</HeadingSM>
-					{user && user.provider === "local" && (
-						<>
-							<TextSecondary className="text-gray2">
-								Ganti Password
-							</TextSecondary>
-							<FormGroup>
-								<StyledFormLabel className="text-gray2 mt-4 mb-3">
-									Password saat ini
-								</StyledFormLabel>
-								<StyledFormControl
-									type="password"
-									name="password"
-									className="mr-xl-2 mb-3 shadow-none"
-									value={password}
-									onChange={handleChange}
-									placeholder="Password saat ini"
-								/>
-
-								<StyledFormLabel className="text-gray2 mt-4 mb-3">
-									Password baru
-								</StyledFormLabel>
-								<StyledFormControl
-									type="password"
-									name="newPassword"
-									className="mr-xl-2 mb-3 shadow-none"
-									value={newPassword}
-									onChange={handleChange}
-									placeholder="Password baru"
-								/>
-
-								<FormText className="mt-2 text-muted">
-									Password harus minimal 8 karakter, dengan huruf besar, huruf
-									kecil, nomer, dan simbol.
-								</FormText>
-							</FormGroup>
-
-							<EnrollBtn
-								disabled={loading}
-								onClick={handleSubmit}
-								className="bg-primary1 shadow"
-							>
-								<HeadingXXS>Ganti</HeadingXXS>
-							</EnrollBtn>
-						</>
-					)}
+					{user && user.provider === "local" && <>{PasswordResetForm}</>}
 				</>
 			</OuterContainer>
 		</Layout>
