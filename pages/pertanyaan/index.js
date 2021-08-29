@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "components/Layout";
 import Showcase from "components/Showcase";
-import { Container, Row, Col } from "react-bootstrap";
-import { TextTertiary, TextPrimary } from "components/Typography/Text";
+import { Container, Row, Col, Accordion } from "react-bootstrap";
+import {
+	TextTertiary,
+	TextSecondary,
+	TextPrimary,
+} from "components/Typography/Text";
 import { API_URL } from "config";
 import styled from "styled-components";
 import { MdHeadsetMic } from "react-icons/md";
 import { BsEnvelope } from "react-icons/bs";
-import Link from "next/link";
+import { Image } from "react-bootstrap";
 import SearchBar from "components/Search/SearchBar";
 import { whitespace } from "utils/whitespace";
+import { HeadingXXS } from "components/Typography/Headings";
 
 const TitleText = styled(TextPrimary)`
 	font-size: 22px;
@@ -40,49 +45,97 @@ const StyledRow = styled(Row)`
 	margin-left: 0;
 	margin-right: 0;
 `;
-export default function Index({ categories }) {
-	const [categoriesState, setCategoriesState] = useState(categories);
-	const handleChange = (e) => {
-		if (!whitespace(e.target.value)) {
-			const filteredCategories = categories.filter((cat) =>
-				cat.name.toLowerCase().includes(e.target.value)
+const StyledAccordion = styled(Accordion)`
+	& button {
+		background: none;
+		border: none;
+		width: 100%;
+	}
+	.accordion-body {
+		padding-top: 32px;
+	}
+	.accordion-header {
+		margin: 0;
+	}
+	& .accordion-body {
+		padding-left: 48px;
+		padding-right: 24px;
+		padding-bottom: 24px;
+	}
+	border: 2px solid #e8e8e8;
+	padding: 16px;
+	padding-top: 10px;
+	padding-bottom: 12px;
+	border-radius: 10px;
+`;
+export default function Index({ questions }) {
+	const [questionsState, setQuestionsState] = useState(questions);
+	const [keyword, setKeyword] = useState("");
+
+	useEffect(() => {
+		if (!whitespace(keyword)) {
+			const filteredCategories = questions.filter((que) =>
+				que.title.toLowerCase().includes(keyword.toLowerCase())
 			);
-			setCategoriesState(filteredCategories);
+			setQuestionsState(filteredCategories);
 		} else {
-			setCategoriesState(categories);
+			setQuestionsState(questions);
 		}
-	};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [keyword]);
+
 	return (
 		<Layout showBurger={false} title="Pertanyaan | Unbelieveable" scrollToSolid>
 			<Showcase title="Pertanyaan" />
+
 			<StyledContainer>
 				<StyledRow className="w-100 mb-5">
 					<Col xl={12} className="d-flex justify-content-center">
-						<SearchBar onChange={handleChange} placeholder="Cari..." />
+						<SearchBar
+							onChange={(e) => setKeyword(e.target.value)}
+							placeholder="Cari..."
+						/>
 					</Col>
 				</StyledRow>
-				<StyledRow className="w-100 mb-5">
-					<Col xl={12}>
-						<TitleText as="h1" className="text-center text-gray2">
-							Topik Bantuan
-						</TitleText>
-					</Col>
-				</StyledRow>
+
 				<StyledRow className="w-100">
-					{categoriesState &&
-						categoriesState.map((category, ix) => (
-							<Col key={ix} className="mb-4" xl={4} md={6} sm={12}>
-								<Link href={`/pertanyaan/topik/${category.slug}`}>
-									<a>
-										<TopicContainer>
-											<TextTertiary className="text-gray2">
-												{category.name}
-											</TextTertiary>
-										</TopicContainer>
-									</a>
-								</Link>
-							</Col>
-						))}
+					{questionsState.map((q, ix) => (
+						<Col key={q.title} className="mb-4" md={6} sm={12}>
+							<StyledAccordion flush>
+								<Accordion.Item eventKey="0">
+									<Accordion.Header>
+										<div className="d-flex align-items-center">
+											<>
+												<Image
+													src={`/images/qmark.png`}
+													alt="Question Mark"
+													width={27}
+													height={27}
+													className="mr-3"
+												/>
+												<HeadingXXS as="p" className="text-gray2">
+													{q.title}
+												</HeadingXXS>
+
+												{/* <Image
+													src={`/images/dropdown-caret.svg`}
+													alt="Question Mark"
+													width={27}
+													height={27}
+													className="ml-auto"
+												/> */}
+											</>
+										</div>
+									</Accordion.Header>
+									<Accordion.Body>
+										<TextSecondary style={{ whiteSpace: "pre-line" }}>
+											{q.content}
+										</TextSecondary>
+									</Accordion.Body>
+								</Accordion.Item>
+							</StyledAccordion>
+						</Col>
+					))}
 				</StyledRow>
 				<StyledRow className="w-100 mt-4">
 					<Col xl={12}>
@@ -112,11 +165,11 @@ export default function Index({ categories }) {
 }
 
 export async function getStaticProps() {
-	const res = await fetch(`${API_URL}/question-categories`);
-	const categories = await res.json();
+	const res = await fetch(`${API_URL}/questions`);
+	const questions = await res.json();
 	return {
 		props: {
-			categories,
+			questions,
 		},
 		revalidate: 1,
 	};

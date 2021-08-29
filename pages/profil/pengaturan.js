@@ -149,7 +149,7 @@ const Pengaturan = () => {
 			<EnrollBtn
 				disabled={loading}
 				onClick={handleSubmit}
-				className="bg-primary1 shadow"
+				className="bg-primary1 mt-3 shadow"
 			>
 				<HeadingXXS>Ganti</HeadingXXS>
 			</EnrollBtn>

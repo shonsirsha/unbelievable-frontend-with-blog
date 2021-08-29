@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "video.js/dist/video-js.css";
 import Router from "next/router";
+
 import { AuthProvider } from "context/AuthContext";
 import { CourseProvider } from "context/CourseContext";
 
