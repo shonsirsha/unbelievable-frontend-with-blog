@@ -68,7 +68,7 @@ const Wishlist = () => {
 		);
 	}
 	return (
-		<div className="d-flex flex-column p-1">
+		<div className="d-flex flex-column p-1 w-100">
 			<HeadingXS as="p" className="text-primary1 mb-3 mt-2">
 				wishlist kelas
 			</HeadingXS>
