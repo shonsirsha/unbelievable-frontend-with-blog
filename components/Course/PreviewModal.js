@@ -126,7 +126,6 @@ const PreviewModal = (props) => {
 			setBuyModalOpen(true);
 		}
 	};
-	console.log(selectedPreviewCourse);
 	return (
 		<StyledModal
 			{...props}

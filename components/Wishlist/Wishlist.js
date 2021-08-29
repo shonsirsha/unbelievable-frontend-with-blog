@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { TextSecondary } from "components/Typography/Text";
 import { HeadingXS } from "components/Typography/Headings";
 import { MdRemoveCircle } from "react-icons/md";
+import { toast } from "react-toastify";
 const MyCard = styled.div`
 	background: #fff;
 	display: flex;
@@ -35,8 +36,7 @@ const CourseImage = styled.div`
 const Wishlist = () => {
 	const { setWishlistCourses, wishlistCourses, removeWishlist } =
 		useContext(CourseContext);
-	const { checkUserLoggedIn } = useContext(AuthContext);
-	const { user } = useContext(AuthContext);
+	const { token, user, checkUserLoggedIn } = useContext(AuthContext);
 	const [loading, setLoading] = useState(true);
 	useEffect(() => {
 		checkUserLoggedIn();
@@ -49,9 +49,16 @@ const Wishlist = () => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user]);
-	useEffect(() => {
-		console.log(wishlistCourses);
-	}, [wishlistCourses]);
+
+	const removeWishlistClicked = async (course) => {
+		const removed = await removeWishlist(course, token);
+		setLoading(true);
+		if (!removed) {
+			toast.error("Terjadi kesalahan. Mohon coba lagi.");
+		} else {
+			setLoading(false);
+		}
+	};
 
 	if (loading) {
 		return (
@@ -83,7 +90,7 @@ const Wishlist = () => {
 								</a>
 							</Link>
 							<MdRemoveCircle
-								onClick={async () => await removeWishlist(c.course.uuid)}
+								onClick={async () => await removeWishlistClicked(c)}
 							/>
 						</MyCard>
 					))}

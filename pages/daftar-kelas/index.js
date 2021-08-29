@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { parseCookies } from "utils/cookies";
 import Layout from "components/Layout";
 import Showcase from "components/Showcase";
@@ -22,13 +22,26 @@ const StyledContainer = styled(Container)`
 	padding-bottom: 56px;
 `;
 export default function Index({ courses }) {
-	const { user } = useContext(AuthContext);
+	const { user, checkUserLoggedIn } = useContext(AuthContext);
+
 	const {
 		previewModalOpen,
 		setPreviewModalOpen,
 		buyModalOpen,
 		setBuyModalOpen,
+		setWishlistCourses,
 	} = useContext(CourseContext);
+
+	useEffect(() => {
+		checkUserLoggedIn();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+	useEffect(() => {
+		if (user) {
+			setWishlistCourses(user.wishlist);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user]);
 
 	return (
 		<Layout

@@ -129,11 +129,26 @@ export const CourseProvider = ({ children }) => {
 		setEnrollClassLoading(false);
 	};
 
-	const removeWishlist = async (courseUuid) => {
-		console.log(courseUuid);
-		setWishlistCourses(
-			wishlistCourses.filter((c) => c.course.uuid !== courseUuid)
+	const removeWishlist = async (course, token) => {
+		const res = await fetch(
+			`${API_URL}/courses/remove-wishlist/${course.course.id}`,
+			{
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+			}
 		);
+
+		if (res.ok) {
+			setWishlistCourses(
+				wishlistCourses.filter((c) => c.course.uuid !== course.course.uuid)
+			);
+			return true;
+		} else {
+			return false;
+		}
 	};
 
 	const addWishlist = async (course, token) => {
@@ -145,11 +160,9 @@ export const CourseProvider = ({ children }) => {
 
 		if (wishlistCourses) {
 			alreadyInWishlist = wishlistCourses.some((c) => {
-				console.log(c.uuid);
 				return course.course.uuid === c.course.uuid;
 			});
 		}
-		console.log(course.course.uuid);
 
 		const res = await fetch(`${API_URL}/courses/wishlist/${course.course.id}`, {
 			method: "PUT",

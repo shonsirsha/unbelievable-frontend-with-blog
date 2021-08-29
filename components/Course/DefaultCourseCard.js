@@ -160,7 +160,6 @@ export default function DefaultCourseCard({
 							<Like
 								onClick={async (e) => {
 									e.stopPropagation();
-
 									const wishlisted = await addWishlist(
 										{ course: course },
 										token

@@ -65,7 +65,6 @@ export const AuthProvider = ({ children }) => {
 			router.push("/dashboard");
 			router.reload();
 		} else {
-			console.log(data);
 			setErr(data.message);
 			setErr(null);
 		}
