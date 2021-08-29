@@ -7,6 +7,7 @@ import { FaHeart } from "react-icons/fa";
 import { MdShare } from "react-icons/md";
 import CourseContext from "context/CourseContext";
 import AuthContext from "context/AuthContext";
+import { toast } from "react-toastify";
 
 const EnrollBtn = styled(Button)`
 	border-radius: 40px;
@@ -159,7 +160,19 @@ export default function DefaultCourseCard({
 							<Like
 								onClick={async (e) => {
 									e.stopPropagation();
-									await addWishlist(course);
+
+									const wishlisted = await addWishlist(
+										{ course: course },
+										token
+									);
+
+									if (wishlisted) {
+										toast.success("Kelas ini telah ditambahkan ke wishlist!");
+									} else {
+										toast.error(
+											"Terjadi kesalahan dalam menambahkan kelas ke wishlist"
+										);
+									}
 								}}
 								className="mr-2"
 							/>

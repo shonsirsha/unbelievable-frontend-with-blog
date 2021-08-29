@@ -10,6 +10,8 @@ import { API_URL } from "config";
 import DefaultCourseCard from "components/Course/DefaultCourseCard";
 import PreviewModal from "components/Course/PreviewModal";
 import BuyModal from "components/Course/BuyModal";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const StyledContainer = styled(Container)`
 	display: flex;
@@ -34,6 +36,7 @@ export default function Index({ courses }) {
 			title="Daftar Kelas | Unbelieveable"
 			scrollToSolid
 		>
+			<ToastContainer />
 			<PreviewModal
 				show={previewModalOpen}
 				onHide={() => setPreviewModalOpen(false)}

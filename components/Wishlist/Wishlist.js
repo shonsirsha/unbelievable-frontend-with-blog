@@ -35,9 +35,13 @@ const CourseImage = styled.div`
 const Wishlist = () => {
 	const { setWishlistCourses, wishlistCourses, removeWishlist } =
 		useContext(CourseContext);
+	const { checkUserLoggedIn } = useContext(AuthContext);
 	const { user } = useContext(AuthContext);
 	const [loading, setLoading] = useState(true);
-
+	useEffect(() => {
+		checkUserLoggedIn();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 	useEffect(() => {
 		if (user) {
 			setWishlistCourses(user.wishlist);
@@ -68,7 +72,9 @@ const Wishlist = () => {
 							key={c.course.id}
 							className="shadow d-flex align-items-center justify-content-between"
 						>
-							<CourseImage img={c.course.poster.url} />
+							<CourseImage
+								img={c.course.poster ? c.course.poster.url : c.course.image}
+							/>
 							<Link href={`/kelas/${c.course.slug}`}>
 								<a>
 									<TextSecondary className="text-gray2">

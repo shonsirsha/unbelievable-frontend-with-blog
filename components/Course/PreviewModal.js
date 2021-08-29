@@ -9,7 +9,7 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { FaHeart } from "react-icons/fa";
 import { MdShare } from "react-icons/md";
-
+import { toast } from "react-toastify";
 const EnrollBtn = styled(Button)`
 	border-radius: 40px;
 	border: none;
@@ -104,6 +104,7 @@ const PreviewModal = (props) => {
 		setBuyModalOpen,
 		checkIfInvoiceValid,
 		enrollClassLoading,
+		addWishlist,
 	} = useContext(CourseContext);
 	const { token, user } = useContext(AuthContext);
 
@@ -153,9 +154,20 @@ const PreviewModal = (props) => {
 							<Like
 								role="button"
 								className="mr-2"
-								onClick={(e) => {
+								onClick={async (e) => {
 									e.stopPropagation();
-									alert("Wishlisted (WIP)");
+									const wishlisted = await addWishlist(
+										{ course: selectedPreviewCourse },
+										token
+									);
+
+									if (wishlisted) {
+										toast.success("Kelas ini telah ditambahkan ke wishlist!");
+									} else {
+										toast.error(
+											"Terjadi kesalahan dalam menambahkan kelas ke wishlist"
+										);
+									}
 								}}
 							/>
 							<Share

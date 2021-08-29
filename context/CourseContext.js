@@ -136,16 +136,39 @@ export const CourseProvider = ({ children }) => {
 		);
 	};
 
-	const addWishlist = async (course) => {
+	const addWishlist = async (course, token) => {
+		if (!token) {
+			router.push("/masuk");
+			return;
+		}
 		let alreadyInWishlist = false;
 
 		if (wishlistCourses) {
 			alreadyInWishlist = wishlistCourses.some((c) => {
-				return course.uuid === c.uuid;
+				console.log(c.uuid);
+				return course.course.uuid === c.course.uuid;
 			});
 		}
-		if (!alreadyInWishlist) {
-			setWishlistCourses([...wishlistCourses, course]);
+		console.log(course.course.uuid);
+
+		const res = await fetch(`${API_URL}/courses/wishlist/${course.course.id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${token}`,
+			},
+		});
+
+		if (res.ok) {
+			if (!alreadyInWishlist) {
+				setWishlistCourses([...wishlistCourses, course]);
+			}
+			return true;
+		} else {
+			if (alreadyInWishlist) {
+				return true;
+			}
+			return false;
 		}
 	};
 
