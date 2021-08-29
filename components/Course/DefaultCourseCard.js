@@ -112,6 +112,7 @@ export default function DefaultCourseCard({
 		enrollClass,
 		setPreviewModalOpen,
 		setSelectedPreviewCourse,
+		addWishlist,
 	} = useContext(CourseContext);
 	const { token } = useContext(AuthContext);
 
@@ -156,9 +157,9 @@ export default function DefaultCourseCard({
 					<div className="d-flex">
 						{user && !paid && (
 							<Like
-								onClick={(e) => {
+								onClick={async (e) => {
 									e.stopPropagation();
-									alert("Wishlisted (WIP)");
+									await addWishlist(course);
 								}}
 								className="mr-2"
 							/>

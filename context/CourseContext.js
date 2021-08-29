@@ -18,7 +18,7 @@ export const CourseProvider = ({ children }) => {
 	const [persistedMissionIds, setPersistedMissionIds] = useState([]);
 	const [missionIdsDoneFromAPI, setMissionIdsDoneFromAPI] = useState([]);
 
-	const [wishlistCourses, setWishlistCourses] = useState(null);
+	const [wishlistCourses, setWishlistCourses] = useState([]);
 
 	const [missionSaveLoading, setMissionSaveLoading] = useState(false);
 	const checkIfInvoiceValid = async (courseId, token) => {
@@ -136,6 +136,19 @@ export const CourseProvider = ({ children }) => {
 		);
 	};
 
+	const addWishlist = async (course) => {
+		let alreadyInWishlist = false;
+
+		if (wishlistCourses) {
+			alreadyInWishlist = wishlistCourses.some((c) => {
+				return course.uuid === c.uuid;
+			});
+		}
+		if (!alreadyInWishlist) {
+			setWishlistCourses([...wishlistCourses, course]);
+		}
+	};
+
 	const rateClass = async (course, token, rate) => {
 		if (!token) {
 			router.push(`/masuk`);
@@ -185,6 +198,7 @@ export const CourseProvider = ({ children }) => {
 				setMissionSaveLoading,
 				setWishlistCourses,
 				removeWishlist,
+				addWishlist,
 				missionIdsDoneFromAPI,
 				persistedMissionIds,
 				missionsCompleted,
