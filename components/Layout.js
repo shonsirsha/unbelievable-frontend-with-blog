@@ -8,6 +8,7 @@ import RoundedBtnIcon from "./Buttons/RoundedBtnIcon";
 import styled from "styled-components";
 import { mediaBreakpoint } from "utils/breakpoints";
 import AuthContext from "context/AuthContext";
+import CourseContext from "context/CourseContext";
 import SideBlock from "./SideItems/SideBlock";
 import ReviewBlock from "./SideItems/ReviewBlock";
 import { FaHeart } from "react-icons/fa";
@@ -103,10 +104,10 @@ export default function Layout({
 	mainApp = false,
 	showLogout = false,
 	showReviewBlock = true,
+	backBtn,
 }) {
-	let backBtn = false;
-
 	const { user, loading } = useContext(AuthContext);
+	const { setWishlistModalOpen } = useContext(CourseContext);
 	const router = useRouter();
 	// mainApp is when layout has the floating side menu...
 
@@ -168,6 +169,7 @@ export default function Layout({
 							{router.pathname === "/dashboard" && (
 								<>
 									<SideBlock
+										onClick={() => setWishlistModalOpen(true)}
 										className="mr-2"
 										content={<FaHeart style={{ fontSize: "24px" }} />}
 									/>

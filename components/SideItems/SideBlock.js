@@ -9,9 +9,12 @@ const Container = styled.div`
 		border-radius: 100%;
 	}
 `;
-export default function SideBlock({ content, ...props }) {
+export default function SideBlock({ onClick, content, ...props }) {
 	return (
-		<Container className={`shadow bg-lightgray mb-2 ${props.className}`}>
+		<Container
+			className={`shadow bg-lightgray mb-2 ${props.className}`}
+			onClick={onClick}
+		>
 			{content ? content : <>SideBlock box (work in progress...)</>}
 		</Container>
 	);

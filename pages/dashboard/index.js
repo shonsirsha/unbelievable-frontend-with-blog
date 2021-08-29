@@ -16,6 +16,7 @@ import styled from "styled-components";
 import PreviewModal from "components/Course/PreviewModal";
 import BuyModal from "components/Course/BuyModal";
 import Wishlist from "components/Wishlist/Wishlist";
+import WishlistModal from "components/Wishlist/WishlistModal";
 
 const StyledDefault = styled(DefaultCourseCard)`
 	margin-right: 16px;
@@ -75,6 +76,8 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 		setPreviewModalOpen,
 		buyModalOpen,
 		setBuyModalOpen,
+		wishlistModalOpen,
+		setWishlistModalOpen,
 	} = useContext(CourseContext);
 
 	// console.log(coursesTaken);
@@ -101,6 +104,11 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 			router.push("/dashboard");
 		}
 	};
+
+	useEffect(() => {
+		setWishlistModalOpen(false);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	useEffect(() => {
 		if (router.query.r == "1") {
@@ -138,6 +146,10 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 			/>
 
 			<BuyModal show={buyModalOpen} onHide={() => setBuyModalOpen(false)} />
+			<WishlistModal
+				show={wishlistModalOpen}
+				onHide={() => setWishlistModalOpen(false)}
+			/>
 
 			<div className="d-flex w-100 flex-column">
 				<HeadingXS className="text-gray mb-2">

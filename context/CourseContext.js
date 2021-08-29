@@ -9,6 +9,7 @@ export const CourseProvider = ({ children }) => {
 	const [enrollClassLoading, setEnrollClassLoading] = useState(false);
 	const [previewModalOpen, setPreviewModalOpen] = useState(false);
 	const [buyModalOpen, setBuyModalOpen] = useState(false);
+	const [wishlistModalOpen, setWishlistModalOpen] = useState(false);
 
 	const [selectedPreviewCourse, setSelectedPreviewCourse] = useState(null);
 	const [invoiceUrl, setInvoiceUrl] = useState(null);
@@ -235,6 +236,7 @@ export const CourseProvider = ({ children }) => {
 				setWishlistCourses,
 				removeWishlist,
 				addWishlist,
+				setWishlistModalOpen,
 				missionIdsDoneFromAPI,
 				persistedMissionIds,
 				missionsCompleted,
@@ -246,6 +248,7 @@ export const CourseProvider = ({ children }) => {
 				buyModalOpen,
 				missionSaveLoading,
 				wishlistCourses,
+				wishlistModalOpen,
 			}}
 		>
 			{children}
