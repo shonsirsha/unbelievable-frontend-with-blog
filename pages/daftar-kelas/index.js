@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { parseCookies } from "utils/cookies";
 import Layout from "components/Layout";
 import Showcase from "components/Showcase";
@@ -21,6 +21,7 @@ const StyledContainer = styled(Container)`
 	padding-top: 120px;
 	padding-bottom: 56px;
 `;
+
 export default function Index({ courses }) {
 	const { user, checkUserLoggedIn } = useContext(AuthContext);
 

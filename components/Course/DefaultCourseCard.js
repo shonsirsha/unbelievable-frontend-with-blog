@@ -8,6 +8,7 @@ import { MdShare } from "react-icons/md";
 import CourseContext from "context/CourseContext";
 import AuthContext from "context/AuthContext";
 import { toast } from "react-toastify";
+import { Popover } from "react-tiny-popover";
 
 const EnrollBtn = styled(Button)`
 	border-radius: 40px;
@@ -28,6 +29,10 @@ const CardBody = styled.div`
 	position: relative;
 	padding: 20px 32px;
 	padding-bottom: 48px;
+
+	& .react-tiny-popover-container {
+		display: none;
+	}
 `;
 const StyledHeadingXXS = styled(HeadingXXS)`
 	font-size: 13px;
@@ -92,6 +97,21 @@ const TextDesc = styled(TextTertiary)`
 	font-size: ${(props) => (props.small ? `12px` : `14px`)};
 `;
 
+const PopoverContainer = styled.div`
+	min-width: 80px;
+	padding: 8px;
+	border-radius: 8px;
+	background: #0160ef;
+	a:hover {
+		cursor: pointer;
+	}
+	font-size: 14px;
+
+	a {
+		text-decoration: underline !important;
+	}
+`;
+
 export default function DefaultCourseCard({
 	course,
 	small,
@@ -105,6 +125,7 @@ export default function DefaultCourseCard({
 		content_creator,
 		image,
 		videos,
+		slug,
 		total_rating,
 		paid,
 	} = course;
@@ -116,6 +137,7 @@ export default function DefaultCourseCard({
 		addWishlist,
 	} = useContext(CourseContext);
 	const { token } = useContext(AuthContext);
+	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
 	const openModal = () => {
 		setPreviewModalOpen(true);
@@ -179,9 +201,42 @@ export default function DefaultCourseCard({
 						<Share
 							onClick={(e) => {
 								e.stopPropagation();
-								alert("Share (WIP)");
+								navigator.clipboard.writeText(
+									`${window.location.origin}/kelas/${slug}`
+								);
+								setIsPopoverOpen(true);
+
+								setTimeout(() => {
+									setIsPopoverOpen(false);
+								}, 800);
 							}}
 						/>
+
+						<Popover
+							isOpen={isPopoverOpen}
+							onClickOutside={() => setIsPopoverOpen(false)}
+							padding={4}
+							reposition={true}
+							positions={["bottom"]} // preferred positions by priority
+							content={() => (
+								// you can also provide a render function that injects some useful stuff!
+								<PopoverContainer
+									onClick={(e) => {
+										e.stopPropagation();
+									}}
+									className="shadow text-white text-center"
+								>
+									URL kelas telah disalin
+								</PopoverContainer>
+							)}
+						>
+							<div
+								onClick={(e) => {
+									e.stopPropagation();
+									setIsPopoverOpen(!isPopoverOpen);
+								}}
+							></div>
+						</Popover>
 					</div>
 					<div className="d-flex">
 						{[...Array(Math.round(total_rating > 0 ? total_rating : 0))].map(
