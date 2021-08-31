@@ -152,7 +152,11 @@ export default function ResetPassword({ sc }) {
 				password: "",
 				passwordConfirmation: "",
 			});
+			setTimeout(() => {
+				router.push("/masuk");
+			}, 2500);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [success]);
 	const { password, passwordConfirmation } = passwords;
 
@@ -197,7 +201,7 @@ export default function ResetPassword({ sc }) {
 								/>
 							</FormGroup>
 
-							<FormGroup>
+							<FormGroup className="mt-3">
 								<FormLabel>Konfirmasi Password</FormLabel>
 								<StyledFormControl
 									type="password"
