@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthContext from "context/AuthContext";
+import moment from "moment";
 import Layout from "components/Layout";
 import styled from "styled-components";
 import {
@@ -21,6 +22,7 @@ import mustBeUnauthed from "utils/mustBeUnauthed";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { checkPassword } from "utils/checkPassword";
 import { API_URL } from "config";
+import { whitespace } from "utils/whitespace";
 
 const OuterContainer = styled.div`
 	background: #fff;
@@ -152,6 +154,27 @@ const Index = () => {
 		setSignUpDetails({ ...signUpDetails, [e.target.name]: e.target.value });
 	};
 	const { email, password, first_name, last_name, dob } = signUpDetails;
+	const validateRegisterData = () => {
+		if (
+			whitespace(first_name) ||
+			whitespace(last_name) ||
+			whitespace(dob) ||
+			!moment(`${dob}`, "YYYY-MM-DD", true).isValid()
+		) {
+			return false;
+		} else {
+			if (new Date(dob).getFullYear() >= 1950) {
+				if (
+					new Date().setHours(0, 0, 0, 0) >=
+					new Date(dob).setHours(0, 0, 0, 0).valueOf()
+				) {
+					// today is bigger than user's birthday (valid)
+					return true;
+				}
+			}
+			return false;
+		}
+	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (!authLoading) {
@@ -159,13 +182,18 @@ const Index = () => {
 			if (!checkPassword(password)) {
 				toast.error("Password tidak memenuhi kriteria");
 			} else {
-				register({
-					email,
-					password,
-					first_name,
-					last_name,
-					dob,
-				});
+				const validData = validateRegisterData();
+				if (validData) {
+					register({
+						email,
+						password,
+						first_name,
+						last_name,
+						dob,
+					});
+				} else {
+					toast.error("Mohon isi semua kolom dengan benar");
+				}
 			}
 		}
 	};
@@ -174,7 +202,7 @@ const Index = () => {
 		datex.getMonth() + 1 < 10
 			? `0${datex.getMonth() + 1}`
 			: datex.getMonth() + 1
-	}-${datex.getDate()}`;
+	}-${datex.getDate() < 10 ? `0${datex.getDate()}` : datex.getDate()}`;
 	return (
 		<Layout background="#171b2d" withMargin>
 			<OuterContainer>

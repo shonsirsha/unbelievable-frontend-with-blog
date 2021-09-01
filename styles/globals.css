@@ -26,5 +26,5 @@ a:active {
 }
 
 .react-tiny-popover-container {
-	z-index: 10;
+	z-index: 1800;
 }

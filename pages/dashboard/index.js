@@ -6,7 +6,12 @@ import "react-toastify/dist/ReactToastify.css";
 import AuthContext from "context/AuthContext";
 import CourseContext from "context/CourseContext";
 import { API_URL } from "config/index";
-import { HeadingXS, HeadingLG } from "components/Typography/Headings";
+import {
+	HeadingXS,
+	HeadingLG,
+	HeadingXXS,
+} from "components/Typography/Headings";
+import { TextTertiary } from "components/Typography/Text";
 import Layout from "components/Layout";
 import Onboarding from "components/Onboarding/Onboarding";
 import EnrolledCourseCard from "components/Course/EnrolledCourseCard";
@@ -17,6 +22,7 @@ import PreviewModal from "components/Course/PreviewModal";
 import BuyModal from "components/Course/BuyModal";
 import Wishlist from "components/Wishlist/Wishlist";
 import WishlistModal from "components/Wishlist/WishlistModal";
+import { FormGroup, FormControl, Button } from "react-bootstrap";
 
 const StyledDefault = styled(DefaultCourseCard)`
 	margin-right: 16px;
@@ -67,6 +73,50 @@ const StyledEnrolled = styled(EnrolledCourseCard)`
 	}
 `;
 
+const StyledFormGroup = styled(FormGroup)`
+	position: absolute;
+	top: 40%;
+	padding: 0 32px;
+	width: 100%;
+`;
+
+const StyledFormControl = styled(FormControl)`
+	border: none;
+	border-radius: 16px;
+	padding: 16px;
+	background: #f4f4f7;
+	margin: 0 !important;
+	transition: 0.5s;
+	&:-webkit-autofill,
+	&:-webkit-autofill:hover,
+	&:-webkit-autofill:focus,
+	&:-webkit-autofill:active {
+		-webkit-box-shadow: 0 0 0 30px #f4f4f7 inset !important;
+	}
+
+	&:focus {
+		background: #e8e8e8;
+		outline: none;
+	}
+`;
+
+const DOBWrapper = styled.div`
+	display: flex;
+	padding: 24px;
+	background: #fff;
+	border-radius: 16px;
+	flex-direction: column;
+	max-width: 640px;
+	margin-left: auto;
+	margin-right: auto;
+`;
+
+const StyledSubmitBtn = styled(Button)`
+	margin-top: 16px;
+	width: 100%;
+	border-radius: 18px;
+`;
+
 const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 	const router = useRouter();
 
@@ -84,6 +134,7 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 	// console.log(user.wishlist);
 
 	const [allCourses] = useState(courses);
+	const [dob, setDob] = useState(null);
 
 	const handleFinishOnboarding = async () => {
 		const res = await fetch(`${API_URL}/users/me`, {
@@ -117,6 +168,52 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	if (!user.dob) {
+		const datex = new Date();
+		const today = `${datex.getFullYear()}-${
+			datex.getMonth() + 1 < 10
+				? `0${datex.getMonth() + 1}`
+				: datex.getMonth() + 1
+		}-${datex.getDate() < 10 ? `0${datex.getDate()}` : datex.getDate()}`;
+
+		return (
+			<Layout title="Dashboard | Unbelieveable" background="#171b2d" withMargin>
+				<StyledFormGroup>
+					<DOBWrapper className="shadow">
+						<HeadingXXS as="p" className="mb-2">
+							Selesaikan Pendaftaran
+						</HeadingXXS>
+						<TextTertiary className="mb-3">
+							Mohon masukkan tanggal lahir untuk menyelesaikan pendaftaran
+						</TextTertiary>
+						<div className="d-flex flex-column">
+							<StyledFormControl
+								type="date"
+								name="dob"
+								className="mr-xl-2 mb-3 shadow-none"
+								onChange={(e) => {
+									setDob(e.target.value);
+								}}
+								value={dob}
+								min="1950-01-01"
+								max={today}
+								placeholder="Date"
+							/>
+							<StyledSubmitBtn
+								type="submit"
+								onSubmit={(e) => {
+									console.log(e.target.value);
+								}}
+							>
+								Simpan
+							</StyledSubmitBtn>
+						</div>
+					</DOBWrapper>
+				</StyledFormGroup>
+			</Layout>
+		);
+	}
 
 	if (!user.onboarded) {
 		return (
@@ -252,7 +349,7 @@ export async function getServerSideProps({ req, _ }) {
 		user.token = token;
 		const courses = await res3.json();
 		const coursesTaken = await res4.json();
-
+		console.log(user);
 		return {
 			props: {
 				onboardings,

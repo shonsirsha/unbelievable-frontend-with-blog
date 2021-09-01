@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import CourseContext from "context/CourseContext";
 import AuthContext from "context/AuthContext";
 import { Modal, ModalBody, Image, Button } from "react-bootstrap";
@@ -10,6 +10,8 @@ import { mediaBreakpoint } from "utils/breakpoints";
 import { FaHeart } from "react-icons/fa";
 import { MdShare } from "react-icons/md";
 import { toast } from "react-toastify";
+import { Popover } from "react-tiny-popover";
+
 const EnrollBtn = styled(Button)`
 	border-radius: 40px;
 	border: none;
@@ -96,7 +98,25 @@ const Share = styled(MdShare)`
 		color: #f2f2f2;
 	}
 `;
+
+const PopoverContainer = styled.div`
+	min-width: 80px;
+	padding: 8px;
+	border-radius: 8px;
+	background: #0160ef;
+	a:hover {
+		cursor: pointer;
+	}
+	font-size: 14px;
+
+	a {
+		text-decoration: underline !important;
+	}
+`;
+
 const PreviewModal = (props) => {
+	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
 	const {
 		selectedPreviewCourse,
 		getInvoiceUrl,
@@ -173,9 +193,43 @@ const PreviewModal = (props) => {
 								role="button"
 								onClick={(e) => {
 									e.stopPropagation();
-									alert("Share (WIP)");
+									e.stopPropagation();
+									navigator.clipboard.writeText(
+										`${window.location.origin}/kelas/${selectedPreviewCourse.slug}`
+									);
+									setIsPopoverOpen(true);
+
+									setTimeout(() => {
+										setIsPopoverOpen(false);
+									}, 800);
 								}}
 							/>
+
+							<Popover
+								isOpen={isPopoverOpen}
+								onClickOutside={() => setIsPopoverOpen(false)}
+								padding={4}
+								reposition={true}
+								positions={["bottom"]} // preferred positions by priority
+								content={() => (
+									// you can also provide a render function that injects some useful stuff!
+									<PopoverContainer
+										onClick={(e) => {
+											e.stopPropagation();
+										}}
+										className="shadow text-white text-center"
+									>
+										URL kelas telah disalin
+									</PopoverContainer>
+								)}
+							>
+								<div
+									onClick={(e) => {
+										e.stopPropagation();
+										setIsPopoverOpen(!isPopoverOpen);
+									}}
+								></div>
+							</Popover>
 						</div>
 					</div>
 					<div className="d-flex mt-2 align-items-center">
