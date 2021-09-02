@@ -163,14 +163,13 @@ const Index = () => {
 		) {
 			return false;
 		} else {
-			if (new Date(dob).getFullYear() >= 1950) {
-				if (
-					new Date().setHours(0, 0, 0, 0) >=
+			if (
+				new Date(dob).getFullYear() >= 1950 &&
+				new Date().setHours(0, 0, 0, 0) >=
 					new Date(dob).setHours(0, 0, 0, 0).valueOf()
-				) {
-					// today is bigger than user's birthday (valid)
-					return true;
-				}
+			) {
+				return true;
+				// today is bigger than user's birthday (valid)
 			}
 			return false;
 		}

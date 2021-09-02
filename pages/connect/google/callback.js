@@ -27,7 +27,7 @@ const Callback = () => {
 				if (data.message.id === "Auth.form.error.email.taken") {
 					Swal.fire({
 						title: "Pemberitahuan",
-						html: "Kamu sudah memiliki akun dengan email ini.<br/><br/> Mohon masuk kembali tanpa menggunakan Google.",
+						html: "Akun ini tidak terdaftar melalui Google.<br/><br/> Mohon masuk kembali tanpa menggunakan Google.",
 						confirmButtonColor: "#171b2d",
 						confirmButtonText: "Oke",
 						icon: "info",

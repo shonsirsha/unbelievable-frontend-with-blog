@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { parseCookies } from "utils/cookies";
+import moment from "moment";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -156,6 +157,38 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 		}
 	};
 
+	const onDateSubmit = async () => {
+		if (
+			moment(`${dob}`, "YYYY-MM-DD", true).isValid() &&
+			new Date().setHours(0, 0, 0, 0) >=
+				new Date(dob).setHours(0, 0, 0, 0).valueOf() &&
+			new Date(dob).getFullYear() >= 1950
+		) {
+			const res = await fetch(`${API_URL}/users/me`, {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({ dob }),
+			});
+			if (!res.ok) {
+				if (res.status === 403 || res.status === 401) {
+					toast.error("Terjadi Kesalahan Mohon Coba Lagi (403)");
+					return;
+				}
+				toast.error("Terjadi Kesalahan Mohon Coba Lagi");
+			} else {
+				toast.success("Tersimpan!");
+				setTimeout(() => {
+					router.push("/dashboard");
+				}, 600);
+			}
+		} else {
+			toast.error("Mohon isi tanggal lahir dengan benar");
+		}
+	};
+
 	useEffect(() => {
 		setWishlistModalOpen(false);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -179,6 +212,8 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 
 		return (
 			<Layout title="Dashboard | Unbelieveable" background="#171b2d" withMargin>
+				<ToastContainer />
+
 				<StyledFormGroup>
 					<DOBWrapper className="shadow">
 						<HeadingXXS as="p" className="mb-2">
@@ -200,12 +235,7 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 								max={today}
 								placeholder="Date"
 							/>
-							<StyledSubmitBtn
-								type="submit"
-								onSubmit={(e) => {
-									console.log(e.target.value);
-								}}
-							>
+							<StyledSubmitBtn type="submit" onClick={onDateSubmit}>
 								Simpan
 							</StyledSubmitBtn>
 						</div>
