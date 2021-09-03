@@ -1,5 +1,9 @@
 import { useState, useEffect, useContext } from "react";
 import CourseContext from "context/CourseContext";
+import Swal from "sweetalert2";
+import VideoPlayerHLS from "components/VideoPlayer/VideoPlayerHLS";
+import MisiBlock from "components/Kelas/MisiBlock";
+import BuyModal from "components/Course/BuyModal";
 import { parseCookies } from "utils/cookies";
 import { API_URL, USE_FALLBACK_VID } from "config";
 import { useRouter } from "next/router";
@@ -10,15 +14,12 @@ import {
 	HeadingSM,
 	HeadingXXS,
 } from "components/Typography/Headings";
-import MisiBlock from "components/Kelas/MisiBlock";
 import { TextSecondary, TextTertiary } from "components/Typography/Text";
 import { MdLockOutline, MdCheck } from "react-icons/md";
 import { AiOutlineClockCircle } from "react-icons/ai";
-import VideoPlayerHLS from "components/VideoPlayer/VideoPlayerHLS";
 import { mediaBreakpoint } from "utils/breakpoints";
-import Swal from "sweetalert2";
 import { dateDiffInDays } from "utils/dateDiffInDays";
-import BuyModal from "components/Course/BuyModal";
+import { secsToMin } from "utils/secsToMin";
 
 const StyledContainer = styled.div`
 	display: flex;
@@ -106,8 +107,6 @@ const StyledHeadingXXS = styled(HeadingXXS)`
 const StyledTextSecondary = styled(TextSecondary)``;
 export default function Kelas({ slug, currentCourse, token, user }) {
 	const router = useRouter();
-
-	console.log(currentCourse);
 
 	const { paid, title, bought_day_diff } = currentCourse;
 	const { finished_watching, missions, all_missions_completed } =
@@ -417,6 +416,7 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 	};
 
 	const VideoDetailUnpaid = ({ video, ix }) => {
+		console.log(video);
 		return (
 			<>
 				<div className="d-flex align-items-center">
@@ -427,7 +427,9 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 
 				<div className="d-flex align-items-center mb-2">
 					<Clock className="text-white mr-1" />
-					<TimeText className={`text-white`}>6 min</TimeText>
+					<TimeText className={`text-white`}>
+						{secsToMin(video.video.duration_seconds)}
+					</TimeText>
 				</div>
 
 				<div className="d-flex align-items-center">
@@ -478,7 +480,7 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 							bought_day_diff >= ix ? `white` : "lighterDarkGray"
 						}`}
 					>
-						6 min
+						{secsToMin(video.video.duration_seconds)}
 					</TimeText>
 				</div>
 
