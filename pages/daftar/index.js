@@ -260,7 +260,7 @@ const Index = () => {
 									type="email"
 									onBlur={() => setFocus("")}
 									onFocus={() => setFocus("focus")}
-									className={"shadow-none"}
+									className="mr-xl-2 mb-3 shadow-none"
 									name="email"
 									value={email}
 									onChange={handleChange}
@@ -268,7 +268,7 @@ const Index = () => {
 								/>
 							</FormGroup>
 
-							<FormGroup>
+							<FormGroup className="mt-2">
 								<FormLabel>Password</FormLabel>
 								<StyledFormControl
 									type="password"
