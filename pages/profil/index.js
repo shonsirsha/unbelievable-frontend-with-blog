@@ -9,7 +9,7 @@ import { Image } from "react-bootstrap";
 import { MdEdit, MdFeedback, MdSettings } from "react-icons/md";
 import styled from "styled-components";
 import { mediaBreakpoint } from "utils/breakpoints";
-import { API_URL, USE_FALLBACK_VID } from "config";
+import { API_URL, MUX_READY } from "config";
 import { profileDisplay } from "utils/secsToMin";
 
 const OptionButton = styled.div`
@@ -92,7 +92,7 @@ const Profil = ({ courseCount, courses, totalDurationWatched }) => {
 					</div>
 					<div className="d-flex flex-column align-items-center mt-md-0 mt-4">
 						<HeadingMD as="p" className="text-primary1">
-							{USE_FALLBACK_VID ? "-" : profileDisplay(totalDurationWatched)}
+							{!MUX_READY ? "-" : profileDisplay(totalDurationWatched)}
 						</HeadingMD>
 						<TextTertiary className="text-primary1 text-center">
 							total <br />
