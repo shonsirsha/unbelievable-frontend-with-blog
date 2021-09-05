@@ -9,7 +9,7 @@ import { Image } from "react-bootstrap";
 import { MdEdit, MdFeedback, MdSettings } from "react-icons/md";
 import styled from "styled-components";
 import { mediaBreakpoint } from "utils/breakpoints";
-import { API_URL } from "config";
+import { API_URL, USE_FALLBACK_VID } from "config";
 import { profileDisplay } from "utils/secsToMin";
 
 const OptionButton = styled.div`
@@ -58,6 +58,7 @@ const ButtonsContainer = styled.div`
 `;
 
 const Profil = ({ courseCount, courses, totalDurationWatched }) => {
+	console.log(courses);
 	const { user } = useContext(AuthContext);
 
 	return (
@@ -91,7 +92,7 @@ const Profil = ({ courseCount, courses, totalDurationWatched }) => {
 					</div>
 					<div className="d-flex flex-column align-items-center mt-md-0 mt-4">
 						<HeadingMD as="p" className="text-primary1">
-							{profileDisplay(totalDurationWatched)}
+							{USE_FALLBACK_VID ? "-" : profileDisplay(totalDurationWatched)}
 						</HeadingMD>
 						<TextTertiary className="text-primary1 text-center">
 							total <br />
@@ -164,17 +165,21 @@ export async function getServerSideProps(ctx) {
 
 	const courses = await res.json();
 
-	let all_videos_finished_duration_seconds = courses.reduce((a, b) => ({
-		total:
-			a.all_videos_finished_duration_seconds +
-			b.all_videos_finished_duration_seconds,
-	}));
+	let all_videos_finished_duration_seconds =
+		courses.length > 1
+			? courses.reduce((a, b) => ({
+					total: parseFloat(
+						a.all_videos_finished_duration_seconds +
+							b.all_videos_finished_duration_seconds
+					),
+			  })).total
+			: courses[0].all_videos_finished_duration_seconds;
 
 	return {
 		props: {
 			courseCount: courses.length,
 			courses,
-			totalDurationWatched: all_videos_finished_duration_seconds.total,
+			totalDurationWatched: all_videos_finished_duration_seconds,
 		},
 	};
 }
