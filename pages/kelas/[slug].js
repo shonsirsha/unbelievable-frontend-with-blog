@@ -109,6 +109,7 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 	const router = useRouter();
 
 	const { paid, title, bought_day_diff } = currentCourse;
+
 	const { finished_watching, missions, all_missions_completed } =
 		currentCourse.currentVideo;
 	const [renderedDescContext, setRenderedDescContext] = useState(
@@ -165,7 +166,6 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 			);
 
 			// const data = await res.json();
-			console.log(res);
 			if (!res.ok) {
 				console.log("failed...");
 				// console.log(data.message);
@@ -242,7 +242,6 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 			);
 
 			if (!res.ok) {
-				console.log(res);
 				console.log("failed...");
 			} else {
 				setFinishedWatching(true);
@@ -271,8 +270,7 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 		if (!res.ok) {
 			console.log("failed fetching missions...");
 		} else {
-			console.log("fetched mission: ");
-			console.log(fetchedMissions);
+			console.log("fetched missions ");
 			setMissionsCtx(fetchedMissions);
 		}
 	};
@@ -289,7 +287,6 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 	}, [currentCourse.currentVideo]);
 
 	const PengumumanBlock = () => {
-		console.log(currentCourse);
 		return (
 			<div className="d-flex flex-column w-100">
 				{currentCourse.announcement ? (
@@ -416,7 +413,6 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 	};
 
 	const VideoDetailUnpaid = ({ video, ix }) => {
-		console.log(video);
 		return (
 			<>
 				<div className="d-flex align-items-center">
@@ -428,7 +424,7 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 				<div className="d-flex align-items-center mb-2">
 					<Clock className="text-white mr-1" />
 					<TimeText className={`text-white`}>
-						{secsToMin(video.video.duration_seconds)}
+						{secsToMin(video.duration_seconds)}
 					</TimeText>
 				</div>
 
@@ -480,7 +476,7 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 							bought_day_diff >= ix ? `white` : "lighterDarkGray"
 						}`}
 					>
-						{secsToMin(video.video.duration_seconds)}
+						{secsToMin(video.duration_seconds)}
 					</TimeText>
 				</div>
 
@@ -567,7 +563,6 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 								/>
 							);
 							setCurrentlyOpened("misi");
-							console.log(missions);
 						}}
 						role="button"
 						as="p"

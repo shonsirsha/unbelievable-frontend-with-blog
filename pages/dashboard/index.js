@@ -130,7 +130,6 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 		wishlistModalOpen,
 		setWishlistModalOpen,
 	} = useContext(CourseContext);
-
 	// console.log(coursesTaken);
 	// console.log(user.wishlist);
 

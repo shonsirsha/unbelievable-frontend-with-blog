@@ -177,7 +177,7 @@ const Masukkan = ({ categories }) => {
 					<EnrollBtn
 						disabled={loading}
 						onClick={handleSubmit}
-						className="bg-primary1"
+						className="bg-primary1 mt-1"
 					>
 						<HeadingXXS>Submit</HeadingXXS>
 					</EnrollBtn>

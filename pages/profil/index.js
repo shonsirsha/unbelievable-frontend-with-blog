@@ -10,6 +10,7 @@ import { MdEdit, MdFeedback, MdSettings } from "react-icons/md";
 import styled from "styled-components";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { API_URL } from "config";
+import { profileDisplay } from "utils/secsToMin";
 
 const OptionButton = styled.div`
 	background: #f6f6f6;
@@ -56,8 +57,9 @@ const ButtonsContainer = styled.div`
 	}
 `;
 
-const Profil = ({ courseCount }) => {
+const Profil = ({ courseCount, courses, totalDurationWatched }) => {
 	const { user } = useContext(AuthContext);
+
 	return (
 		<Layout
 			title="Profil | Unbelieveable"
@@ -89,7 +91,7 @@ const Profil = ({ courseCount }) => {
 					</div>
 					<div className="d-flex flex-column align-items-center mt-md-0 mt-4">
 						<HeadingMD as="p" className="text-primary1">
-							60 j
+							{profileDisplay(totalDurationWatched)}
 						</HeadingMD>
 						<TextTertiary className="text-primary1 text-center">
 							total <br />
@@ -160,10 +162,19 @@ export async function getServerSideProps(ctx) {
 		},
 	});
 
-	const course = await res.json();
+	const courses = await res.json();
+
+	let all_videos_finished_duration_seconds = courses.reduce((a, b) => ({
+		total:
+			a.all_videos_finished_duration_seconds +
+			b.all_videos_finished_duration_seconds,
+	}));
+
 	return {
 		props: {
-			courseCount: course.length,
+			courseCount: courses.length,
+			courses,
+			totalDurationWatched: all_videos_finished_duration_seconds.total,
 		},
 	};
 }
