@@ -424,7 +424,7 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 				<div className="d-flex align-items-center mb-2">
 					<Clock className="text-white mr-1" />
 					<TimeText className={`text-white`}>
-						{secsToMin(video.duration_seconds)}
+						{USE_FALLBACK_VID ? `0:25` : secsToMin(video.duration_seconds)}
 					</TimeText>
 				</div>
 
@@ -476,7 +476,7 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 							bought_day_diff >= ix ? `white` : "lighterDarkGray"
 						}`}
 					>
-						{secsToMin(video.duration_seconds)}
+						{USE_FALLBACK_VID ? `0:25` : secsToMin(video.duration_seconds)}
 					</TimeText>
 				</div>
 
