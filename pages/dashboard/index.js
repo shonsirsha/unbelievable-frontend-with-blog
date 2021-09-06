@@ -135,6 +135,7 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 
 	const [allCourses] = useState(courses);
 	const [dob, setDob] = useState(null);
+	const [loading, setLoading] = useState(false);
 
 	const handleFinishOnboarding = async () => {
 		const res = await fetch(`${API_URL}/users/me`, {
@@ -157,34 +158,38 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 	};
 
 	const onDateSubmit = async () => {
-		if (
-			moment(`${dob}`, "YYYY-MM-DD", true).isValid() &&
-			new Date().setHours(0, 0, 0, 0) >=
-				new Date(dob).setHours(0, 0, 0, 0).valueOf() &&
-			new Date(dob).getFullYear() >= 1950
-		) {
-			const res = await fetch(`${API_URL}/users/me`, {
-				method: "PUT",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${token}`,
-				},
-				body: JSON.stringify({ dob }),
-			});
-			if (!res.ok) {
-				if (res.status === 403 || res.status === 401) {
-					toast.error("Terjadi Kesalahan Mohon Coba Lagi (403)");
-					return;
+		if (!loading) {
+			setLoading(true);
+			if (
+				moment(`${dob}`, "YYYY-MM-DD", true).isValid() &&
+				new Date().setHours(0, 0, 0, 0) >=
+					new Date(dob).setHours(0, 0, 0, 0).valueOf() &&
+				new Date(dob).getFullYear() >= 1950
+			) {
+				const res = await fetch(`${API_URL}/users/me`, {
+					method: "PUT",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+					body: JSON.stringify({ dob }),
+				});
+				if (!res.ok) {
+					if (res.status === 403 || res.status === 401) {
+						toast.error("Terjadi Kesalahan Mohon Coba Lagi (403)");
+						return;
+					}
+					toast.error("Terjadi Kesalahan Mohon Coba Lagi");
+					setLoading(false);
+				} else {
+					toast.success("Tersimpan!");
+					setTimeout(() => {
+						router.push("/dashboard");
+					}, 600);
 				}
-				toast.error("Terjadi Kesalahan Mohon Coba Lagi");
 			} else {
-				toast.success("Tersimpan!");
-				setTimeout(() => {
-					router.push("/dashboard");
-				}, 600);
+				toast.error("Mohon isi tanggal lahir dengan benar");
 			}
-		} else {
-			toast.error("Mohon isi tanggal lahir dengan benar");
 		}
 	};
 
@@ -234,7 +239,11 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 								max={today}
 								placeholder="Date"
 							/>
-							<StyledSubmitBtn type="submit" onClick={onDateSubmit}>
+							<StyledSubmitBtn
+								disabled={loading}
+								type="submit"
+								onClick={onDateSubmit}
+							>
 								Simpan
 							</StyledSubmitBtn>
 						</div>
