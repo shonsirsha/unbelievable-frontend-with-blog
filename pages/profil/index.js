@@ -58,7 +58,6 @@ const ButtonsContainer = styled.div`
 `;
 
 const Profil = ({ courseCount, courses, totalDurationWatched }) => {
-	console.log(courses);
 	const { user } = useContext(AuthContext);
 
 	return (
@@ -164,22 +163,23 @@ export async function getServerSideProps(ctx) {
 	});
 
 	const courses = await res.json();
-
-	let all_videos_finished_duration_seconds =
-		courses.length > 1
-			? courses.reduce((a, b) => ({
-					total: parseFloat(
-						a.all_videos_finished_duration_seconds +
-							b.all_videos_finished_duration_seconds
-					),
-			  })).total
-			: courses[0].all_videos_finished_duration_seconds;
+	let all_videos_finished_duration_seconds = 0;
+	if (courses.length > 0) {
+		all_videos_finished_duration_seconds =
+			courses.length > 1
+				? courses.reduce(
+						(acc, b) => acc + b.all_videos_finished_duration_seconds,
+						0
+				  )
+				: courses[0].all_videos_finished_duration_seconds;
+	}
 
 	return {
 		props: {
 			courseCount: courses.length,
 			courses,
-			totalDurationWatched: all_videos_finished_duration_seconds,
+			totalDurationWatched:
+				courses.length > 0 ? all_videos_finished_duration_seconds : 0,
 		},
 	};
 }

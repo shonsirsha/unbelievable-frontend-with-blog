@@ -158,7 +158,7 @@ const Pengaturan = () => {
 
 	return (
 		<Layout
-			title="Masukkan | Unbelieveable"
+			title="Pengaturan | Unbelieveable"
 			background="#171b2d"
 			withMargin
 			mainApp
