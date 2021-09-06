@@ -719,6 +719,29 @@ export async function getServerSideProps(ctx) {
 			};
 		}
 	}
+	if (!course[0].enrolled) {
+		const enrolling = await fetch(
+			`${API_URL}/courses/enroll/${course[0].uuid}`,
+			{
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+			}
+		);
+
+		if (!enrolling.ok) {
+			return {
+				redirect: {
+					permanent: false,
+					destination: `/masuk`,
+				},
+				props: {},
+			};
+			console.log("failed enrolling");
+		}
+	}
 	let currentVideo = course[0].videos.find((crs, ix) => {
 		return crs.video.upload_id === c;
 	});
