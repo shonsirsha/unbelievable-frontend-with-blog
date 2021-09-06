@@ -87,7 +87,9 @@ const Masukkan = ({ categories }) => {
 					},
 					body: JSON.stringify({
 						feedback_text: textAreaRef.current.value,
-						category: { id: categoriesId ? categoriesId : -1 },
+						category: {
+							id: parseInt(categoriesId) ? parseInt(categoriesId) : -1,
+						},
 					}),
 				});
 
