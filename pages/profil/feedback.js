@@ -179,7 +179,7 @@ const Masukkan = ({ categories }) => {
 					<EnrollBtn
 						disabled={loading}
 						onClick={handleSubmit}
-						className="bg-primary1 mt-1"
+						className="bg-primary1 mt-2"
 					>
 						<HeadingXXS>Submit</HeadingXXS>
 					</EnrollBtn>
