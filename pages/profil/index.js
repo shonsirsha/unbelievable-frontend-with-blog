@@ -92,7 +92,7 @@ const Profil = ({ courseCount, courses, totalDurationWatched }) => {
 					</div>
 					<div className="d-flex flex-column align-items-center mt-md-0 mt-4">
 						<HeadingMD as="p" className="text-primary1">
-							{!MUX_READY ? "-" : profileDisplay(totalDurationWatched)}
+							{MUX_READY ? profileDisplay(totalDurationWatched) : "-"}
 						</HeadingMD>
 						<TextTertiary className="text-primary1 text-center">
 							total <br />
