@@ -4,7 +4,6 @@ import { API_URL } from "config/index";
 export default async function register(req, res) {
 	if (req.method === "POST") {
 		const { email, password, first_name, last_name, dob } = req.body;
-		const datex = Date.now();
 
 		const strapiRes = await fetch(`${API_URL}/auth/local/register`, {
 			method: "POST",
@@ -12,7 +11,6 @@ export default async function register(req, res) {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-				username: String(datex),
 				email,
 				password,
 				first_name,

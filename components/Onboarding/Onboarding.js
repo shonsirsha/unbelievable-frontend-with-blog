@@ -254,7 +254,7 @@ export default function Onboarding({
 
 	return (
 		<Layout
-			title="Selamat Datang! | Unbelieveable"
+			title="Selamat Datang! | Unbelievable"
 			scrollToSolid
 			showBurger={false}
 			background="rgba(0,0,0,0.27)"
