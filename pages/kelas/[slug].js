@@ -579,7 +579,7 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 	return (
 		<Layout
 			showBurger={false}
-			title={`${title} | Unbelieveable`}
+			title={`${title} | Unbelievable`}
 			background="#171b2d"
 			withMargin
 		>

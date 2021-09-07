@@ -58,7 +58,7 @@ export default function Hero() {
 				<StyledRow>
 					<Col className="align-items-center d-flex justify-content-center">
 						<StyledHeading className="text-white text-center">
-							Belajarlah Setiap Hari Jadilah <span>UNBELIEVEABLE!</span>
+							Belajarlah Setiap Hari Jadilah <span>UNBELIEVABLE!</span>
 						</StyledHeading>
 					</Col>
 				</StyledRow>

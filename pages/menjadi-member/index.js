@@ -83,7 +83,7 @@ export default function index() {
 	return (
 		<Layout
 			showBurger={false}
-			title="Menjadi Member | Unbelieveable"
+			title="Menjadi Member | Unbelievable"
 			scrollToSolid
 		>
 			<Showcase title="Menjadi Member" />

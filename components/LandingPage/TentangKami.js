@@ -40,7 +40,7 @@ export default function TentangKami() {
 				bersama komunitas
 			</StyledTextPrimary>
 			<StyledHeadingMD as="h2" className="mt-1 text-blue">
-				Unbelieveable
+				Unbelievable
 			</StyledHeadingMD>
 			<StyledImg src="/images/cat.jpeg" alt="image" />
 		</>

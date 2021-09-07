@@ -215,7 +215,7 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 		}-${datex.getDate() < 10 ? `0${datex.getDate()}` : datex.getDate()}`;
 
 		return (
-			<Layout title="Dashboard | Unbelieveable" background="#171b2d" withMargin>
+			<Layout title="Dashboard | Unbelievable" background="#171b2d" withMargin>
 				<ToastContainer />
 
 				<StyledFormGroup>
@@ -268,7 +268,7 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 
 	return (
 		<Layout
-			title="Dashboard | Unbelieveable"
+			title="Dashboard | Unbelievable"
 			background="#171b2d"
 			withMargin
 			mainApp

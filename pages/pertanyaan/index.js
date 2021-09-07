@@ -85,7 +85,7 @@ export default function Index({ questions }) {
 	}, [keyword]);
 
 	return (
-		<Layout showBurger={false} title="Pertanyaan | Unbelieveable" scrollToSolid>
+		<Layout showBurger={false} title="Pertanyaan | Unbelievable" scrollToSolid>
 			<Showcase title="Pertanyaan" />
 
 			<StyledContainer>

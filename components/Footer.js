@@ -11,7 +11,7 @@ export default function Footer() {
 					alt="Netlify Logo"
 					className={styles.logo}
 				/>
-				Three-Sigma Technologies | Unbelieveable.id Developer Preview
+				Three-Sigma Technologies | Unbelievable.id Developer Preview
 			</footer>
 		</>
 	);

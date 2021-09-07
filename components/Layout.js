@@ -91,9 +91,9 @@ const LayoutWrapper = styled.div`
 `;
 
 export default function Layout({
-	title = "Unbelieveable",
+	title = "Unbelievable",
 	keywords = "self development, lms",
-	description = "Belajarlah setiap hari, jadilah unbelieveable!",
+	description = "Belajarlah setiap hari, jadilah unbelievable!",
 	children,
 	landingPage = false,
 	withFB = false, // FB = FlyingButtons

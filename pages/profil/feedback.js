@@ -128,7 +128,7 @@ const Masukkan = ({ categories }) => {
 
 	return (
 		<Layout
-			title="Masukkan | Unbelieveable"
+			title="Masukkan | Unbelievable"
 			background="#171b2d"
 			withMargin
 			mainApp

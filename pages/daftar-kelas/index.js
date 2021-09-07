@@ -47,7 +47,7 @@ export default function Index({ courses }) {
 	return (
 		<Layout
 			showBurger={false}
-			title="Daftar Kelas | Unbelieveable"
+			title="Daftar Kelas | Unbelievable"
 			scrollToSolid
 		>
 			<ToastContainer />

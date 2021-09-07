@@ -62,7 +62,7 @@ const Profil = ({ courseCount, courses, totalDurationWatched }) => {
 
 	return (
 		<Layout
-			title="Profil | Unbelieveable"
+			title="Profil | Unbelievable"
 			background="#171b2d"
 			withMargin
 			mainApp
