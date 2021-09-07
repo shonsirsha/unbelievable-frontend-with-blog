@@ -77,7 +77,7 @@ const Wishlist = () => {
 					{wishlistCourses.map((c) => (
 						<MyCard
 							key={c.course.id}
-							className="shadow d-flex align-items-center justify-content-between mb-3"
+							className="shadow d-flex align-items-center justify-content-between"
 						>
 							<CourseImage
 								img={c.course.poster ? c.course.poster.url : c.course.image}
@@ -90,13 +90,17 @@ const Wishlist = () => {
 								</a>
 							</Link>
 							<MdRemoveCircle
-								onClick={async () => await removeWishlistClicked(c)}
+								onClick={async () => {
+									setLoading(true);
+									await removeWishlistClicked(c);
+									setLoading(false);
+								}}
 							/>
 						</MyCard>
 					))}
 				</>
 			) : (
-				<>Tidak ada wishlist</>
+				<TextSecondary>Tidak ada wishlist</TextSecondary>
 			)}
 		</div>
 	);
