@@ -24,7 +24,6 @@ import { mediaBreakpoint } from "utils/breakpoints";
 import { checkPassword } from "utils/checkPassword";
 import { API_URL } from "config";
 import { whitespace } from "utils/whitespace";
-
 const OuterContainer = styled.div`
 	background: #fff;
 	height: 100vh;
@@ -130,6 +129,21 @@ const GreenCharacter = styled(Image)`
 	}
 `;
 const Index = () => {
+	const router = useRouter();
+	const r_c_to_be_checked = router.query.register_code
+		? router.query.register_code
+		: "";
+	const r_code_to_be_checked_g_provider =
+		sessionStorage.getItem("unb_reg_code") || r_c_to_be_checked;
+	useEffect(() => {
+		if (window && r_c_to_be_checked !== "") {
+			sessionStorage.setItem("unb_reg_code", r_c_to_be_checked);
+		}
+
+		// if (window && r_c_to_be_checked === "") {
+		// 	localStorage.removeItem("unb_reg_code");
+		// }
+	}, []);
 	const [signUpDetails, setSignUpDetails] = useState({
 		email: "",
 		first_name: "",
@@ -138,7 +152,6 @@ const Index = () => {
 		dob: "",
 	});
 	const [focus, setFocus] = useState("");
-	const router = useRouter();
 
 	const { register, err, authLoading } = useContext(AuthContext);
 
@@ -186,13 +199,11 @@ const Index = () => {
 				last_name,
 				dob,
 			};
-			const r_c_to_be_checked = router.query.register_code
-				? router.query.register_code
-				: "";
+
 			// reg code to be checked on backend if exists
 			registerData = {
 				...registerData,
-				r_c_to_be_checked: router.query.register_code,
+				r_c_to_be_checked,
 			};
 
 			setFocus("");
@@ -320,7 +331,12 @@ const Index = () => {
 							<hr width="100%" />
 						</div>
 
-						<Link href={`${API_URL}/connect/google`}>
+						<Link
+							href={`${API_URL}/connect/google${
+								r_code_to_be_checked_g_provider &&
+								`?register_code=${r_code_to_be_checked_g_provider}`
+							}`}
+						>
 							<a
 								className="shadow mt-3 d-flex w-100 justify-content-center nostyle"
 								style={{ borderRadius: "16px", padding: "14px" }}

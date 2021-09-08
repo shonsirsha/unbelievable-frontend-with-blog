@@ -185,6 +185,7 @@ export const AuthProvider = ({ children }) => {
 
 		if (res.ok) {
 			setUser(data.user);
+			setToken(data.user.token);
 		} else {
 			setUser(null);
 		}

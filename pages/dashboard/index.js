@@ -130,8 +130,6 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 		wishlistModalOpen,
 		setWishlistModalOpen,
 	} = useContext(CourseContext);
-	// console.log(coursesTaken);
-	// console.log(user.wishlist);
 
 	const [allCourses] = useState(courses);
 	const [dob, setDob] = useState(null);
@@ -387,7 +385,7 @@ export async function getServerSideProps({ req, _ }) {
 		user.token = token;
 		const courses = await res3.json();
 		const coursesTaken = await res4.json();
-		console.log(user);
+
 		return {
 			props: {
 				onboardings,

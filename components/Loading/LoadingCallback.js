@@ -21,7 +21,9 @@ export default function LoadingCallback() {
 	return (
 		<StyledDiv>
 			<StyledImage src="/images/loading.gif" alt="Loading..." />
-			<p className="mt-3">Masuk dengan Google...</p>
+			<p className="mt-3 text-center">
+				Masuk dengan Google... <br /> Mohon Jangan Tutup Jendela Ini
+			</p>
 		</StyledDiv>
 	);
 }
