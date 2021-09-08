@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthContext from "context/AuthContext";
@@ -137,6 +138,7 @@ const Index = () => {
 		dob: "",
 	});
 	const [focus, setFocus] = useState("");
+	const router = useRouter();
 
 	const { register, err, authLoading } = useContext(AuthContext);
 
@@ -177,19 +179,29 @@ const Index = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (!authLoading) {
+			let registerData = {
+				email,
+				password,
+				first_name,
+				last_name,
+				dob,
+			};
+			const r_c_to_be_checked = router.query.register_code
+				? router.query.register_code
+				: "";
+			// reg code to be checked on backend if exists
+			registerData = {
+				...registerData,
+				r_c_to_be_checked: router.query.register_code,
+			};
+
 			setFocus("");
 			if (!checkPassword(password)) {
 				toast.error("Password tidak memenuhi kriteria");
 			} else {
 				const validData = validateRegisterData();
 				if (validData) {
-					register({
-						email,
-						password,
-						first_name,
-						last_name,
-						dob,
-					});
+					register(registerData);
 				} else {
 					toast.error("Mohon isi semua kolom dengan benar");
 				}
