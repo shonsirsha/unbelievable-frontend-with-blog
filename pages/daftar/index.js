@@ -130,19 +130,12 @@ const GreenCharacter = styled(Image)`
 `;
 const Index = () => {
 	const router = useRouter();
-	const r_c_to_be_checked = router.query.register_code
-		? router.query.register_code
-		: "";
-	const r_code_to_be_checked_g_provider =
-		sessionStorage.getItem("unb_reg_code") || r_c_to_be_checked;
+	const r_code = router.query.register_code ? router.query.register_code : "";
+	const r_c_to_be_checked = sessionStorage.getItem("unb_reg_code") || r_code;
 	useEffect(() => {
-		if (window && r_c_to_be_checked !== "") {
-			sessionStorage.setItem("unb_reg_code", r_c_to_be_checked);
+		if (window && r_code !== "") {
+			sessionStorage.setItem("unb_reg_code", r_code);
 		}
-
-		// if (window && r_c_to_be_checked === "") {
-		// 	localStorage.removeItem("unb_reg_code");
-		// }
 	}, []);
 	const [signUpDetails, setSignUpDetails] = useState({
 		email: "",
@@ -198,13 +191,10 @@ const Index = () => {
 				first_name,
 				last_name,
 				dob,
+				r_c_to_be_checked,
 			};
 
 			// reg code to be checked on backend if exists
-			registerData = {
-				...registerData,
-				r_c_to_be_checked,
-			};
 
 			setFocus("");
 			if (!checkPassword(password)) {
@@ -213,6 +203,7 @@ const Index = () => {
 				const validData = validateRegisterData();
 				if (validData) {
 					register(registerData);
+					sessionStorage.removeItem("unb_reg_code");
 				} else {
 					toast.error("Mohon isi semua kolom dengan benar");
 				}
@@ -333,8 +324,7 @@ const Index = () => {
 
 						<Link
 							href={`${API_URL}/connect/google${
-								r_code_to_be_checked_g_provider &&
-								`?register_code=${r_code_to_be_checked_g_provider}`
+								r_c_to_be_checked && `?register_code=${r_c_to_be_checked}`
 							}`}
 						>
 							<a
