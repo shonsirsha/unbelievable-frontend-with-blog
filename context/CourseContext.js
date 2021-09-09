@@ -66,7 +66,7 @@ export const CourseProvider = ({ children }) => {
 			const { slug, course_price, title } = course;
 			const { email } = user;
 			const price = course_price
-				? parseFloat(parseFloat(course_price.price) - 3000)
+				? parseFloat(parseFloat(course_price.price))
 				: 5000 - 3000;
 			const external_id = `${slug}-${Date.now() * 2}-${price}`;
 			// `/xendit` endpoint does:
