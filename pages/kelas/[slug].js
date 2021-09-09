@@ -20,7 +20,7 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { dateDiffInDays } from "utils/dateDiffInDays";
 import { secsToMin } from "utils/secsToMin";
-
+import Markdown from "Markdown-to-jsx";
 const StyledContainer = styled.div`
 	display: flex;
 	padding: 32px 0;
@@ -104,6 +104,12 @@ const MiscBodyContainer = styled.div`
 const StyledHeadingXXS = styled(HeadingXXS)`
 	${(props) => props.opened && `text-decoration: underline;`}
 `;
+
+const StyledMarkDown = styled(Markdown)`
+	& p {
+		font-size: 14px;
+	}
+`;
 const StyledTextSecondary = styled(TextSecondary)``;
 export default function Kelas({ slug, currentCourse, token, user }) {
 	const router = useRouter();
@@ -113,9 +119,13 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 	const { finished_watching, missions, all_missions_completed } =
 		currentCourse.currentVideo;
 	const [renderedDescContext, setRenderedDescContext] = useState(
-		<StyledTextTertiary className="text-primary1 mb">
-			{currentCourse.short_desc}
-		</StyledTextTertiary>
+		<>
+			{currentCourse.long_descx ? (
+				<StyledMarkDown>{currentCourse.long_descx}</StyledMarkDown>
+			) : (
+				"-"
+			)}
+		</>
 	);
 	const {
 		setMissionsCtx,
@@ -280,7 +290,11 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 		setFinishedWatching(finished_watching);
 		setRenderedDescContext(
 			<StyledTextTertiary className="text-primary1 mb">
-				{currentCourse.short_desc}
+				{currentCourse.long_descx ? (
+					<StyledMarkDown>{currentCourse.long_descx}</StyledMarkDown>
+				) : (
+					"-"
+				)}
 			</StyledTextTertiary>
 		);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -300,7 +314,10 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 									Memposting pengumuman {"-"}{" "}
 									{dateDiffInDays(new Date(p.date), new Date())}
 								</StyledTextTertiary>
-								<StyledTextTertiary className="text-primary1 ">
+								<StyledTextTertiary
+									className="text-primary1 mt-1"
+									style={{ whiteSpace: "pre-line" }}
+								>
 									{p.text}
 								</StyledTextTertiary>
 							</div>
@@ -346,7 +363,11 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 				goToVideo(video);
 				setRenderedDescContext(
 					<StyledTextTertiary className="text-primary1">
-						{currentCourse.short_desc}
+						{currentCourse.long_descx ? (
+							<StyledMarkDown>{currentCourse.long_descx}</StyledMarkDown>
+						) : (
+							"-"
+						)}
 					</StyledTextTertiary>
 				);
 			} else {
@@ -528,9 +549,13 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 						opened={currentlyOpened === "desc"}
 						onClick={() => {
 							setRenderedDescContext(
-								<StyledTextTertiary className="text-primary1">
-									{currentCourse.short_desc}
-								</StyledTextTertiary>
+								<>
+									{currentCourse.long_descx ? (
+										<StyledMarkDown>{currentCourse.long_descx}</StyledMarkDown>
+									) : (
+										"-"
+									)}
+								</>
 							);
 							setCurrentlyOpened("desc");
 						}}

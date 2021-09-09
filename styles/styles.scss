@@ -5,11 +5,13 @@ html {
 @font-face {
 	font-family: OpenSansRegular;
 	src: url("./fonts/OpenSans-Regular.ttf");
+	font-weight: 400;
 }
 
 @font-face {
 	font-family: OpenSansBold;
 	src: url("./fonts/OpenSans-Bold.ttf");
+	font-weight: 800;
 }
 
 @font-face {
@@ -25,7 +27,7 @@ p {
 	margin: 0;
 }
 
-$font-family-sans-serif: OpenSansRegular !important;
+$font-family-sans-serif: OpenSansRegular;
 
 // Base Colours
 $white: #ffffff;

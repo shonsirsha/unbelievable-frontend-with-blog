@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import HalfHalf from "components/HalfHalf/HalfHalf";
-import { TextPrimary, TextSecondary } from "components/Typography/Text";
+import { TextSecondary } from "components/Typography/Text";
 
 import {
 	HeadingLG,
@@ -82,7 +82,7 @@ export default function CaraKerja() {
 							<StyledHeadingXS as="h3" className="mb-1">
 								{item.title}
 							</StyledHeadingXS>
-							<StyledTextSecondary>{item.body}</StyledTextSecondary>
+							<StyledTextSecondary>{item.body} dada</StyledTextSecondary>
 						</div>
 					</div>
 				))}
