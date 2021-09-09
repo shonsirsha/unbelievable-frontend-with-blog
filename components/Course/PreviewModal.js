@@ -146,6 +146,9 @@ const PreviewModal = (props) => {
 			setBuyModalOpen(true);
 		}
 	};
+	const price = selectedPreviewCourse.course_price
+		? parseInt(selectedPreviewCourse.course_price.price)
+		: 5000;
 	return (
 		<StyledModal
 			{...props}
@@ -246,11 +249,7 @@ const PreviewModal = (props) => {
 							{new Intl.NumberFormat("id-ID", {
 								style: "currency",
 								currency: "IDR",
-							}).format(
-								selectedPreviewCourse.course_price
-									? selectedPreviewCourse.course_price.price
-									: 0
-							)}
+							}).format(price + 3000)}
 						</StyledTextTertiary>
 					</div>
 					<div className="mt-2">

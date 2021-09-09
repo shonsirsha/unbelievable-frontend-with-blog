@@ -77,7 +77,7 @@ const Wishlist = () => {
 					{wishlistCourses.map((c) => (
 						<MyCard
 							key={c.course.id}
-							className="shadow d-flex align-items-center justify-content-between"
+							className="shadow d-flex align-items-center justify-content-between mb-3"
 						>
 							<CourseImage
 								img={c.course.poster ? c.course.poster.url : c.course.image}

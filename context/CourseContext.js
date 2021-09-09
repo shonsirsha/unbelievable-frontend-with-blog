@@ -65,9 +65,10 @@ export const CourseProvider = ({ children }) => {
 
 			const { slug, course_price, title } = course;
 			const { email } = user;
-			const external_id = `${slug}-${Date.now() * 2}-${
-				course_price ? course_price.price : 5000
-			}`;
+			const price = course_price
+				? parseFloat(parseFloat(course_price.price) - 3000)
+				: 5000 - 3000;
+			const external_id = `${slug}-${Date.now() * 2}-${price}`;
 			// `/xendit` endpoint does:
 			//1 . Call xendit API to create a new invoice_url
 			//2. Create a new entry of waiting_payment with the corresponding: user, course, external_id, and invoice_url
@@ -80,7 +81,7 @@ export const CourseProvider = ({ children }) => {
 				body: JSON.stringify({
 					external_id,
 					courseId: course.id,
-					amount: course_price ? course_price.price : 5000,
+					amount: parseFloat(parseFloat(course_price.price) + 3000),
 					payer_email: email,
 					description: `Beli Kelas: ${title}`,
 					redirect_url: `${window.location.origin}/redir/${slug}`,
