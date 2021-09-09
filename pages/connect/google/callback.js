@@ -6,12 +6,11 @@ import Swal from "sweetalert2";
 import AuthContext from "context/AuthContext";
 const Callback = () => {
 	const router = useRouter();
-	const { user, token, getToken, checkUserLoggedIn } = useContext(AuthContext);
+	const { user, token, checkUserLoggedIn } = useContext(AuthContext);
 	const [loading, setLoading] = useState(true);
 	const [redir, setRedir] = useState(false);
 	useEffect(() => {
 		if (token && user && !user.code_verified) {
-			console.log(token);
 			async function saveRegisterCodeToDB(code) {
 				const res = await fetch(`${API_URL}/users/me`, {
 					method: "PUT",
