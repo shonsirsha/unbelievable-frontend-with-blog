@@ -258,48 +258,23 @@ const PreviewModal = (props) => {
 						</TextSecondary>
 					</div>
 					<div className="mt-3 d-flex flex-column">
-						<div className="d-flex align-items-center mb-3">
-							<Image
-								width={19.58}
-								height={19.58}
-								src="images/yellowcheck.png"
-								alt="Checkmark"
-								className="mr-2"
-							/>
-							<HeadingXXS className="text-white">30+ Video Course</HeadingXXS>
-						</div>
-						<div className="d-flex align-items-center mb-3">
-							<Image
-								width={19.58}
-								height={19.58}
-								src="images/yellowcheck.png"
-								alt="Checkmark"
-								className="mr-2"
-							/>
-							<HeadingXXS className="text-white">Daily Challenge</HeadingXXS>
-						</div>
-						<div className="d-flex align-items-center mb-3">
-							<Image
-								width={19.58}
-								height={19.58}
-								src="images/yellowcheck.png"
-								alt="Checkmark"
-								className="mr-2"
-							/>
-							<HeadingXXS className="text-white">
-								Akses ke Exclusive Community (Tanya seputar materi & LIVE)
-							</HeadingXXS>
-						</div>
-						<div className="d-flex align-items-center mb-3">
-							<Image
-								width={19.58}
-								height={19.58}
-								src="images/yellowcheck.png"
-								alt="Checkmark"
-								className="mr-2"
-							/>
-							<HeadingXXS className="text-white">Bonus Consultation</HeadingXXS>
-						</div>
+						{selectedPreviewCourse.features && (
+							<>
+								{selectedPreviewCourse.features.map((f) => (
+									<div key={f.id} className="d-flex align-items-center mb-3">
+										<Image
+											width={19.58}
+											height={19.58}
+											src="images/yellowcheck.png"
+											alt="Checkmark"
+											className="mr-2"
+										/>
+										<HeadingXXS className="text-white">{f.feature}</HeadingXXS>
+									</div>
+								))}
+							</>
+						)}
+
 						<EnrollBtn
 							disabled={enrollClassLoading}
 							onClick={onClickEnrollBtn}

@@ -89,6 +89,8 @@ const Callback = () => {
 	}, [loading, redir]);
 	useEffect(() => {
 		async function googleAuth() {
+			console.log("ASDSA");
+
 			const res = await fetch(`${NEXT_URL}/api/google-auth`, {
 				method: "POST",
 				headers: {
@@ -98,7 +100,6 @@ const Callback = () => {
 					token_details: router.asPath.replace("/connect/google/callback?", ""),
 				}),
 			});
-
 			const data = await res.json();
 
 			if (res.ok) {
@@ -107,8 +108,10 @@ const Callback = () => {
 
 				// console.log(userState);
 			} else {
-				console.log(res);
-				console.log(data);
+				if (data.message === "No access_token.") {
+					router.push("/masuk");
+					return;
+				}
 				if (data.message.id === "Auth.form.error.email.taken") {
 					Swal.fire({
 						title: "Pemberitahuan",
