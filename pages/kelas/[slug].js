@@ -53,6 +53,8 @@ const VideosListContainer = styled.div`
 	@media ${mediaBreakpoint.down.lg} {
 		min-height: 0;
 		width: 100%;
+		max-height: 480px;
+		overflow-y: auto;
 	}
 `;
 
