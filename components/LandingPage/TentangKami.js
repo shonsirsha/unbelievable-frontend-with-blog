@@ -32,7 +32,7 @@ const StyledImg = styled(Image)`
 	}
 `;
 
-export default function TentangKami() {
+export default function TentangKami({ about }) {
 	const left = (
 		<>
 			<StyledHeadingXXL as="h2">tumbuh</StyledHeadingXXL>
@@ -48,18 +48,11 @@ export default function TentangKami() {
 
 	const right = (
 		<>
-			<TextPrimary className="text-white">
-				UNBELIEVABLE merupakan sebuah komunitas yang ingin bersama meningkatkan
-				kualitas hidup setiap individu di dunia dengan cara yang paling efektif
-			</TextPrimary>
-			<TextPrimary className="mt-4 text-white">
-				Belajarlah bersama karakter spesial Unbelievable agar belajar lebih
-				menyenangkan dan efektif!
-			</TextPrimary>
-			<TextPrimary className="mt-4 text-white">
-				Setiap hari kamu akan merasakan perubahannya, bayangkan perubahan yang
-				terjadi dalam waktu 1 tahun!
-			</TextPrimary>
+			{about && (
+				<TextPrimary className="text-white" style={{ whiteSpace: "pre-line" }}>
+					{about}
+				</TextPrimary>
+			)}
 		</>
 	);
 	return (

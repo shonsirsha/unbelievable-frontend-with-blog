@@ -96,7 +96,11 @@ const StyledSlider = styled(Slider)`
 		}
 	}
 `;
+const StyledImage = styled(Image)`
+	object-fit: cover;
+`;
 export default function Testimonial({ testimonials }) {
+	console.log(testimonials);
 	const settings = {
 		dots: true,
 		infinite: true,
@@ -119,10 +123,10 @@ export default function Testimonial({ testimonials }) {
 							{testimonials &&
 								testimonials.map((t, ix) => (
 									<TestimonialCard
+										photo={t.photo}
 										key={ix}
-										nama={t.nama}
-										status={t.status}
-										testimonial={t.testimonial}
+										name={t.name}
+										content={t.content}
 									/>
 								))}
 						</StyledSlider>
@@ -132,21 +136,19 @@ export default function Testimonial({ testimonials }) {
 		</OuterContainer>
 	);
 }
-const TestimonialCard = ({ nama, status, testimonial }) => {
+const TestimonialCard = ({ name, content, photo }) => {
 	return (
 		<CardBody className="shadow bg-tan">
-			<Image
+			<StyledImage
 				alt="placeholder"
-				src="/images/plcholder.png"
+				src={photo ? photo.url : `/images/plcholder.png`}
 				width={160}
+				height={160}
 				roundedCircle
 			/>
 
-			<StyledHeadingXS>
-				{nama}
-				{status && `, ${status}`}
-			</StyledHeadingXS>
-			<TextTertiary className="mt-3 text-center">{testimonial}</TextTertiary>
+			<StyledHeadingXS>{name}</StyledHeadingXS>
+			<TextTertiary className="mt-3 text-center">{content}</TextTertiary>
 		</CardBody>
 	);
 };
