@@ -24,15 +24,16 @@ const StyledHeadingMD = styled(HeadingMD)`
 `;
 const StyledImg = styled(Image)`
 	width: 80%;
-	margin-top: 48px;
+	margin-top: 32px;
 	border-radius: 8px;
+	object-fit: cover;
 
 	@media ${mediaBreakpoint.down.md} {
 		margin-top: 16px;
 	}
 `;
 
-export default function TentangKami({ about }) {
+export default function TentangKami({ about, about_image }) {
 	const left = (
 		<>
 			<StyledHeadingXXL as="h2">tumbuh</StyledHeadingXXL>
@@ -42,7 +43,10 @@ export default function TentangKami({ about }) {
 			<StyledHeadingMD as="h2" className="mt-1 text-blue">
 				Unbelievable
 			</StyledHeadingMD>
-			<StyledImg src="/images/cat.jpeg" alt="image" />
+			<StyledImg
+				src={about_image ? about_image[0].url : `/images/cat.png`}
+				alt="image"
+			/>
 		</>
 	);
 

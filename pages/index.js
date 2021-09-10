@@ -8,11 +8,12 @@ import Testimonial from "components/LandingPage/Testimonial";
 import { API_URL } from "config";
 
 export default function Home({ homePageContent }) {
-	const { about, carakerja, professionals, testimonials } = homePageContent;
+	const { about, carakerja, professionals, testimonials, about_image } =
+		homePageContent;
 	return (
 		<Layout id="asd" landingPage withFB>
 			<Hero />
-			<TentangKami about={about} />
+			<TentangKami about={about} about_image={about_image} />
 			<CaraKerja carakerja={carakerja} />
 			<TentangKami2 professionals={professionals} />
 			{testimonials && <Testimonial testimonials={testimonials} />}
