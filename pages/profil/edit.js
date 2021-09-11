@@ -1,9 +1,5 @@
-import { useContext, useRef, useState } from "react";
-import {
-	HeadingSM,
-	HeadingXS,
-	HeadingXXS,
-} from "components/Typography/Headings";
+import { useContext, useState, useEffect } from "react";
+import { HeadingSM, HeadingXXS } from "components/Typography/Headings";
 import {
 	FormLabel,
 	FormGroup,
@@ -17,9 +13,12 @@ import { API_URL } from "config";
 import AuthContext from "context/AuthContext";
 import Layout from "components/Layout";
 import styled from "styled-components";
-import Swal from "sweetalert2";
 import { whitespace } from "utils/whitespace";
 import withAuth from "utils/withAuth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { TextSecondary } from "components/Typography/Text";
+import moment from "moment";
 
 const OuterContainer = styled.div`
 	width: 100%;
@@ -91,7 +90,7 @@ const EnrollBtn = styled(Button)`
 const StyledFormControl = styled(FormControl)`
 	border: none;
 	border-radius: 6px;
-	padding: 24px;
+	padding: 24px 16px;
 	background: #f4f4f7;
 	transition: 0.5s;
 	&:-webkit-autofill,
@@ -129,13 +128,191 @@ const Radio = styled(FormCheck)`
 		margin-left: 4px;
 	}
 `;
-const Masukkan = ({ categories }) => {
-	const { token } = useContext(AuthContext);
-	const [categoriesId, setCategoriesId] = useState([
-		categories ? categories[0].id : null,
-	]);
+
+const FormLabelContainer = styled.div`
+	width: 960px;
+	max-width: 100%;
+
+	@media ${mediaBreakpoint.down.xl} {
+		width: 100%;
+	}
+`;
+
+const Edit = () => {
+	const { token, user } = useContext(AuthContext);
+
+	const [userState, setUserState] = useState(user ? user : null);
 	const [loading, setLoading] = useState(false);
-	const textAreaRef = useRef();
+	const [citiesLoading, setCitiesLoading] = useState(false);
+	const [cities, setCities] = useState([]);
+	const [indoProvinces] = useState([
+		{
+			id: 11,
+			nama: "Aceh",
+		},
+		{
+			id: 12,
+			nama: "Sumatera Utara",
+		},
+		{
+			id: 13,
+			nama: "Sumatera Barat",
+		},
+		{
+			id: 14,
+			nama: "Riau",
+		},
+		{
+			id: 15,
+			nama: "Jambi",
+		},
+		{
+			id: 16,
+			nama: "Sumatera Selatan",
+		},
+		{
+			id: 17,
+			nama: "Bengkulu",
+		},
+		{
+			id: 18,
+			nama: "Lampung",
+		},
+		{
+			id: 19,
+			nama: "Kepulauan Bangka Belitung",
+		},
+		{
+			id: 21,
+			nama: "Kepulauan Riau",
+		},
+		{
+			id: 31,
+			nama: "DKI Jakarta",
+		},
+		{
+			id: 32,
+			nama: "Jawa Barat",
+		},
+		{
+			id: 33,
+			nama: "Jawa Tengah",
+		},
+		{
+			id: 34,
+			nama: "Di Yogyakarta",
+		},
+		{
+			id: 35,
+			nama: "Jawa Timur",
+		},
+		{
+			id: 36,
+			nama: "Banten",
+		},
+		{
+			id: 51,
+			nama: "Bali",
+		},
+		{
+			id: 52,
+			nama: "Nusa Tenggara Barat",
+		},
+		{
+			id: 53,
+			nama: "Nusa Tenggara Timur",
+		},
+		{
+			id: 61,
+			nama: "Kalimantan Barat",
+		},
+		{
+			id: 62,
+			nama: "Kalimantan Tengah",
+		},
+		{
+			id: 63,
+			nama: "Kalimantan Selatan",
+		},
+		{
+			id: 64,
+			nama: "Kalimantan Timur",
+		},
+		{
+			id: 65,
+			nama: "Kalimantan Utara",
+		},
+		{
+			id: 71,
+			nama: "Sulawesi Utara",
+		},
+		{
+			id: 72,
+			nama: "Sulawesi Tengah",
+		},
+		{
+			id: 73,
+			nama: "Sulawesi Selatan",
+		},
+		{
+			id: 74,
+			nama: "Sulawesi Tenggara",
+		},
+		{
+			id: 75,
+			nama: "Gorontalo",
+		},
+		{
+			id: 76,
+			nama: "Sulawesi Barat",
+		},
+		{
+			id: 81,
+			nama: "Maluku",
+		},
+		{
+			id: 82,
+			nama: "Maluku Utara",
+		},
+		{
+			id: 91,
+			nama: "Papua Barat",
+		},
+		{
+			id: 94,
+			nama: "Papua",
+		},
+	]);
+
+	const {
+		first_name,
+		last_name,
+		dob,
+		gender,
+		biodata,
+		phone_number,
+		country,
+		province,
+		city,
+		education_status,
+		instagram,
+		twitter,
+		facebook,
+		youtube,
+		blog,
+	} = userState;
+
+	const [currentProvince, setCurrentProvince] = useState(
+		province
+			? indoProvinces[indoProvinces.findIndex((p) => p.nama === province)]
+			: indoProvinces[0]
+	);
+
+	const status = ["Profesional", "Pelajar / Mahasiswa"];
+
+	if (!education_status) {
+		setUserState({ ...userState, ["education_status"]: status[0] });
+	}
 
 	const datex = new Date();
 	const today = `${datex.getFullYear()}-${
@@ -352,56 +529,69 @@ const Masukkan = ({ categories }) => {
 		"Zimbabwe",
 	];
 
-	const handleSubmit = async () => {
+	const handleChange = (e) => {
+		setUserState({ ...userState, [e.target.name]: e.target.value });
+	};
+	const validDate = (dob) => {
+		return (
+			moment(`${dob}`, "YYYY-MM-DD", true).isValid() &&
+			new Date().setHours(0, 0, 0, 0) >=
+				new Date(dob).setHours(0, 0, 0, 0).valueOf() &&
+			new Date(dob).getFullYear() >= 1950
+		);
+	};
+	const handleSave = async () => {
+		setLoading(true);
 		if (!loading) {
-			setLoading(true);
-			if (!whitespace(textAreaRef.current.value)) {
-				const res = await fetch(`${API_URL}/feedbacks`, {
-					method: "POST",
+			if (!whitespace(first_name) && !whitespace(last_name) && validDate(dob)) {
+				const res = await fetch(`${API_URL}/users/me`, {
+					method: "PUT",
 					headers: {
 						"Content-Type": "application/json",
 						Authorization: `Bearer ${token}`,
 					},
-					body: JSON.stringify({
-						feedback_text: textAreaRef.current.value,
-						category: {
-							id: parseInt(categoriesId) ? parseInt(categoriesId) : -1,
-						},
-					}),
+					body: JSON.stringify(userState),
 				});
-
-				if (res.ok) {
-					textAreaRef.current.value = "";
-					Swal.fire({
-						title: "Masukkan Terkirim!",
-						text: "Terima kasih karena kamu akan membuat platform ini menjadi lebih baik lagi",
-						icon: "success",
-						confirmButtonColor: "#171b2d",
-						confirmButtonText: "Tutup",
-					});
-					setLoading(false);
+				if (!res.ok) {
+					if (res.status === 403 || res.status === 401) {
+						toast.error("Terjadi Kesalahan Mohon Coba Lagi (403)");
+						return;
+					}
+					toast.error("Terjadi Kesalahan Mohon Coba Lagi");
 				} else {
-					setLoading(false);
-					Swal.fire({
-						title: "Ups...",
-						text: "Mohon maaf telah terjadi kesalahan dalam mengirim masukan. Mohon coba lagi dan hubungi admin jika kesalahan ini tetap terjadi. Terima kasih.",
-						icon: "error",
-						confirmButtonColor: "#171b2d",
-						confirmButtonText: "Tutup",
-					});
+					toast.success("Profil telah berhasil diperbarui");
 				}
 			} else {
-				setLoading(false);
-				Swal.fire({
-					title: "Pemberitahuan",
-					text: "Kolom teks masukkan tidak dapat kosong",
-					icon: "warning",
-					confirmButtonColor: "#171b2d",
-					confirmButtonText: "Tutup",
-				});
+				toast.error("Mohon isi semua kolom yang harus diisi dengan benar! (*)");
 			}
+
+			setLoading(false);
 		}
 	};
+
+	useEffect(() => {
+		async function getCities() {
+			setCitiesLoading(true);
+			const res = await fetch(
+				`https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=${currentProvince.id}`,
+				{
+					method: "GET",
+				}
+			);
+			const data = await res.json();
+			if (!res.ok) {
+				if (res.status === 403 || res.status === 401) {
+					toast.error("Terjadi Kesalahan Mohon Coba Lagi (403)");
+					return;
+				}
+				toast.error("Terjadi Kesalahan Mohon Coba Lagi");
+			} else {
+				setCities(data.kota_kabupaten);
+			}
+			setCitiesLoading(false);
+		}
+		getCities();
+	}, [currentProvince]);
 
 	return (
 		<Layout
@@ -410,30 +600,35 @@ const Masukkan = ({ categories }) => {
 			withMargin
 			mainApp
 		>
+			<ToastContainer />
 			<OuterContainer className="d-flex flex-column">
 				<>
 					<HeadingSM className="mb-2">edit profil</HeadingSM>
 
 					<FormGroup className="mt-3 d-flex flex-wrap w-100">
 						<FormControlContainer className="d-flex flex-column mr-xl-4 ">
-							<StyledFormLabel>Nama Depan</StyledFormLabel>
+							<StyledFormLabel>
+								Nama Depan <span className="text-danger">*</span>
+							</StyledFormLabel>
 							<StyledFormControl
 								type="text"
 								name="first_name"
 								className="shadow-none mb-3 mb-lg-3 mb-xl-0"
-								// onChange={handleChange}
-								value={""}
+								onChange={handleChange}
+								value={first_name}
 								placeholder="Nama Depan"
 							/>
 						</FormControlContainer>
 						<FormControlContainer className="d-flex flex-column">
-							<StyledFormLabel>Nama Depan</StyledFormLabel>
+							<StyledFormLabel>
+								Nama Belakang <span className="text-danger">*</span>
+							</StyledFormLabel>
 							<StyledFormControl
 								type="text"
 								className={"shadow-none"}
 								name="last_name"
-								value={""}
-								// onChange={}
+								value={last_name}
+								onChange={handleChange}
 								placeholder="Nama Belakang"
 							/>
 						</FormControlContainer>
@@ -448,21 +643,33 @@ const Masukkan = ({ categories }) => {
 									className="mr-3"
 									name="gender"
 									label={`Perempuan`}
+									value={"f"}
+									onChange={handleChange}
+									checked={gender === "f"}
 								/>
-								<Radio type={"radio"} label={`Laki-laki`} name="gender" />
+								<Radio
+									type={"radio"}
+									label={`Laki-laki`}
+									onChange={handleChange}
+									checked={gender === "m"}
+									value={"m"}
+									name="gender"
+								/>
 							</div>
 						</FormControlContainer>
 					</FormGroup>
 
 					<FormGroup className="mt-3 d-flex flex-wrap w-100">
 						<FormControlContainer className="d-flex flex-column">
-							<StyledFormLabel>Tanggal Lahir</StyledFormLabel>
+							<StyledFormLabel>
+								Tanggal Lahir <span className="text-danger">*</span>
+							</StyledFormLabel>
 							<StyledFormControl
 								type="date"
 								name="dob"
 								className="mr-xl-2 shadow-none"
-								// onChange={handleChange}
-								// value={dob}
+								onChange={handleChange}
+								value={dob}
 								max={today}
 								placeholder="Date"
 							/>
@@ -470,11 +677,17 @@ const Masukkan = ({ categories }) => {
 					</FormGroup>
 
 					<FormGroup className="mt-3 d-flex flex-column text-gray2">
-						<StyledFormLabel>Biodata</StyledFormLabel>
+						<FormLabelContainer className="d-flex justify-content-between">
+							<StyledFormLabel>Biodata</StyledFormLabel>
+							<StyledFormLabel>{biodata.length} / 100</StyledFormLabel>
+						</FormLabelContainer>
+
 						<StyledTextArea
-							ref={textAreaRef}
+							value={biodata}
+							onChange={handleChange}
+							name="biodata"
 							as="textarea"
-							placeholder="Silahkan tulis masukkan dan pendapat Anda"
+							placeholder="Masukkan biodata"
 						/>
 					</FormGroup>
 
@@ -482,11 +695,11 @@ const Masukkan = ({ categories }) => {
 						<FormControlContainer className="d-flex flex-column">
 							<StyledFormLabel>Nomor handphone</StyledFormLabel>
 							<StyledFormControl
-								type="text"
+								type="tel"
 								className={"shadow-none"}
-								name="phone"
-								value={""}
-								// onChange={}
+								name="phone_number"
+								value={phone_number}
+								onChange={handleChange}
 								placeholder="Nomor handphone"
 							/>
 						</FormControlContainer>
@@ -496,67 +709,79 @@ const Masukkan = ({ categories }) => {
 						<StyledFormLabel>Negara</StyledFormLabel>
 
 						<Select
-							onChange={(e) => setCategoriesId(e.target.value)}
+							onChange={handleChange}
+							name="country"
 							as="select"
 							aria-label="Default select example"
-							defaultValue="Indonesia"
+							defaultValue={country}
 						>
 							{country_list.map((c, ix) => (
-								<option defaultValue="Indonesia" key={ix} value={c}>
+								<option defaultValue={country} key={ix} value={c}>
 									{c}
 								</option>
 							))}
 						</Select>
 					</FormGroup>
 
-					<FormGroup className="mt-3 d-flex flex-wrap text-gray2">
-						<FormControlContainer className="d-flex flex-column mr-xl-4 mr-0">
-							<StyledFormLabel>Provinsi</StyledFormLabel>
+					{country === "Indonesia" && (
+						<FormGroup className="mt-3 d-flex flex-wrap text-gray2">
+							<FormControlContainer className="d-flex flex-column mr-xl-4 mr-0">
+								<StyledFormLabel>Provinsi</StyledFormLabel>
 
-							<Select
-								onChange={(e) => setCategoriesId(e.target.value)}
-								as="select"
-								aria-label="Default select example"
-								defaultValue="Indonesia"
-							>
-								{[].map((c, ix) => (
-									<option defaultValue="Indonesia" key={ix} value={c}>
-										{c}
-									</option>
-								))}
-							</Select>
-						</FormControlContainer>
+								<Select
+									name="province"
+									as="select"
+									value={province}
+									onChange={(e) => {
+										handleChange(e);
+										const provIx = indoProvinces.findIndex(
+											(p) => p.nama === e.target.value
+										);
+										setCurrentProvince(indoProvinces[provIx]);
+									}}
+									defaultValue={indoProvinces[0].nama}
+								>
+									{indoProvinces.map((c, ix) => (
+										<option defaultValue={indoProvinces[0].nama} key={ix}>
+											{c.nama}
+										</option>
+									))}
+								</Select>
+							</FormControlContainer>
+							{citiesLoading && <TextSecondary>Memuat kota...</TextSecondary>}
+							{!citiesLoading && cities && cities.length > 0 && (
+								<FormControlContainer className="d-flex flex-column">
+									<StyledFormLabel>Kota / Kabupaten</StyledFormLabel>
 
-						<FormControlContainer className="d-flex flex-column">
-							<StyledFormLabel>Kota / Kabupaten</StyledFormLabel>
+									<Select
+										as="select"
+										name="city"
+										onChange={handleChange}
+										value={city}
+									>
+										{cities.map((c, ix) => (
+											<option key={ix}>{c.nama}</option>
+										))}
+									</Select>
+								</FormControlContainer>
+							)}
+						</FormGroup>
+					)}
 
-							<Select
-								onChange={(e) => setCategoriesId(e.target.value)}
-								as="select"
-								aria-label="Default select example"
-								defaultValue="Indonesia"
-							>
-								{[].map((c, ix) => (
-									<option defaultValue="Indonesia" key={ix} value={c}>
-										{c}
-									</option>
-								))}
-							</Select>
-						</FormControlContainer>
-					</FormGroup>
-
-					<FormGroup className="mt-3 d-flex flex-wrap text-gray2">
+					<FormGroup className="mt-3 mb-1 d-flex flex-wrap text-gray2">
 						<FormControlContainer className="d-flex flex-column mr-xl-4 mr-0">
 							<StyledFormLabel>Status</StyledFormLabel>
 
 							<Select
-								onChange={(e) => setCategoriesId(e.target.value)}
+								onChange={handleChange}
 								as="select"
 								aria-label="Default select example"
-								defaultValue="Indonesia"
+								defaultValue={status[0]}
+								name="education_status"
+								value={education_status ? education_status : status[0]}
 							>
-								{[].map((c, ix) => (
-									<option defaultValue="Indonesia" key={ix} value={c}>
+								{status.map((c, ix) => (
+									<option defaultValue={status[0]} key={ix} value={c}>
 										{c}
 									</option>
 								))}
@@ -564,7 +789,7 @@ const Masukkan = ({ categories }) => {
 						</FormControlContainer>
 					</FormGroup>
 
-					<HeadingXXS className="mb-2 mt-4">your social media</HeadingXXS>
+					<HeadingXXS className="mb-2 mt-5">your social media</HeadingXXS>
 
 					<FormGroup className="mt-3 d-flex flex-wrap w-100">
 						<FormControlContainer className="d-flex flex-column mr-xl-4 ">
@@ -573,8 +798,8 @@ const Masukkan = ({ categories }) => {
 								type="text"
 								name="instagram"
 								className="shadow-none mb-3 mb-lg-3 mb-xl-0 transparent"
-								// onChange={handleChange}
-								value={""}
+								onChange={handleChange}
+								value={instagram}
 								placeholder="Instagram"
 							/>
 						</FormControlContainer>
@@ -584,8 +809,8 @@ const Masukkan = ({ categories }) => {
 								type="text"
 								name="twitter"
 								className="shadow-none mb-3 mb-lg-3 mb-xl-0 transparent"
-								// onChange={handleChange}
-								value={""}
+								onChange={handleChange}
+								value={twitter}
 								placeholder="@user_name"
 							/>
 						</FormControlContainer>
@@ -598,8 +823,8 @@ const Masukkan = ({ categories }) => {
 								type="text"
 								name="facebook"
 								className="shadow-none mb-3 mb-lg-3 mb-xl-0 transparent"
-								// onChange={handleChange}
-								value={""}
+								onChange={handleChange}
+								value={facebook}
 								placeholder="facebook.com/user_name"
 							/>
 						</FormControlContainer>
@@ -609,8 +834,8 @@ const Masukkan = ({ categories }) => {
 								type="text"
 								name="youtube"
 								className="shadow-none mb-3 mb-lg-3 mb-xl-0 transparent"
-								// onChange={handleChange}
-								value={""}
+								onChange={handleChange}
+								value={youtube}
 								placeholder="YouTube url"
 							/>
 						</FormControlContainer>
@@ -621,10 +846,10 @@ const Masukkan = ({ categories }) => {
 							<StyledFormLabel>Blog</StyledFormLabel>
 							<StyledFormControl
 								type="text"
-								name="facebook"
-								className="shadow-none mb-3 mb-lg-3 mb-xl-0 transparent"
-								// onChange={handleChange}
-								value={""}
+								name="blog"
+								className="shadow-none transparent"
+								onChange={handleChange}
+								value={blog}
 								placeholder="blog url"
 							/>
 						</FormControlContainer>
@@ -632,7 +857,7 @@ const Masukkan = ({ categories }) => {
 
 					<EnrollBtn
 						disabled={loading}
-						onClick={handleSubmit}
+						onClick={handleSave}
 						className="bg-primary1 mt-5 shadow"
 					>
 						<HeadingXXS>Simpan</HeadingXXS>
@@ -642,14 +867,4 @@ const Masukkan = ({ categories }) => {
 		</Layout>
 	);
 };
-export default withAuth(Masukkan);
-export async function getStaticProps() {
-	const res = await fetch(`${API_URL}/feedback-categories`);
-	const categories = await res.json();
-	return {
-		props: {
-			categories,
-		},
-		revalidate: 1,
-	};
-}
+export default withAuth(Edit);

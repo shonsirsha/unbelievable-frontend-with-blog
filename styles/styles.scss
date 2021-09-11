@@ -64,7 +64,7 @@ $colorBottom: #31a4fa;
 
 // Variables
 $primary: #171b2d;
-$secondary: #d52f89;
+$pink: #d52f89;
 $success: $green !default;
 $info1: #0b37b2;
 $warning: $yellow !default;
@@ -80,7 +80,7 @@ $theme-colors: map-merge(
 	(
 		"primary": $primary,
 		"primary1": $primary1,
-		"secondary": $secondary,
+		"pink": $pink,
 		"success": $success,
 		"info1": $info1,
 		"warning": $warning,
@@ -121,6 +121,6 @@ $border-radius-sm: 8px !default;
 :export {
 	primary: $primary;
 	primary1: $primary1;
-	secondary: $secondary;
+	pink: $pink;
 	slate: $slate;
 }
