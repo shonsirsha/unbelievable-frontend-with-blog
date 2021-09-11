@@ -173,9 +173,9 @@ export default function Layout({
 										className="mr-2"
 										content={<FaHeart style={{ fontSize: "24px" }} />}
 									/>
-									<SideBlock
+									{/* <SideBlock
 										content={<BiTask style={{ fontSize: "24px" }} />}
-									/>
+									/> */}
 								</>
 							)}
 						</div>
