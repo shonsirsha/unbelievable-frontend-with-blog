@@ -139,7 +139,7 @@ const FormLabelContainer = styled.div`
 `;
 
 const Edit = () => {
-	const { token, user } = useContext(AuthContext);
+	const { token, user, checkUserLoggedIn } = useContext(AuthContext);
 
 	const [userState, setUserState] = useState(user ? user : null);
 	const [loading, setLoading] = useState(false);
@@ -559,7 +559,7 @@ const Edit = () => {
 					}
 					toast.error("Terjadi Kesalahan Mohon Coba Lagi");
 				} else {
-					toast.success("Profil telah berhasil diperbarui");
+					checkUserLoggedIn();
 				}
 			} else {
 				toast.error("Mohon isi semua kolom yang harus diisi dengan benar! (*)");
