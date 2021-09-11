@@ -155,11 +155,7 @@ const Masukkan = ({ categories }) => {
 								aria-label="Default select example"
 							>
 								{categories.map((c) => (
-									<option
-										onChange={(e) => alert(e.target.value)}
-										key={c.id}
-										value={c.id}
-									>
+									<option key={c.id} value={c.id}>
 										{c.name}
 									</option>
 								))}
