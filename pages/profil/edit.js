@@ -7,6 +7,7 @@ import {
 	Button,
 	FormControl,
 	FormCheck,
+	Image,
 } from "react-bootstrap";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { API_URL } from "config";
@@ -127,6 +128,11 @@ const Radio = styled(FormCheck)`
 	& label {
 		margin-left: 4px;
 	}
+`;
+
+const AvatarContainer = styled(Image)`
+	object-fit: cover;
+	border-radius: 100%;
 `;
 
 const FormLabelContainer = styled.div`
@@ -629,7 +635,34 @@ const Edit = () => {
 			<OuterContainer className="d-flex flex-column">
 				<>
 					<HeadingSM className="mb-2">edit profil</HeadingSM>
+					<FormLabelContainer className="d-flex flex-column align-items-center">
+						{window && (
+							<div role="button" className="position-relative">
+								<AvatarContainer
+									src={
+										user.profile_picture
+											? ``
+											: `${window.location.origin}/images/avatar-plc.png`
+									}
+									width={96}
+									alt="Avatar"
+									height={96}
+								/>
+								<Image
+									src={`${window.location.origin}/images/cam-icon.png`}
+									alt="camera"
+									style={{ right: 0, bottom: "-3px" }}
+									height={28}
+									width={28}
+									className="position-absolute"
+								/>
+							</div>
+						)}
 
+						<StyledFormLabel className="mt-2 text-align-center">
+							Ganti Avatar
+						</StyledFormLabel>
+					</FormLabelContainer>
 					<FormGroup className="mt-3 d-flex flex-wrap w-100">
 						<FormControlContainer className="d-flex flex-column mr-xl-4 ">
 							<StyledFormLabel>
@@ -658,7 +691,6 @@ const Edit = () => {
 							/>
 						</FormControlContainer>
 					</FormGroup>
-
 					<FormGroup className="mt-3 d-flex flex-wrap w-100">
 						<FormControlContainer className="d-flex flex-column">
 							<StyledFormLabel>Jenis Kelamin</StyledFormLabel>
@@ -683,7 +715,6 @@ const Edit = () => {
 							</div>
 						</FormControlContainer>
 					</FormGroup>
-
 					<FormGroup className="mt-3 d-flex flex-wrap w-100">
 						<FormControlContainer className="d-flex flex-column">
 							<StyledFormLabel>
@@ -700,7 +731,6 @@ const Edit = () => {
 							/>
 						</FormControlContainer>
 					</FormGroup>
-
 					<FormGroup className="mt-3 d-flex flex-column text-gray2">
 						<FormLabelContainer className="d-flex justify-content-between">
 							<StyledFormLabel>Biodata</StyledFormLabel>
@@ -717,7 +747,6 @@ const Edit = () => {
 							placeholder="Masukkan biodata"
 						/>
 					</FormGroup>
-
 					<FormGroup className="mt-3 d-flex flex-wrap w-100">
 						<FormControlContainer className="d-flex flex-column">
 							<StyledFormLabel>Nomor handphone</StyledFormLabel>
@@ -731,7 +760,6 @@ const Edit = () => {
 							/>
 						</FormControlContainer>
 					</FormGroup>
-
 					<FormGroup className="mt-3 d-flex flex-column text-gray2">
 						<StyledFormLabel>Negara</StyledFormLabel>
 
@@ -749,7 +777,6 @@ const Edit = () => {
 							))}
 						</Select>
 					</FormGroup>
-
 					{country === "Indonesia" && (
 						<FormGroup className="mt-3 d-flex flex-wrap text-gray2">
 							<FormControlContainer className="d-flex flex-column mr-xl-4 mr-0">
@@ -794,7 +821,6 @@ const Edit = () => {
 							)}
 						</FormGroup>
 					)}
-
 					{country !== "Indonesia" && (
 						<FormGroup className="mt-3 d-flex flex-wrap text-gray2">
 							<FormControlContainer className="d-flex flex-column mr-xl-4 mr-0">
@@ -811,7 +837,6 @@ const Edit = () => {
 							</FormControlContainer>
 						</FormGroup>
 					)}
-
 					<FormGroup className="mt-3 mb-1 d-flex flex-wrap text-gray2">
 						<FormControlContainer className="d-flex flex-column mr-xl-4 mr-0">
 							<StyledFormLabel>Status</StyledFormLabel>
@@ -832,9 +857,7 @@ const Edit = () => {
 							</Select>
 						</FormControlContainer>
 					</FormGroup>
-
 					<HeadingXXS className="mb-2 mt-5">your social media</HeadingXXS>
-
 					<FormGroup className="mt-3 d-flex flex-wrap w-100">
 						<FormControlContainer className="d-flex flex-column mr-xl-4 ">
 							<StyledFormLabel>Instagram</StyledFormLabel>
@@ -859,7 +882,6 @@ const Edit = () => {
 							/>
 						</FormControlContainer>
 					</FormGroup>
-
 					<FormGroup className="mt-3 d-flex flex-wrap w-100">
 						<FormControlContainer className="d-flex flex-column mr-xl-4 ">
 							<StyledFormLabel>Facebook</StyledFormLabel>
@@ -884,7 +906,6 @@ const Edit = () => {
 							/>
 						</FormControlContainer>
 					</FormGroup>
-
 					<FormGroup className="mt-3 d-flex flex-wrap w-100">
 						<FormControlContainer className="d-flex flex-column mr-xl-4 ">
 							<StyledFormLabel>Blog</StyledFormLabel>
@@ -898,7 +919,6 @@ const Edit = () => {
 							/>
 						</FormControlContainer>
 					</FormGroup>
-
 					<EnrollBtn
 						disabled={loading}
 						onClick={handleSave}
