@@ -20,7 +20,7 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { dateDiffInDays } from "utils/dateDiffInDays";
 import { secsToMin } from "utils/secsToMin";
-import Markdown from "Markdown-to-jsx";
+import Markdown from "markdown-to-jsx";
 const StyledContainer = styled.div`
 	display: flex;
 	padding: 32px 0;
@@ -109,7 +109,11 @@ const StyledHeadingXXS = styled(HeadingXXS)`
 
 const StyledMarkDown = styled(Markdown)`
 	& p {
-		font-size: 14px;
+		font-size: 13px;
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+			"Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
+			"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+			"Noto Color Emoji";
 	}
 `;
 const StyledTextSecondary = styled(TextSecondary)``;
