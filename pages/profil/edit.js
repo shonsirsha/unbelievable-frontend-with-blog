@@ -616,11 +616,12 @@ const Edit = () => {
 			setCitiesLoading(false);
 		}
 		getCities();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentProvince]);
 
 	return (
 		<Layout
-			title="Profil | Unbelievable"
+			title="Edit Profil | Unbelievable"
 			background="#171b2d"
 			withMargin
 			mainApp
