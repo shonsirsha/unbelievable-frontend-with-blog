@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { HeadingSM, HeadingXXS } from "components/Typography/Headings";
 import {
 	FormLabel,
@@ -147,12 +147,12 @@ const FormLabelContainer = styled.div`
 const Edit = () => {
 	const { token, user, setUser } = useContext(AuthContext);
 
-	console.log(user);
-
 	const [userState, setUserState] = useState(user ? user : null);
 	const [loading, setLoading] = useState(false);
 	const [citiesLoading, setCitiesLoading] = useState(false);
+	const [profilePicLoading, setProfilePicLoading] = useState(false);
 	const [cities, setCities] = useState([]);
+	const fileSelectorRef = useRef();
 	const [indoProvinces] = useState([
 		{
 			id: 11,
@@ -565,8 +565,9 @@ const Edit = () => {
 		);
 	};
 	const handleSave = async () => {
-		setLoading(true);
 		if (!loading) {
+			setLoading(true);
+
 			if (!whitespace(first_name) && !whitespace(last_name) && validDate(dob)) {
 				const res = await fetch(`${API_URL}/users/me`, {
 					method: "PUT",
@@ -578,14 +579,14 @@ const Edit = () => {
 				});
 				if (!res.ok) {
 					if (res.status === 403 || res.status === 401) {
-						toast.error("Terjadi Kesalahan Mohon Coba Lagi (403)");
+						toast.error("Terjadi kesalahan mohon coba lagi (403)");
 						return;
 					}
-					toast.error("Terjadi Kesalahan Mohon Coba Lagi");
+					toast.error("Terjadi kesalahan mohon coba lagi");
 				} else {
 					// checkUserLoggedIn();
-					setUser(userState);
-					toast.success("Berhasil memperbarui profil");
+					setUser({ ...userState, profile_picture: user.profile_picture });
+					toast.success("Profil telah diperbarui");
 				}
 			} else {
 				toast.error("Mohon isi semua kolom yang harus diisi dengan benar! (*)");
@@ -594,6 +595,34 @@ const Edit = () => {
 			setLoading(false);
 		}
 	};
+
+	const handleUploadProfilePic = async (picture) => {
+		if (!profilePicLoading) {
+			setProfilePicLoading(true);
+			let formData = new FormData();
+			formData.append("files", picture);
+			const res = await fetch(`${API_URL}/upload/profile-picture`, {
+				method: "POST",
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+				body: formData,
+			});
+			const data = await res.json();
+			if (!res.ok) {
+				toast.error("Terjadi kesalahan mohon coba lagi");
+			} else {
+				setUser({ ...user, profile_picture: data[0] });
+				toast.success("Avatar telah diganti");
+			}
+			setProfilePicLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		console.log("=======");
+		console.log(user);
+	}, [user]);
 
 	useEffect(() => {
 		async function getCities() {
@@ -607,10 +636,10 @@ const Edit = () => {
 			const data = await res.json();
 			if (!res.ok) {
 				if (res.status === 403 || res.status === 401) {
-					toast.error("Terjadi Kesalahan Mohon Coba Lagi (403)");
+					toast.error("Terjadi kesalahan mohon coba lagi (403)");
 					return;
 				}
-				toast.error("Terjadi Kesalahan Mohon Coba Lagi");
+				toast.error("Terjadi kesalahan mohon coba lagi");
 			} else {
 				setCities(data.kota_kabupaten);
 				setUserState({
@@ -637,28 +666,66 @@ const Edit = () => {
 					<HeadingSM className="mb-2">edit profil</HeadingSM>
 					<FormLabelContainer className="d-flex flex-column align-items-center">
 						{window && (
-							<div role="button" className="position-relative">
-								<AvatarContainer
-									src={
-										user.profile_picture
-											? ``
-											: `${window.location.origin}/images/avatar-plc.png`
+							<div
+								onClick={() => {
+									if (!profilePicLoading) {
+										fileSelectorRef.current.click();
 									}
-									width={96}
-									alt="Avatar"
-									height={96}
-								/>
-								<Image
-									src={`${window.location.origin}/images/cam-icon.png`}
-									alt="camera"
-									style={{ right: 0, bottom: "-3px" }}
-									height={28}
-									width={28}
-									className="position-absolute"
-								/>
+								}}
+								role="button"
+								className="position-relative"
+							>
+								{profilePicLoading ? (
+									<Image
+										src={`${window.location.origin}/images/loading.gif`}
+										alt="Loading..."
+										height={32}
+										width={32}
+									/>
+								) : (
+									<>
+										<AvatarContainer
+											src={
+												user.profile_picture
+													? user.profile_picture.url
+													: `${window.location.origin}/images/avatar-plc.png`
+											}
+											width={96}
+											alt="Avatar"
+											height={96}
+										/>
+										<Image
+											src={`${window.location.origin}/images/cam-icon.png`}
+											alt="camera"
+											style={{ right: 0, bottom: "-3px" }}
+											height={28}
+											width={28}
+											className="position-absolute"
+										/>
+									</>
+								)}
 							</div>
 						)}
 
+						<Form.Group hidden controlId="formFile" className="mb-3">
+							<Form.Label>Default file input example</Form.Label>
+							<Form.Control
+								onChange={async (e) => {
+									if (e.target.files && e.target.files[0]) {
+										if (e.target.files[0].size <= 6000000) {
+											await handleUploadProfilePic(e.target.files[0]);
+										} else {
+											toast.error(
+												"File terlalu besar. Ukuran maksimal adalah 6MB."
+											);
+										}
+									}
+								}}
+								ref={fileSelectorRef}
+								type="file"
+								accept=".png, .jpg, .jpeg"
+							/>
+						</Form.Group>
 						<StyledFormLabel className="mt-2 text-align-center">
 							Ganti Avatar
 						</StyledFormLabel>
