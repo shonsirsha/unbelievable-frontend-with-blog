@@ -330,10 +330,10 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 						// ))}
 						className="mb-3"
 					/>
-					{/* <SideBlock
+					<SideBlock
 						content={"Mission Box (Work in progress..)"}
 						className="mb-3"
-					/> */}
+					/>
 				</ComponentsContainer>
 			</RightContainer>
 		</Layout>

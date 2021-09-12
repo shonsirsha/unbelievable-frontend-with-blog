@@ -139,7 +139,9 @@ const FormLabelContainer = styled.div`
 `;
 
 const Edit = () => {
-	const { token, user, checkUserLoggedIn } = useContext(AuthContext);
+	const { token, user, setUser } = useContext(AuthContext);
+
+	console.log(user);
 
 	const [userState, setUserState] = useState(user ? user : null);
 	const [loading, setLoading] = useState(false);
@@ -200,7 +202,7 @@ const Edit = () => {
 		},
 		{
 			id: 34,
-			nama: "Di Yogyakarta",
+			nama: "DI Yogyakarta",
 		},
 		{
 			id: 35,
@@ -531,6 +533,16 @@ const Edit = () => {
 
 	const handleChange = (e) => {
 		setUserState({ ...userState, [e.target.name]: e.target.value });
+		console.log(e.target.name);
+		console.log(e.target.value);
+		if (e.target.name === "country" && e.target.value !== "Indonesia") {
+			setUserState({
+				...userState,
+				[e.target.name]: e.target.value,
+				city: "",
+				province: "",
+			});
+		}
 	};
 	const validDate = (dob) => {
 		return (
@@ -559,7 +571,9 @@ const Edit = () => {
 					}
 					toast.error("Terjadi Kesalahan Mohon Coba Lagi");
 				} else {
-					checkUserLoggedIn();
+					// checkUserLoggedIn();
+					setUser(userState);
+					toast.success("Berhasil memperbarui profil");
 				}
 			} else {
 				toast.error("Mohon isi semua kolom yang harus diisi dengan benar! (*)");
@@ -679,7 +693,9 @@ const Edit = () => {
 					<FormGroup className="mt-3 d-flex flex-column text-gray2">
 						<FormLabelContainer className="d-flex justify-content-between">
 							<StyledFormLabel>Biodata</StyledFormLabel>
-							<StyledFormLabel>{biodata.length} / 100</StyledFormLabel>
+							<StyledFormLabel>
+								{biodata ? biodata.length : 0} / 100
+							</StyledFormLabel>
 						</FormLabelContainer>
 
 						<StyledTextArea

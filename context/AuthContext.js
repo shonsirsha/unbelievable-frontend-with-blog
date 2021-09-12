@@ -216,6 +216,7 @@ export const AuthProvider = ({ children }) => {
 				getToken,
 				changePassword,
 				setErr,
+				setUser,
 				checkIfProviderLocal,
 				forgotPassword,
 				resetPassword,
