@@ -310,7 +310,9 @@ const Edit = () => {
 		blog,
 		full_address,
 	} = userState;
-
+	if (!biodata) {
+		setUserState({ ...userState, biodata: "" });
+	}
 	const [currentProvince, setCurrentProvince] = useState(
 		province
 			? indoProvinces[indoProvinces.findIndex((p) => p.nama === province)]
