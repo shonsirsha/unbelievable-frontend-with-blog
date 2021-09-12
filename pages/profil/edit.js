@@ -534,8 +534,7 @@ const Edit = () => {
 
 	const handleChange = (e) => {
 		setUserState({ ...userState, [e.target.name]: e.target.value });
-		console.log(e.target.name);
-		console.log(e.target.value);
+
 		if (e.target.name === "country" && e.target.value !== "Indonesia") {
 			setUserState({
 				...userState,
