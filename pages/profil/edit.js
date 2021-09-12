@@ -310,9 +310,7 @@ const Edit = () => {
 		blog,
 		full_address,
 	} = userState;
-	if (!biodata) {
-		setUserState({ ...userState, biodata: "" });
-	}
+
 	const [currentProvince, setCurrentProvince] = useState(
 		province
 			? indoProvinces[indoProvinces.findIndex((p) => p.nama === province)]
@@ -571,7 +569,9 @@ const Edit = () => {
 			setLoading(true);
 
 			if (!whitespace(first_name) && !whitespace(last_name) && validDate(dob)) {
-				if (biodata.length <= 100) {
+				if (biodata && biodata.length >= 100) {
+					toast.error("Ups... Maaf, biodatamu terlalu panjang.");
+				} else {
 					const res = await fetch(`${API_URL}/users/me`, {
 						method: "PUT",
 						headers: {
@@ -591,8 +591,6 @@ const Edit = () => {
 						setUser({ ...userState, profile_picture: user.profile_picture });
 						toast.success("Profilmu telah diperbarui.");
 					}
-				} else {
-					toast.error("Ups... Maaf, biodatamu terlalu panjang.");
 				}
 			} else {
 				toast.error("Mohon isi semua kolom yang harus diisi dengan benar! (*)");
