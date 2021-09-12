@@ -302,6 +302,7 @@ const Edit = () => {
 		facebook,
 		youtube,
 		blog,
+		full_address,
 	} = userState;
 
 	const [currentProvince, setCurrentProvince] = useState(
@@ -542,6 +543,12 @@ const Edit = () => {
 				city: "",
 				province: "",
 			});
+		} else {
+			setUserState({
+				...userState,
+				[e.target.name]: e.target.value,
+				full_address: "",
+			});
 		}
 	};
 	const validDate = (dob) => {
@@ -601,6 +608,10 @@ const Edit = () => {
 				toast.error("Terjadi Kesalahan Mohon Coba Lagi");
 			} else {
 				setCities(data.kota_kabupaten);
+				setUserState({
+					...userState,
+					city: data.kota_kabupaten[0].nama,
+				});
 			}
 			setCitiesLoading(false);
 		}
@@ -781,6 +792,23 @@ const Edit = () => {
 									</Select>
 								</FormControlContainer>
 							)}
+						</FormGroup>
+					)}
+
+					{country !== "Indonesia" && (
+						<FormGroup className="mt-3 d-flex flex-wrap text-gray2">
+							<FormControlContainer className="d-flex flex-column mr-xl-4 mr-0">
+								<StyledFormLabel>Alamat Lengkap</StyledFormLabel>
+
+								<StyledFormControl
+									type="text"
+									name="full_address"
+									className="shadow-none mb-3 mb-lg-3 mb-xl-0"
+									onChange={handleChange}
+									value={full_address}
+									placeholder=""
+								/>
+							</FormControlContainer>
 						</FormGroup>
 					)}
 
