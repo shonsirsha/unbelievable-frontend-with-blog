@@ -136,6 +136,7 @@ const Index = () => {
 		if (window && r_code !== "") {
 			sessionStorage.setItem("unb_reg_code", r_code);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	const [signUpDetails, setSignUpDetails] = useState({
 		email: "",
