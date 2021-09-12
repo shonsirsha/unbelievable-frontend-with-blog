@@ -569,24 +569,28 @@ const Edit = () => {
 			setLoading(true);
 
 			if (!whitespace(first_name) && !whitespace(last_name) && validDate(dob)) {
-				const res = await fetch(`${API_URL}/users/me`, {
-					method: "PUT",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`,
-					},
-					body: JSON.stringify(userState),
-				});
-				if (!res.ok) {
-					if (res.status === 403 || res.status === 401) {
-						toast.error("Terjadi kesalahan mohon coba lagi (403)");
-						return;
+				if (biodata.length <= 100) {
+					const res = await fetch(`${API_URL}/users/me`, {
+						method: "PUT",
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${token}`,
+						},
+						body: JSON.stringify(userState),
+					});
+					if (!res.ok) {
+						if (res.status === 403 || res.status === 401) {
+							toast.error("Terjadi kesalahan mohon coba lagi. (403)");
+							return;
+						}
+						toast.error("Terjadi kesalahan mohon coba lagi.");
+					} else {
+						// checkUserLoggedIn();
+						setUser({ ...userState, profile_picture: user.profile_picture });
+						toast.success("Profilmu telah diperbarui.");
 					}
-					toast.error("Terjadi kesalahan mohon coba lagi");
 				} else {
-					// checkUserLoggedIn();
-					setUser({ ...userState, profile_picture: user.profile_picture });
-					toast.success("Profil telah diperbarui");
+					toast.error("Ups... Maaf, biodatamu terlalu panjang.");
 				}
 			} else {
 				toast.error("Mohon isi semua kolom yang harus diisi dengan benar! (*)");
@@ -610,7 +614,7 @@ const Edit = () => {
 			});
 			const data = await res.json();
 			if (!res.ok) {
-				toast.error("Terjadi kesalahan mohon coba lagi");
+				toast.error("Terjadi kesalahan mohon coba lagi.");
 			} else {
 				setUser({ ...user, profile_picture: data[0] });
 				toast.success("Avatar telah diganti");
@@ -618,11 +622,6 @@ const Edit = () => {
 			setProfilePicLoading(false);
 		}
 	};
-
-	useEffect(() => {
-		console.log("=======");
-		console.log(user);
-	}, [user]);
 
 	useEffect(() => {
 		async function getCities() {
@@ -636,10 +635,10 @@ const Edit = () => {
 			const data = await res.json();
 			if (!res.ok) {
 				if (res.status === 403 || res.status === 401) {
-					toast.error("Terjadi kesalahan mohon coba lagi (403)");
+					toast.error("Terjadi kesalahan mohon coba lagi. (403)");
 					return;
 				}
-				toast.error("Terjadi kesalahan mohon coba lagi");
+				toast.error("Terjadi kesalahan mohon coba lagi.");
 			} else {
 				setCities(data.kota_kabupaten);
 				setUserState({

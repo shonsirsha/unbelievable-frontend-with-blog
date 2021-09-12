@@ -98,6 +98,8 @@ const Overlay = styled.div`
 	background: #000000b0;
 `;
 const ProfileImage = styled(Image)`
+	object-fit: cover;
+	border-radius: 100%;
 	&:hover {
 		cursor: pointer;
 	}
@@ -151,7 +153,6 @@ const StyledTextTertiary = styled(TextTertiary)`
 export default function Header({
 	landingPage,
 	background,
-	user = null,
 	showBurger,
 	scrollToSolid,
 	mainApp,
@@ -161,7 +162,8 @@ export default function Header({
 	const router = useRouter();
 	const [navbarClass, setNavbarClass] = useState("");
 	const [menuShown, setMenuShown] = useState("");
-	const { logout } = useContext(AuthContext);
+	const { logout, user } = useContext(AuthContext);
+
 	useEffect(() => {
 		if (landingPage && window) {
 			window.addEventListener("scroll", handleScroll);
@@ -358,7 +360,11 @@ export default function Header({
 									router.push("/masuk");
 								}
 							}}
-							src={`${window.location.origin}/images/profile-main.png`}
+							src={
+								user.profile_picture
+									? user.profile_picture.url
+									: `${window.location.origin}/images/profile-main.png`
+							}
 							alt="Profile"
 							width={24}
 							height={24}
@@ -375,7 +381,11 @@ export default function Header({
 											router.push("/masuk");
 										}
 									}}
-									src={`${window.location.origin}/images/profile-main.png`}
+									src={
+										user.profile_picture
+											? user.profile_picture.url
+											: `${window.location.origin}/images/profile-main.png`
+									}
 									alt="Profile"
 									width={24}
 									height={24}

@@ -137,7 +137,6 @@ export default function Layout({
 					scrollToSolid={scrollToSolid}
 					landingPage={landingPage}
 					background={background}
-					user={user}
 					mainApp={mainApp}
 					backBtn={backBtn}
 				/>
