@@ -104,8 +104,6 @@ export default function EnrolledCourseCard({ small, user, course, ...props }) {
 		setIsPopoverOpen(false);
 	};
 	const handleClickStars = (ix) => {
-		// console.log(course);
-
 		if (!paid) {
 			setIsPopoverOpen(true);
 			setTimeout(() => {
