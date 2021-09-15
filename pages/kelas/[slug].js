@@ -39,10 +39,11 @@ const VideoContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	min-height: 320px;
-
+	max-height: 100vh;
 	@media ${mediaBreakpoint.down.lg} {
 		min-height: 0;
 		width: 100%;
+		max-height: unset;
 	}
 `;
 
@@ -50,11 +51,32 @@ const VideosListContainer = styled.div`
 	width: 40%;
 	min-height: 320px;
 	padding: 32px 0;
+	max-height: 100vh;
+	overflow-y: auto;
+	/* width */
+	::-webkit-scrollbar {
+		width: 10px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #171b2de8;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: #888;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		background: #555;
+	}
+
 	@media ${mediaBreakpoint.down.lg} {
 		min-height: 0;
 		width: 100%;
 		max-height: 480px;
-		overflow-y: auto;
 	}
 `;
 
@@ -102,6 +124,7 @@ const StyledTextTertiary = styled(TextTertiary)`
 `;
 const MiscBodyContainer = styled.div`
 	padding: 24px;
+	overflow-y: auto;
 `;
 const StyledHeadingXXS = styled(HeadingXXS)`
 	${(props) => props.opened && `text-decoration: underline;`}
