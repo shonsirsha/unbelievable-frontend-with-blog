@@ -114,7 +114,6 @@ const Pengaturan = () => {
 
 	const PasswordResetForm = (
 		<>
-			<TextSecondary className="text-gray2">Ganti Password</TextSecondary>
 			<FormGroup>
 				<StyledFormLabel className="text-gray2 mt-4 mb-3">
 					Password saat ini
@@ -169,7 +168,19 @@ const Pengaturan = () => {
 					<ToastContainer />
 
 					<HeadingSM className="mb-4">pengaturan umum</HeadingSM>
-					{user && user.provider === "local" && <>{PasswordResetForm}</>}
+					<TextSecondary className="text-gray2">Ganti Password</TextSecondary>
+					{user && user.provider === "local" ? (
+						<>{PasswordResetForm}</>
+					) : (
+						<>
+							<TextSecondary className="text-gray2 mt-2">
+								Kamu tidak bisa mengganti password karena akun ini
+								{user
+									? `terhubung melalui ${user.provider} (tidak menggunakan password).`
+									: `tidak menggunakan password`}
+							</TextSecondary>
+						</>
+					)}
 				</>
 			</OuterContainer>
 		</Layout>
