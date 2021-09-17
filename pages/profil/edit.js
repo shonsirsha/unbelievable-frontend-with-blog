@@ -317,6 +317,19 @@ const Edit = () => {
 			: indoProvinces[0]
 	);
 
+	useEffect(() => {
+		if (!userState.country) {
+			setUserState({
+				...userState,
+				country: "Indonesia",
+				province: "Aceh",
+			});
+		}
+
+		console.log(userState);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [userState, currentProvince]);
+
 	const status = ["Profesional", "Pelajar / Mahasiswa"];
 
 	if (!education_status) {
@@ -625,6 +638,7 @@ const Edit = () => {
 
 	useEffect(() => {
 		async function getCities() {
+			console.log(currentProvince);
 			setCitiesLoading(true);
 			const res = await fetch(
 				`https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=${currentProvince.id}`,
@@ -707,7 +721,6 @@ const Edit = () => {
 						)}
 
 						<Form.Group hidden controlId="formFile" className="mb-3">
-							<Form.Label>Default file input example</Form.Label>
 							<Form.Control
 								onChange={async (e) => {
 									if (e.target.files && e.target.files[0]) {
@@ -834,16 +847,20 @@ const Edit = () => {
 							name="country"
 							as="select"
 							aria-label="Default select example"
-							defaultValue={country}
+							defaultValue={country ? country : "Indonesia"}
 						>
 							{country_list.map((c, ix) => (
-								<option defaultValue={country} key={ix} value={c}>
+								<option
+									defaultValue={country ? country : "Indonesia"}
+									key={ix}
+									value={c}
+								>
 									{c}
 								</option>
 							))}
 						</Select>
 					</FormGroup>
-					{country === "Indonesia" && (
+					{(country === "Indonesia" || !country) && (
 						<FormGroup className="mt-3 d-flex flex-wrap text-gray2">
 							<FormControlContainer className="d-flex flex-column mr-xl-4 mr-0">
 								<StyledFormLabel>Provinsi</StyledFormLabel>

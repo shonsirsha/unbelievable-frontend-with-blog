@@ -174,7 +174,7 @@ const Pengaturan = () => {
 					) : (
 						<>
 							<TextSecondary className="text-gray2 mt-2">
-								Kamu tidak bisa mengganti password karena akun ini
+								Kamu tidak bisa mengganti password karena akun ini{" "}
 								{user
 									? `terhubung melalui ${user.provider} (tidak menggunakan password).`
 									: `tidak menggunakan password`}
