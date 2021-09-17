@@ -18,6 +18,7 @@ const CheckBoxWrapper = styled.div`
 		-moz-appearance: none;
 		-o-appearance: none;
 		appearance: none;
+		position: static;
 		outline: none;
 		box-shadow: none;
 		background: #dbdbdb;
@@ -30,7 +31,6 @@ const CheckBoxWrapper = styled.div`
 
 	input[type="checkbox"]:checked:after {
 		content: "✓";
-		position: absolute;
 		font-size: 16px;
 		line-height: 1rem;
 		padding-left: 5px;
