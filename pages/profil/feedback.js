@@ -10,7 +10,7 @@ import styled from "styled-components";
 import Swal from "sweetalert2";
 import { whitespace } from "utils/whitespace";
 import withAuth from "utils/withAuth";
-
+import Breadcrumb from "components/Breadcrumb/Breadcrumb";
 const OuterContainer = styled.div`
 	max-width: 60%;
 	@media ${mediaBreakpoint.down.lg} {
@@ -135,6 +135,8 @@ const Masukkan = ({ categories }) => {
 			showReviewBlock={false}
 		>
 			<OuterContainer className="d-flex flex-column">
+				<Breadcrumb />
+
 				<>
 					<HeadingSM className="mb-2">tulis masukkan</HeadingSM>
 					<TextPrimary className="mt-3 mt-lg-5 specialgray">

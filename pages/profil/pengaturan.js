@@ -6,7 +6,6 @@ import { TextSecondary } from "components/Typography/Text";
 import {
 	FormLabel,
 	FormGroup,
-	Form,
 	Button,
 	FormControl,
 	FormText,
@@ -18,6 +17,7 @@ import Layout from "components/Layout";
 import styled from "styled-components";
 import { whitespace } from "utils/whitespace";
 import withAuth from "utils/withAuth";
+import Breadcrumb from "components/Breadcrumb/Breadcrumb";
 
 const OuterContainer = styled.div`
 	max-width: 60%;
@@ -164,6 +164,7 @@ const Pengaturan = () => {
 			showLogout
 		>
 			<OuterContainer className="d-flex flex-column">
+				<Breadcrumb />
 				<>
 					<ToastContainer />
 

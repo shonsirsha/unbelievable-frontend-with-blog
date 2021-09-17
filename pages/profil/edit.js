@@ -20,6 +20,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { TextSecondary } from "components/Typography/Text";
 import moment from "moment";
+import Breadcrumb from "components/Breadcrumb/Breadcrumb";
 
 const OuterContainer = styled.div`
 	width: 100%;
@@ -675,6 +676,7 @@ const Edit = () => {
 		>
 			<ToastContainer />
 			<OuterContainer className="d-flex flex-column">
+				<Breadcrumb />
 				<>
 					<HeadingSM className="mb-2">edit profil</HeadingSM>
 					<FormLabelContainer className="d-flex flex-column align-items-center">
