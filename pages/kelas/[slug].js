@@ -149,14 +149,21 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 
 	const { finished_watching, missions, all_missions_completed } =
 		currentCourse.currentVideo;
-	const [renderedDescContext, setRenderedDescContext] = useState(
+	const video_desc = (
 		<>
 			{currentCourse.long_descx ? (
 				<StyledMarkDown>{currentCourse.long_descx}</StyledMarkDown>
 			) : (
-				"-"
+				<StyledTextTertiary>
+					{currentCourse.short_desc && currentCourse.short_desc.length > 0
+						? currentCourse.short_desc
+						: "-"}
+				</StyledTextTertiary>
 			)}
 		</>
+	);
+	const [renderedDescContext, setRenderedDescContext] = useState(
+		<>{video_desc}</>
 	);
 	const {
 		setMissionsCtx,
@@ -316,18 +323,12 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 		}
 	};
 
+	console.log(currentCourse);
+
 	useEffect(() => {
 		setCurrentlyOpened("desc");
 		setFinishedWatching(finished_watching);
-		setRenderedDescContext(
-			<StyledTextTertiary className="text-primary1 mb">
-				{currentCourse.long_descx ? (
-					<StyledMarkDown>{currentCourse.long_descx}</StyledMarkDown>
-				) : (
-					"-"
-				)}
-			</StyledTextTertiary>
-		);
+		setRenderedDescContext(<>{video_desc}</>);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentCourse.currentVideo]);
 
@@ -392,15 +393,7 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 		if (videosState[previousOfClickedVideoIx].all_missions_completed) {
 			if (bought_day_diff >= video_day) {
 				goToVideo(video);
-				setRenderedDescContext(
-					<StyledTextTertiary className="text-primary1">
-						{currentCourse.long_descx ? (
-							<StyledMarkDown>{currentCourse.long_descx}</StyledMarkDown>
-						) : (
-							"-"
-						)}
-					</StyledTextTertiary>
-				);
+				setRenderedDescContext(<>{video_desc}</>);
 			} else {
 				Swal.fire({
 					title: "Pemberitahuan",
@@ -579,15 +572,7 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 					<StyledHeadingXXS
 						opened={currentlyOpened === "desc"}
 						onClick={() => {
-							setRenderedDescContext(
-								<>
-									{currentCourse.long_descx ? (
-										<StyledMarkDown>{currentCourse.long_descx}</StyledMarkDown>
-									) : (
-										"-"
-									)}
-								</>
-							);
+							setRenderedDescContext(<>{video_desc}</>);
 							setCurrentlyOpened("desc");
 						}}
 						role="button"

@@ -95,14 +95,22 @@ export default function MisiBlock({
 					<HeadingXS as="p" className="text-primary1 mb-1">
 						Misi Video Ini
 					</HeadingXS>
-					<TextTertiary className="text-gray mb-3 text-center">
-						Kerjakan (centang dan simpan) misi-misi dibawah ini untuk
-						melanjutkan ke video selanjutnya.
-					</TextTertiary>
+					{(missionsCtx || missionsCtx.length === 0) && (
+						<TextTertiary className="text-gray mb-3 text-center">
+							Kerjakan (centang dan simpan) misi-misi dibawah ini untuk
+							melanjutkan ke video selanjutnya.
+						</TextTertiary>
+					)}
+
 					{loading ? (
 						<Loading className="mt-4" fixed={false} />
 					) : (
 						<div className="d-flex flex-column ">
+							{(!missionsCtx || missionsCtx.length === 0) && (
+								<TextTertiary className="text-gray mb-3 text-center">
+									Video ini tidak memiliki misi.
+								</TextTertiary>
+							)}
 							{missionsCtx.map((m) => (
 								<div key={m.id} className="d-flex align-items-center  mb-1">
 									<CheckBoxWrapper
@@ -162,7 +170,7 @@ export default function MisiBlock({
 									<TextSecondary>{m.text}</TextSecondary>
 								</div>
 							))}
-							{!missionsCompleted && !loading && (
+							{missionsCtx.length > 0 && !missionsCompleted && !loading && (
 								<SaveBtn
 									disabled={missionSaveLoading}
 									className="bg-primary1 mt-3 align-self-center"
