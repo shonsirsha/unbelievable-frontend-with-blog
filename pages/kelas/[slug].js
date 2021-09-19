@@ -39,7 +39,7 @@ const VideoContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	min-height: 320px;
-	max-height: 100vh;
+	max-height: calc(100vh + 81px);
 	@media ${mediaBreakpoint.down.lg} {
 		min-height: 0;
 		width: 100%;
@@ -53,6 +53,8 @@ const VideosListContainer = styled.div`
 	padding: 32px 0;
 	max-height: 100vh;
 	overflow-y: auto;
+	max-height: calc(100vh + 81px);
+
 	/* width */
 	::-webkit-scrollbar {
 		width: 10px;

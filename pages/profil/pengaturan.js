@@ -6,7 +6,6 @@ import { TextSecondary } from "components/Typography/Text";
 import {
 	FormLabel,
 	FormGroup,
-	Form,
 	Button,
 	FormControl,
 	FormText,
@@ -18,6 +17,7 @@ import Layout from "components/Layout";
 import styled from "styled-components";
 import { whitespace } from "utils/whitespace";
 import withAuth from "utils/withAuth";
+import Breadcrumb from "components/Breadcrumb/Breadcrumb";
 
 const OuterContainer = styled.div`
 	max-width: 60%;
@@ -164,6 +164,7 @@ const Pengaturan = () => {
 			showLogout
 		>
 			<OuterContainer className="d-flex flex-column">
+				<Breadcrumb />
 				<>
 					<ToastContainer />
 
@@ -174,7 +175,7 @@ const Pengaturan = () => {
 					) : (
 						<>
 							<TextSecondary className="text-gray2 mt-2">
-								Kamu tidak bisa mengganti password karena akun ini
+								Kamu tidak bisa mengganti password karena akun ini{" "}
 								{user
 									? `terhubung melalui ${user.provider} (tidak menggunakan password).`
 									: `tidak menggunakan password`}

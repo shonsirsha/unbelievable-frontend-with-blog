@@ -120,7 +120,7 @@ const StyledSubmitBtn = styled(Button)`
 
 const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 	const router = useRouter();
-
+	console.log(courses);
 	const { logout, checkUserLoggedIn, getToken } = useContext(AuthContext);
 	const {
 		previewModalOpen,
@@ -383,7 +383,12 @@ export async function getServerSideProps({ req, _ }) {
 		const onboardings = await res.json();
 		let user = await res2.json();
 		user.token = token;
-		const courses = await res3.json();
+		let courses = await res3.json();
+		if (courses) {
+			courses = courses.sort(
+				(a, b) => b.enrolled_users.length - a.enrolled_users.length
+			);
+		}
 		const coursesTaken = await res4.json();
 
 		return {
