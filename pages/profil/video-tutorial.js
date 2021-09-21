@@ -8,6 +8,7 @@ const VideoTutorial = ({ user, onboardings }) => {
 		<Onboarding
 			user={user}
 			backTo="/profil"
+			title="Video Tutorial | Unbelievable"
 			onboardings={onboardings}
 			videoSkippable
 			showBackBtn
