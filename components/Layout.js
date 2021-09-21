@@ -105,6 +105,7 @@ export default function Layout({
 	showLogout = false,
 	showReviewBlock = true,
 	backBtn,
+	backTo,
 }) {
 	const { user, loading } = useContext(AuthContext);
 	const { setWishlistModalOpen } = useContext(CourseContext);
@@ -139,6 +140,7 @@ export default function Layout({
 					background={background}
 					mainApp={mainApp}
 					backBtn={backBtn}
+					backTo={backTo}
 				/>
 			)}
 

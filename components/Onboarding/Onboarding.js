@@ -11,7 +11,7 @@ import {
 } from "components/Typography/Headings";
 import VideoPlayerNonHLS from "components/VideoPlayer/VideoPlayerNonHLS";
 import CircleButton from "components/Buttons/CircleButton";
-import { FaChevronRight } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { mediaBreakpoint } from "utils/breakpoints";
 import Swal from "sweetalert2";
 
@@ -86,11 +86,14 @@ const StyledP = styled.p`
 export default function Onboarding({
 	onboardings,
 	user,
+	backTo = "",
 	showBreadCrumb = false,
-	handleFinishOnboarding,
+	handleFinishOnboarding = () => {},
 	videoSkippable = false,
 	steps = 4,
+	title = "Selamat Datang! | Unbelievable",
 	stepsRange = null,
+	showBackBtn = false,
 }) {
 	const [stage, setStage] = useState(1);
 	const bgArr = [
@@ -272,7 +275,8 @@ export default function Onboarding({
 
 	return (
 		<Layout
-			title="Selamat Datang! | Unbelievable"
+			backTo={backTo}
+			title={title}
 			scrollToSolid
 			showBurger={false}
 			background="rgba(0,0,0,0.27)"
@@ -283,10 +287,20 @@ export default function Onboarding({
 					{onboardings && VP}
 				</Container>
 				<div className="d-flex flex-lg-row flex-column align-items-center mt-1">
-					{stage <= 2 && (
+					{stage <= 2 && steps === 4 && (
 						<StyledHeadingSM as="p" className="ml-lg-5 ml-0 text-white">
 							intro
 						</StyledHeadingSM>
+					)}
+					{showBackBtn && stage !== 1 && (
+						<CircleButton
+							className="ml-auto mr-lg-5 mr-auto "
+							bg={"primary1"}
+							onClick={() => {
+								setStage(stage - 1);
+							}}
+							icon={<FaChevronLeft size={24} />}
+						/>
 					)}
 					{stage !== steps && (
 						<CircleButton

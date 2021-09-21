@@ -158,6 +158,7 @@ export default function Header({
 	mainApp,
 	showLogout,
 	backBtn,
+	backTo,
 }) {
 	const router = useRouter();
 	const [navbarClass, setNavbarClass] = useState("");
@@ -214,7 +215,7 @@ export default function Header({
 		router.push("/");
 	};
 	const handleClickBack = () => {
-		router.push("/dashboard");
+		router.push(`${backTo ? backTo : `/dashboard`}`);
 	};
 	const handleClickMenu = () => {
 		if (menuShown === "") {
