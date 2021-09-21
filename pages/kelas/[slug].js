@@ -238,7 +238,7 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 						text: "Kamu telah berhasil menyelesaikan semua misi video ini!",
 						icon: "success",
 						confirmButtonColor: "#171b2d",
-						confirmButtonText: "Tutup notifikasi",
+						confirmButtonText: "Tutup pemberitahuan",
 					}).then((result) => {
 						if (result.isConfirmed || result.dismiss) {
 							if (window) {

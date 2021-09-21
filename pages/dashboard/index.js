@@ -259,7 +259,6 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 					user={user}
 					onboardings={onboardings}
 				/>
-				<button onClick={() => logout()}>logout</button>
 			</>
 		);
 	}

@@ -6,12 +6,14 @@ import styled from "styled-components";
 import {
 	HeadingSM,
 	HeadingMD,
+	HeadingLG,
 	HeadingXS,
 } from "components/Typography/Headings";
 import VideoPlayerNonHLS from "components/VideoPlayer/VideoPlayerNonHLS";
 import CircleButton from "components/Buttons/CircleButton";
 import { FaChevronRight } from "react-icons/fa";
 import { mediaBreakpoint } from "utils/breakpoints";
+import Swal from "sweetalert2";
 
 const OuterContainer = styled.div`
 	min-height: 100vh;
@@ -84,7 +86,11 @@ const StyledP = styled.p`
 export default function Onboarding({
 	onboardings,
 	user,
+	showBreadCrumb = false,
 	handleFinishOnboarding,
+	videoSkippable = false,
+	steps = 4,
+	stepsRange = null,
 }) {
 	const [stage, setStage] = useState(1);
 	const bgArr = [
@@ -95,11 +101,11 @@ export default function Onboarding({
 	];
 
 	const onVideoFinished = () => {
-		setBtnDisplayed(true);
+		setAllowToNextStep(true);
 	};
 
 	const [loadingFinishBtn, setLoadingFinishBtn] = useState(false);
-	const [btnDisplayed, setBtnDisplayed] = useState(false);
+	const [allowToNextStep, setAllowToNextStep] = useState(false);
 	const [userName, setUserName] = useState("");
 	const [url, setUrl] = useState(onboardings[0][`video_intro_1`].url);
 	const [VP, setVP] = useState(
@@ -113,7 +119,19 @@ export default function Onboarding({
 	}, [user]);
 
 	const onClickNextBtn = () => {
-		setStage(stage + 1);
+		if (allowToNextStep || videoSkippable) {
+			setStage(stage + 1);
+		} else {
+			Swal.fire({
+				title: "Pemberitahuan",
+				html: "Tonton video hingga selesai untuk melanjutkan",
+				confirmButtonColor: "#171b2d",
+				confirmButtonText: "Lanjutkan menonton",
+				icon: "info",
+				timer: 10000,
+				timerProgressBar: true,
+			});
+		}
 	};
 
 	const onClickFinishBtn = async () => {
@@ -130,9 +148,9 @@ export default function Onboarding({
 			<HeadingSM as="h1" className="text-white">
 				Selamat Datang
 			</HeadingSM>
-			<HeadingMD as="h2" className="mt-2 text-yellow2">
+			<HeadingLG as="h2" className="mt-2 text-yellow2">
 				Hero!
-			</HeadingMD>
+			</HeadingLG>
 		</>,
 		<>
 			<HeadingSM as="h1" className="text-white">
@@ -200,7 +218,7 @@ export default function Onboarding({
 					/>
 				</>
 			);
-			setBtnDisplayed(true);
+			setAllowToNextStep(true);
 		} else if (stage === 4) {
 			setVP(
 				<div className="d-flex flex-column">
@@ -227,7 +245,7 @@ export default function Onboarding({
 					</FinishBtn>
 				</div>
 			);
-			setBtnDisplayed(false);
+			setAllowToNextStep(false);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [stage]);
@@ -247,7 +265,7 @@ export default function Onboarding({
 					</>
 				);
 			}, 300);
-			setBtnDisplayed(false);
+			setAllowToNextStep(false);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [url]);
@@ -270,7 +288,7 @@ export default function Onboarding({
 							intro
 						</StyledHeadingSM>
 					)}
-					{btnDisplayed && (
+					{stage !== steps && (
 						<CircleButton
 							className="ml-auto mr-lg-5 mr-auto "
 							bg={"primary1"}
