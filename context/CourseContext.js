@@ -27,6 +27,8 @@ export const CourseProvider = ({ children }) => {
 
 		if (!token) {
 			router.push(`/masuk`);
+			setEnrollClassLoading(false);
+
 			return;
 		}
 		const res = await fetch(`${API_URL}/waiting-payments/singular/me`, {
@@ -60,6 +62,8 @@ export const CourseProvider = ({ children }) => {
 			setEnrollClassLoading(true);
 			if (!token) {
 				router.push(`/masuk`);
+				setEnrollClassLoading(false);
+
 				return;
 			}
 
@@ -92,6 +96,7 @@ export const CourseProvider = ({ children }) => {
 		setEnrollClassLoading(true);
 		if (!token) {
 			router.push(`/masuk`);
+			setEnrollClassLoading(false);
 			return;
 		} else {
 			const { enrolled, slug, uuid } = course;
