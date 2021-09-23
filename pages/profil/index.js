@@ -8,6 +8,7 @@ import { TextTertiary, TextPrimary } from "components/Typography/Text";
 import { Image } from "react-bootstrap";
 import { FaVideo } from "react-icons/fa";
 import { MdEdit, MdFeedback, MdSettings } from "react-icons/md";
+import { IoDocumentText } from "react-icons/io5";
 import styled from "styled-components";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { API_URL, MUX_READY } from "config";
@@ -112,6 +113,20 @@ const Profil = ({ courseCount, courses, totalDurationWatched }) => {
 							</OptionButton>
 						</a>
 					</Link>
+					<Link href="/profil/komitmen">
+						<a className="d-flex">
+							<OptionButton
+								as="button"
+								className="d-flex flex-md-row flex-column align-items-center shadow-sm"
+							>
+								<IoDocumentText className="mr-0 mr-md-4" />
+								<TextPrimary className="text-primary1">
+									lihat komitmen saya
+								</TextPrimary>
+							</OptionButton>
+						</a>
+					</Link>
+
 					<Link href="/profil/feedback">
 						<a className="d-flex">
 							<OptionButton

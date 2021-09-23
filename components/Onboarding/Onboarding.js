@@ -109,7 +109,7 @@ export default function Onboarding({
 	stepsRange = null,
 	showBackBtn = false,
 }) {
-	const [stage, setStage] = useState(1);
+	const [stage, setStage] = useState(stepsRange ? stepsRange[0] : 1);
 	const bgArr = [
 		"#02a0e1",
 		"#42a591",
@@ -121,9 +121,10 @@ export default function Onboarding({
 		setAllowToNextStep(true);
 	};
 
-	const [loadingFinishBtn, setLoadingFinishBtn] = useState(false);
 	const [allowToNextStep, setAllowToNextStep] = useState(false);
 	const [userName, setUserName] = useState("");
+	const [lastStep] = useState(stepsRange ? stepsRange[1] : steps);
+	const [firstStep] = useState(stepsRange ? stepsRange[0] : 1);
 	const [url, setUrl] = useState(onboardings[0][`video_intro_1`].url);
 	const [VP, setVP] = useState(
 		<VideoContainer className="mt-4">
@@ -191,79 +192,86 @@ export default function Onboarding({
 	];
 
 	useEffect(() => {
-		if (stage <= 2) {
-			setUrl(onboardings[0][`video_intro_${stage}`].url);
-		} else if (stage === 3) {
-			setVP(
-				<>
-					<StyledP className="text-center mt-5 text-white">
-						Surat ini aku bikin khusus buat kamu! Aku tau sekrang kamu baru mau
-						mulai petualangan yang bakal kamu inget seumur hidup!
-						<br />
-						<br />
-						Kenapa aku tau? karena aku {user.first_name} dari{" "}
-						{parseInt(moment(user.created_at).format("yyyy")) + 1}
-					</StyledP>
-					<HighHeadingSM
-						as="p"
-						className="text-center text-yellow2 mt-lg-3 mt-1"
-					>
-						{moment(user.created_at).format("dddd, D MMMM, yyyy")} is the day
-						<br />
-						we decided to change our lives for the better
-					</HighHeadingSM>
+		setTimeout(() => {
+			if (stage <= 2) {
+				setUrl(onboardings[0][`video_intro_${stage}`].url);
+			} else if (stage === 3) {
+				setVP(
+					<>
+						<StyledP className="text-center mt-5 text-white">
+							Surat ini aku bikin khusus buat kamu! Aku tau sekrang kamu baru
+							mau mulai petualangan yang bakal kamu inget seumur hidup!
+							<br />
+							<br />
+							Kenapa aku tau? karena aku {user.first_name} dari{" "}
+							{parseInt(moment(user.created_at).format("yyyy")) + 1}
+						</StyledP>
+						<HighHeadingSM
+							as="p"
+							className="text-center text-yellow2 mt-lg-3 mt-1"
+						>
+							{moment(user.created_at).format("dddd, D MMMM, yyyy")} is the day
+							<br />
+							we decided to change our lives for the better
+						</HighHeadingSM>
 
-					<StyledP className="text-center mt-lg-5 mt-3 text-white">
-						I have excellent news, I’m healthy, in great shape, and worry-free,
-						thanks to choices you’re making.
-						<br />
-						I’ll be with you every step of the way. See you soon!
-					</StyledP>
+						<StyledP className="text-center mt-lg-5 mt-3 text-white">
+							I have excellent news, I’m healthy, in great shape, and
+							worry-free, thanks to choices you’re making.
+							<br />
+							I’ll be with you every step of the way. See you soon!
+						</StyledP>
 
-					<HighHeadingSM
-						as="p"
-						className="mt-1 ml-auto mr-auto mr-lg-5 text-white"
-					>
-						future {userName}
-					</HighHeadingSM>
+						<HighHeadingSM
+							as="p"
+							className="mt-1 ml-auto mr-auto mr-lg-5 text-white"
+						>
+							future {user.first_name} {user.last_name}
+						</HighHeadingSM>
 
-					<Blob className={`teal`} src={"/images/blueblob.png"} alt="Blob" />
-					<Blob
-						className={`purple`}
-						src={"/images/purpleblob.png"}
-						alt="Blob"
-					/>
-				</>
-			);
-			setAllowToNextStep(true);
-		} else if (stage === 4) {
-			setVP(
-				<div className="d-flex flex-column">
-					<p className="text-center mt-5 text-white">
-						It’s me, future {userName}. I’m calling from 2022 because today is
-						an important
-						<br />
-						day for you - for us!
-					</p>
-					<HighHeadingSM as="p" className="text-center text-yellow2 mt-3">
-						I, {userName}, will make the most of tommorow.
-						<br />
-						I will always remember that I will not live forever.
-						<br />
-						Every fear and irritation that threatens to distract me
-						<br />
-						will become fuel for building my best life one day at the time
-					</HighHeadingSM>
-					<FinishBtn
-						onClick={onClickFinishBtn}
-						className="mt-4 mx-auto bg-primary1"
-					>
-						<HeadingXS as="p">Ya, saya siap berkomitmen!</HeadingXS>
-					</FinishBtn>
-				</div>
-			);
-			setAllowToNextStep(false);
-		}
+						<Blob className={`teal`} src={"/images/blueblob.png"} alt="Blob" />
+						<Blob
+							className={`purple`}
+							src={"/images/purpleblob.png"}
+							alt="Blob"
+						/>
+					</>
+				);
+				setAllowToNextStep(true);
+			} else if (stage === 4) {
+				setVP(
+					<div className="d-flex flex-column">
+						<p className="text-center mt-5 text-white">
+							It’s me, future {userName}. I’m calling from 2022 because today is
+							an important
+							<br />
+							day for you - for us!
+						</p>
+						<HighHeadingSM as="p" className="text-center text-yellow2 mt-3">
+							I, {userName}, will make the most of tommorow.
+							<br />
+							I will always remember that I will not live forever.
+							<br />
+							Every fear and irritation that threatens to distract me
+							<br />
+							will become fuel for building my best life one day at the time
+						</HighHeadingSM>
+						{!stepsRange && (
+							<FinishBtn
+								onClick={onClickFinishBtn}
+								className="mt-4 mx-auto bg-primary1"
+							>
+								<HeadingXS as="p">Ya, saya siap berkomitmen!</HeadingXS>
+							</FinishBtn>
+						)}
+					</div>
+				);
+				setAllowToNextStep(false);
+			}
+		}, 0);
+
+		console.log("ASD");
+		console.log(stage);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [stage]);
 
@@ -281,7 +289,7 @@ export default function Onboarding({
 						</VideoContainer>
 					</>
 				);
-			}, 300);
+			}, 500);
 			setAllowToNextStep(false);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -306,24 +314,28 @@ export default function Onboarding({
 							intro
 						</StyledHeadingSM>
 					)}
-					{showBackBtn && stage !== 1 && (
-						<CircleButton
-							className="ml-auto mr-lg-5 mr-auto "
-							bg={"primary1"}
-							onClick={() => {
-								setStage(stage - 1);
-							}}
-							icon={<FaChevronLeft size={24} />}
-						/>
+					{showBackBtn && stage !== firstStep && (
+						<>
+							<CircleButton
+								className="ml-auto mr-lg-5 mr-auto "
+								bg={"primary1"}
+								onClick={() => {
+									setStage(stage - 1);
+								}}
+								icon={<FaChevronLeft size={24} />}
+							/>
+						</>
 					)}
 
-					{stage !== steps && (
-						<CircleButton
-							className="ml-auto mr-lg-5 mr-auto "
-							bg={"primary1"}
-							onClick={onClickNextBtn}
-							icon={<FaChevronRight size={24} />}
-						/>
+					{stage !== lastStep && (
+						<>
+							<CircleButton
+								className="ml-auto mr-lg-5 mr-auto "
+								bg={"primary1"}
+								onClick={onClickNextBtn}
+								icon={<FaChevronRight size={24} />}
+							/>
+						</>
 					)}
 				</div>
 				{stage === steps && videoSkippable && (
