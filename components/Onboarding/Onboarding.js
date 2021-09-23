@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { Container, Button, Image } from "react-bootstrap";
 import moment from "moment";
 import Layout from "components/Layout";
@@ -9,12 +10,16 @@ import {
 	HeadingLG,
 	HeadingXS,
 } from "components/Typography/Headings";
+import { TextPrimary, TextSecondary } from "components/Typography/Text";
 import VideoPlayerNonHLS from "components/VideoPlayer/VideoPlayerNonHLS";
 import CircleButton from "components/Buttons/CircleButton";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { mediaBreakpoint } from "utils/breakpoints";
 import Swal from "sweetalert2";
 
+const StyledTextSecondary = styled(TextSecondary)`
+	font-family: "OpenSansBold";
+`;
 const OuterContainer = styled.div`
 	min-height: 100vh;
 	width: 100%;
@@ -82,6 +87,15 @@ const Blob = styled(Image)`
 
 const StyledP = styled.p`
 	z-index: 3;
+`;
+
+const EnrollBtn = styled(Button)`
+	border-radius: 40px;
+	border: none;
+	padding: 8px 24px;
+	left: 0;
+	right: 0;
+	width: 116px;
 `;
 export default function Onboarding({
 	onboardings,
@@ -282,7 +296,7 @@ export default function Onboarding({
 			background="rgba(0,0,0,0.27)"
 		>
 			<OuterContainer bg={bgArr[stage - 1]}>
-				<Container className="position-relative d-flex flex-column justify-content-center align-items-center justify-content-center">
+				<Container className="position-relative d-flex flex-column justify-content-center align-items-center justify-content-center mb-3">
 					{headingText[stage - 1]}
 					{onboardings && VP}
 				</Container>
@@ -302,6 +316,7 @@ export default function Onboarding({
 							icon={<FaChevronLeft size={24} />}
 						/>
 					)}
+
 					{stage !== steps && (
 						<CircleButton
 							className="ml-auto mr-lg-5 mr-auto "
@@ -311,6 +326,15 @@ export default function Onboarding({
 						/>
 					)}
 				</div>
+				{stage === steps && videoSkippable && (
+					<Link href="/profil">
+						<a className="mx-auto">
+							<EnrollBtn className="bg-primary1">
+								<StyledTextSecondary>Selesai</StyledTextSecondary>
+							</EnrollBtn>
+						</a>
+					</Link>
+				)}
 			</OuterContainer>
 		</Layout>
 	);
