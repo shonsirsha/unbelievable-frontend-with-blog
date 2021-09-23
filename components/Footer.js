@@ -20,24 +20,19 @@ export default function Footer() {
 
 	return (
 		<StyledFooter className="bg-primary1">
-			{/* <Image
-				width={"20px"}
-				height={"20px"}
-				src="/netliheart.svg"
-				alt="Netlify Logo"
-				className={styles.logo}
-			/> */}
 			<Link href={user ? `/dashboard` : `/`}>
-				<Image
-					width={"220px"}
-					height={"24px"}
-					src="/images/logo.png"
-					alt="logo"
-				/>
+				<a>
+					<Image
+						width={"220px"}
+						height={"24px"}
+						src="/images/logo.png"
+						alt="logo"
+					/>
+				</a>
 			</Link>
 
 			<TextSecondary className="text-white ">
-				© Unbelievable.id, 2021
+				© Unbelievable.id, {new Date().getFullYear()}
 			</TextSecondary>
 		</StyledFooter>
 	);
