@@ -85,8 +85,14 @@ export const CourseProvider = ({ children }) => {
 			if (res.ok) {
 				setInvoiceUrl(inv.invoice_url);
 			} else {
-				console.log(res);
-				alert("Maaf, telah terjadi kesalahan. Mohon coba lagi. (NO_PRC)");
+				console.log(inv);
+				setInvoiceUrl("");
+
+				if (inv.message.message === "invoice can't be issued") {
+					router.reload();
+				} else {
+					alert("Maaf, telah terjadi kesalahan. Mohon coba lagi. (NO_PRC)");
+				}
 			}
 			setEnrollClassLoading(false);
 		}

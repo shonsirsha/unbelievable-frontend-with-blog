@@ -120,7 +120,6 @@ const StyledSubmitBtn = styled(Button)`
 
 const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 	const router = useRouter();
-	console.log(courses);
 	const { logout, checkUserLoggedIn, getToken } = useContext(AuthContext);
 	const {
 		previewModalOpen,
