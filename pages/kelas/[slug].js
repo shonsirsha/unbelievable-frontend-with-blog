@@ -620,6 +620,11 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 	return (
 		<Layout
 			showBurger={false}
+			description={
+				currentCourse.short_desc && currentCourse.short_desc.length > 0
+					? `${currentCourse.short_desc} Ikuti kelas ${title} sekarang juga di Unbelievable!`
+					: `Ikuti kelas ${title} sekarang juga di Unbelievable!`
+			}
 			title={`${title} | Unbelievable`}
 			background="#171b2d"
 			withMargin
