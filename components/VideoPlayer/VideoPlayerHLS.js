@@ -33,7 +33,7 @@ const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo }) => {
 	useEffect(() => {
 		const videoJsOptions = {
 			preload: "auto",
-			autoplay: true,
+			autoplay: false,
 			controls: true,
 			fluid: true,
 			playsinline: true,

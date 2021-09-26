@@ -28,3 +28,27 @@ a:active {
 .react-tiny-popover-container {
 	z-index: 1800;
 }
+
+.video-js .vjs-big-play-button {
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	border-radius: 100%;
+	width: 110px;
+	height: 110px;
+	border: none;
+	background: #45454575;
+}
+
+.video-js .vjs-big-play-button .vjs-icon-placeholder:before {
+	font-size: 56px;
+	top: 33px;
+}
+
+.video-js:hover .vjs-big-play-button,
+.video-js .vjs-big-play-button:focus {
+	background-color: #79797975;
+}
