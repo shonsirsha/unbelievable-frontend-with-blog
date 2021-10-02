@@ -323,8 +323,6 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 		}
 	};
 
-	console.log(currentCourse);
-
 	useEffect(() => {
 		setCurrentlyOpened("desc");
 		setFinishedWatching(finished_watching);
@@ -637,16 +635,33 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 				</div>
 				<div className="d-flex flex-lg-row flex-column w-100 mt-4">
 					<VideoContainer>
-						<VideoPlayerHLS
+						{/* <VideoPlayerHLS
 							videoId={currentCourse.currentVideo.id}
 							finishesVideo={finishesVideo}
 							liveURL={
 								// https://content.jwplatform.com/manifests/yp34SRmf.m3u8
 								USE_FALLBACK_VID
-									? `https://content.jwplatform.com/manifests/yp34SRmf.m3u8`
+									? `https://vz-450fb4df-0a1.b-cdn.net/07c1aae4-7af6-415e-b178-bb3eed797438/playlist.m3u8`
 									: `https://stream.mux.com/${currentCourse.currentVideo.video.playback_id}.m3u8`
 							}
-						/>
+						/> */}
+						<div style={{ position: "relative", paddingTop: "56.25%" }}>
+							<iframe
+								src="https://iframe.mediadelivery.net/embed/14531/07c1aae4-7af6-415e-b178-bb3eed797438?autoplay=true"
+								loading="lazy"
+								style={{
+									border: "none",
+									position: "absolute",
+									top: 0,
+									height: "100%",
+									width: "100%",
+								}}
+								allowFullScreen
+								onEnded={() => alert("ASD")}
+								id="lalax"
+								allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+							/>
+						</div>
 
 						<MiscContainer />
 					</VideoContainer>

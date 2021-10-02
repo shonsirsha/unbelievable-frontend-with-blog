@@ -176,6 +176,7 @@ export const AuthProvider = ({ children }) => {
 	//Check if user is logged in
 
 	const checkUserLoggedIn = async () => {
+		console.log("ASSAAS");
 		setUserLoading(true);
 		const res = await fetch(`${NEXT_URL}/api/user`, { method: "POST" });
 
@@ -184,6 +185,25 @@ export const AuthProvider = ({ children }) => {
 		if (res.ok) {
 			setUser(data.user);
 			setToken(data.user.token);
+
+			if (!data.user.mailchimp_set && data.user.dob) {
+				//registering to mailchimp (account with a 'free' tag)
+				const mailchimpRegisterRes = await fetch(
+					`${API_URL}/users/mailchimp-register`,
+					{
+						method: "POST",
+						headers: {
+							Authorization: `Bearer ${data.user.token}`,
+						},
+					}
+				);
+
+				if (!mailchimpRegisterRes.ok) {
+					console.log("mc E");
+				} else {
+					console.log("mc R (free)");
+				}
+			}
 		} else {
 			setUser(null);
 		}

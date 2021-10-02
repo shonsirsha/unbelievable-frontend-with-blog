@@ -138,7 +138,7 @@ export default function index() {
 								<div className="d-flex flex-column body">
 									<PriceBox className="bg-blue">
 										<StyledHeadingXXS as="p" className="text-white">
-											IDR 399,000 / kelas
+											Lihat Kelas
 										</StyledHeadingXXS>
 									</PriceBox>
 									<div className="separator"></div>

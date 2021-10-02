@@ -54,16 +54,19 @@ const Callback = () => {
 				const reg_code = sessionStorage.getItem("unb_reg_code");
 				if (reg_code) {
 					console.log(reg_code);
+					// saving to DB immediately - just in case user closes the tab
 					saveRegisterCodeToDB(reg_code).then(() => {
 						sessionStorage.removeItem("unb_reg_code");
+						//attempting to set reg_code in db
 						setUserRegisterCodeToDB(reg_code);
-					}); // saving to DB immediately - just in case user closes the tab
+					});
 				} else {
 					//if !reg_code,
 					// no code in DB nor in session storage -
 					// safe to assume that user has no special register code
-					setRedir(true);
-					setUserRegisterCodeToDB(""); // will basically set code_verified to true
+
+					console.log("no reg link");
+					setUserRegisterCodeToDB(""); // will basically set code_verified to true w/ no register link
 				}
 			} else if (
 				!user.register_link &&
