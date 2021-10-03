@@ -38,6 +38,11 @@ const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo }) => {
 			fluid: true,
 			playsinline: true,
 			responsive: true,
+			html5: {
+				hls: {
+					overrideNative: true, // add this line
+				},
+			},
 			sources: [
 				{
 					src: liveURL,

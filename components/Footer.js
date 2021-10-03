@@ -19,7 +19,7 @@ export default function Footer() {
 	const { user } = useContext(AuthContext);
 
 	return (
-		<StyledFooter className="bg-primary1">
+		<StyledFooter className="bg-primary1 flex-md-row flex-column">
 			<Link href={user ? `/dashboard` : `/`}>
 				<a>
 					<Image

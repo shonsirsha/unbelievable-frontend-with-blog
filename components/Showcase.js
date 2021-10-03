@@ -17,7 +17,7 @@ const StyledHeading = styled(HeadingLG)`
 export default function Showcase({ title = "Title" }) {
 	return (
 		<OuterContainer>
-			<StyledHeading className="text-white">{title}</StyledHeading>
+			<StyledHeading className="text-white text-center">{title}</StyledHeading>
 		</OuterContainer>
 	);
 }
