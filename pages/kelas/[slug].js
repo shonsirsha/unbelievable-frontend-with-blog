@@ -5,7 +5,7 @@ import VideoPlayerHLS from "components/VideoPlayer/VideoPlayerHLS";
 import MisiBlock from "components/Kelas/MisiBlock";
 import BuyModal from "components/Course/BuyModal";
 import { parseCookies } from "utils/cookies";
-import { API_URL, USE_FALLBACK_VID } from "config";
+import { API_URL, USE_FALLBACK_VID, BUNNY_STREAM_PREFIX_URL } from "config";
 import { useRouter } from "next/router";
 import Layout from "components/Layout";
 import styled from "styled-components";
@@ -365,8 +365,8 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 	const goToVideo = (video) => {
 		router.push(
 			`${
-				video.video.upload_id
-					? `/kelas/${slug}?c=${video.video.upload_id}`
+				video.bunny_video.upload_id
+					? `/kelas/${slug}?c=${video.bunny_video.upload_id}`
 					: `#`
 			}`
 		);
@@ -467,14 +467,14 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 				<div className="d-flex align-items-center mb-2">
 					<Clock className="text-white mr-1" />
 					<TimeText className={`text-white`}>
-						{USE_FALLBACK_VID ? `0:25` : secsToMin(video.duration_seconds)}
+						{secsToMin(video.bunny_video.duration)}
 					</TimeText>
 				</div>
 
 				<div className="d-flex align-items-center">
 					{ix > 0 && <Lock className="text-white mr-1" />}
 					<StyledTextSecondary className={`text-white`}>
-						{video.video.title}
+						{video.bunny_video.title}
 					</StyledTextSecondary>
 				</div>
 			</>
@@ -519,7 +519,7 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 							bought_day_diff >= ix ? `white` : "lighterDarkGray"
 						}`}
 					>
-						{USE_FALLBACK_VID ? `0:25` : secsToMin(video.duration_seconds)}
+						{secsToMin(video.bunny_video.duration)}
 					</TimeText>
 				</div>
 
@@ -556,7 +556,7 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 							bought_day_diff >= ix ? `white` : "lighterDarkGray"
 						}`}
 					>
-						{video.video.title}
+						{video.bunny_video.title}
 					</StyledTextSecondary>
 				</div>
 			</>
@@ -640,29 +640,12 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 							finishesVideo={finishesVideo}
 							liveURL={
 								// https://content.jwplatform.com/manifests/yp34SRmf.m3u8
-								USE_FALLBACK_VID
-									? `https://vz-450fb4df-0a1.b-cdn.net/07c1aae4-7af6-415e-b178-bb3eed797438/playlist.m3u8`
-									: `https://stream.mux.com/${currentCourse.currentVideo.video.playback_id}.m3u8`
+								// USE_FALLBACK_VID
+								// 	? `https://vz-450fb4df-0a1.b-cdn.net/07c1aae4-7af6-415e-b178-bb3eed797438/playlist.m3u8`
+								// 	: `https://stream.mux.com/${currentCourse.currentVideo.video.playback_id}.m3u8`
+								`${BUNNY_STREAM_PREFIX_URL}/${currentCourse.currentVideo.bunny_video.video_id}/playlist.m3u8`
 							}
 						/>
-						{/* <div style={{ position: "relative", paddingTop: "56.25%" }}>
-							<iframe
-								src="https://iframe.mediadelivery.net/embed/14531/07c1aae4-7af6-415e-b178-bb3eed797438?autoplay=true"
-								loading="lazy"
-								style={{
-									border: "none",
-									position: "absolute",
-									top: 0,
-									height: "100%",
-									width: "100%",
-								}}
-								allowFullScreen
-								onEnded={() => alert("ASD")}
-								id="lalax"
-								allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-							/>
-						</div> */}
-
 						<MiscContainer />
 					</VideoContainer>
 					<VideosListContainer className="bg-primary1">
@@ -672,7 +655,7 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 
 						{videosState.map((vid, ix) => (
 							<div
-								key={vid.video.upload_id}
+								key={vid.bunny_video.upload_id}
 								onClick={() => handleClickedVideoDay(vid, ix)}
 							>
 								<a>
@@ -726,6 +709,7 @@ export async function getServerSideProps(ctx) {
 		},
 	});
 	const course = await res.json();
+	console.log("???", course);
 
 	if (course.length < 1) {
 		return {
@@ -736,10 +720,9 @@ export async function getServerSideProps(ctx) {
 			props: {},
 		};
 	}
-
 	const validUploadId = course[0].videos.some((crs) => {
-		if (crs.video) {
-			return crs.video.upload_id === c;
+		if (crs.bunny_video) {
+			return crs.bunny_video.upload_id === c;
 		} else {
 			return false; // if user hasnt bought the course / course has not even 1 video
 		}
@@ -748,7 +731,7 @@ export async function getServerSideProps(ctx) {
 		return {
 			redirect: {
 				permanent: false,
-				destination: `/kelas/${slug}?c=${course[0].videos[0].video.upload_id}`,
+				destination: `/kelas/${slug}?c=${course[0].videos[0].bunny_video.upload_id}`,
 			},
 			props: {},
 		};
@@ -758,13 +741,13 @@ export async function getServerSideProps(ctx) {
 		return {
 			redirect: {
 				permanent: false,
-				destination: `/kelas/${slug}?c=${course[0].videos[0].video.upload_id}`,
+				destination: `/kelas/${slug}?c=${course[0].videos[0].bunny_video.upload_id}`,
 			},
 			props: {},
 		};
 	}
 	let currentVideoIndexInVideosArray = course[0].videos.findIndex((crs, ix) => {
-		return crs.video.upload_id === c;
+		return crs.bunny_video.upload_id === c;
 	});
 	if (currentVideoIndexInVideosArray > 0) {
 		let prevVideoMissionsCompleted =
@@ -774,7 +757,7 @@ export async function getServerSideProps(ctx) {
 			return {
 				redirect: {
 					permanent: false,
-					destination: `/kelas/${slug}?c=${course[0].videos[0].video.upload_id}`,
+					destination: `/kelas/${slug}?c=${course[0].videos[0].bunny_video.upload_id}`,
 				},
 				props: {},
 			};
@@ -793,6 +776,8 @@ export async function getServerSideProps(ctx) {
 		);
 
 		if (!enrolling.ok) {
+			console.log("failed enrolling");
+
 			return {
 				redirect: {
 					permanent: false,
@@ -800,11 +785,10 @@ export async function getServerSideProps(ctx) {
 				},
 				props: {},
 			};
-			console.log("failed enrolling");
 		}
 	}
 	let currentVideo = course[0].videos.find((crs, ix) => {
-		return crs.video.upload_id === c;
+		return crs.bunny_video.upload_id === c;
 	});
 	const currentCourse = {
 		currentVideo,
