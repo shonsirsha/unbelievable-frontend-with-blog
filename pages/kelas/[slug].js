@@ -636,6 +636,7 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 				<div className="d-flex flex-lg-row flex-column w-100 mt-4">
 					<VideoContainer>
 						<VideoPlayerHLS
+							posterURL={`${BUNNY_STREAM_PREFIX_URL}/${currentCourse.currentVideo.bunny_video.video_id}/${currentCourse.currentVideo.bunny_video.thumbnail_name}`}
 							videoId={currentCourse.currentVideo.id}
 							finishesVideo={finishesVideo}
 							liveURL={
