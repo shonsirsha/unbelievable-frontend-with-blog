@@ -710,7 +710,6 @@ export async function getServerSideProps(ctx) {
 		},
 	});
 	const course = await res.json();
-	console.log("???", course);
 
 	if (course.length < 1) {
 		return {
@@ -721,7 +720,6 @@ export async function getServerSideProps(ctx) {
 			props: {},
 		};
 	}
-	console.log(course);
 	const validUploadId = course[0].videos.some((crs) => {
 		if (crs.bunny_video) {
 			return crs.bunny_video.upload_id === c;
