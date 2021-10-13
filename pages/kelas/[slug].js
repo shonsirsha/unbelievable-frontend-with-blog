@@ -721,6 +721,7 @@ export async function getServerSideProps(ctx) {
 			props: {},
 		};
 	}
+	console.log(course);
 	const validUploadId = course[0].videos.some((crs) => {
 		if (crs.bunny_video) {
 			return crs.bunny_video.upload_id === c;

@@ -120,7 +120,7 @@ export default function EnrolledCourseCard({ small, user, course, ...props }) {
 	};
 
 	return (
-		<Link passHref href={`kelas/${slug}?c=${videos[0].video.upload_id}`}>
+		<Link passHref href={`kelas/${slug}?c=${videos[0].bunny_video.upload_id}`}>
 			<StyledCard small={small} {...props}>
 				<ImageContainer small={small} img={image} />
 
