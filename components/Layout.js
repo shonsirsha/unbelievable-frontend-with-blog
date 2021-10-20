@@ -130,6 +130,8 @@ export default function Layout({
 				<title>{title}</title>
 				<meta name="description" content={description} />
 				<meta name="keywords" content={keywords} />
+				<meta property="og:title" content={title} key="ogtitle" />
+				<meta property="og:description" content={description} key="ogdesc" />
 			</Head>
 			{!loading && (
 				<Header
