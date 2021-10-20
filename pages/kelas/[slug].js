@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect, useContext } from "react";
 import CourseContext from "context/CourseContext";
 import Swal from "sweetalert2";
@@ -21,6 +22,7 @@ import { mediaBreakpoint } from "utils/breakpoints";
 import { dateDiffInDays } from "utils/dateDiffInDays";
 import { secsToMin } from "utils/secsToMin";
 import Markdown from "markdown-to-jsx";
+import AuthContext from "context/AuthContext";
 const StyledContainer = styled.div`
 	display: flex;
 	padding: 32px 0;
@@ -142,8 +144,32 @@ const StyledMarkDown = styled(Markdown)`
 	}
 `;
 const StyledTextSecondary = styled(TextSecondary)``;
-export default function Kelas({ slug, currentCourse, token, user }) {
+export default function Kelas({
+	slug,
+	currentCourse,
+	token,
+	userServer,
+	noToken = false,
+}) {
 	const router = useRouter();
+
+	const { user, checkUserLoggedIn } = useContext(AuthContext);
+	useEffect(() => {
+		if (noToken) {
+			checkUserLoggedIn();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [noToken]);
+	useEffect(() => {
+		if (noToken && user) {
+			router.reload();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user]);
+
+	if (noToken) {
+		return <></>;
+	}
 
 	const { paid, title, bought_day_diff } = currentCourse;
 
@@ -165,6 +191,7 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 	const [renderedDescContext, setRenderedDescContext] = useState(
 		<>{video_desc}</>
 	);
+
 	const {
 		setMissionsCtx,
 		missionsCtx,
@@ -450,7 +477,7 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 		const invoiceIsValid = await checkIfInvoiceValid(currentCourse.id, token); // exists and not expiring soon/expired yet
 		if (!invoiceIsValid) {
 			console.log("getting new url (call to xendit)...");
-			await getInvoiceUrl(currentCourse, user, token);
+			await getInvoiceUrl(currentCourse, userServer, token);
 		}
 		setBuyModalOpen(true);
 	};
@@ -615,6 +642,10 @@ export default function Kelas({ slug, currentCourse, token, user }) {
 		);
 	};
 
+	if (noToken) {
+		return <></>;
+	}
+
 	return (
 		<Layout
 			showBurger={false}
@@ -692,11 +723,9 @@ export async function getServerSideProps(ctx) {
 	const { token } = parseCookies(ctx.req);
 	if (!token) {
 		return {
-			redirect: {
-				permanent: false,
-				destination: "/masuk",
+			props: {
+				noToken: true,
 			},
-			props: {},
 		};
 	}
 	const { slug, c } = ctx.query;
@@ -819,7 +848,7 @@ export async function getServerSideProps(ctx) {
 			slug,
 			currentCourse,
 			token,
-			user,
+			userServer: user,
 		},
 	};
 }

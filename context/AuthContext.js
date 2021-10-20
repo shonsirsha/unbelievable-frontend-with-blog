@@ -176,7 +176,6 @@ export const AuthProvider = ({ children }) => {
 	//Check if user is logged in
 
 	const checkUserLoggedIn = async () => {
-		console.log("ASSAAS");
 		setUserLoading(true);
 		const res = await fetch(`${NEXT_URL}/api/user`, { method: "POST" });
 
@@ -206,6 +205,7 @@ export const AuthProvider = ({ children }) => {
 			}
 		} else {
 			setUser(null);
+			router.push("/masuk");
 		}
 		setUserLoading(false);
 	};

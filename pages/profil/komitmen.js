@@ -1,14 +1,37 @@
+import { useEffect, useContext } from "react";
+import { useRouter } from "next/router";
+import AuthContext from "context/AuthContext";
 import "react-toastify/dist/ReactToastify.css";
 import { parseCookies } from "utils/cookies";
 import Onboarding from "components/Onboarding/Onboarding";
 import { API_URL } from "config/index";
 
-const Komitmen = ({ user, onboardings }) => {
+const Komitmen = ({ userServer, onboardings, noToken = false }) => {
+	const router = useRouter();
+
+	const { user, checkUserLoggedIn } = useContext(AuthContext);
+	useEffect(() => {
+		if (noToken) {
+			checkUserLoggedIn();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [noToken]);
+	useEffect(() => {
+		if (noToken && user) {
+			router.reload();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user]);
+
+	if (noToken) {
+		return <></>;
+	}
+
 	return (
 		<Onboarding
-			user={user}
+			user={userServer}
 			backTo="/profil"
-			title="Video Tutorial | Unbelievable"
+			title="Komitmen | Unbelievable"
 			onboardings={onboardings}
 			videoSkippable
 			showBackBtn
@@ -20,15 +43,12 @@ const Komitmen = ({ user, onboardings }) => {
 export async function getServerSideProps({ req, _ }) {
 	const { token } = parseCookies(req);
 
-	if (token === undefined) {
+	if (!token) {
 		return {
-			redirect: {
-				permanent: false,
-				destination: "/masuk",
+			props: {
+				noToken: true,
 			},
-			props: {},
 		};
-	} else {
 	}
 
 	const res = await fetch(`${API_URL}/onboardings`, {
@@ -50,7 +70,7 @@ export async function getServerSideProps({ req, _ }) {
 	return {
 		props: {
 			onboardings,
-			user,
+			userServer: user,
 		},
 	};
 }

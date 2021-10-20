@@ -1,5 +1,6 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import AuthContext from "context/AuthContext";
 import Layout from "components/Layout";
 import { parseCookies } from "utils/cookies";
@@ -11,7 +12,7 @@ import { MdEdit, MdFeedback, MdSettings } from "react-icons/md";
 import { IoDocumentText } from "react-icons/io5";
 import styled from "styled-components";
 import { mediaBreakpoint } from "utils/breakpoints";
-import { API_URL, MUX_READY } from "config";
+import { NEXT_URL, API_URL, MUX_READY } from "config";
 import { profileDisplay } from "utils/secsToMin";
 
 const OptionButton = styled.div`
@@ -59,9 +60,33 @@ const ButtonsContainer = styled.div`
 	}
 `;
 
-const Profil = ({ courseCount, courses, totalDurationWatched }) => {
-	const { user } = useContext(AuthContext);
+const Profil = ({
+	courseCount,
+	courses,
+	totalDurationWatched,
+	noToken = false,
+}) => {
+	const { user, checkUserLoggedIn } = useContext(AuthContext);
+	const router = useRouter();
 
+	useEffect(() => {
+		if (noToken) {
+			checkUserLoggedIn();
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [noToken]);
+
+	useEffect(() => {
+		if (noToken && user) {
+			router.reload();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user]);
+
+	if (noToken) {
+		return <></>;
+	}
 	return (
 		<Layout
 			title="Profil | Unbelievable"
@@ -175,13 +200,20 @@ const Profil = ({ courseCount, courses, totalDurationWatched }) => {
 };
 export async function getServerSideProps(ctx) {
 	const { token } = parseCookies(ctx.req);
+
 	if (!token) {
+		// return {
+		// 	redirect: {
+		// 		permanent: false,
+		// 		destination: "/masuk",
+		// 	},
+		// 	props: {},
+		// };
+
 		return {
-			redirect: {
-				permanent: false,
-				destination: "/masuk",
+			props: {
+				noToken: true,
 			},
-			props: {},
 		};
 	}
 
