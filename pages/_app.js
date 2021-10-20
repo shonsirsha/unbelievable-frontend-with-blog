@@ -1,4 +1,5 @@
 import NProgress from "nprogress";
+import Head from "next/head";
 import "nprogress/nprogress.css";
 import "styles/styles.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -26,6 +27,9 @@ function Application({ Component, pageProps }) {
 	return (
 		<AuthProvider>
 			<CourseProvider>
+				<Head>
+					x <meta property="og:description" content={"tezt"} key="ogdesc" />
+				</Head>
 				<Component {...pageProps} />
 			</CourseProvider>
 		</AuthProvider>
