@@ -31,7 +31,7 @@ export default function VideoPlayerNonHLS({ liveUrl, onVideoFinished }) {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [sec]);
-
+	let y = 0;
 	return (
 		<div id="macan">
 			<VREPlayer
@@ -40,9 +40,25 @@ export default function VideoPlayerNonHLS({ liveUrl, onVideoFinished }) {
 				onLoadedMetadata={(e, player) => {
 					setDuration(player.duration());
 				}}
-				onReady={(player) => {}}
+				// onReady={(player) => {
+				// 	// player.controlBar.progressControl.disable();
+				// }}
+				onSeeking={(ev, player, currentTimeSecond) => {
+					console.log(y);
+					if (y < currentTimeSecond) {
+						player.currentTime(y);
+						return;
+					}
+				}}
+				onSeeked={(ev, player, startPositionSecond, completeTimeSecond) => {
+					if (startPositionSecond < completeTimeSecond) {
+						player.currentTime(startPositionSecond);
+						return;
+					}
+				}}
 				onPlay={(e, _, second) => {}}
 				onTimeUpdate={(e, _, second) => {
+					y = second;
 					setSec(second);
 				}}
 				onPause={(e, _, second) => {}}
