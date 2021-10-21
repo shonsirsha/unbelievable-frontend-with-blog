@@ -52,3 +52,7 @@ a:active {
 .video-js .vjs-big-play-button:focus {
 	background-color: #79797975;
 }
+
+#macan .video-js .vjs-progress-control {
+	pointer-events: none;
+}

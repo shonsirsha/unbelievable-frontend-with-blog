@@ -127,7 +127,7 @@ export default function Onboarding({
 	const [firstStep] = useState(stepsRange ? stepsRange[0] : 1);
 	const [url, setUrl] = useState(onboardings[0][`video_intro_1`].url);
 	const [VP, setVP] = useState(
-		<VideoContainer className="mt-4">
+		<VideoContainer id="macan" className="mt-4">
 			<VideoPlayerNonHLS liveUrl={url} onVideoFinished={onVideoFinished} />
 		</VideoContainer>
 	);

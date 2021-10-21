@@ -33,21 +33,23 @@ export default function VideoPlayerNonHLS({ liveUrl, onVideoFinished }) {
 	}, [sec]);
 
 	return (
-		<VREPlayer
-			playerOptions={playerOptions}
-			videojsOptions={videojsOptions}
-			onLoadedMetadata={(e, player) => {
-				setDuration(player.duration());
-			}}
-			onReady={(player) => {}}
-			onPlay={(e, _, second) => {}}
-			onTimeUpdate={(e, _, second) => {
-				setSec(second);
-			}}
-			onPause={(e, _, second) => {}}
-			onEnded={(e, _) => {
-				setFinished(true);
-			}}
-		/>
+		<div id="macan">
+			<VREPlayer
+				playerOptions={playerOptions}
+				videojsOptions={videojsOptions}
+				onLoadedMetadata={(e, player) => {
+					setDuration(player.duration());
+				}}
+				onReady={(player) => {}}
+				onPlay={(e, _, second) => {}}
+				onTimeUpdate={(e, _, second) => {
+					setSec(second);
+				}}
+				onPause={(e, _, second) => {}}
+				onEnded={(e, _) => {
+					setFinished(true);
+				}}
+			/>
+		</div>
 	);
 }
