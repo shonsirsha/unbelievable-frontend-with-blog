@@ -9,7 +9,7 @@ import { API_URL } from "config/index";
 const VideoTutorial = ({ userServer, onboardings, noToken = false }) => {
 	const router = useRouter();
 
-	const { user, checkUserLoggedIn } = useContext(AuthContext);
+	const { userLoading, user, checkUserLoggedIn } = useContext(AuthContext);
 	useEffect(() => {
 		if (noToken) {
 			checkUserLoggedIn();
@@ -17,11 +17,13 @@ const VideoTutorial = ({ userServer, onboardings, noToken = false }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [noToken]);
 	useEffect(() => {
-		if (noToken && user) {
+		if (noToken && user && !userLoading) {
 			router.reload();
+		} else if (!user && !userLoading) {
+			router.push("/masuk");
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [user]);
+	}, [userLoading]);
 	if (noToken) {
 		return <></>;
 	}

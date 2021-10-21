@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import AuthContext from "context/AuthContext";
@@ -66,7 +66,7 @@ const Profil = ({
 	totalDurationWatched,
 	noToken = false,
 }) => {
-	const { user, checkUserLoggedIn } = useContext(AuthContext);
+	const { user, userLoading, checkUserLoggedIn } = useContext(AuthContext);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -78,11 +78,13 @@ const Profil = ({
 	}, [noToken]);
 
 	useEffect(() => {
-		if (noToken && user) {
+		if (noToken && user && !userLoading) {
 			router.reload();
+		} else if (!user && !userLoading) {
+			router.push("/masuk");
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [user]);
+	}, [userLoading]);
 
 	if (noToken) {
 		return <></>;

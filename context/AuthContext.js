@@ -204,8 +204,9 @@ export const AuthProvider = ({ children }) => {
 				}
 			}
 		} else {
+			setUserLoading(false);
+
 			setUser(null);
-			router.push("/masuk");
 		}
 		setUserLoading(false);
 	};
