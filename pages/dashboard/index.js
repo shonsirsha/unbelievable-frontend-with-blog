@@ -310,7 +310,7 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 					<div className="d-flex flex-lg-wrap flex-nowrap w-100 overflow-lg-none overflow-auto pb-2">
 						{coursesTaken.map((course) => (
 							<>
-								{course.videos.length > 0 && (
+								{course.grouped_videos.videos.length > 0 && (
 									<StyledEnrolled user={user} key={course.id} course={course} />
 								)}
 							</>

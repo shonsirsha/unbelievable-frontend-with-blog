@@ -210,7 +210,9 @@ export default function Kelas({
 	const [missionIdsToAPI, setMissionIdsToAPI] = useState([]);
 	const [missionHook, setMissionHook] = useState(false);
 	const [loadingFetchMission, setLoadingFetchMission] = useState(true);
-	const [videosState, setVideosState] = useState(currentCourse.videos);
+	const [videosState, setVideosState] = useState(
+		currentCourse.grouped_videos.videos
+	);
 
 	useEffect(() => {
 		setMissionsCtx(missions);
@@ -751,44 +753,48 @@ export async function getServerSideProps(ctx) {
 			props: {},
 		};
 	}
-	const validUploadId = course[0].videos.some((crs) => {
+	const validUploadId = course[0].grouped_videos.videos.some((crs) => {
 		if (crs.bunny_video) {
+			console.log("XXXX");
 			return crs.bunny_video.upload_id === c;
 		} else {
+			console.log("WWW");
 			return false; // if user hasnt bought the course / course has not even 1 video
 		}
 	});
+
 	if (!validUploadId) {
 		return {
 			redirect: {
 				permanent: false,
-				destination: `/kelas/${slug}?c=${course[0].videos[0].bunny_video.upload_id}`,
+				destination: `/kelas/${slug}?c=${course[0].grouped_videos.videos[0].bunny_video.upload_id}`,
 			},
 			props: {},
 		};
 	}
-
+	console.log("AAAA");
 	if (c === "" || !c || c.length === 0) {
 		return {
 			redirect: {
 				permanent: false,
-				destination: `/kelas/${slug}?c=${course[0].videos[0].bunny_video.upload_id}`,
+				destination: `/kelas/${slug}?c=${course[0].grouped_videos.videos[0].bunny_video.upload_id}`,
 			},
 			props: {},
 		};
 	}
-	let currentVideoIndexInVideosArray = course[0].videos.findIndex((crs, ix) => {
-		return crs.bunny_video.upload_id === c;
-	});
+	let currentVideoIndexInVideosArray =
+		course[0].grouped_videos.videos.findIndex((crs, ix) => {
+			return crs.bunny_video.upload_id === c;
+		});
 	if (currentVideoIndexInVideosArray > 0) {
 		let prevVideoMissionsCompleted =
-			course[0].videos[currentVideoIndexInVideosArray - 1]
+			course[0].grouped_videos.videos[currentVideoIndexInVideosArray - 1]
 				.all_missions_completed;
 		if (!prevVideoMissionsCompleted) {
 			return {
 				redirect: {
 					permanent: false,
-					destination: `/kelas/${slug}?c=${course[0].videos[0].bunny_video.upload_id}`,
+					destination: `/kelas/${slug}?c=${course[0].grouped_videos.videos[0].bunny_video.upload_id}`,
 				},
 				props: {},
 			};
@@ -818,13 +824,15 @@ export async function getServerSideProps(ctx) {
 			};
 		}
 	}
-	let currentVideo = course[0].videos.find((crs, ix) => {
+	let currentVideo = course[0].grouped_videos.videos.find((crs, ix) => {
 		return crs.bunny_video.upload_id === c;
 	});
 	const currentCourse = {
 		currentVideo,
 		...course[0],
 	};
+
+	console.log(currentCourse);
 
 	const res2 = await fetch(`${API_URL}/users/me`, {
 		method: "GET",

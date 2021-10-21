@@ -85,11 +85,12 @@ export default function EnrolledCourseCard({ small, user, course, ...props }) {
 		slug,
 		content_creator,
 		image,
-		videos,
 		my_rating,
+		grouped_videos,
 		paid,
 		percentage_course_finished,
 	} = course;
+	console.log(course);
 	const { rateClass, setPreviewModalOpen, setSelectedPreviewCourse } =
 		useContext(CourseContext);
 	const { token } = useContext(AuthContext);
@@ -120,7 +121,10 @@ export default function EnrolledCourseCard({ small, user, course, ...props }) {
 	};
 
 	return (
-		<Link passHref href={`kelas/${slug}?c=${videos[0].bunny_video.upload_id}`}>
+		<Link
+			passHref
+			href={`kelas/${slug}?c=${grouped_videos.videos[0].bunny_video.upload_id}`}
+		>
 			<StyledCard small={small} {...props}>
 				<ImageContainer small={small} img={image} />
 
