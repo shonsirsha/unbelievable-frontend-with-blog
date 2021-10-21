@@ -169,7 +169,7 @@ const PreviewModal = (props) => {
 						<div className="d-flex">
 							<Clock className="text-white mr-2" />
 							<StyledTextTertiary className="text-white ">
-								{selectedPreviewCourse.videos.length} hari
+								{selectedPreviewCourse.grouped_videos.videos.length} hari
 							</StyledTextTertiary>
 						</div>
 						<div className="d-flex">
