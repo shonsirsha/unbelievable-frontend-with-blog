@@ -138,7 +138,7 @@ const Masukkan = ({ categories }) => {
 				<Breadcrumb />
 
 				<>
-					<HeadingSM className="mb-2">tulis masukkan</HeadingSM>
+					<HeadingSM className="mb-2">Tulis Masukkan</HeadingSM>
 					<TextPrimary className="mt-3 mt-lg-5 specialgray">
 						Terima kasih, Heroes! Karena kamu akan membuat platform ini menjadi
 						lebih baik lagi dengan memberikan masukkan dan saran kepada kami
@@ -179,7 +179,7 @@ const Masukkan = ({ categories }) => {
 						onClick={handleSubmit}
 						className="bg-primary1 mt-2"
 					>
-						<HeadingXXS>Submit</HeadingXXS>
+						<HeadingXXS>Kirim</HeadingXXS>
 					</EnrollBtn>
 				</>
 			</OuterContainer>

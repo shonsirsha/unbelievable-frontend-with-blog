@@ -168,7 +168,7 @@ const Pengaturan = () => {
 				<>
 					<ToastContainer />
 
-					<HeadingSM className="mb-4">pengaturan umum</HeadingSM>
+					<HeadingSM className="mb-4">Pengaturan Umum</HeadingSM>
 					<TextSecondary className="text-gray2">Ganti Password</TextSecondary>
 					{user && user.provider === "local" ? (
 						<>{PasswordResetForm}</>

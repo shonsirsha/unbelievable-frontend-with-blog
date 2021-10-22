@@ -24,12 +24,12 @@ const BreadcrumbContainer = styled.div`
 
 const Breadcrumb = () => {
 	return (
-		<BreadcrumbContainer>
+		<BreadcrumbContainer className="bread">
 			<Breadcrumbs
 				omitRootLabel
 				replaceCharacterList={[
-					{ from: "feedback", to: "tulis masukkan" },
-					{ from: "pengaturan", to: "pengaturan umum" },
+					{ from: "feedback", to: "Tulis masukkan" },
+					{ from: "pengaturan", to: "Pengaturan umum" },
 				]}
 			/>
 		</BreadcrumbContainer>

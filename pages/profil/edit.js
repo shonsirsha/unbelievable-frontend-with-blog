@@ -678,7 +678,7 @@ const Edit = () => {
 			<OuterContainer className="d-flex flex-column">
 				<Breadcrumb />
 				<>
-					<HeadingSM className="mb-2">edit profil</HeadingSM>
+					<HeadingSM className="mb-2">Edit Profil</HeadingSM>
 					<FormLabelContainer className="d-flex flex-column align-items-center">
 						{window && (
 							<div
@@ -942,7 +942,7 @@ const Edit = () => {
 							</Select>
 						</FormControlContainer>
 					</FormGroup>
-					<HeadingXXS className="mb-2 mt-5">your social media</HeadingXXS>
+					<HeadingXXS className="mb-2 mt-5">Your Social Media</HeadingXXS>
 					<FormGroup className="mt-3 d-flex flex-wrap w-100">
 						<FormControlContainer className="d-flex flex-column mr-xl-4 ">
 							<StyledFormLabel>Instagram</StyledFormLabel>
