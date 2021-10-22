@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, memo } from "react";
 import { HeadingXS, HeadingXXS } from "components/Typography/Headings";
 import { TextTertiary, TextSecondary } from "components/Typography/Text";
 import { Form, Button } from "react-bootstrap";
@@ -54,12 +54,12 @@ const StyledHeadingXXS = styled(HeadingXXS)`
 	font-size: 12px;
 `;
 
-export default function MisiBlock({
+const MisiBlock = ({
 	finishedWatching,
 	loading,
 	setMissionIdsToAPI,
 	setMissionHook,
-}) {
+}) => {
 	const [missionIds, setMissionIds] = useState([]);
 	const [alreadySetIds, setAlreadySetIds] = useState([]);
 	const {
@@ -91,12 +91,12 @@ export default function MisiBlock({
 	return (
 		<OuterContainer>
 			{finishedWatching ? (
-				<div className="d-flex flex-column align-items-center">
+				<div className="d-flex flex-column">
 					<HeadingXS as="p" className="text-primary1 mb-1">
 						Misi Video Ini
 					</HeadingXS>
 					{(missionsCtx || missionsCtx.length === 0) && (
-						<TextTertiary className="text-gray mb-3 text-center">
+						<TextTertiary className="text-gray mb-3">
 							Kerjakan (centang dan simpan) misi-misi dibawah ini untuk
 							melanjutkan ke video selanjutnya.
 						</TextTertiary>
@@ -112,7 +112,11 @@ export default function MisiBlock({
 								</TextTertiary>
 							)}
 							{missionsCtx.map((m) => (
-								<div key={m.id} className="d-flex align-items-center  mb-1">
+								<div
+									key={m.id}
+									className="d-flex align-items-center dada mb-1"
+									style={{ paddingLeft: "24px" }}
+								>
 									<CheckBoxWrapper
 										done={
 											alreadySetIds.includes(m.id) ||
@@ -173,7 +177,7 @@ export default function MisiBlock({
 							{missionsCtx.length > 0 && !missionsCompleted && !loading && (
 								<SaveBtn
 									disabled={missionSaveLoading}
-									className="bg-primary1 mt-3 align-self-center"
+									className="bg-primary1 mt-3 "
 									onClick={() => {
 										if (!missionSaveLoading) {
 											setMissionSaveLoading(true);
@@ -197,4 +201,6 @@ export default function MisiBlock({
 			)}
 		</OuterContainer>
 	);
-}
+};
+
+export default memo(MisiBlock);

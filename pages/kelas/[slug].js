@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, memo } from "react";
 import CourseContext from "context/CourseContext";
 import Swal from "sweetalert2";
 import VideoPlayerHLS from "components/VideoPlayer/VideoPlayerHLS";
@@ -609,7 +609,8 @@ export default function Kelas({
 		);
 	};
 
-	const MiscContainer = () => {
+	// eslint-disable-next-line react/display-name
+	const MiscContainer = memo(() => {
 		return (
 			<>
 				<MiscHeaderContainer className="justify-content-sm-start justify-content-between">
@@ -659,7 +660,7 @@ export default function Kelas({
 				<MiscBodyContainer>{renderedDescContext}</MiscBodyContainer>
 			</>
 		);
-	};
+	});
 
 	if (noToken) {
 		return <></>;
