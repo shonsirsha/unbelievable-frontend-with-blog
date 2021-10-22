@@ -153,7 +153,7 @@ export default function Layout({
 							<RoundedBtnIcon className="shadow" img={`/images/home.png`} />
 						</a>
 					</Link>
-					<Link href="/">
+					<Link href={user ? `/dashboard` : `/daftar`}>
 						<a>
 							<RoundedBtnIcon className="shadow" img={`/images/smiley.png`} />
 						</a>

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Link from "next/link";
 import HalfHalf from "components/HalfHalf/HalfHalf";
 import { TextPrimary } from "components/Typography/Text";
 import { Image } from "react-bootstrap";
@@ -64,7 +65,13 @@ export default function MulaiSekarang() {
 			left={left}
 			right={right}
 			light
-			bottom={<YellowButton width={280}>Mulai Sekarang!</YellowButton>}
+			bottom={
+				<Link href="/masuk">
+					<a>
+						<YellowButton width={280}>Mulai Sekarang!</YellowButton>
+					</a>
+				</Link>
+			}
 		/>
 	);
 }
