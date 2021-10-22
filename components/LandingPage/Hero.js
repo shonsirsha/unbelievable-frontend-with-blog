@@ -72,7 +72,7 @@ export default function Hero() {
 				</StyledRow>
 				<StyledRow className="mt-4">
 					<Col>
-						<Link href="/daftar">
+						<Link href="/menjadi-member">
 							<a>
 								<YellowButton>Menjadi Member</YellowButton>
 							</a>

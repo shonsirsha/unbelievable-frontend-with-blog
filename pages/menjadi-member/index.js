@@ -107,11 +107,15 @@ export default function index() {
 							</HeadingXS>
 						</div>
 						<div className="d-flex flex-column body">
-							<PriceBox className="bg-blue">
-								<StyledHeadingXXS className="text-white">
-									GRATIS
-								</StyledHeadingXXS>
-							</PriceBox>
+							<Link href="/daftar">
+								<a>
+									<PriceBox className="bg-blue">
+										<StyledHeadingXXS className="text-white">
+											GRATIS
+										</StyledHeadingXXS>
+									</PriceBox>
+								</a>
+							</Link>
 							<div className="separator"></div>
 							<div className="feature-list d-flex flex-column w-100">
 								<div className="d-flex">
@@ -123,41 +127,42 @@ export default function index() {
 							</div>
 						</div>
 					</ClassTypeBox>
-					<Link href="/daftar-kelas">
-						<a>
-							<ClassTypeBox className="shadow">
-								<div className="d-flex flex-column bg-lightgray header position-relative">
-									<StyledHeadingXS as="p" className="text-center">
-										rekomendasi
-									</StyledHeadingXS>
-									<HeadingXS as="p" className="text-center mt-1">
-										beli <br />
-										per-kelas
-									</HeadingXS>
-								</div>
-								<div className="d-flex flex-column body">
+
+					<ClassTypeBox className="shadow">
+						<div className="d-flex flex-column bg-lightgray header position-relative">
+							<StyledHeadingXS as="p" className="text-center">
+								rekomendasi
+							</StyledHeadingXS>
+							<HeadingXS as="p" className="text-center mt-1">
+								beli <br />
+								per-kelas
+							</HeadingXS>
+						</div>
+						<div className="d-flex flex-column body">
+							<Link href="/daftar-kelas">
+								<a>
 									<PriceBox className="bg-blue">
 										<StyledHeadingXXS as="p" className="text-white">
 											Lihat Kelas
 										</StyledHeadingXXS>
 									</PriceBox>
-									<div className="separator"></div>
-									<div className="feature-list d-flex flex-column w-100">
-										<div className="d-flex">
-											<CheckMark />
-											<StyledTextTertiary>
-												Full akses materi kelas yang kamu minati
-											</StyledTextTertiary>
-										</div>
-										<div className="d-flex mt-3">
-											<CheckMark />
-											<StyledTextTertiary>PDF Workbook</StyledTextTertiary>
-										</div>
-									</div>
+								</a>
+							</Link>
+							<div className="separator"></div>
+							<div className="feature-list d-flex flex-column w-100">
+								<div className="d-flex">
+									<CheckMark />
+									<StyledTextTertiary>
+										Full akses materi kelas yang kamu minati
+									</StyledTextTertiary>
 								</div>
-							</ClassTypeBox>
-						</a>
-					</Link>
+								<div className="d-flex mt-3">
+									<CheckMark />
+									<StyledTextTertiary>PDF Workbook</StyledTextTertiary>
+								</div>
+							</div>
+						</div>
+					</ClassTypeBox>
 				</div>
 			</StyledContainer>
 		</Layout>
