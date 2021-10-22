@@ -65,13 +65,18 @@ const MenuOpenBtn = styled.div`
 	position: absolute;
 	top: 35%;
 	right: 0;
-
+	pointer-events: auto;
 	&:hover {
 		cursor: pointer;
 	}
 
 	& > svg {
 		font-size: 48px;
+	}
+
+	@media ${mediaBreakpoint.down.lg} {
+		opacity: 0;
+		pointer-events: none;
 	}
 `;
 
@@ -118,6 +123,18 @@ const VideosListContainer = styled.div`
 
 	&.show {
 		width: 25%;
+	}
+
+	@media ${mediaBreakpoint.down.lg} {
+		&.hide {
+			opacity: 1;
+			width: 100%;
+			transform: translate(0, 0);
+		}
+
+		&.show {
+			width: 100%;
+		}
 	}
 `;
 
