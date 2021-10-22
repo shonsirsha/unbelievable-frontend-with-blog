@@ -162,7 +162,7 @@ export default function Layout({
 			)}
 			<div
 				className={`${mainApp && `d-flex position-relative`}`}
-				style={{ marginTop: withMargin ? `112px` : `0` }}
+				style={{ marginTop: withMargin ? `112px` : `0`, overflowX: "hidden" }}
 			>
 				{mainApp && <SideMenu />}
 				{mainApp && showReviewBlock && (

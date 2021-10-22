@@ -36,7 +36,7 @@ const StyledContainer = styled.div`
 	}
 `;
 const VideoContainer = styled.div`
-	width: 60%;
+	width: 75%;
 	background: transparent;
 	display: flex;
 	flex-direction: column;
@@ -50,13 +50,14 @@ const VideoContainer = styled.div`
 `;
 
 const VideosListContainer = styled.div`
-	width: 40%;
+	width: 25%;
 	min-height: 320px;
 	padding: 32px 0;
 	max-height: 100vh;
 	overflow-y: auto;
 	max-height: calc(100vh + 81px);
-
+	position: relative;
+	transition: all 0.3s;
 	/* width */
 	::-webkit-scrollbar {
 		width: 10px;
@@ -82,11 +83,22 @@ const VideosListContainer = styled.div`
 		width: 100%;
 		max-height: 480px;
 	}
+
+	&.hide {
+		transform: translate(100%, 0);
+	}
 `;
 
 const StyledHeadingSM = styled(HeadingSM)`
 	font-size: 28px;
-	margin-left: 32px;
+`;
+
+const CloseButton = styled(HeadingSM)`
+	font-size: 20px;
+	padding: 4px;
+	&:hover {
+		cursor: pointer;
+	}
 `;
 
 const StyledHeadingXS = styled(HeadingXS)`
@@ -121,6 +133,7 @@ const MiscHeaderContainer = styled.div`
 	border-bottom: 1px #d1d1d1 solid;
 	align-items: center;
 	padding: 24px;
+	background: #fff;
 	padding-bottom: 24px;
 `;
 const StyledTextTertiary = styled(TextTertiary)`
@@ -128,6 +141,7 @@ const StyledTextTertiary = styled(TextTertiary)`
 `;
 const MiscBodyContainer = styled.div`
 	padding: 24px;
+	background: #fff;
 	overflow-y: auto;
 `;
 const StyledHeadingXXS = styled(HeadingXXS)`
@@ -210,6 +224,7 @@ export default function Kelas({
 	const [missionIdsToAPI, setMissionIdsToAPI] = useState([]);
 	const [missionHook, setMissionHook] = useState(false);
 	const [loadingFetchMission, setLoadingFetchMission] = useState(true);
+	const [hideList, setHideList] = useState(false);
 	const [videosState, setVideosState] = useState(
 		currentCourse.grouped_videos.videos
 	);
@@ -668,7 +683,10 @@ export default function Kelas({
 				<div className="d-flex w-100 justify-content-center">
 					<HeadingXS>{title}</HeadingXS>
 				</div>
-				<div className="d-flex flex-lg-row flex-column w-100 mt-4">
+				<div
+					id="waw"
+					className="d-flex flex-lg-row flex-column w-100 mt-4 bg-primary1"
+				>
 					<VideoContainer>
 						<VideoPlayerHLS
 							posterURL={`${BUNNY_STREAM_PREFIX_URL}/${currentCourse.currentVideo.bunny_video.video_id}/${currentCourse.currentVideo.bunny_video.thumbnail_name}`}
@@ -684,10 +702,22 @@ export default function Kelas({
 						/>
 						<MiscContainer />
 					</VideoContainer>
-					<VideosListContainer className="bg-primary1">
-						<StyledHeadingSM as="p" className="text-white mb-3">
-							Course content
-						</StyledHeadingSM>
+					<VideosListContainer className={`bg-primary1 ${hideList && `hide`}`}>
+						<div className="px-4 d-flex justify-content-between">
+							<StyledHeadingSM as="p" className="text-white mb-3">
+								Course content
+							</StyledHeadingSM>
+
+							<CloseButton
+								onClick={() => {
+									setHideList(!hideList);
+								}}
+								as="p"
+								className="text-white"
+							>
+								X
+							</CloseButton>
+						</div>
 
 						{videosState.map((vid, ix) => (
 							<div
