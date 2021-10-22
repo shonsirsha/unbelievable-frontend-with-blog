@@ -9,10 +9,11 @@ import { TextTertiary, TextPrimary } from "components/Typography/Text";
 import { Image } from "react-bootstrap";
 import { FaVideo } from "react-icons/fa";
 import { MdEdit, MdFeedback, MdSettings } from "react-icons/md";
+import { FiLogOut } from "react-icons/fi";
 import { IoDocumentText } from "react-icons/io5";
 import styled from "styled-components";
 import { mediaBreakpoint } from "utils/breakpoints";
-import { NEXT_URL, API_URL, MUX_READY } from "config";
+import { API_URL, MUX_READY } from "config";
 import { profileDisplay } from "utils/secsToMin";
 
 const OptionButton = styled.div`
@@ -66,7 +67,8 @@ const Profil = ({
 	totalDurationWatched,
 	noToken = false,
 }) => {
-	const { user, userLoading, checkUserLoggedIn } = useContext(AuthContext);
+	const { user, userLoading, checkUserLoggedIn, logout } =
+		useContext(AuthContext);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -192,6 +194,19 @@ const Profil = ({
 								<TextPrimary className="text-primary1">
 									Pengaturan Umum
 								</TextPrimary>
+							</OptionButton>
+						</a>
+					</Link>
+					<Link href="#">
+						<a className="d-flex">
+							<OptionButton
+								onClick={logout}
+								as="button"
+								className="d-flex flex-md-row flex-column align-items-center shadow-sm"
+							>
+								<FiLogOut className="mr-0 mr-md-4" />
+
+								<TextPrimary className="text-primary1">Log Out</TextPrimary>
 							</OptionButton>
 						</a>
 					</Link>
