@@ -18,8 +18,11 @@ const CardBody = styled.div`
 `;
 
 const CardHeader = styled(HeadingXXS)`
-	font-size: 14px;
+	font-size: 13.5px;
 	font-family: MontserratRegular;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 `;
 
 const StyledProgressBar = styled(ProgressBar)`

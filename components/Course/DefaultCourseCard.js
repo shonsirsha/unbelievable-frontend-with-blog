@@ -35,7 +35,7 @@ const CardBody = styled.div`
 	}
 `;
 const StyledHeadingXXS = styled(HeadingXXS)`
-	font-size: 13px;
+	font-size: 12px;
 `;
 const CardHeader = styled(HeadingXXS)`
 	font-size: 14px;

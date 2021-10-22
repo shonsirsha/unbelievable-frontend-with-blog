@@ -189,7 +189,7 @@ const StyledTextTertiary = styled(TextTertiary)`
 	font-size: 12px;
 `;
 const MiscBodyContainer = styled.div`
-	padding: 24px;
+	padding: 24px 32px;
 	background: #fff;
 	overflow-y: auto;
 `;
@@ -743,7 +743,7 @@ export default function Kelas({
 
 			<StyledContainer className="flex-column">
 				<div className="d-flex w-100 justify-content-center">
-					<HeadingXS>{title}</HeadingXS>
+					<HeadingXS className="text-center">{title}</HeadingXS>
 				</div>
 				<div
 					id="waw"
