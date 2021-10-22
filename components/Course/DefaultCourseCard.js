@@ -18,18 +18,17 @@ const EnrollBtn = styled(Button)`
 	bottom: -16px;
 	left: 0;
 	right: 0;
-	margin-left: ${(props) => (props.small ? `22.5%` : `30%`)};
+	margin-left: ${(props) => (props.small ? `30%` : `30%`)};
 
 	width: 116px;
 `;
 const CardBody = styled.div`
 	display: flex;
-	height: 100%;
 	flex-direction: column;
 	position: relative;
 	padding: 20px 32px;
 	padding-bottom: 48px;
-
+	height: 50%;
 	& .react-tiny-popover-container {
 		display: none;
 	}
@@ -40,6 +39,12 @@ const StyledHeadingXXS = styled(HeadingXXS)`
 const CardHeader = styled(HeadingXXS)`
 	font-size: 14px;
 	font-family: MontserratRegular;
+
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
 `;
 
 const TotalRating = styled(HeadingXXS)`
@@ -53,7 +58,7 @@ const StyledTextTertiary = styled(TextTertiary)`
 const StyledCard = styled(Card)`
 	border-radius: 12px;
 	box-shadow: 2px 1px 15px rgba(0, 0, 0, 0.1);
-	width: ${(props) => (props.small ? `215px` : `308px`)};
+	width: ${(props) => (props.small ? `280px` : `308px`)};
 
 	border: none;
 
@@ -66,8 +71,7 @@ const ImageContainer = styled.div`
 		props.img ? `url(${props.img}) no-repeat` : `gray`};
 	background-size: cover; /* <------ */
 	background-position: center center; /* optional, center the image */
-	height: ${(props) => (props.small ? `240px` : `305px`)};
-
+	height: ${(props) => (props.small ? `300px` : `305px`)};
 	width: 100%;
 	border-radius: 12px;
 	border-bottom-left-radius: 0;
@@ -92,7 +96,7 @@ const Like = styled(FaHeart)`
 	}
 `;
 const TextDesc = styled(TextTertiary)`
-	height: ${(props) => (props.small ? `56px` : `32px`)};
+	height: ${(props) => (props.small ? `0` : `32px`)};
 	font-size: ${(props) => (props.small ? `12px` : `14px`)};
 `;
 
@@ -162,7 +166,9 @@ export default function DefaultCourseCard({
 					{title}
 				</CardHeader>
 				<div className="d-flex mt-2">
-					<TextDesc small={small}>{short_desc}</TextDesc>
+					<TextDesc small={small}>
+						{small ? <u>Lebih lanjut</u> : short_desc}
+					</TextDesc>
 				</div>
 
 				<StyledTextTertiary className="mt-4">

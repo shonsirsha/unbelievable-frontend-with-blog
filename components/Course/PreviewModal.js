@@ -162,7 +162,11 @@ const PreviewModal = (props) => {
 			>
 				<div className="d-flex left"></div>
 				<div className="d-flex flex-column right">
-					<HeadingXS as="p" className="text-white">
+					<HeadingXS
+						as="p"
+						className="text-white"
+						style={{ lineBreak: "anywhere" }}
+					>
 						{selectedPreviewCourse.title}
 					</HeadingXS>
 					<div className="d-flex justify-content-between mt-3 align-items-center">
@@ -241,10 +245,10 @@ const PreviewModal = (props) => {
 						</StyledTextTertiary>
 					</div>
 					<div className="d-flex mt-2 align-items-center">
-						<StyledTextTertiary className="text-white mr-3">
+						{/* <StyledTextTertiary className="text-white mr-3">
 							dapatkan e-Sertifikat <br />
 							setelah menyelesaikan kelas ini
-						</StyledTextTertiary>
+						</StyledTextTertiary> */}
 						<StyledTextTertiary className="text-white">
 							{new Intl.NumberFormat("id-ID", {
 								style: "currency",
