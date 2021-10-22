@@ -39,7 +39,6 @@ const StyledHeadingXXS = styled(HeadingXXS)`
 `;
 const CardHeader = styled(HeadingXXS)`
 	font-size: 14px;
-	height: 40px;
 	font-family: MontserratRegular;
 `;
 
@@ -55,7 +54,7 @@ const StyledCard = styled(Card)`
 	border-radius: 12px;
 	box-shadow: 2px 1px 15px rgba(0, 0, 0, 0.1);
 	width: ${(props) => (props.small ? `215px` : `308px`)};
-	height: 520px;
+
 	border: none;
 
 	&:hover {
@@ -67,7 +66,7 @@ const ImageContainer = styled.div`
 		props.img ? `url(${props.img}) no-repeat` : `gray`};
 	background-size: cover; /* <------ */
 	background-position: center center; /* optional, center the image */
-	height: ${(props) => (props.small ? `240px` : `380px`)};
+	height: ${(props) => (props.small ? `240px` : `305px`)};
 
 	width: 100%;
 	border-radius: 12px;
@@ -166,7 +165,7 @@ export default function DefaultCourseCard({
 					<TextDesc small={small}>{short_desc}</TextDesc>
 				</div>
 
-				<StyledTextTertiary className="mt-auto">
+				<StyledTextTertiary className="mt-4">
 					{content_creator && content_creator.full_name}
 				</StyledTextTertiary>
 
@@ -276,7 +275,7 @@ export default function DefaultCourseCard({
 					}}
 				>
 					<StyledHeadingXXS as="p">
-						{!enrolled ? "enroll" : "lanjutkan"}
+						{!enrolled ? "Free Trial" : "Lanjutkan"}
 					</StyledHeadingXXS>
 				</EnrollBtn>
 			</CardBody>

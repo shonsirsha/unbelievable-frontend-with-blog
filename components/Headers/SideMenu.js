@@ -43,19 +43,19 @@ export default function SideMenu() {
 	const routes = [
 		{
 			url: "/dashboard",
-			text: "dashboard",
+			text: "Dashboard",
 		},
 		{
 			url: "/profil",
-			text: "profil",
+			text: "Profil",
 		},
 		{
 			url: "/daftar-kelas",
-			text: "kelas",
+			text: "Kelas",
 		},
 		{
 			url: "/pertanyaan",
-			text: "pertanyaan",
+			text: "Pertanyaan",
 		},
 	];
 	return (

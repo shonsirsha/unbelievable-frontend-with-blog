@@ -115,7 +115,7 @@ const Profil = ({
 							{courseCount}
 						</HeadingMD>
 						<TextTertiary className="text-primary1 text-center">
-							kelas berjalan
+							Kelas Berjalan
 						</TextTertiary>
 					</div>
 					<div className="d-flex flex-column align-items-center mt-md-0 mt-4">
@@ -123,8 +123,8 @@ const Profil = ({
 							{MUX_READY ? profileDisplay(totalDurationWatched) : "-"}
 						</HeadingMD>
 						<TextTertiary className="text-primary1 text-center">
-							total <br />
-							waktu belajar
+							Total <br />
+							Waktu Belajar
 						</TextTertiary>
 					</div>
 				</div>
@@ -136,7 +136,7 @@ const Profil = ({
 								className="d-flex flex-md-row flex-column align-items-center shadow-sm"
 							>
 								<MdEdit className="mr-0 mr-md-4" />
-								<TextPrimary className="text-primary1">edit profil</TextPrimary>
+								<TextPrimary className="text-primary1">Edit Profil</TextPrimary>
 							</OptionButton>
 						</a>
 					</Link>
@@ -162,7 +162,7 @@ const Profil = ({
 							>
 								<MdFeedback className="mr-0 mr-md-4" />
 								<TextPrimary className="text-primary1">
-									tulis masukkan
+									Tulis Masukkan
 								</TextPrimary>
 							</OptionButton>
 						</a>
@@ -176,7 +176,7 @@ const Profil = ({
 							>
 								<FaVideo className="mr-0 mr-md-4" />
 								<TextPrimary className="text-primary1">
-									lihat video tutorial
+									Lihat Video Tutorial
 								</TextPrimary>
 							</OptionButton>
 						</a>
@@ -190,7 +190,7 @@ const Profil = ({
 							>
 								<MdSettings className="mr-0 mr-md-4" />
 								<TextPrimary className="text-primary1">
-									pengaturan umum
+									Pengaturan Umum
 								</TextPrimary>
 							</OptionButton>
 						</a>

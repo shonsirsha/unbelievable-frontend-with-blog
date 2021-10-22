@@ -14,12 +14,16 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const StyledContainer = styled(Container)`
-	display: flex;
-	flex-wrap: wrap;
 	width: 100%;
 	justify-content: center;
 	padding-top: 120px;
 	padding-bottom: 56px;
+	overflow: hidden;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, 320px);
+	grid-auto-rows: 1fr;
+	grid-column-gap: 32px;
+	grid-row-gap: 48px;
 `;
 
 export default function Index({ courses }) {
@@ -59,10 +63,10 @@ export default function Index({ courses }) {
 			<Showcase title="Daftar Kelas" />
 			<StyledContainer>
 				{courses.map((course) => (
-					<div key={course.id}>
+					<div className="d-flex" key={course.id}>
 						<DefaultCourseCard
 							key={course.id}
-							className="mr-xl-3 mr-lg-3 mr-md-3 mr-0 mb-5 "
+							className=" "
 							user={user}
 							course={course}
 							enrolled={course.enrolled}

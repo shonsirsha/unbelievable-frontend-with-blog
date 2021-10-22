@@ -48,10 +48,10 @@ export default function ReviewBlock() {
 				>
 					<div className="d-flex flex-column">
 						<StyledHeadingXXS as="p" className="text-center">
-							tulis masukkan
+							Tulis Masukkan
 						</StyledHeadingXXS>
 						<TextTertiary className="mt-1 text-center mb-2">
-							disini!
+							Disini!
 						</TextTertiary>
 					</div>
 					<Image src="/images/character2.png" alt="Character" />

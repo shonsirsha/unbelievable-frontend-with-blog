@@ -284,13 +284,13 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 
 			<div className="d-flex w-100 flex-column">
 				<HeadingXS className="text-gray mb-2">
-					selamat datang kembali,
+					Selamat Datang Kembali,
 				</HeadingXS>
 				<StyledHeadingLG className="text-primary1 mb-5">
-					heroes!
+					Heroes!
 				</StyledHeadingLG>
 				<div className="d-flex flex-column">
-					<StyledHeadingXS className="mb-2 ml-1">kelas populer</StyledHeadingXS>
+					<StyledHeadingXS className="mb-2 ml-1">Kelas Populer</StyledHeadingXS>
 					{user.token && (
 						<div className="d-flex flex-lg-wrap flex-nowrap w-100 overflow-lg-none overflow-auto ">
 							{allCourses.map((course) => (
@@ -306,7 +306,7 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 				</div>
 
 				<div className="d-flex flex-column mt-4">
-					<StyledHeadingXS className="mb-2 ml-1 ">kelas saya</StyledHeadingXS>
+					<StyledHeadingXS className="mb-2 ml-1 ">Kelas Saya</StyledHeadingXS>
 					<div className="d-flex flex-lg-wrap flex-nowrap w-100 overflow-lg-none overflow-auto pb-2">
 						{coursesTaken.map((course) => (
 							<>
