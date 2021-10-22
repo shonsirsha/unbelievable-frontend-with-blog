@@ -42,7 +42,6 @@ const VideoContainer = styled.div`
 	position: relative;
 	flex-direction: column;
 	min-height: 320px;
-	max-height: calc(100vh + 81px);
 	transition: all 0.8s;
 
 	@media ${mediaBreakpoint.down.lg} {
@@ -62,9 +61,9 @@ const MenuOpenBtn = styled.div`
 	width: 48px;
 	height: 48px;
 	z-index: 100;
-	position: absolute;
-	top: 35%;
+	position: fixed;
 	right: 0;
+	top: 50%;
 	pointer-events: auto;
 	&:hover {
 		cursor: pointer;
@@ -83,12 +82,15 @@ const MenuOpenBtn = styled.div`
 const VideosListContainer = styled.div`
 	min-height: 320px;
 	padding: 32px 0;
-	max-height: 100vh;
 	overflow-y: auto;
-	max-height: calc(100vh + 81px);
 	position: relative;
 	transition: all 0.8s;
 	transform: translate(0, 0);
+	position: absolute;
+	right: 0;
+	max-height: 100%;
+	height: 100%;
+
 	/* width */
 	::-webkit-scrollbar {
 		width: 10px;
@@ -316,13 +318,16 @@ export default function Kelas({
 				console.log("failed...");
 				// console.log(data.message);
 			} else {
+				let px = mis;
 				missionIdsToAPI.map((x) => {
-					missions.map((y, ix) => {
+					px.map((y, ix) => {
 						if (y.id === x) {
-							missions[ix].completed = true;
+							px[ix].completed = true;
 						}
 					});
 				});
+				console.log("lalu", px);
+				setMis(px);
 				console.log("mission done");
 				setMissionSaveLoading(false);
 
@@ -364,10 +369,17 @@ export default function Kelas({
 	}, [missionHook]);
 
 	useEffect(() => {
-		if (finishedWatching) {
+		if (finishedWatching && loadingFetchMission) {
+			setLoadingFetchMission(false);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [finishedWatching, loadingFetchMission]);
+
+	useEffect(() => {
+		if (!loadingFetchMission && mis.length > 0) {
 			setRenderedDescContext(
 				<MisiBlock
-					missions={missions}
+					missions={mis}
 					finishedWatching
 					loading={loadingFetchMission}
 					setMissionIdsToAPI={setMissionIdsToAPI}
@@ -375,10 +387,8 @@ export default function Kelas({
 				/>
 			);
 			setCurrentlyOpened("misi");
-			setLoadingFetchMission(false);
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [finishedWatching, missionsCtx]);
+	}, [loadingFetchMission, mis]);
 
 	const finishesVideo = async (videoId) => {
 		console.log("finishing...");
@@ -424,8 +434,9 @@ export default function Kelas({
 		if (!res.ok) {
 			console.log("failed fetching missions...");
 		} else {
-			console.log("fetched missions ");
+			console.log("fetched missions ", fetchedMissions);
 			setMissionsCtx(fetchedMissions);
+			setMis(fetchedMissions);
 		}
 	};
 
@@ -443,12 +454,17 @@ export default function Kelas({
 					<>
 						{[...currentCourse.announcement.pengumuman].reverse().map((p) => (
 							<div key={p.id} className=" mb-4">
-								<StyledTextTertiary className="text-info1 mb-2">
+								<HeadingXXS
+									style={{ fontSize: "13px" }}
+									className="text-info1 mb-2"
+								>
 									{currentCourse.content_creator.full_name}
-								</StyledTextTertiary>
+								</HeadingXXS>
 								<StyledTextTertiary className="text-primary1 mb-2">
 									Memposting pengumuman {"-"}{" "}
-									{dateDiffInDays(new Date(p.date), new Date())}
+									<span style={{ fontSize: "11px" }}>
+										{dateDiffInDays(new Date(p.date), new Date())}
+									</span>
 								</StyledTextTertiary>
 								<StyledTextTertiary
 									className="text-primary1 mt-1"
@@ -456,6 +472,7 @@ export default function Kelas({
 								>
 									{p.text}
 								</StyledTextTertiary>
+								<hr />
 							</div>
 						))}
 					</>
@@ -703,7 +720,7 @@ export default function Kelas({
 						onClick={() => {
 							setRenderedDescContext(
 								<MisiBlock
-									missions={missions}
+									missions={mis}
 									finishedWatching={finishedWatching}
 									setMissionIdsToAPI={setMissionIdsToAPI}
 									setMissionHook={setMissionHook}
@@ -747,15 +764,15 @@ export default function Kelas({
 				</div>
 				<div
 					id="waw"
-					className="d-flex flex-lg-row flex-column w-100 mt-4 bg-primary1"
+					className="position-relative d-flex flex-lg-row flex-column w-100 mt-4 bg-primary1"
 				>
+					<MenuOpenBtn
+						className={`${hideList && `d-block shadow-lg`}`}
+						onClick={() => setHideList(false)}
+					>
+						<MdChevronLeft />
+					</MenuOpenBtn>
 					<VideoContainer className={`${hideList && `hide`}`}>
-						<MenuOpenBtn
-							className={`${hideList && `d-block`}`}
-							onClick={() => setHideList(false)}
-						>
-							<MdChevronLeft />
-						</MenuOpenBtn>
 						<VideoPlayerHLS
 							posterURL={`${BUNNY_STREAM_PREFIX_URL}/${currentCourse.currentVideo.bunny_video.video_id}/${currentCourse.currentVideo.bunny_video.thumbnail_name}`}
 							videoId={currentCourse.currentVideo.id}
@@ -783,7 +800,7 @@ export default function Kelas({
 									setHideList(!hideList);
 								}}
 								as="p"
-								className="text-white"
+								className="text-white d-none d-lg-block"
 							>
 								X
 							</CloseButton>
@@ -855,10 +872,8 @@ export async function getServerSideProps(ctx) {
 	}
 	const validUploadId = course[0].grouped_videos.videos.some((crs) => {
 		if (crs.bunny_video) {
-			console.log("XXXX");
 			return crs.bunny_video.upload_id === c;
 		} else {
-			console.log("WWW");
 			return false; // if user hasnt bought the course / course has not even 1 video
 		}
 	});
@@ -872,7 +887,6 @@ export async function getServerSideProps(ctx) {
 			props: {},
 		};
 	}
-	console.log("AAAA");
 	if (c === "" || !c || c.length === 0) {
 		return {
 			redirect: {

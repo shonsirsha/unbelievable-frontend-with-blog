@@ -47,7 +47,7 @@ const SaveBtn = styled(Button)`
 	border: none;
 	padding: 8px 24px;
 
-	width: 116px;
+	width: 148px;
 `;
 
 const StyledHeadingXXS = styled(HeadingXXS)`
@@ -63,7 +63,7 @@ const MisiBlock = ({
 }) => {
 	const [missionIds, setMissionIds] = useState([]);
 	const [alreadySetIds, setAlreadySetIds] = useState([]);
-	const [lM, setLM] = useState(missions);
+
 	const {
 		missionsCtx,
 		setMissionsCtx,
@@ -74,6 +74,7 @@ const MisiBlock = ({
 		missionSaveLoading,
 		setMissionSaveLoading,
 	} = useContext(CourseContext);
+	const [lM, setLM] = useState(missionsCtx); // local mission
 
 	const [loadingSave, setLoadingSave] = useState(false);
 	// const [checkedState, setCheckedState] = useState(
@@ -160,8 +161,8 @@ const MisiBlock = ({
 													!persistedMissionIds.includes(m.id) &&
 													!missionIdsDoneFromAPI.includes(m.id)
 												) {
-													setLM(
-														[...lM].map((object) => {
+													setMissionsCtx(
+														[...missionsCtx].map((object) => {
 															if (object.id === m.id) {
 																return {
 																	...object,
@@ -173,67 +174,11 @@ const MisiBlock = ({
 												}
 											}}
 										/>
-										{/* 
-										<Form.Check type="checkbox">
-											<Form.Check.Input
-												type="checkbox"
-												name={m.id}
-												checked={m.completed}
-												onClick={() => {
-													setMissionsCtx(
-														[...missionsCtx].map((object) => {
-															if (object.id === m.id) {
-																return {
-																	...object,
-																	completed: !m.completed,
-																};
-															} else return object;
-														})
-													);
-													if (
-														!alreadySetIds.includes(m.id) &&
-														!persistedMissionIds.includes(m.id) &&
-														!missionIdsDoneFromAPI.includes(m.id)
-													) {
-														setMissionsCtx(
-															[...missionsCtx].map((object) => {
-																if (object.id === m.id) {
-																	return {
-																		...object,
-																		completed: !m.completed,
-																	};
-																} else return object;
-															})
-														);
-													}
-												}}
-												onChange={(e) => {
-													const checked = e.target.checked;
-													if (
-														!alreadySetIds.includes(m.id) &&
-														!persistedMissionIds.includes(m.id) &&
-														!missionIdsDoneFromAPI.includes(m.id)
-													) {
-														if (checked) {
-															if (!missionIds.includes(m.id)) {
-																setMissionIds([...missionIds, m.id]);
-															}
-														} else if (!checked) {
-															if (missionIds.includes(m.id)) {
-																setMissionIds(
-																	missionIds.filter((id) => id !== m.id)
-																);
-															}
-														}
-													}
-												}}
-											/>
-										</Form.Check> */}
 									</CheckBoxWrapper>
-
 									<TextSecondary>{m.text}</TextSecondary>
 								</div>
 							))}
+
 							{missionsCtx.length > 0 && !missionsCompleted && !loading && (
 								<SaveBtn
 									disabled={missionSaveLoading}
@@ -249,7 +194,9 @@ const MisiBlock = ({
 										}
 									}}
 								>
-									<StyledHeadingXXS as="p">Simpan</StyledHeadingXXS>
+									<StyledHeadingXXS as="p">
+										{missionSaveLoading ? "Menyimpan..." : "Simpan"}
+									</StyledHeadingXXS>
 								</SaveBtn>
 							)}
 						</div>

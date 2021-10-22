@@ -9,12 +9,14 @@ const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo, posterURL }) => {
 	const videoRef = useRef();
 	const [player, setPlayer] = useState(undefined);
 	const [callFinishVideoAPI, setCallFinishVideoAPI] = useState(false);
-	const [vidDuration, setVidDuration] = useState(0);
+	const [vidDuration, setVidDuration] = useState(50000);
+
 	useEffect(() => {
 		if (player) {
 			player.src([liveURL]);
 			player.poster(posterURL);
 			setCallFinishVideoAPI(false);
+			setVidDuration(50000);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [videoId, liveURL, posterURL]);
@@ -29,7 +31,7 @@ const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo, posterURL }) => {
 			finishesVideo(videoId);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [callFinishVideoAPI, posterURL]);
+	}, [callFinishVideoAPI]);
 
 	useEffect(() => {
 		const videoJsOptions = {
@@ -74,6 +76,7 @@ const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo, posterURL }) => {
 			<video
 				ref={videoRef}
 				onLoadedMetadata={(e, px) => {
+					console.log(e.target.duration);
 					setVidDuration(e.target.duration);
 				}}
 				onTimeUpdate={(e) => {
