@@ -45,14 +45,18 @@ export default function VideoPlayerNonHLS({ liveUrl, onVideoFinished }) {
 				// }}
 				onSeeking={(ev, player, currentTimeSecond) => {
 					console.log(y);
+
 					if (y < currentTimeSecond) {
+						player.pause();
 						player.currentTime(y);
 						return;
 					}
 				}}
 				onSeeked={(ev, player, startPositionSecond, completeTimeSecond) => {
 					if (startPositionSecond < completeTimeSecond) {
+						player.pause();
 						player.currentTime(startPositionSecond);
+
 						return;
 					}
 				}}
@@ -63,6 +67,8 @@ export default function VideoPlayerNonHLS({ liveUrl, onVideoFinished }) {
 				}}
 				onPause={(e, _, second) => {}}
 				onEnded={(e, _) => {
+					console.log(y);
+					console.log("ASDASD");
 					setFinished(true);
 				}}
 			/>
