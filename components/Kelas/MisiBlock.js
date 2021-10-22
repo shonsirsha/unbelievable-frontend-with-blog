@@ -59,9 +59,11 @@ const MisiBlock = ({
 	loading,
 	setMissionIdsToAPI,
 	setMissionHook,
+	missions,
 }) => {
 	const [missionIds, setMissionIds] = useState([]);
 	const [alreadySetIds, setAlreadySetIds] = useState([]);
+	const [lM, setLM] = useState(missions);
 	const {
 		missionsCtx,
 		setMissionsCtx,
@@ -74,7 +76,9 @@ const MisiBlock = ({
 	} = useContext(CourseContext);
 
 	const [loadingSave, setLoadingSave] = useState(false);
-
+	// const [checkedState, setCheckedState] = useState(
+	// 	new Array(missionsCtx.length).fill(false)
+	// );
 	useEffect(() => {
 		let ary = [];
 
@@ -83,6 +87,7 @@ const MisiBlock = ({
 				ary.push(m.id);
 			}
 		});
+		console.log(missions);
 		setMissionIds(ary);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -111,11 +116,11 @@ const MisiBlock = ({
 									Video ini tidak memiliki misi.
 								</TextTertiary>
 							)}
-							{missionsCtx.map((m) => (
+							{lM.map((m, ix) => (
 								<div
 									key={m.id}
 									className="d-flex align-items-center dada mb-1"
-									style={{ paddingLeft: "24px" }}
+									style={{ paddingLeft: "4px" }}
 								>
 									<CheckBoxWrapper
 										done={
@@ -125,12 +130,66 @@ const MisiBlock = ({
 										}
 										className="mr-2"
 									>
+										<input
+											type="checkbox"
+											checked={m.completed}
+											onChange={(e) => {
+												const checked = e.target.checked;
+												if (
+													!alreadySetIds.includes(m.id) &&
+													!persistedMissionIds.includes(m.id) &&
+													!missionIdsDoneFromAPI.includes(m.id)
+												) {
+													if (checked) {
+														if (!missionIds.includes(m.id)) {
+															setMissionIds([...missionIds, m.id]);
+														}
+													} else if (!checked) {
+														if (missionIds.includes(m.id)) {
+															setMissionIds(
+																missionIds.filter((id) => id !== m.id)
+															);
+														}
+													}
+												}
+											}}
+											// checked={checkedState[ix]}
+											onClick={() => {
+												if (
+													!alreadySetIds.includes(m.id) &&
+													!persistedMissionIds.includes(m.id) &&
+													!missionIdsDoneFromAPI.includes(m.id)
+												) {
+													setLM(
+														[...lM].map((object) => {
+															if (object.id === m.id) {
+																return {
+																	...object,
+																	completed: !m.completed,
+																};
+															} else return object;
+														})
+													);
+												}
+											}}
+										/>
+										{/* 
 										<Form.Check type="checkbox">
 											<Form.Check.Input
 												type="checkbox"
 												name={m.id}
 												checked={m.completed}
 												onClick={() => {
+													setMissionsCtx(
+														[...missionsCtx].map((object) => {
+															if (object.id === m.id) {
+																return {
+																	...object,
+																	completed: !m.completed,
+																};
+															} else return object;
+														})
+													);
 													if (
 														!alreadySetIds.includes(m.id) &&
 														!persistedMissionIds.includes(m.id) &&
@@ -169,8 +228,9 @@ const MisiBlock = ({
 													}
 												}}
 											/>
-										</Form.Check>
+										</Form.Check> */}
 									</CheckBoxWrapper>
+
 									<TextSecondary>{m.text}</TextSecondary>
 								</div>
 							))}
@@ -185,6 +245,7 @@ const MisiBlock = ({
 											setAlreadySetIds(missionIds);
 											setPersistedMissionIds(missionIds);
 											setMissionHook(true);
+											console.log(missionIds);
 										}
 									}}
 								>

@@ -36,7 +36,6 @@ const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo, posterURL }) => {
 			preload: "auto",
 			autoplay: false,
 			controls: true,
-			fluid: true,
 			playsinline: true,
 			responsive: true,
 			poster: posterURL,

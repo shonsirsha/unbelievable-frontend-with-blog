@@ -16,7 +16,7 @@ import {
 	HeadingXXS,
 } from "components/Typography/Headings";
 import { TextSecondary, TextTertiary } from "components/Typography/Text";
-import { MdLockOutline, MdCheck } from "react-icons/md";
+import { MdLockOutline, MdCheck, MdChevronLeft } from "react-icons/md";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { dateDiffInDays } from "utils/dateDiffInDays";
@@ -39,25 +39,51 @@ const VideoContainer = styled.div`
 	width: 75%;
 	background: transparent;
 	display: flex;
+	position: relative;
 	flex-direction: column;
 	min-height: 320px;
 	max-height: calc(100vh + 81px);
+	transition: all 0.8s;
+
 	@media ${mediaBreakpoint.down.lg} {
 		min-height: 0;
 		width: 100%;
 		max-height: unset;
 	}
+
+	&.hide {
+		width: 100%;
+	}
+`;
+
+const MenuOpenBtn = styled.div`
+	display: none;
+	background: #fff;
+	width: 48px;
+	height: 48px;
+	z-index: 100;
+	position: absolute;
+	top: 35%;
+	right: 0;
+
+	&:hover {
+		cursor: pointer;
+	}
+
+	& > svg {
+		font-size: 48px;
+	}
 `;
 
 const VideosListContainer = styled.div`
-	width: 25%;
 	min-height: 320px;
 	padding: 32px 0;
 	max-height: 100vh;
 	overflow-y: auto;
 	max-height: calc(100vh + 81px);
 	position: relative;
-	transition: all 0.3s;
+	transition: all 0.8s;
+	transform: translate(0, 0);
 	/* width */
 	::-webkit-scrollbar {
 		width: 10px;
@@ -85,7 +111,13 @@ const VideosListContainer = styled.div`
 	}
 
 	&.hide {
+		opacity: 0;
+		width: 0;
 		transform: translate(100%, 0);
+	}
+
+	&.show {
+		width: 25%;
 	}
 `;
 
@@ -229,8 +261,11 @@ export default function Kelas({
 		currentCourse.grouped_videos.videos
 	);
 
+	const [mis, setMis] = useState([]);
+
 	useEffect(() => {
 		setMissionsCtx(missions);
+		setMis(missions);
 		setMissionsCompleted(all_missions_completed);
 		let misObj = missions.filter((m) => m.completed === true);
 		let ary = [];
@@ -264,6 +299,13 @@ export default function Kelas({
 				console.log("failed...");
 				// console.log(data.message);
 			} else {
+				missionIdsToAPI.map((x) => {
+					missions.map((y, ix) => {
+						if (y.id === x) {
+							missions[ix].completed = true;
+						}
+					});
+				});
 				console.log("mission done");
 				setMissionSaveLoading(false);
 
@@ -308,6 +350,7 @@ export default function Kelas({
 		if (finishedWatching) {
 			setRenderedDescContext(
 				<MisiBlock
+					missions={missions}
 					finishedWatching
 					loading={loadingFetchMission}
 					setMissionIdsToAPI={setMissionIdsToAPI}
@@ -643,6 +686,7 @@ export default function Kelas({
 						onClick={() => {
 							setRenderedDescContext(
 								<MisiBlock
+									missions={missions}
 									finishedWatching={finishedWatching}
 									setMissionIdsToAPI={setMissionIdsToAPI}
 									setMissionHook={setMissionHook}
@@ -688,7 +732,13 @@ export default function Kelas({
 					id="waw"
 					className="d-flex flex-lg-row flex-column w-100 mt-4 bg-primary1"
 				>
-					<VideoContainer>
+					<VideoContainer className={`${hideList && `hide`}`}>
+						<MenuOpenBtn
+							className={`${hideList && `d-block`}`}
+							onClick={() => setHideList(false)}
+						>
+							<MdChevronLeft />
+						</MenuOpenBtn>
 						<VideoPlayerHLS
 							posterURL={`${BUNNY_STREAM_PREFIX_URL}/${currentCourse.currentVideo.bunny_video.video_id}/${currentCourse.currentVideo.bunny_video.thumbnail_name}`}
 							videoId={currentCourse.currentVideo.id}
@@ -703,7 +753,9 @@ export default function Kelas({
 						/>
 						<MiscContainer />
 					</VideoContainer>
-					<VideosListContainer className={`bg-primary1 ${hideList && `hide`}`}>
+					<VideosListContainer
+						className={`bg-primary1 ${hideList ? `hide` : `show`}`}
+					>
 						<div className="px-4 d-flex justify-content-between">
 							<StyledHeadingSM as="p" className="text-white mb-3">
 								Course content
@@ -862,8 +914,6 @@ export async function getServerSideProps(ctx) {
 		currentVideo,
 		...course[0],
 	};
-
-	console.log(currentCourse);
 
 	const res2 = await fetch(`${API_URL}/users/me`, {
 		method: "GET",
