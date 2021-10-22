@@ -31,7 +31,17 @@ const CourseImage = styled.div`
 	background-size: cover;
 	width: 48px;
 	height: 48px;
+	flex-shrink: 0;
 	border-radius: 4px;
+`;
+const StyledTextSecondary = styled(TextSecondary)`
+
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 8px;
+}
 `;
 const Wishlist = () => {
 	const { setWishlistCourses, wishlistCourses, removeWishlist } =
@@ -83,10 +93,10 @@ const Wishlist = () => {
 								img={c.course.poster ? c.course.poster.url : c.course.image}
 							/>
 							<Link href={`/kelas/${c.course.slug}`}>
-								<a>
-									<TextSecondary className="text-gray2">
+								<a style={{ width: "70%" }}>
+									<StyledTextSecondary className="text-gray2">
 										{c.course.title}
-									</TextSecondary>
+									</StyledTextSecondary>
 								</a>
 							</Link>
 							<MdRemoveCircle
