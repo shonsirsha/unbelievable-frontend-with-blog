@@ -20,7 +20,7 @@ import { MdLockOutline, MdCheck, MdChevronLeft } from "react-icons/md";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { dateDiffInDays } from "utils/dateDiffInDays";
-import { secsToMin } from "utils/secsToMin";
+import { secsToMin, secsToMinOnly } from "utils/secsToMin";
 import Markdown from "markdown-to-jsx";
 import AuthContext from "context/AuthContext";
 const StyledContainer = styled.div`
@@ -590,7 +590,7 @@ export default function Kelas({
 				<div className="d-flex align-items-center mb-2">
 					<Clock className="text-white mr-1" />
 					<TimeText className={`text-white`}>
-						{secsToMin(video.bunny_video.duration)}
+						{secsToMinOnly(video.bunny_video.duration)}
 					</TimeText>
 				</div>
 
@@ -642,7 +642,7 @@ export default function Kelas({
 							bought_day_diff >= ix ? `white` : "lighterDarkGray"
 						}`}
 					>
-						{secsToMin(video.bunny_video.duration)}
+						{secsToMinOnly(video.bunny_video.duration)}
 					</TimeText>
 				</div>
 
