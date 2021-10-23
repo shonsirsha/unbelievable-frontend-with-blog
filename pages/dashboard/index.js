@@ -151,9 +151,9 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 		wishlistModalOpen,
 		setWishlistModalOpen,
 	} = useContext(CourseContext);
-	// const userPaid = coursesTaken.some((user) => {
-	// 	return user.paid;
-	// });
+	const userPaid = coursesTaken.some((user) => {
+		return user.paid;
+	});
 	const [allCourses] = useState(courses);
 	const [dob, setDob] = useState(null);
 	const [loading, setLoading] = useState(false);
@@ -236,7 +236,7 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 		}-${datex.getDate() < 10 ? `0${datex.getDate()}` : datex.getDate()}`;
 
 		return (
-			<Layout title="Dashboard | Unbelievable" background="#171b2d" withMargin>
+			<Layout userPaid={userPaid} title="Dashboard | Unbelievable" background="#171b2d" withMargin>
 				<ToastContainer />
 
 				<StyledFormGroup>

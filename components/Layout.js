@@ -115,6 +115,7 @@ export default function Layout({
 	showLogout = false,
 	showReviewBlock = true,
 	backBtn,
+	userPaid = false,
 	backTo,
 }) {
 	const { user, loading } = useContext(AuthContext);
@@ -133,7 +134,7 @@ export default function Layout({
 	if (loading) {
 		return <Loading />;
 	}
-
+	console.log(user);
 	return (
 		<LayoutWrapper>
 			<Head>
@@ -178,22 +179,26 @@ export default function Layout({
 				{mainApp && showReviewBlock && (
 					<ReviewBlockContainer>
 						<div className="d-flex flex-lg-column flex-lg-col-reverse">
-							<Link href="/menjadi-member">
-								<a className="my-auto">
-									<UpgradeBlock
-										className="mr-2 "
-										small
-										content={
-											<>
-												<TextTertiary>status akun:</TextTertiary>{" "}
-												<HeadingXXS>free account.</HeadingXXS>
-												<HeadingXXS className="mt-2">upgrade</HeadingXXS>
-												<TextTertiary>untuk akses lebih maksimal!</TextTertiary>
-											</>
-										}
-									/>
-								</a>
-							</Link>
+							{!userPaid && user && router.pathname === "/dashboard" && (
+								<Link href="/menjadi-member">
+									<a className="my-auto">
+										<UpgradeBlock
+											className="mr-2 "
+											small
+											content={
+												<>
+													<TextTertiary>status akun:</TextTertiary>{" "}
+													<HeadingXXS>free account.</HeadingXXS>
+													<HeadingXXS className="mt-2">upgrade</HeadingXXS>
+													<TextTertiary>
+														untuk akses lebih maksimal!
+													</TextTertiary>
+												</>
+											}
+										/>
+									</a>
+								</Link>
+							)}
 							<ReviewBlock className="mt-0 mt-lg-auto" />
 						</div>
 
