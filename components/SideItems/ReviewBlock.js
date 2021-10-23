@@ -38,7 +38,8 @@ const Feedback = styled(MdRateReview)`
 		display: block;
 	}
 `;
-export default function ReviewBlock() {
+export default function ReviewBlock({ ...props }) {
+	const {className} = props
 	const content = (
 		<Link href="/profil/feedback">
 			<a>
@@ -60,5 +61,7 @@ export default function ReviewBlock() {
 			</a>
 		</Link>
 	);
-	return <StyledSideBlock content={content} className="bg-yellow3" />;
+	return (
+		<StyledSideBlock content={content} className={`bg-yellow3 ${className}`} />
+	);
 }

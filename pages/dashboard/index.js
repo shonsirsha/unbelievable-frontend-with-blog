@@ -151,7 +151,9 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 		wishlistModalOpen,
 		setWishlistModalOpen,
 	} = useContext(CourseContext);
-
+	// const userPaid = coursesTaken.some((user) => {
+	// 	return user.paid;
+	// });
 	const [allCourses] = useState(courses);
 	const [dob, setDob] = useState(null);
 	const [loading, setLoading] = useState(false);
@@ -342,13 +344,14 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 			</div>
 
 			<RightContainer>
-				<ComponentsContainer className="position-fixed">
+				<ComponentsContainer className="position-fixed display-flex">
 					<SideBlock
 						onClick={() => setWishlistModalOpen(true)}
 						circular
 						content={<FaHeart style={{ fontSize: "24px" }} />}
 						className="mb-3"
 					/>
+
 					{/* <SideBlock
 						content={"Mission Box (Work in progress..)"}
 						className="mb-3"

@@ -10,10 +10,13 @@ import { mediaBreakpoint } from "utils/breakpoints";
 import AuthContext from "context/AuthContext";
 import CourseContext from "context/CourseContext";
 import SideBlock from "./SideItems/SideBlock";
+import UpgradeBlock from "./SideItems/UpgradeBlock";
 import ReviewBlock from "./SideItems/ReviewBlock";
 import { FaHeart } from "react-icons/fa";
 import { useRouter } from "next/router";
 import Loading from "./Loading/Loading";
+import { HeadingXXS } from "./Typography/Headings";
+import { TextTertiary } from "./Typography/Text";
 const FlyingButtonsContainer = styled.div`
 	width: 0;
 	display: flex;
@@ -66,13 +69,22 @@ const ReviewBlockContainer = styled.div`
 	bottom: 48px;
 	left: 32px;
 	display: flex;
+	height: 100%;
 	justify-content: space-between;
 	& > .responsiveSideBlock {
 		display: none;
 	}
+	& a {
+		color: inherit;
+	}
+
+	&:a {
+		text-decoration: none;
+	}
 	@media (max-width: 1024px) {
 		width: 100%;
 		padding-right: 32px;
+		height: auto;
 		z-index: 10;
 		bottom: 16px;
 		left: 16px;
@@ -165,7 +177,26 @@ export default function Layout({
 				{mainApp && <SideMenu />}
 				{mainApp && showReviewBlock && (
 					<ReviewBlockContainer>
-						<ReviewBlock />
+						<div className="d-flex flex-lg-column flex-lg-col-reverse">
+							<Link href="/menjadi-member">
+								<a className="my-auto">
+									<UpgradeBlock
+										className="mr-2 "
+										small
+										content={
+											<>
+												<TextTertiary>status akun:</TextTertiary>{" "}
+												<HeadingXXS>free account.</HeadingXXS>
+												<HeadingXXS className="mt-2">upgrade</HeadingXXS>
+												<TextTertiary>untuk akses lebih maksimal!</TextTertiary>
+											</>
+										}
+									/>
+								</a>
+							</Link>
+							<ReviewBlock className="mt-0 mt-lg-auto" />
+						</div>
+
 						<div className="responsiveSideBlock">
 							{router.pathname === "/dashboard" && (
 								<>
