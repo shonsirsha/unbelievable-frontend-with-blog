@@ -4,6 +4,10 @@ const Container = styled.div`
 	width: ${(props) => (props.circular ? `56px` : `320px`)};
 	${(props) => (props.circular ? `height: 56px;` : ``)}
 	border-radius: ${(props) => (props.circular ? `100%` : `12px`)};
+
+	&:hover {
+		cursor: pointer;
+	}
 	@media (max-width: 1024px) {
 		width: 56px;
 		height: 56px;

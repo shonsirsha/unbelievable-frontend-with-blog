@@ -91,6 +91,18 @@ const DefaultCardsContainer = styled.div`
 	}
 `;
 
+const EnrolledCardsContainer = styled.div`
+	max-width: 90vw;
+
+	padding: 16px 6px;
+	padding-right: 240px;
+
+	@media (max-width: 1024px) {
+		padding: 16px 6px;
+		max-width: 100%;
+	}
+`;
+
 const StyledFormControl = styled(FormControl)`
 	border: none;
 	border-radius: 16px;
@@ -317,7 +329,7 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 
 				<div className="d-flex flex-column mt-4">
 					<StyledHeadingXS className="mb-2 ml-1 ">Kelas Saya</StyledHeadingXS>
-					<div className="d-flex flex-lg-wrap flex-nowrap py-4 w-100 overflow-lg-none overflow-auto pb-2">
+					<EnrolledCardsContainer className="d-flex flex-lg-wrap flex-nowrap py-4 w-100 overflow-lg-none overflow-auto pb-2">
 						{coursesTaken.map((course) => (
 							<>
 								{course.grouped_videos.videos.length > 0 && (
@@ -325,7 +337,7 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 								)}
 							</>
 						))}
-					</div>
+					</EnrolledCardsContainer>
 				</div>
 			</div>
 
