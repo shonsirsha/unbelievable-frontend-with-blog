@@ -14,6 +14,7 @@ import {
 	Button,
 	Image,
 } from "react-bootstrap";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { HeadingXS, HeadingXXS } from "components/Typography/Headings";
 import { TextSecondary } from "components/Typography/Text";
 import mustBeUnauthed from "utils/mustBeUnauthed";
@@ -128,12 +129,31 @@ const GreenCharacter = styled(Image)`
 	}
 `;
 
+const Eye = styled.div`
+	display: flex;
+	width: 24px;
+	height: 24px;
+	position: absolute;
+	right: 16px;
+	top: 8px;
+	background: transparent;
+	align-items: center;
+	&:hover {
+		cursor: pointer;
+	}
+
+	& svg {
+		font-size: 32px;
+	}
+`;
+
 const LoginView = ({ setShowLogin }) => {
 	const [loginDetails, setLoginDetails] = useState({
 		email: "",
 		password: "",
 	});
 	const [focus, setFocus] = useState("");
+	const [asText, setAsText] = useState(false);
 
 	const { email, password } = loginDetails;
 
@@ -171,16 +191,21 @@ const LoginView = ({ setShowLogin }) => {
 
 				<FormGroup>
 					<FormLabel>Password</FormLabel>
-					<StyledFormControl
-						type="password"
-						name="password"
-						onBlur={() => setFocus("")}
-						onFocus={() => setFocus("focus2")}
-						className={"shadow-none"}
-						value={password}
-						placeholder="Password"
-						onChange={handleChange}
-					/>
+					<div className="position-relative">
+						<StyledFormControl
+							type={`${asText ? `text` : `password`}`}
+							name="password"
+							onBlur={() => setFocus("")}
+							onFocus={() => setFocus("focus2")}
+							className={"shadow-none"}
+							value={password}
+							placeholder="Password"
+							onChange={handleChange}
+						/>
+						<Eye onClick={() => setAsText(!asText)}>
+							{asText ? <BsEye /> : <BsEyeSlash />}
+						</Eye>
+					</div>
 				</FormGroup>
 
 				<TextSecondary className="mt-3" onClick={() => setShowLogin(false)}>

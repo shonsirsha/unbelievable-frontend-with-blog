@@ -16,6 +16,7 @@ import AuthContext from "context/AuthContext";
 import Layout from "components/Layout";
 import styled from "styled-components";
 import { whitespace } from "utils/whitespace";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 import withAuth from "utils/withAuth";
 import Breadcrumb from "components/Breadcrumb/Breadcrumb";
 
@@ -36,7 +37,7 @@ const EnrollBtn = styled(Button)`
 	width: 100%;
 	max-width: 180px;
 `;
-const StyledFormControl = styled(FormControl)`
+const PasswordFormControl = styled(FormControl)`
 	border: 2px solid #e8e8e8;
 	border-radius: 8px;
 	padding: 24px;
@@ -48,10 +49,27 @@ const StyledFormControl = styled(FormControl)`
 	&:-webkit-autofill:active {
 		-webkit-box-shadow: 0 0 0 30px transparent inset !important;
 	}
-
 	&:focus {
 		background: transparent;
 		outline: none;
+	}
+`;
+
+const Eye = styled.div`
+	display: flex;
+	width: 24px;
+	height: 24px;
+	position: absolute;
+	right: 16px;
+	top: 14px;
+	background: transparent;
+	align-items: center;
+	&:hover {
+		cursor: pointer;
+	}
+
+	& svg {
+		font-size: 32px;
 	}
 `;
 const Pengaturan = () => {
@@ -63,6 +81,7 @@ const Pengaturan = () => {
 		password: "",
 		newPassword: "",
 	});
+	const [asText, setAsText] = useState(false);
 	const { password, newPassword } = details;
 
 	useEffect(() => {
@@ -118,27 +137,36 @@ const Pengaturan = () => {
 				<StyledFormLabel className="text-gray2 mt-4 mb-3">
 					Password saat ini
 				</StyledFormLabel>
-				<StyledFormControl
-					type="password"
-					name="password"
-					className="mr-xl-2 mb-3 shadow-none"
-					value={password}
-					onChange={handleChange}
-					placeholder="Password saat ini"
-				/>
+				<div className="position-relative">
+					<PasswordFormControl
+						type={`${asText ? `text` : `password`}`}
+						name="password"
+						className="mr-xl-2 mb-3 shadow-none"
+						value={password}
+						onChange={handleChange}
+						placeholder="Password saat ini"
+					/>
+					<Eye onClick={() => setAsText(!asText)}>
+						{asText ? <BsEye /> : <BsEyeSlash />}
+					</Eye>
+				</div>
 
 				<StyledFormLabel className="text-gray2 mt-4 mb-3">
 					Password baru
 				</StyledFormLabel>
-				<StyledFormControl
-					type="password"
-					name="newPassword"
-					className="mr-xl-2 mb-3 shadow-none"
-					value={newPassword}
-					onChange={handleChange}
-					placeholder="Password baru"
-				/>
-
+				<div className="position-relative">
+					<PasswordFormControl
+						type={`${asText ? `text` : `password`}`}
+						name="newPassword"
+						className="mr-xl-2 mb-3 shadow-none"
+						value={newPassword}
+						onChange={handleChange}
+						placeholder="Password baru"
+					/>
+					<Eye onClick={() => setAsText(!asText)}>
+						{asText ? <BsEye /> : <BsEyeSlash />}
+					</Eye>
+				</div>
 				<FormText className="mt-2 text-muted">
 					Password harus minimal 8 karakter, dengan huruf besar, huruf kecil,
 					nomer, dan simbol.

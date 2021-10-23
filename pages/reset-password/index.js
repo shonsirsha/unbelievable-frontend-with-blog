@@ -14,6 +14,7 @@ import {
 	Button,
 	Image,
 } from "react-bootstrap";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { HeadingXS } from "components/Typography/Headings";
 import { TextSecondary } from "components/Typography/Text";
 import { mediaBreakpoint } from "utils/breakpoints";
@@ -124,12 +125,29 @@ const GreenCharacter = styled(Image)`
 		}
 	}
 `;
+const Eye = styled.div`
+	display: flex;
+	width: 24px;
+	height: 24px;
+	position: absolute;
+	right: 16px;
+	top: 8px;
+	background: transparent;
+	align-items: center;
+	&:hover {
+		cursor: pointer;
+	}
 
+	& svg {
+		font-size: 32px;
+	}
+`;
 export default function ResetPassword({ sc }) {
 	const [passwords, setPasswords] = useState({
 		password: "",
 		passwordConfirmation: "",
 	});
+	const [asText, setAsText] = useState(false);
 	const router = useRouter();
 	const { authLoading, resetPassword, err, success } = useContext(AuthContext);
 	useEffect(() => {
@@ -191,26 +209,36 @@ export default function ResetPassword({ sc }) {
 						<Form className="w-100 mt-3">
 							<FormGroup>
 								<FormLabel>Password</FormLabel>
-								<StyledFormControl
-									type="password"
-									className={"shadow-none"}
-									name="password"
-									value={password}
-									onChange={handleChange}
-									placeholder="Password"
-								/>
+								<div className="position-relative">
+									<StyledFormControl
+										type={`${asText ? `text` : `password`}`}
+										className={"shadow-none"}
+										name="password"
+										value={password}
+										onChange={handleChange}
+										placeholder="Password"
+									/>
+									<Eye onClick={() => setAsText(!asText)}>
+										{asText ? <BsEye /> : <BsEyeSlash />}
+									</Eye>
+								</div>
 							</FormGroup>
 
 							<FormGroup className="mt-3">
 								<FormLabel>Konfirmasi Password</FormLabel>
-								<StyledFormControl
-									type="password"
-									className={"shadow-none"}
-									name="passwordConfirmation"
-									value={passwordConfirmation}
-									onChange={handleChange}
-									placeholder="Konfirmasi Password"
-								/>
+								<div className="position-relative">
+									<StyledFormControl
+										type={`${asText ? `text` : `password`}`}
+										className={"shadow-none"}
+										name="passwordConfirmation"
+										value={passwordConfirmation}
+										onChange={handleChange}
+										placeholder="Konfirmasi Password"
+									/>
+									<Eye onClick={() => setAsText(!asText)}>
+										{asText ? <BsEye /> : <BsEyeSlash />}
+									</Eye>
+								</div>
 							</FormGroup>
 
 							<FormText className="mt-2 text-muted">

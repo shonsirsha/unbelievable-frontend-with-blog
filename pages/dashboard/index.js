@@ -292,7 +292,7 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 				<div className="d-flex flex-column">
 					<StyledHeadingXS className="mb-2 ml-1">Kelas Populer</StyledHeadingXS>
 					{user.token && (
-						<div className="d-flex flex-lg-wrap py-4 flex-nowrap w-100 overflow-lg-none overflow-auto ">
+						<div className="d-flex flex-lg-wrap py-lg-4 py-1 flex-nowrap w-100 overflow-lg-none overflow-auto ">
 							{allCourses.map((course) => (
 								<StyledDefault
 									key={course.id}
@@ -341,7 +341,7 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 export async function getServerSideProps({ req, _ }) {
 	const { token } = parseCookies(req);
 
-	if (token === undefined) {
+	if (!token) {
 		return {
 			redirect: {
 				permanent: false,
