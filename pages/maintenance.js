@@ -26,7 +26,7 @@ const MaintenancePage = () => {
 			<div className="inner">
 				<Image id="logo" src="/images/logo.png" alt="logo" />
 				<HeadingXS className="text-white mt-5 text-center">
-					Sedang terjadi maintenance hingga 04.02.2022 jam 13:30. Sampai nanti!
+					Sedang terjadi maintenance.
 				</HeadingXS>
 			</div>
 		</Container>

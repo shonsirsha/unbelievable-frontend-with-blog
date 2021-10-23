@@ -13,7 +13,7 @@ import Router from "next/router";
 import { MAINTENANCE } from "../config";
 import { AuthProvider } from "context/AuthContext";
 import { CourseProvider } from "context/CourseContext";
-
+import MaintenancePage from "./maintenance";
 function Application({ Component, pageProps }) {
 	NProgress.configure({
 		minimum: 0.3,
@@ -26,6 +26,8 @@ function Application({ Component, pageProps }) {
 		if (MAINTENANCE) {
 			Router.push("/");
 		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [MAINTENANCE]);
 
 	Router.events.on("routeChangeStart", () => NProgress.start());
@@ -37,7 +39,7 @@ function Application({ Component, pageProps }) {
 				<Head>
 					<meta property="og:description" content={"tezt"} key="ogdesc" />
 				</Head>
-				{MAINTENANCE ? "Maaf, maintenance" : <Component {...pageProps} />}
+				{MAINTENANCE ? <MaintenancePage /> : <Component {...pageProps} />}
 			</CourseProvider>
 		</AuthProvider>
 	);
