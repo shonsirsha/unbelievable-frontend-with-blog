@@ -7,7 +7,8 @@ const OuterContainer = styled.div`
 	/*height: 100vh;*/
 	margin-right: 200px;
 	margin-left: 64px;
-
+	position: relative;
+	z-index: 5;
 	@media (max-width: 1024px) {
 		/*iPad Pro and below*/
 		display: none;
