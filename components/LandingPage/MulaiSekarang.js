@@ -47,7 +47,7 @@ export default function MulaiSekarang() {
 				<span className="bold">proses tidak akan mengkhianati hasil!</span>
 			</StyledHeadingSM>
 			<StyledTextPrimary className="mt-4">
-				belajarlah sesuai dengan apa yang kamu minati dengan gaya belajar masa
+				Belajarlah sesuai dengan apa yang kamu minati dengan gaya belajar masa
 				depan rasakan hasilnya mulai <span className="bold"> HARI INI!</span>
 			</StyledTextPrimary>
 		</LeftContainer>

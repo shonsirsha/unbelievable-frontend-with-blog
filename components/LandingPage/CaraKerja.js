@@ -50,9 +50,9 @@ const StyledHeadingSM = styled(HeadingSM)`
 export default function CaraKerja({ carakerja }) {
 	const left = (
 		<>
-			<StyledHeadingLG as="h2">bagaimana</StyledHeadingLG>
+			<StyledHeadingLG as="h2">Bagaimana</StyledHeadingLG>
 			<StyledHeadingSM as="h2" className="mt-1 text-blue">
-				cara kerjanya?
+				Cara Kerjanya?
 			</StyledHeadingSM>
 		</>
 	);

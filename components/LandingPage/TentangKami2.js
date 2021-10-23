@@ -18,13 +18,13 @@ export default function TentangKami({ professionals }) {
 	const left = (
 		<>
 			<HeadingMD as="h2" className="mt-1 text-white">
-				dengan
+				Dengan
 			</HeadingMD>
 			<StyledHeadingXXL as="h2" className="mt-2 text-blue">
 				TERBAIK
 			</StyledHeadingXXL>
 			<HeadingMD as="h2" className="mt-1 text-white">
-				di bidangnya
+				di Bidangnya
 			</HeadingMD>
 		</>
 	);

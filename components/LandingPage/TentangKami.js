@@ -36,9 +36,9 @@ const StyledImg = styled(Image)`
 export default function TentangKami({ about, about_image }) {
 	const left = (
 		<>
-			<StyledHeadingXXL as="h2">tumbuh</StyledHeadingXXL>
+			<StyledHeadingXXL as="h2">Tumbuh</StyledHeadingXXL>
 			<StyledTextPrimary as="h2" className="text-white">
-				bersama komunitas
+				Bersama Komunitas
 			</StyledTextPrimary>
 			<StyledHeadingMD as="h2" className="mt-1 text-blue">
 				Unbelievable

@@ -114,7 +114,7 @@ export default function Testimonial({ testimonials }) {
 				<Row>
 					<Col lg={12}>
 						<StyledHeadingMD className="text-center">
-							Testimoni Member yang sudah Join Batch 1
+							Testimoni Member yang Sudah Join Batch 1
 						</StyledHeadingMD>
 					</Col>
 
