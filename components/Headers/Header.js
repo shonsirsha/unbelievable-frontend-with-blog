@@ -340,12 +340,19 @@ export default function Header({
 					src="/images/logo.png"
 					alt="logo"
 				/>
-				<div className="ml-auto d-flex align-items-center">
+				<div
+					onClick={() => {
+						if (user) {
+							router.push("/dashboard");
+						} else {
+							router.push("/masuk");
+						}
+					}}
+					role="button"
+					className="ml-auto d-flex align-items-center"
+				>
 					{window && !user && (
 						<ProfileImage
-							onClick={() => {
-								router.push("/masuk");
-							}}
 							src={`${window.location.origin}/images/profile.png`}
 							alt="Profile"
 							width={43}
@@ -354,13 +361,6 @@ export default function Header({
 					)}
 					{window && user && !showLogout && (
 						<ProfileImage
-							onClick={() => {
-								if (user) {
-									router.push("/dashboard");
-								} else {
-									router.push("/masuk");
-								}
-							}}
 							src={
 								user.profile_picture
 									? user.profile_picture.url
