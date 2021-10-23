@@ -72,7 +72,7 @@ const Wishlist = () => {
 
 	if (loading) {
 		return (
-			<div className="d-flex justify-content-center">
+			<div className="d-flex justify-content-center m-auto">
 				<Loading fixed={false} transform={false} />
 			</div>
 		);

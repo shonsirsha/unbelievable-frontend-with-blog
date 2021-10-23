@@ -12,7 +12,6 @@ import CourseContext from "context/CourseContext";
 import SideBlock from "./SideItems/SideBlock";
 import ReviewBlock from "./SideItems/ReviewBlock";
 import { FaHeart } from "react-icons/fa";
-import { BiTask } from "react-icons/bi";
 import { useRouter } from "next/router";
 import Loading from "./Loading/Loading";
 const FlyingButtonsContainer = styled.div`
@@ -54,7 +53,6 @@ const OuterContainer = styled.div`
 	display: flex;
 
 	@media (max-width: 1024px) {
-		padding-right: 48px;
 		width: 100%;
 		overflow: auto;
 	}
@@ -176,9 +174,6 @@ export default function Layout({
 										className="mr-2"
 										content={<FaHeart style={{ fontSize: "24px" }} />}
 									/>
-									{/* <SideBlock
-										content={<BiTask style={{ fontSize: "24px" }} />}
-									/> */}
 								</>
 							)}
 						</div>

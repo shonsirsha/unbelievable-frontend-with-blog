@@ -24,10 +24,12 @@ import BuyModal from "components/Course/BuyModal";
 import Wishlist from "components/Wishlist/Wishlist";
 import WishlistModal from "components/Wishlist/WishlistModal";
 import { FormGroup, FormControl, Button } from "react-bootstrap";
+import { FaHeart } from "react-icons/fa";
 
 const StyledDefault = styled(DefaultCourseCard)`
 	margin-right: 16px;
 	margin-bottom: 16px;
+	flex-shrink: 0;
 	@media (max-width: 1024px) {
 		/*iPad Pro and below*/
 		min-width: 215px;
@@ -40,7 +42,6 @@ const StyledDefault = styled(DefaultCourseCard)`
 const RightContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	width: 320px;
 
 	@media (max-width: 1024px) {
 		/*iPad Pro and below*/
@@ -79,6 +80,15 @@ const StyledFormGroup = styled(FormGroup)`
 	top: 40%;
 	padding: 0 32px;
 	width: 100%;
+`;
+
+const DefaultCardsContainer = styled.div`
+	padding: 16px 6px;
+	padding-right: 240px;
+
+	@media (max-width: 1024px) {
+		padding: 16px 6px;
+	}
 `;
 
 const StyledFormControl = styled(FormControl)`
@@ -289,10 +299,10 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 				<StyledHeadingLG className="text-primary1 mb-5">
 					Heroes!
 				</StyledHeadingLG>
-				<div className="d-flex flex-column">
+				<div className="d-flex flex-column w-100">
 					<StyledHeadingXS className="mb-2 ml-1">Kelas Populer</StyledHeadingXS>
 					{user.token && (
-						<div className="d-flex flex-lg-wrap py-lg-4 py-1 flex-nowrap w-100 overflow-lg-none overflow-auto ">
+						<DefaultCardsContainer className="d-flex flex-nowrap w-100 overflow-auto ">
 							{allCourses.map((course) => (
 								<StyledDefault
 									key={course.id}
@@ -301,7 +311,7 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 									course={course}
 								/>
 							))}
-						</div>
+						</DefaultCardsContainer>
 					)}
 				</div>
 
@@ -321,18 +331,10 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 
 			<RightContainer>
 				<ComponentsContainer className="position-fixed">
-					{/* <SideBlock
-						content={<Wishlist />}
-						// content={wishlistCourses.map((c) => (
-						// 	<>{c.course.title}</>
-						// ))}
-						className="mb-5"
-					/> */}
 					<SideBlock
-						content={<Wishlist />}
-						// content={wishlistCourses.map((c) => (
-						// 	<>{c.course.title}</>
-						// ))}
+						onClick={() => setWishlistModalOpen(true)}
+						circular
+						content={<FaHeart style={{ fontSize: "24px" }} />}
 						className="mb-3"
 					/>
 					{/* <SideBlock
