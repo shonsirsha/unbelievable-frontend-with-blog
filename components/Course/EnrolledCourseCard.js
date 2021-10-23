@@ -43,9 +43,11 @@ const StyledCard = styled(Card)`
 	box-shadow: 2px 1px 15px rgba(0, 0, 0, 0.1);
 	width: ${(props) => (props.small ? `215px` : `308px`)};
 	border: none;
+	transition: 0.25s all;
 	min-height: 480px;
 	&:hover {
 		cursor: pointer;
+		transform: scale(1.01) translate(3px, -9px);
 	}
 `;
 const ImageContainer = styled.div`

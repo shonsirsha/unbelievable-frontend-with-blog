@@ -292,7 +292,7 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 				<div className="d-flex flex-column">
 					<StyledHeadingXS className="mb-2 ml-1">Kelas Populer</StyledHeadingXS>
 					{user.token && (
-						<div className="d-flex flex-lg-wrap flex-nowrap w-100 overflow-lg-none overflow-auto ">
+						<div className="d-flex flex-lg-wrap py-4 flex-nowrap w-100 overflow-lg-none overflow-auto ">
 							{allCourses.map((course) => (
 								<StyledDefault
 									key={course.id}
@@ -307,7 +307,7 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 
 				<div className="d-flex flex-column mt-4">
 					<StyledHeadingXS className="mb-2 ml-1 ">Kelas Saya</StyledHeadingXS>
-					<div className="d-flex flex-lg-wrap flex-nowrap w-100 overflow-lg-none overflow-auto pb-2">
+					<div className="d-flex flex-lg-wrap flex-nowrap py-4 w-100 overflow-lg-none overflow-auto pb-2">
 						{coursesTaken.map((course) => (
 							<>
 								{course.grouped_videos.videos.length > 0 && (

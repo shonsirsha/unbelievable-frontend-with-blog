@@ -239,11 +239,14 @@ const PreviewModal = (props) => {
 							</Popover>
 						</div>
 					</div>
-					<div className="d-flex mt-2 align-items-center">
-						<StyledTextTertiary className="text-white mr-3">
-							{selectedPreviewCourse.num_of_participants} siswa
-						</StyledTextTertiary>
-					</div>
+					{selectedPreviewCourse.display_siswa && (
+						<div className="d-flex mt-2 align-items-center">
+							<StyledTextTertiary className="text-white mr-3">
+								{selectedPreviewCourse.num_of_participants} siswa
+							</StyledTextTertiary>
+						</div>
+					)}
+
 					<div className="d-flex mt-2 align-items-center">
 						{/* <StyledTextTertiary className="text-white mr-3">
 							dapatkan e-Sertifikat <br />

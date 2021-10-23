@@ -59,11 +59,11 @@ const StyledCard = styled(Card)`
 	border-radius: 12px;
 	box-shadow: 2px 1px 15px rgba(0, 0, 0, 0.1);
 	width: ${(props) => (props.small ? `280px` : `308px`)};
-
 	border: none;
-
+	transition: 0.25s all;
 	&:hover {
 		cursor: pointer;
+		transform: scale(1.01) translate(3px, -9px);
 	}
 `;
 const ImageContainer = styled.div`
@@ -100,6 +100,10 @@ const TextDesc = styled(TextTertiary)`
 	font-size: ${(props) => (props.small ? `12px` : `14px`)};
 `;
 
+const TextSiswa = styled(TextTertiary)`
+	font-size: 11px;
+`;
+
 const PopoverContainer = styled.div`
 	min-width: 80px;
 	padding: 8px;
@@ -131,7 +135,10 @@ export default function DefaultCourseCard({
 		slug,
 		total_rating,
 		paid,
+		num_of_participants,
+		display_siswa,
 	} = course;
+	console.log(course);
 	const {
 		enrollClassLoading,
 		enrollClass,
@@ -165,7 +172,10 @@ export default function DefaultCourseCard({
 				<CardHeader as="p" className="mt-3">
 					{title}
 				</CardHeader>
-				<div className="d-flex mt-2">
+				<div className="d-flex flex-column mt-2">
+					{display_siswa && (
+						<TextSiswa className="mb-2">{num_of_participants} siswa</TextSiswa>
+					)}
 					<TextDesc small={small}>
 						{small ? <u>Lebih lanjut</u> : short_desc}
 					</TextDesc>
