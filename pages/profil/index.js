@@ -13,7 +13,7 @@ import { FiLogOut } from "react-icons/fi";
 import { IoDocumentText } from "react-icons/io5";
 import styled from "styled-components";
 import { mediaBreakpoint } from "utils/breakpoints";
-import { API_URL, MUX_READY } from "config";
+import { API_URL } from "config";
 import { profileDisplay } from "utils/secsToMin";
 
 const OptionButton = styled.div`
@@ -122,7 +122,7 @@ const Profil = ({
 					</div>
 					<div className="d-flex flex-column align-items-center mt-md-0 mt-4">
 						<HeadingMD as="p" className="text-primary1">
-							{MUX_READY ? profileDisplay(totalDurationWatched) : "-"}
+							{profileDisplay(totalDurationWatched)}
 						</HeadingMD>
 						<TextTertiary className="text-primary1 text-center">
 							Total <br />
