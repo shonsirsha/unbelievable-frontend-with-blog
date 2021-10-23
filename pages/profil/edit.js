@@ -315,7 +315,7 @@ const Edit = () => {
 	const [currentProvince, setCurrentProvince] = useState(
 		province
 			? indoProvinces[indoProvinces.findIndex((p) => p.nama === province)]
-			: indoProvinces[0]
+			: ""
 	);
 
 	useEffect(() => {
@@ -323,7 +323,7 @@ const Edit = () => {
 			setUserState({
 				...userState,
 				country: "Indonesia",
-				province: "Aceh",
+				province: "",
 			});
 		}
 
@@ -562,6 +562,7 @@ const Edit = () => {
 				city: "",
 				province: "",
 			});
+			setCities([]);
 		} else {
 			setUserState({
 				...userState,
@@ -639,7 +640,6 @@ const Edit = () => {
 
 	useEffect(() => {
 		async function getCities() {
-			console.log(currentProvince);
 			setCitiesLoading(true);
 			const res = await fetch(
 				`https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=${currentProvince.id}`,
@@ -658,7 +658,7 @@ const Edit = () => {
 				setCities(data.kota_kabupaten);
 				setUserState({
 					...userState,
-					city: data.kota_kabupaten[0].nama,
+					city: "",
 				});
 			}
 			setCitiesLoading(false);
@@ -878,12 +878,11 @@ const Edit = () => {
 										);
 										setCurrentProvince(indoProvinces[provIx]);
 									}}
-									defaultValue={indoProvinces[0].nama}
+									defaultValue={""}
 								>
+									<option></option>
 									{indoProvinces.map((c, ix) => (
-										<option defaultValue={indoProvinces[0].nama} key={ix}>
-											{c.nama}
-										</option>
+										<option key={ix}>{c.nama}</option>
 									))}
 								</Select>
 							</FormControlContainer>
@@ -897,7 +896,9 @@ const Edit = () => {
 										name="city"
 										onChange={handleChange}
 										value={city}
+										efaultValue={""}
 									>
+										<option></option>
 										{cities.map((c, ix) => (
 											<option key={ix}>{c.nama}</option>
 										))}

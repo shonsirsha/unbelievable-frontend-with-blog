@@ -78,6 +78,7 @@ export const AuthProvider = ({ children }) => {
 
 		if (res.ok) {
 			setUser(null);
+			setToken(null);
 			router.push("/masuk");
 		}
 	};
