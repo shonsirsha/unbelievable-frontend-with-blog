@@ -190,7 +190,6 @@ export default function Layout({
 													<HeadingXXS>free account.</HeadingXXS>
 													<HeadingXXS className="mt-2">upgrade</HeadingXXS>
 													<TextTertiary>
-														{userPaid.toString()}
 														untuk akses lebih maksimal!
 													</TextTertiary>
 												</>
