@@ -149,6 +149,13 @@ const PreviewModal = (props) => {
 	const price = selectedPreviewCourse.course_price
 		? parseInt(selectedPreviewCourse.course_price.price)
 		: 5000;
+	const crossedOutPrice =
+		selectedPreviewCourse.course_price &&
+		!Number.isNaN(
+			parseInt(selectedPreviewCourse.course_price.crossed_out_price)
+		)
+			? selectedPreviewCourse.course_price.crossed_out_price
+			: null;
 	return (
 		<StyledModal
 			{...props}
@@ -247,12 +254,26 @@ const PreviewModal = (props) => {
 						</div>
 					)}
 
-					<div className="d-flex mt-2 align-items-center">
+					<div className="d-flex flex-column mt-2 ">
 						{/* <StyledTextTertiary className="text-white mr-3">
 							dapatkan e-Sertifikat <br />
 							setelah menyelesaikan kelas ini
 						</StyledTextTertiary> */}
-						<StyledTextTertiary className="text-white">
+						{crossedOutPrice && (
+							<StyledTextTertiary
+								style={{ textDecoration: "line-through" }}
+								className="text-white"
+							>
+								{new Intl.NumberFormat("id-ID", {
+									style: "currency",
+									currency: "IDR",
+								}).format(crossedOutPrice)}
+							</StyledTextTertiary>
+						)}
+						<StyledTextTertiary
+							style={{ fontSize: `${crossedOutPrice ? `16px` : `14px`}` }}
+							className="text-white"
+						>
 							{new Intl.NumberFormat("id-ID", {
 								style: "currency",
 								currency: "IDR",
