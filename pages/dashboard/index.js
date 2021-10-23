@@ -321,6 +321,13 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 
 			<RightContainer>
 				<ComponentsContainer className="position-fixed">
+					{/* <SideBlock
+						content={<Wishlist />}
+						// content={wishlistCourses.map((c) => (
+						// 	<>{c.course.title}</>
+						// ))}
+						className="mb-5"
+					/> */}
 					<SideBlock
 						content={<Wishlist />}
 						// content={wishlistCourses.map((c) => (
