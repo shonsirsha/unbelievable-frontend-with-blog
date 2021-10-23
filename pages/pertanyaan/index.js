@@ -44,6 +44,10 @@ const Mail = styled(BsEnvelope)`
 const StyledRow = styled(Row)`
 	margin-left: 0;
 	margin-right: 0;
+
+	& a {
+		color: inherit;
+	}
 `;
 const StyledAccordion = styled(Accordion)`
 	& button {
@@ -68,7 +72,7 @@ const StyledAccordion = styled(Accordion)`
 	padding-bottom: 12px;
 	border-radius: 10px;
 `;
-export default function Index({ questions }) {
+export default function Index({ questions, siteData }) {
 	const [questionsState, setQuestionsState] = useState(questions);
 	const [keyword, setKeyword] = useState("");
 
@@ -146,16 +150,24 @@ export default function Index({ questions }) {
 
 					<Col xl={12} className="mt-5">
 						<div className="d-flex align-items-center justify-content-center flex-lg-row flex-md-row flex-column">
-							<div className="d-flex mr-lg-4 mr-md-4 mr-0 mb-lg-0 mb-md-0 mb-3">
-								<Headset className="mr-2" />
-								<TextTertiary className="text-gray2">
-									Hubungi Admin
-								</TextTertiary>
-							</div>
-							<div className="d-flex">
-								<Mail className="mr-2" />
-								<TextTertiary className="text-gray2">Email Kami</TextTertiary>
-							</div>
+							<a
+								rel="noopener noreferrer"
+								target="_blank"
+								href={`https://api.whatsapp.com/send?phone=${siteData.whatsapp_number}`}
+							>
+								<div className="d-flex mr-lg-4 mr-md-4 mr-0 mb-lg-0 mb-md-0 mb-3">
+									<Headset className="mr-2" />
+									<TextTertiary className="text-gray2">
+										Hubungi Admin
+									</TextTertiary>
+								</div>
+							</a>
+							<a href={`mailto:${siteData.email}`}>
+								<div className="d-flex">
+									<Mail className="mr-2" />
+									<TextTertiary className="text-gray2">Email Kami</TextTertiary>
+								</div>
+							</a>
 						</div>
 					</Col>
 				</StyledRow>
@@ -166,10 +178,15 @@ export default function Index({ questions }) {
 
 export async function getStaticProps() {
 	const res = await fetch(`${API_URL}/questions`);
+	const resSiteData = await fetch(`${API_URL}/sitedata`);
+
 	const questions = await res.json();
+	const siteData = await resSiteData.json();
+
 	return {
 		props: {
 			questions,
+			siteData,
 		},
 		revalidate: 1,
 	};

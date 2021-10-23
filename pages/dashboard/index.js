@@ -151,9 +151,7 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 		wishlistModalOpen,
 		setWishlistModalOpen,
 	} = useContext(CourseContext);
-	const userPaid = coursesTaken.some((user) => {
-		return user.paid;
-	});
+
 	const [allCourses] = useState(courses);
 	const [dob, setDob] = useState(null);
 	const [loading, setLoading] = useState(false);
@@ -227,6 +225,10 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	const userPaid = coursesTaken.some((user) => {
+		return user.paid;
+	});
+
 	if (!user.dob) {
 		const datex = new Date();
 		const today = `${datex.getFullYear()}-${
@@ -236,7 +238,12 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 		}-${datex.getDate() < 10 ? `0${datex.getDate()}` : datex.getDate()}`;
 
 		return (
-			<Layout userPaid={userPaid} title="Dashboard | Unbelievable" background="#171b2d" withMargin>
+			<Layout
+				userPaid={userPaid}
+				title="Dashboard | Unbelievable"
+				background="#171b2d"
+				withMargin
+			>
 				<ToastContainer />
 
 				<StyledFormGroup>
@@ -291,6 +298,7 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 			title="Dashboard | Unbelievable"
 			background="#171b2d"
 			withMargin
+			userPaid={userPaid}
 			mainApp
 		>
 			<ToastContainer />

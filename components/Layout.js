@@ -134,7 +134,6 @@ export default function Layout({
 	if (loading) {
 		return <Loading />;
 	}
-	console.log(user);
 	return (
 		<LayoutWrapper>
 			<Head>
@@ -191,6 +190,7 @@ export default function Layout({
 													<HeadingXXS>free account.</HeadingXXS>
 													<HeadingXXS className="mt-2">upgrade</HeadingXXS>
 													<TextTertiary>
+														{userPaid.toString()}
 														untuk akses lebih maksimal!
 													</TextTertiary>
 												</>

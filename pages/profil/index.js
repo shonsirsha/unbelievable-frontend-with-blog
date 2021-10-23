@@ -150,7 +150,7 @@ const Profil = ({
 							>
 								<IoDocumentText className="mr-0 mr-md-4" />
 								<TextPrimary className="text-primary1">
-									lihat komitmen saya
+									Lihat Komitmen Saya
 								</TextPrimary>
 							</OptionButton>
 						</a>
