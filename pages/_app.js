@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import NProgress from "nprogress";
 import Head from "next/head";
 import "nprogress/nprogress.css";
@@ -9,7 +10,7 @@ import "video.js/dist/video-js.css";
 import "styles/globals.css";
 
 import Router from "next/router";
-
+import { MAINTENANCE } from "../config";
 import { AuthProvider } from "context/AuthContext";
 import { CourseProvider } from "context/CourseContext";
 
@@ -21,6 +22,12 @@ function Application({ Component, pageProps }) {
 		showSpinner: false,
 	});
 
+	useEffect(() => {
+		if (MAINTENANCE) {
+			Router.push("/");
+		}
+	}, [MAINTENANCE]);
+
 	Router.events.on("routeChangeStart", () => NProgress.start());
 	Router.events.on("routeChangeComplete", () => NProgress.done());
 	Router.events.on("routeChangeError", () => NProgress.done());
@@ -28,9 +35,9 @@ function Application({ Component, pageProps }) {
 		<AuthProvider>
 			<CourseProvider>
 				<Head>
-					x <meta property="og:description" content={"tezt"} key="ogdesc" />
+					<meta property="og:description" content={"tezt"} key="ogdesc" />
 				</Head>
-				<Component {...pageProps} />
+				{MAINTENANCE ? "Maaf, maintenance" : <Component {...pageProps} />}
 			</CourseProvider>
 		</AuthProvider>
 	);

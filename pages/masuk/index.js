@@ -360,6 +360,8 @@ const Index = () => {
 			toast.error("E-mail tidak boleh kosong");
 		} else if (err == "Auth.form.error.password.provide") {
 			toast.error("Password tidak boleh kosong");
+		} else if (err === "Auth.form.error.blocked") {
+			toast.error("Maaf, telah terjadi kesalahan dalam log-in");
 		} else {
 			toast.error(err);
 		}

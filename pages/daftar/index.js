@@ -16,6 +16,7 @@ import {
 	Button,
 	FormText,
 	Image,
+	FormCheck,
 } from "react-bootstrap";
 import { HeadingXS, HeadingXXS } from "components/Typography/Headings";
 import { TextSecondary } from "components/Typography/Text";
@@ -148,6 +149,17 @@ const Eye = styled.div`
 	}
 `;
 
+const Radio = styled(FormCheck)`
+	& input {
+		width: 19px;
+		height: 19px;
+		margin-top: 2px;
+	}
+	& label {
+		margin-left: 4px;
+	}
+`;
+
 const Index = () => {
 	const router = useRouter();
 	const r_code = router.query.register_code ? router.query.register_code : "";
@@ -164,6 +176,7 @@ const Index = () => {
 		last_name: "",
 		password: "",
 		dob: "",
+		gender: "f",
 	});
 	const [focus, setFocus] = useState("");
 	const [asText, setAsText] = useState(false);
@@ -182,7 +195,7 @@ const Index = () => {
 	const handleChange = (e) => {
 		setSignUpDetails({ ...signUpDetails, [e.target.name]: e.target.value });
 	};
-	const { email, password, first_name, last_name, dob } = signUpDetails;
+	const { email, password, first_name, last_name, dob, gender } = signUpDetails;
 	const validateRegisterData = () => {
 		if (
 			whitespace(first_name) ||
@@ -213,6 +226,7 @@ const Index = () => {
 				last_name,
 				dob,
 				r_c_to_be_checked,
+				gender,
 			};
 
 			// reg code to be checked on backend if exists
@@ -263,7 +277,7 @@ const Index = () => {
 										type="text"
 										onBlur={() => setFocus("")}
 										onFocus={() => setFocus("focus2")}
-										className={"shadow-none"}
+										className={"shadow-none mb-3"}
 										name="last_name"
 										value={last_name}
 										onChange={handleChange}
@@ -285,6 +299,29 @@ const Index = () => {
 										value={dob}
 										max={today}
 										placeholder="Date"
+									/>
+								</div>
+							</FormGroup>
+
+							<FormGroup className="mr-xl-2 mb-3">
+								<FormLabel>Jenis Kelamin</FormLabel>
+								<div className="d-flex w-100">
+									<Radio
+										type={"radio"}
+										className="mr-3"
+										name="gender"
+										label={`Perempuan`}
+										value={"f"}
+										onChange={handleChange}
+										checked={gender === "f"}
+									/>
+									<Radio
+										type={"radio"}
+										label={`Laki-laki`}
+										onChange={handleChange}
+										checked={gender === "m"}
+										value={"m"}
+										name="gender"
 									/>
 								</div>
 							</FormGroup>
