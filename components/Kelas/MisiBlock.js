@@ -21,18 +21,11 @@ const CheckBoxWrapper = styled.div`
 		box-shadow: none;
 		background: #dbdbdb;
 		border-radius: 100%;
+		cursor: pointer;
 	}
 
 	input[type="checkbox"]:checked {
 		background: #e8e8e8;
-	}
-
-	input[type="checkbox"]:checked:after {
-		font-size: 16px;
-		line-height: 1rem;
-		padding-left: 5px;
-		padding-top: 2px;
-		color: #fff;
 	}
 `;
 const OuterContainer = styled.div`
@@ -127,11 +120,8 @@ const MisiBlock = ({
 									Video ini tidak memiliki misi.
 								</TextTertiary>
 							)}
-							{missionsCtx.map((m, ix) => (
-								<div
-									key={m.id}
-									className="d-flex align-items-center mb-2"
-								>
+							{missionsCtx.map((m, _) => (
+								<div key={m.id} className="d-flex align-items-center mb-2">
 									<CheckBoxWrapper
 										done={missionDone(m)}
 										className="mr-2 position-relative"

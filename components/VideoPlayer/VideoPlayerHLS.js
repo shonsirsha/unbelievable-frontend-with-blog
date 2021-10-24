@@ -5,7 +5,7 @@ import _ from "videojs-contrib-quality-levels";
 // those imports are important
 import qualitySelector from "videojs-hls-quality-selector";
 
-const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo, posterURL }) => {
+const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo, thumbnailURL }) => {
 	const videoRef = useRef();
 	const [player, setPlayer] = useState(undefined);
 	const [callFinishVideoAPI, setCallFinishVideoAPI] = useState(false);
@@ -14,16 +14,16 @@ const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo, posterURL }) => {
 	useEffect(() => {
 		if (player) {
 			player.src([liveURL]);
-			player.poster(posterURL);
+			player.poster(thumbnailURL);
 			setCallFinishVideoAPI(false);
 			setVidDuration(50000);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [videoId, liveURL, posterURL]);
+	}, [videoId, liveURL, thumbnailURL]);
 
 	useEffect(() => {
 		if (callFinishVideoAPI) {
-			finishesVideo(videoId);
+			finishesVideo();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [callFinishVideoAPI]);
@@ -35,7 +35,7 @@ const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo, posterURL }) => {
 			controls: true,
 			playsinline: true,
 			responsive: true,
-			poster: posterURL,
+			poster: thumbnailURL,
 			html5: {
 				hls: {
 					overrideNative: true, // add this line
