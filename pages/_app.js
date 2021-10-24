@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import NProgress from "nprogress";
 import Head from "next/head";
 import "nprogress/nprogress.css";
@@ -10,10 +10,10 @@ import "video.js/dist/video-js.css";
 import "styles/globals.css";
 
 import Router from "next/router";
-import { MAINTENANCE } from "../config";
+// import { MAINTENANCE } from "../config";
 import { AuthProvider } from "context/AuthContext";
 import { CourseProvider } from "context/CourseContext";
-import MaintenancePage from "./maintenance";
+// import MaintenancePage from "./maintenance";
 function Application({ Component, pageProps }) {
 	NProgress.configure({
 		minimum: 0.3,
@@ -22,13 +22,13 @@ function Application({ Component, pageProps }) {
 		showSpinner: false,
 	});
 
-	useEffect(() => {
-		if (MAINTENANCE) {
-			Router.push("/");
-		}
+	// useEffect(() => {
+	// 	if (MAINTENANCE) {
+	// 		Router.push("/");
+	// 	}
 
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [MAINTENANCE]);
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, [MAINTENANCE]);
 
 	Router.events.on("routeChangeStart", () => NProgress.start());
 	Router.events.on("routeChangeComplete", () => NProgress.done());
@@ -39,7 +39,9 @@ function Application({ Component, pageProps }) {
 				<Head>
 					<meta property="og:description" content={"tezt"} key="ogdesc" />
 				</Head>
-				{MAINTENANCE ? <MaintenancePage /> : <Component {...pageProps} />}
+				{/* {MAINTENANCE ? <MaintenancePage /> : <Component {...pageProps} />} */}
+
+				<Component {...pageProps} />
 			</CourseProvider>
 		</AuthProvider>
 	);
