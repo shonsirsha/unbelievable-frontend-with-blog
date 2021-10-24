@@ -211,6 +211,12 @@ const StyledMarkDown = styled(Markdown)`
 			"Noto Color Emoji";
 	}
 `;
+const StyledHeadingXS = styled(HeadingXS)`
+	line-break: anywhere;
+	@media ${mediaBreakpoint.down.md} {
+		font-size: 18px;
+	}
+`;
 export default function Kelas({ slug, currentCourse, token, noToken = false }) {
 	const router = useRouter();
 
@@ -352,8 +358,10 @@ export default function Kelas({ slug, currentCourse, token, noToken = false }) {
 			<BuyModal show={buyModalOpen} onHide={() => setBuyModalOpen(false)} />
 
 			<StyledContainer className="flex-column">
-				<div className="d-flex w-100 justify-content-center">
-					<HeadingXS className="text-center">{title}</HeadingXS>
+				<div className="d-flex w-100 justify-content-center px-3">
+					<StyledHeadingXS as="h1" className="text-center">
+						{title}
+					</StyledHeadingXS>
 				</div>
 				<div className="position-relative d-flex flex-lg-row flex-column w-100 mt-4 bg-primary1">
 					<MenuOpenBtn
