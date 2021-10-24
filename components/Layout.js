@@ -95,6 +95,10 @@ const ReviewBlockContainer = styled.div`
 			display: flex;
 		}
 		/*iPad Pro and below*/
+
+		& .ad {
+			display: none;
+		}
 	}
 `;
 const LayoutWrapper = styled.div`
@@ -214,6 +218,7 @@ export default function Layout({
 										siteData.ad_url && !whitespace(siteData.ad_url) && "_blank"
 									}
 									rel="noreferrer"
+									className="ad"
 								>
 									<AdBlock className="mt-2" url={siteData.ad_picture.url} />
 								</a>
