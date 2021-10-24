@@ -60,9 +60,15 @@ a:active {
 	height: 640px;
 }
 
-@media only screen and (max-width: 576px) {
-	.dancok {
-		height: 240px;
+@media only screen and (max-width: 1024px) and (min-width: 767px) {
+	.vidPlayer {
+		height: 480px;
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.vidPlayer {
+		height: 320px;
 	}
 }
 
