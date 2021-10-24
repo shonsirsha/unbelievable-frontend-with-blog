@@ -327,7 +327,6 @@ const Edit = () => {
 			});
 		}
 
-		console.log(userState);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [userState, currentProvince]);
 

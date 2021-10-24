@@ -53,7 +53,6 @@ const Callback = () => {
 			) {
 				const reg_code = sessionStorage.getItem("unb_reg_code");
 				if (reg_code) {
-					console.log(reg_code);
 					// saving to DB immediately - just in case user closes the tab
 					saveRegisterCodeToDB(reg_code).then(() => {
 						sessionStorage.removeItem("unb_reg_code");
@@ -65,7 +64,6 @@ const Callback = () => {
 					// no code in DB nor in session storage -
 					// safe to assume that user has no special register code
 
-					console.log("no reg link");
 					setUserRegisterCodeToDB(""); // will basically set code_verified to true w/ no register link
 				}
 			} else if (
@@ -92,8 +90,6 @@ const Callback = () => {
 	}, [loading, redir]);
 	useEffect(() => {
 		async function googleAuth() {
-			console.log("ASDSA");
-
 			const res = await fetch(`${NEXT_URL}/api/google-auth`, {
 				method: "POST",
 				headers: {
@@ -108,8 +104,6 @@ const Callback = () => {
 			if (res.ok) {
 				checkUserLoggedIn();
 				setLoading(false);
-
-				// console.log(userState);
 			} else {
 				if (data.message === "No access_token.") {
 					router.push("/masuk");

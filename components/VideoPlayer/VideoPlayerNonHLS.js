@@ -44,8 +44,6 @@ export default function VideoPlayerNonHLS({ liveUrl, onVideoFinished }) {
 				// 	// player.controlBar.progressControl.disable();
 				// }}
 				onSeeking={(ev, player, currentTimeSecond) => {
-					console.log(y);
-
 					if (y < currentTimeSecond) {
 						player.pause();
 						player.currentTime(y);
@@ -67,8 +65,6 @@ export default function VideoPlayerNonHLS({ liveUrl, onVideoFinished }) {
 				}}
 				onPause={(e, _, second) => {}}
 				onEnded={(e, _) => {
-					console.log(y);
-					console.log("ASDASD");
 					setFinished(true);
 				}}
 			/>

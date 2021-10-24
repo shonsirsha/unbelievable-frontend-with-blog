@@ -14,7 +14,6 @@ const StyledImage = styled(Image)`
 	object-fit: cover;
 `;
 export default function TentangKami({ professionals }) {
-	console.log(professionals);
 	const left = (
 		<>
 			<HeadingMD as="h2" className="mt-1 text-white">

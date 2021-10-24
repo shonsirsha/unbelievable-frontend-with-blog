@@ -270,8 +270,6 @@ export default function Onboarding({
 			}
 		}, 0);
 
-		console.log("ASD");
-		console.log(stage);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [stage]);
 

@@ -100,7 +100,6 @@ const StyledImage = styled(Image)`
 	object-fit: cover;
 `;
 export default function Testimonial({ testimonials }) {
-	console.log(testimonials);
 	const settings = {
 		dots: true,
 		infinite: true,

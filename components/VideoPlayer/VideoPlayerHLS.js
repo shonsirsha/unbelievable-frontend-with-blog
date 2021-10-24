@@ -21,11 +21,6 @@ const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo, posterURL }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [videoId, liveURL, posterURL]);
 
-	// useEffect(() => {
-	// 	console.log("wuwu");
-	// 	console.log(vidDuration);
-	// }, [vidDuration]);
-
 	useEffect(() => {
 		if (callFinishVideoAPI) {
 			finishesVideo(videoId);
@@ -76,7 +71,7 @@ const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo, posterURL }) => {
 			<video
 				ref={videoRef}
 				onLoadedMetadata={(e, px) => {
-					console.log(e.target.duration);
+					// console.log(e.target.duration);
 					setVidDuration(e.target.duration);
 				}}
 				onTimeUpdate={(e) => {

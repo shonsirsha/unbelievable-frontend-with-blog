@@ -95,7 +95,6 @@ export default function EnrolledCourseCard({ small, user, course, ...props }) {
 		paid,
 		percentage_course_finished,
 	} = course;
-	console.log(course);
 	const { rateClass, setPreviewModalOpen, setSelectedPreviewCourse } =
 		useContext(CourseContext);
 	const { token } = useContext(AuthContext);

@@ -138,7 +138,6 @@ export default function DefaultCourseCard({
 		num_of_participants,
 		display_siswa,
 	} = course;
-	console.log(course);
 	const {
 		enrollClassLoading,
 		enrollClass,

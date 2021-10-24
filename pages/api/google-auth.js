@@ -31,14 +31,11 @@ export default async function login(req, res) {
 				user: data.user,
 			});
 		} else {
-			console.log(data);
-			res
-				.status(data.statusCode)
-				.json({
-					message: data.message[0]
-						? data.message[0].messages[0]
-						: data.message.message,
-				});
+			res.status(data.statusCode).json({
+				message: data.message[0]
+					? data.message[0].messages[0]
+					: data.message.message,
+			});
 		}
 	} else {
 		res.setHeader("Allow", ["POST"]);

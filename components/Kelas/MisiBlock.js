@@ -51,13 +51,6 @@ const StyledHeadingXXS = styled(HeadingXXS)`
 	font-size: 12px;
 `;
 
-// const CheckedIcon = styled(Image)`
-// 	width: 20px;
-// 	height: 20px;
-// 	position: absolute;
-// 	left: 10px;
-// `;
-
 const CheckedIcon = styled(BsCheckLg)`
 	position: absolute;
 	left: 6px;
@@ -168,7 +161,6 @@ const MisiBlock = ({
 													}
 												}
 											}}
-											// checked={checkedState[ix]}
 											onClick={() => {
 												if (
 													!alreadySetIds.includes(m.id) &&
@@ -204,7 +196,6 @@ const MisiBlock = ({
 											setAlreadySetIds(missionIds);
 											setPersistedMissionIds(missionIds);
 											setMissionHook(true);
-											console.log(missionIds);
 										}
 									}}
 								>

@@ -315,7 +315,6 @@ export default function Kelas({
 			// const data = await res.json();
 			if (!res.ok) {
 				console.log("failed...");
-				// console.log(data.message);
 			} else {
 				console.log("mission done");
 				setMissionSaveLoading(false);
@@ -422,7 +421,7 @@ export default function Kelas({
 		if (!res.ok) {
 			console.log("failed fetching missions...");
 		} else {
-			console.log("fetched missions ", fetchedMissions);
+			console.log("missions fetched");
 			setMissionsCtx(fetchedMissions);
 		}
 	};
@@ -567,7 +566,6 @@ export default function Kelas({
 	const onClickBuyButton = async () => {
 		const invoiceIsValid = await checkIfInvoiceValid(currentCourse.id, token); // exists and not expiring soon/expired yet
 		if (!invoiceIsValid) {
-			console.log("getting new url (call to xendit)...");
 			await getInvoiceUrl(currentCourse, userServer, token);
 		}
 		setBuyModalOpen(true);
@@ -919,8 +917,6 @@ export async function getServerSideProps(ctx) {
 		);
 
 		if (!enrolling.ok) {
-			console.log("failed enrolling");
-
 			return {
 				redirect: {
 					permanent: false,
