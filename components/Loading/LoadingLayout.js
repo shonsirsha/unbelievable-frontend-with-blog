@@ -12,7 +12,7 @@ const StyledImage = styled(Image)`
 `;
 export default function LoadingLayout({
 	title,
-	keywords,
+	keywords = "self development, lms",
 	description,
 	imageURL = null,
 }) {

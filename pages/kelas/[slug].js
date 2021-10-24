@@ -24,9 +24,8 @@ import {
 	HeadingXXS,
 } from "components/Typography/Headings";
 import { TextTertiary } from "components/Typography/Text";
-import { MdCheck, MdChevronLeft } from "react-icons/md";
+import { MdChevronLeft } from "react-icons/md";
 import { mediaBreakpoint } from "utils/breakpoints";
-import { secsToMinOnly } from "utils/secsToMin";
 import Markdown from "markdown-to-jsx";
 import AuthContext from "context/AuthContext";
 
