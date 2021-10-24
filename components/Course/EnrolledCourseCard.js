@@ -49,6 +49,12 @@ const StyledCard = styled(Card)`
 		cursor: pointer;
 		transform: scale(1.01) translate(3px, -9px);
 	}
+	@media (max-width: 1024px) {
+		&:hover {
+			cursor: pointer;
+			transform: none;
+		}
+	}
 `;
 const ImageContainer = styled.div`
 	background: ${(props) =>
