@@ -119,6 +119,7 @@ const VideosListContainer = styled.div`
 	}
 
 	@media ${mediaBreakpoint.down.lg} {
+		position: relative;
 		min-height: 0;
 		width: 100%;
 		max-height: 480px;
