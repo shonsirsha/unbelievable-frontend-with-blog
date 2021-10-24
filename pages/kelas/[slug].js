@@ -282,11 +282,8 @@ export default function Kelas({
 		currentCourse.grouped_videos.videos
 	);
 
-	const [mis, setMis] = useState([]);
-
 	useEffect(() => {
 		setMissionsCtx(missions);
-		setMis(missions);
 		setMissionsCompleted(all_missions_completed);
 		let misObj = missions.filter((m) => m.completed === true);
 		let ary = [];
@@ -381,7 +378,6 @@ export default function Kelas({
 		if (!loadingFetchMission && mis.length > 0) {
 			setRenderedDescContext(
 				<MisiBlock
-					missions={mis}
 					finishedWatching
 					loading={loadingFetchMission}
 					setMissionIdsToAPI={setMissionIdsToAPI}
@@ -730,7 +726,6 @@ export default function Kelas({
 						onClick={() => {
 							setRenderedDescContext(
 								<MisiBlock
-									missions={mis}
 									finishedWatching={finishedWatching}
 									setMissionIdsToAPI={setMissionIdsToAPI}
 									setMissionHook={setMissionHook}

@@ -1,7 +1,8 @@
 import { useState, useEffect, useContext, memo } from "react";
 import { HeadingXS, HeadingXXS } from "components/Typography/Headings";
 import { TextTertiary, TextSecondary } from "components/Typography/Text";
-import { Form, Button } from "react-bootstrap";
+import { Button, Image } from "react-bootstrap";
+import { BsCheckLg } from "react-icons/bs";
 import styled from "styled-components";
 import CourseContext from "context/CourseContext";
 import Loading from "components/Loading/Loading";
@@ -12,25 +13,21 @@ const CheckBoxWrapper = styled.div`
 	display: flex;
 	min-height: 28px;
 	input[type="checkbox"] {
-		width: 20px !important;
-		height: 20px !important;
-		-webkit-appearance: none;
-		-moz-appearance: none;
-		-o-appearance: none;
+		width: 24px !important;
+		height: 24px !important;
 		appearance: none;
 		position: static;
 		outline: none;
 		box-shadow: none;
 		background: #dbdbdb;
-		border-radius: 4px;
+		border-radius: 100%;
 	}
 
 	input[type="checkbox"]:checked {
-		background: #${(props) => (props.done ? `7e8298` : `171b2d`)};
+		background: #e8e8e8;
 	}
 
 	input[type="checkbox"]:checked:after {
-		content: "✓";
 		font-size: 16px;
 		line-height: 1rem;
 		padding-left: 5px;
@@ -54,12 +51,27 @@ const StyledHeadingXXS = styled(HeadingXXS)`
 	font-size: 12px;
 `;
 
+// const CheckedIcon = styled(Image)`
+// 	width: 20px;
+// 	height: 20px;
+// 	position: absolute;
+// 	left: 10px;
+// `;
+
+const CheckedIcon = styled(BsCheckLg)`
+	position: absolute;
+	left: 6px;
+	width: 22px;
+	height: 22px;
+	pointer-events: none;
+	color: ${(props) => (props.done ? `#798989` : `#0AC7CE`)};
+`;
+
 const MisiBlock = ({
 	finishedWatching,
 	loading,
 	setMissionIdsToAPI,
 	setMissionHook,
-	missions,
 }) => {
 	const [missionIds, setMissionIds] = useState([]);
 	const [alreadySetIds, setAlreadySetIds] = useState([]);
@@ -74,9 +86,7 @@ const MisiBlock = ({
 		missionSaveLoading,
 		setMissionSaveLoading,
 	} = useContext(CourseContext);
-	const [lM, setLM] = useState(missionsCtx); // local mission
 
-	const [loadingSave, setLoadingSave] = useState(false);
 	// const [checkedState, setCheckedState] = useState(
 	// 	new Array(missionsCtx.length).fill(false)
 	// );
@@ -88,11 +98,18 @@ const MisiBlock = ({
 				ary.push(m.id);
 			}
 		});
-		console.log(missions);
 		setMissionIds(ary);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	const missionDone = (mission) => {
+		return (
+			alreadySetIds.includes(mission.id) ||
+			persistedMissionIds.includes(mission.id) ||
+			missionIdsDoneFromAPI.includes(mission.id)
+		);
+	};
 
 	return (
 		<OuterContainer>
@@ -117,20 +134,17 @@ const MisiBlock = ({
 									Video ini tidak memiliki misi.
 								</TextTertiary>
 							)}
-							{lM.map((m, ix) => (
+							{missionsCtx.map((m, ix) => (
 								<div
 									key={m.id}
-									className="d-flex align-items-center dada mb-1"
+									className="d-flex align-items-center mb-2"
 									style={{ paddingLeft: "4px" }}
 								>
 									<CheckBoxWrapper
-										done={
-											alreadySetIds.includes(m.id) ||
-											persistedMissionIds.includes(m.id) ||
-											missionIdsDoneFromAPI.includes(m.id)
-										}
-										className="mr-2"
+										done={missionDone(m)}
+										className="mr-2 position-relative"
 									>
+										{m.completed && <CheckedIcon done={missionDone(m)} />}
 										<input
 											type="checkbox"
 											checked={m.completed}
