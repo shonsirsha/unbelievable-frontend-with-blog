@@ -33,7 +33,7 @@ export default function VideoPlayerNonHLS({ liveUrl, onVideoFinished }) {
 	}, [sec]);
 	let y = 0;
 	return (
-		<div id="macan">
+		<div id="onboardingplayer">
 			<VREPlayer
 				playerOptions={playerOptions}
 				videojsOptions={videojsOptions}
