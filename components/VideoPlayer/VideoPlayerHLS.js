@@ -35,6 +35,7 @@ const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo, thumbnailURL }) => {
 			controls: true,
 			playsinline: true,
 			responsive: true,
+			overrideNative: true,
 			poster: thumbnailURL,
 			html5: {
 				hls: {
