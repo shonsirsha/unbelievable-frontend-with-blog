@@ -7,11 +7,11 @@ import MulaiSekarang from "components/LandingPage/MulaiSekarang";
 import Testimonial from "components/LandingPage/Testimonial";
 import { API_URL } from "config";
 
-export default function Home({ homePageContent }) {
+export default function Home({ homePageContent, seo }) {
 	const { about, carakerja, professionals, testimonials, about_image } =
 		homePageContent;
 	return (
-		<Layout id="asd" landingPage withFB>
+		<Layout landingPage withFB>
 			<Hero />
 			<TentangKami about={about} about_image={about_image} />
 			<CaraKerja carakerja={carakerja} />
@@ -26,7 +26,9 @@ export async function getStaticProps() {
 	const homeRes = await fetch(`${API_URL}/homepage`);
 	const homePageContent = await homeRes.json();
 	return {
-		props: { homePageContent },
+		props: {
+			homePageContent,
+		},
 		revalidate: 1,
 	};
 }

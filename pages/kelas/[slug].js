@@ -354,6 +354,7 @@ export default function Kelas({
 	return (
 		<Layout
 			showBurger={false}
+			metaImageURL={thumbnailURL}
 			description={
 				currentCourse.short_desc && currentCourse.short_desc.length > 0
 					? `${currentCourse.short_desc} Ikuti kelas ${title} sekarang juga di Unbelievable!`

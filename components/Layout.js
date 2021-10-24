@@ -15,10 +15,10 @@ import AdBlock from "./SideItems/AdBlock";
 import ReviewBlock from "./SideItems/ReviewBlock";
 import { FaHeart } from "react-icons/fa";
 import { useRouter } from "next/router";
-import Loading from "./Loading/Loading";
 import { HeadingXXS } from "./Typography/Headings";
 import { TextTertiary } from "./Typography/Text";
 import { whitespace } from "utils/whitespace";
+import LoadingLayout from "./Loading/LoadingLayout";
 
 const FlyingButtonsContainer = styled.div`
 	width: 0;
@@ -111,6 +111,7 @@ export default function Layout({
 	title = "Unbelievable",
 	keywords = "self development, lms",
 	description = "Belajarlah setiap hari, jadilah unbelievable!",
+	metaImageURL = null,
 	children,
 	landingPage = false,
 	withFB = false, // FB = FlyingButtons
@@ -140,18 +141,26 @@ export default function Layout({
 	}
 
 	if (loading) {
-		return <Loading />;
+		return (
+			<LoadingLayout
+				title={title}
+				keywords={keywords}
+				description={description}
+				imageURL={metaImageURL}
+			/>
+		);
 	}
 	return (
 		<LayoutWrapper>
 			<Head>
 				<title>{title}</title>
-				<meta name="description" content={description} />
+				<meta property="og:title" content={title} />
+				{metaImageURL && <meta property="og:image" content={metaImageURL} />}
+				<meta name="og:description" content={description} />
+				<meta property="og:type" content="website" />
 				<meta name="keywords" content={keywords} />
-				<meta name="og:title" content={title} key="ogtitle" />
-				<meta name="og:description" content={description} key="ogdesc" />
-
-				<link rel="shortcut icon" href="images/favicon/favicon.ico" />
+				<meta name="description" content={description} />
+				<link rel="shortcut icon" href="/images/favicon/favicon.ico" />
 			</Head>
 			{!loading && (
 				<Header
