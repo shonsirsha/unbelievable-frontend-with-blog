@@ -72,6 +72,23 @@ const isGoingNext = (currentDay, targetDay, videosState) => {
 	//false means user goes to previous day
 };
 
+const onClickBuyButton = async (
+	currentCourse,
+	token,
+	userServer,
+	checkIfInvoiceValid,
+	getInvoiceUrl,
+	setBuyModalOpen
+) => {
+	const invoiceIsValid = await checkIfInvoiceValid(currentCourse.id, token); // exists and not expiring soon/expired yet
+	if (!invoiceIsValid) {
+		console.log("getting new url (call to xendit)...");
+		await getInvoiceUrl(currentCourse, userServer, token);
+	}
+	setBuyModalOpen(true);
+};
+
+//this func needs to be refactored further
 export const handleClickVideoDay = (
 	currentCourse,
 	video,
@@ -81,7 +98,12 @@ export const handleClickVideoDay = (
 	videosState,
 	slug,
 	boughtDayDiff,
-	setRenderedDescContext
+	setRenderedDescContext,
+	userServer,
+	checkIfInvoiceValid,
+	getInvoiceUrl,
+	setBuyModalOpen,
+	token
 ) => {
 	if (paid) {
 		if (currentCourse.currentVideo.id !== video.id) {
@@ -116,7 +138,14 @@ export const handleClickVideoDay = (
 				confirmButtonText: "Beli Kelas",
 				cancelButtonText: "Tutup",
 				preConfirm: async (email) => {
-					await onClickBuyButton();
+					await onClickBuyButton(
+						currentCourse,
+						token,
+						userServer,
+						checkIfInvoiceValid,
+						getInvoiceUrl,
+						setBuyModalOpen
+					);
 				},
 			}).then(async (_) => {});
 		}

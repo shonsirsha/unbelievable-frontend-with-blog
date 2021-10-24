@@ -217,7 +217,13 @@ const StyledHeadingXS = styled(HeadingXS)`
 		font-size: 18px;
 	}
 `;
-export default function Kelas({ slug, currentCourse, token, noToken = false }) {
+export default function Kelas({
+	slug,
+	currentCourse,
+	token,
+	noToken = false,
+	userServer,
+}) {
 	const router = useRouter();
 
 	const { userLoading, user, checkUserLoggedIn } = useContext(AuthContext);
@@ -269,6 +275,8 @@ export default function Kelas({ slug, currentCourse, token, noToken = false }) {
 		setBuyModalOpen,
 		buyModalOpen,
 		setMissionSaveLoading,
+		getInvoiceUrl,
+		checkIfInvoiceValid,
 	} = useContext(CourseContext);
 	const [finishedWatching, setFinishedWatching] = useState(finished_watching);
 	const [currentlyOpened, setCurrentlyOpened] = useState("desc");
@@ -430,7 +438,12 @@ export default function Kelas({ slug, currentCourse, token, noToken = false }) {
 										videosState,
 										slug,
 										bought_day_diff,
-										setRenderedDescContext
+										setRenderedDescContext,
+										userServer,
+										checkIfInvoiceValid,
+										getInvoiceUrl,
+										setBuyModalOpen,
+										token
 									)
 								}
 							>
@@ -598,6 +611,7 @@ export async function getServerSideProps(ctx) {
 			slug,
 			currentCourse,
 			token,
+			userServer: user,
 		},
 	};
 }
