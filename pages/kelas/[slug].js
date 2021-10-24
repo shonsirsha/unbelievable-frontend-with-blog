@@ -317,16 +317,6 @@ export default function Kelas({
 				console.log("failed...");
 				// console.log(data.message);
 			} else {
-				let px = mis;
-				missionIdsToAPI.map((x) => {
-					px.map((y, ix) => {
-						if (y.id === x) {
-							px[ix].completed = true;
-						}
-					});
-				});
-				console.log("lalu", px);
-				setMis(px);
 				console.log("mission done");
 				setMissionSaveLoading(false);
 
@@ -375,7 +365,7 @@ export default function Kelas({
 	}, [finishedWatching, loadingFetchMission]);
 
 	useEffect(() => {
-		if (!loadingFetchMission && mis.length > 0) {
+		if (!loadingFetchMission && missionsCtx) {
 			setRenderedDescContext(
 				<MisiBlock
 					finishedWatching
@@ -386,7 +376,7 @@ export default function Kelas({
 			);
 			setCurrentlyOpened("misi");
 		}
-	}, [loadingFetchMission, mis]);
+	}, [loadingFetchMission, missionsCtx]);
 
 	const finishesVideo = async (videoId) => {
 		console.log("finishing...");
@@ -434,7 +424,6 @@ export default function Kelas({
 		} else {
 			console.log("fetched missions ", fetchedMissions);
 			setMissionsCtx(fetchedMissions);
-			setMis(fetchedMissions);
 		}
 	};
 
