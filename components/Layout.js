@@ -11,12 +11,15 @@ import AuthContext from "context/AuthContext";
 import CourseContext from "context/CourseContext";
 import SideBlock from "./SideItems/SideBlock";
 import UpgradeBlock from "./SideItems/UpgradeBlock";
+import AdBlock from "./SideItems/AdBlock";
 import ReviewBlock from "./SideItems/ReviewBlock";
 import { FaHeart } from "react-icons/fa";
 import { useRouter } from "next/router";
 import Loading from "./Loading/Loading";
 import { HeadingXXS } from "./Typography/Headings";
 import { TextTertiary } from "./Typography/Text";
+import { whitespace } from "utils/whitespace";
+
 const FlyingButtonsContainer = styled.div`
 	width: 0;
 	display: flex;
@@ -116,6 +119,7 @@ export default function Layout({
 	showReviewBlock = true,
 	backBtn,
 	userPaid = false,
+	siteData = null,
 	backTo,
 }) {
 	const { user, loading } = useContext(AuthContext);
@@ -199,6 +203,21 @@ export default function Layout({
 								</Link>
 							)}
 							<ReviewBlock className="mt-0 mt-lg-auto" />
+							{siteData && siteData.ad_picture && (
+								<a
+									href={
+										siteData.ad_url && !whitespace(siteData.ad_url)
+											? siteData.ad_url
+											: "#"
+									}
+									target={
+										siteData.ad_url && !whitespace(siteData.ad_url) && "_blank"
+									}
+									rel="noreferrer"
+								>
+									<AdBlock className="mt-2" url={siteData.ad_picture.url} />
+								</a>
+							)}
 						</div>
 
 						<div className="responsiveSideBlock">

@@ -140,7 +140,14 @@ const StyledSubmitBtn = styled(Button)`
 	border-radius: 18px;
 `;
 
-const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
+const Index = ({
+	token,
+	onboardings,
+	user,
+	courses,
+	coursesTaken,
+	siteData,
+}) => {
 	const router = useRouter();
 	const { logout, checkUserLoggedIn, getToken } = useContext(AuthContext);
 	const {
@@ -238,12 +245,7 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 		}-${datex.getDate() < 10 ? `0${datex.getDate()}` : datex.getDate()}`;
 
 		return (
-			<Layout
-				userPaid={userPaid}
-				title="Dashboard | Unbelievable"
-				background="#171b2d"
-				withMargin
-			>
+			<Layout title="Dashboard | Unbelievable" background="#171b2d" withMargin>
 				<ToastContainer />
 
 				<StyledFormGroup>
@@ -299,6 +301,7 @@ const Index = ({ token, onboardings, user, courses, coursesTaken }) => {
 			background="#171b2d"
 			withMargin
 			userPaid={userPaid}
+			siteData={siteData}
 			mainApp
 		>
 			<ToastContainer />
@@ -410,6 +413,10 @@ export async function getServerSideProps({ req, _ }) {
 			},
 		});
 
+		const resSiteData = await fetch(`${API_URL}/sitedata`, {
+			method: "GET",
+		});
+
 		const onboardings = await res.json();
 		let user = await res2.json();
 		user.token = token;
@@ -420,7 +427,7 @@ export async function getServerSideProps({ req, _ }) {
 			);
 		}
 		const coursesTaken = await res4.json();
-
+		const siteData = await resSiteData.json();
 		return {
 			props: {
 				onboardings,
@@ -428,6 +435,7 @@ export async function getServerSideProps({ req, _ }) {
 				user,
 				courses,
 				coursesTaken,
+				siteData,
 			},
 		};
 	}
