@@ -6,6 +6,8 @@ const Container = styled.div`
 	${(props) => (props.circular ? `height: 56px;` : ``)}
 	border-radius: ${(props) => (props.circular ? `100%` : `12px`)};
 	background: #99bbf8;
+	position: absolute;
+	top: 220px;
 	&:hover {
 		cursor: pointer;
 	}

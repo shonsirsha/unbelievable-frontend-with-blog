@@ -10,7 +10,7 @@ const StyledHeadingXXS = styled(HeadingXXS)`
 	font-size: 18px;
 `;
 const StyledSideBlock = styled(SideBlock)`
-	width: 180px;
+	width: 240px;
 
 	a {
 		color: inherit;
@@ -39,21 +39,19 @@ const Feedback = styled(MdRateReview)`
 	}
 `;
 export default function ReviewBlock({ ...props }) {
-	const {className} = props
+	const { className } = props;
 	const content = (
 		<Link href="/profil/feedback">
 			<a>
 				<ContentContainer
 					role="button"
-					className="d-flex justify-content-between align-items-center flex-column"
+					className="d-flex justify-content-between align-items-center flex-row"
 				>
 					<div className="d-flex flex-column">
-						<StyledHeadingXXS as="p" className="text-center">
+						<StyledHeadingXXS as="p" className="text-left mb-1">
 							Tulis Masukkan
 						</StyledHeadingXXS>
-						<TextTertiary className="mt-1 text-center mb-2">
-							Disini!
-						</TextTertiary>
+						<TextTertiary className="mt-1 text-left ">Disini!</TextTertiary>
 					</div>
 					<Image src="/images/character2.png" alt="Character" />
 				</ContentContainer>

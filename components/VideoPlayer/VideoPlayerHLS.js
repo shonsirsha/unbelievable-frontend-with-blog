@@ -13,7 +13,11 @@ const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo, thumbnailURL }) => {
 
 	useEffect(() => {
 		if (player) {
-			player.src([liveURL]);
+			player.src({
+				src: liveURL,
+				type: "application/x-mpegURL",
+				withCredentials: false,
+			});
 			player.poster(thumbnailURL);
 			setCallFinishVideoAPI(false);
 			setVidDuration(50000);
@@ -29,25 +33,26 @@ const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo, thumbnailURL }) => {
 	}, [callFinishVideoAPI]);
 
 	useEffect(() => {
+		console.log("ASDASD");
 		const videoJsOptions = {
-			preload: "auto",
 			autoplay: false,
+			preload: "auto",
 			controls: true,
-			playsinline: true,
-			responsive: true,
-			overrideNative: true,
 			poster: thumbnailURL,
-			html5: {
-				hls: {
-					overrideNative: true, // add this line
-				},
-			},
 			sources: [
 				{
 					src: liveURL,
 					type: "application/x-mpegURL",
+					withCredentials: false,
 				},
 			],
+			html5: {
+				hls: {
+					overrideNative: true,
+				},
+				nativeAudioTracks: false,
+				nativeVideoTracks: false,
+			},
 		};
 
 		const p = videojs(
@@ -57,6 +62,8 @@ const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo, thumbnailURL }) => {
 				// console.log('onPlayerReady');
 			}
 		);
+
+		console.log(p.qualityLevels());
 		setPlayer(p);
 		return () => {
 			if (player) player.dispose();

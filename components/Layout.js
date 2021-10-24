@@ -185,12 +185,11 @@ export default function Layout({
 				{mainApp && <SideMenu />}
 				{mainApp && showReviewBlock && (
 					<ReviewBlockContainer>
-						<div className="d-flex flex-lg-column flex-lg-col-reverse">
+						<div className="d-flex flex-lg-column flex-lg-col-reverse position-relative">
 							{!userPaid && user && router.pathname === "/dashboard" && (
 								<Link href="/menjadi-member">
 									<a className="my-auto">
 										<UpgradeBlock
-											className="mr-2 "
 											small
 											content={
 												<>

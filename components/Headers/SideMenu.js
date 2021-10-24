@@ -17,7 +17,7 @@ const OuterContainer = styled.div`
 const MenuContainer = styled.div`
 	position: fixed;
 	display: flex;
-	top: 45%;
+	top: 40%;
 	flex-direction: column;
 
 	a {
