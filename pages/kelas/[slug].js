@@ -5,12 +5,11 @@ import VideoPlayerHLS from "components/VideoPlayer/VideoPlayerHLS";
 import MisiBlock from "components/Kelas/MisiBlock";
 import MiscContainer from "components/Kelas/MiscContainer";
 import ListSingleVideoPaid from "components/Kelas/ListSingleVideoPaid";
-import VideoIndicatorCheckbox from "components/Kelas/VideoIndicatorCheckbox";
+import ListSingleVideoUnpaid from "components/Kelas/ListSingleVideoUnpaid";
 import {
 	handleClickVideoDay,
 	handleMissionsSave,
 	finishesVideo,
-	isVideoFinished,
 } from "components/Kelas/utils";
 
 import BuyModal from "components/Course/BuyModal";
@@ -24,9 +23,8 @@ import {
 	HeadingSM,
 	HeadingXXS,
 } from "components/Typography/Headings";
-import { TextSecondary, TextTertiary } from "components/Typography/Text";
-import { MdLockOutline, MdCheck, MdChevronLeft } from "react-icons/md";
-import { AiOutlineClockCircle } from "react-icons/ai";
+import { TextTertiary } from "components/Typography/Text";
+import { MdCheck, MdChevronLeft } from "react-icons/md";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { secsToMinOnly } from "utils/secsToMin";
 import Markdown from "markdown-to-jsx";
@@ -161,10 +159,6 @@ const CloseButton = styled(HeadingSM)`
 	}
 `;
 
-const StyledHeadingXS = styled(HeadingXS)`
-	font-size: 22px;
-`;
-
 const CourseDayContainer = styled.div`
 	padding: 16px 32px;
 	${(props) => props.current && `background: rgba(255,255,255,0.28);`}
@@ -177,15 +171,9 @@ const CourseDayContainer = styled.div`
 	}
 `;
 
-const Lock = styled(MdLockOutline)`
-	font-size: 18px;
-`;
 const TimeText = styled(HeadingXXS)`
 	font-size: 12px;
 	font-family: MontSerratRegular;
-`;
-const Clock = styled(AiOutlineClockCircle)`
-	font-size: 14px;
 `;
 
 const StyledTextTertiary = styled(TextTertiary)`
@@ -342,36 +330,6 @@ export default function Kelas({ slug, currentCourse, token, noToken = false }) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentCourse.currentVideo]);
 
-	const VideoDetailUnpaid = ({ video, ix }) => {
-		return (
-			<>
-				<div className="d-flex align-items-center">
-					<StyledHeadingXS as="p" className={`text-white mb-1`}>
-						{video.day_title}
-					</StyledHeadingXS>
-				</div>
-
-				<div className="d-flex align-items-center mb-2">
-					<Clock className="text-white mr-1" />
-					<TimeText className={`text-white`}>
-						{secsToMinOnly(video.bunny_video.duration)}
-					</TimeText>
-				</div>
-
-				<div className="d-flex align-items-center">
-					{ix > 0 && <Lock className="text-white mr-1" />}
-
-					{isVideoFinished(videosState, video) && (
-						<VideoIndicatorCheckbox finished />
-					)}
-					<TextSecondary className={`text-white`}>
-						{video.bunny_video.title}
-					</TextSecondary>
-				</div>
-			</>
-		);
-	};
-
 	if (noToken) {
 		return <></>;
 	}
@@ -396,10 +354,7 @@ export default function Kelas({ slug, currentCourse, token, noToken = false }) {
 				<div className="d-flex w-100 justify-content-center">
 					<HeadingXS className="text-center">{title}</HeadingXS>
 				</div>
-				<div
-					id="waw"
-					className="position-relative d-flex flex-lg-row flex-column w-100 mt-4 bg-primary1"
-				>
+				<div className="position-relative d-flex flex-lg-row flex-column w-100 mt-4 bg-primary1">
 					<MenuOpenBtn
 						className={`${hideList && `d-block shadow-lg`}`}
 						onClick={() => setHideList(false)}
@@ -486,7 +441,11 @@ export default function Kelas({ slug, currentCourse, token, noToken = false }) {
 												/>
 											</>
 										) : (
-											<VideoDetailUnpaid video={vid} ix={ix} />
+											<ListSingleVideoUnpaid
+												videosState={videosState}
+												video={vid}
+												ix={ix}
+											/>
 										)}
 									</CourseDayContainer>
 								</a>
