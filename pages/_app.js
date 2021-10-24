@@ -36,9 +36,6 @@ function Application({ Component, pageProps }) {
 	return (
 		<AuthProvider>
 			<CourseProvider>
-				<Head>
-					<meta property="og:description" content={"tezt"} key="ogdesc" />
-				</Head>
 				{/* {MAINTENANCE ? <MaintenancePage /> : <Component {...pageProps} />} */}
 
 				<Component {...pageProps} />

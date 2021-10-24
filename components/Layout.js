@@ -150,6 +150,8 @@ export default function Layout({
 				<meta name="keywords" content={keywords} />
 				<meta name="og:title" content={title} key="ogtitle" />
 				<meta name="og:description" content={description} key="ogdesc" />
+
+				<link rel="shortcut icon" href="images/favicon/favicon.ico" />
 			</Head>
 			{!loading && (
 				<Header
