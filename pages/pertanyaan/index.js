@@ -15,6 +15,7 @@ import { Image } from "react-bootstrap";
 import SearchBar from "components/Search/SearchBar";
 import { whitespace } from "utils/whitespace";
 import { HeadingXXS } from "components/Typography/Headings";
+import Linkify from "react-linkify";
 
 const TitleText = styled(TextPrimary)`
 	font-size: 22px;
@@ -44,10 +45,6 @@ const Mail = styled(BsEnvelope)`
 const StyledRow = styled(Row)`
 	margin-left: 0;
 	margin-right: 0;
-
-	& a {
-		color: inherit;
-	}
 `;
 const StyledAccordion = styled(Accordion)`
 	& button {
@@ -133,7 +130,19 @@ export default function Index({ questions, siteData }) {
 									</Accordion.Header>
 									<Accordion.Body>
 										<TextSecondary style={{ whiteSpace: "pre-line" }}>
-											{q.content}
+											<Linkify
+												componentDecorator={(
+													decoratedHref,
+													decoratedText,
+													key
+												) => (
+													<a target="blank" href={decoratedHref} key={key}>
+														{decoratedText}
+													</a>
+												)}
+											>
+												{q.content}
+											</Linkify>
 										</TextSecondary>
 									</Accordion.Body>
 								</Accordion.Item>

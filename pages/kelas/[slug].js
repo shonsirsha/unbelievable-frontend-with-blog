@@ -6,7 +6,7 @@ import VideoPlayerHLS from "components/VideoPlayer/VideoPlayerHLS";
 import MisiBlock from "components/Kelas/MisiBlock";
 import BuyModal from "components/Course/BuyModal";
 import { parseCookies } from "utils/cookies";
-import { API_URL, USE_FALLBACK_VID, BUNNY_STREAM_PREFIX_URL } from "config";
+import { API_URL, BUNNY_STREAM_PREFIX_URL } from "config";
 import { useRouter } from "next/router";
 import Layout from "components/Layout";
 import styled from "styled-components";
@@ -20,9 +20,11 @@ import { MdLockOutline, MdCheck, MdChevronLeft } from "react-icons/md";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { dateDiffInDays } from "utils/dateDiffInDays";
-import { secsToMin, secsToMinOnly } from "utils/secsToMin";
+import { secsToMinOnly } from "utils/secsToMin";
 import Markdown from "markdown-to-jsx";
 import AuthContext from "context/AuthContext";
+import Linkify from "react-linkify";
+
 const StyledContainer = styled.div`
 	display: flex;
 	padding: 32px 0;
@@ -470,7 +472,15 @@ export default function Kelas({
 									className="text-primary1 mt-1"
 									style={{ whiteSpace: "pre-line" }}
 								>
-									{p.text}
+									<Linkify
+										componentDecorator={(decoratedHref, decoratedText, key) => (
+											<a target="blank" href={decoratedHref} key={key}>
+												{decoratedText}
+											</a>
+										)}
+									>
+										{p.text}
+									</Linkify>
 								</StyledTextTertiary>
 								<hr />
 							</div>
@@ -777,13 +787,7 @@ export default function Kelas({
 							posterURL={`${BUNNY_STREAM_PREFIX_URL}/${currentCourse.currentVideo.bunny_video.video_id}/${currentCourse.currentVideo.bunny_video.thumbnail_name}`}
 							videoId={currentCourse.currentVideo.id}
 							finishesVideo={finishesVideo}
-							liveURL={
-								// https://content.jwplatform.com/manifests/yp34SRmf.m3u8
-								// USE_FALLBACK_VID
-								// 	? `https://vz-450fb4df-0a1.b-cdn.net/07c1aae4-7af6-415e-b178-bb3eed797438/playlist.m3u8`
-								// 	: `https://stream.mux.com/${currentCourse.currentVideo.video.playback_id}.m3u8`
-								`${BUNNY_STREAM_PREFIX_URL}/${currentCourse.currentVideo.bunny_video.video_id}/playlist.m3u8`
-							}
+							liveURL={`${BUNNY_STREAM_PREFIX_URL}/${currentCourse.currentVideo.bunny_video.video_id}/playlist.m3u8`}
 						/>
 						<MiscContainer />
 					</VideoContainer>
@@ -846,6 +850,10 @@ export async function getServerSideProps(ctx) {
 		return {
 			props: {
 				noToken: true,
+				// this noToken prop serves as a 'hack'ish way to fix
+				// when token can't be fetched after a redirect
+				// from a different site
+				// might have to find a better solution... :)
 			},
 		};
 	}

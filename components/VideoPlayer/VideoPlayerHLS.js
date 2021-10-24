@@ -84,7 +84,7 @@ const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo, posterURL }) => {
 						setCallFinishVideoAPI(true);
 					}
 				}}
-				className="dancok video-js vjs-default-skin vjs-big-play-centered"
+				className="vidPlayer video-js vjs-default-skin vjs-big-play-centered"
 			></video>
 		</div>
 	);
