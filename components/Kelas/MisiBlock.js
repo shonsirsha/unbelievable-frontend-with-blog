@@ -131,7 +131,6 @@ const MisiBlock = ({
 								<div
 									key={m.id}
 									className="d-flex align-items-center mb-2"
-									style={{ paddingLeft: "4px" }}
 								>
 									<CheckBoxWrapper
 										done={missionDone(m)}
