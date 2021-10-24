@@ -1,17 +1,18 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect, useContext, memo } from "react";
 import CourseContext from "context/CourseContext";
-import Swal from "sweetalert2";
 import VideoPlayerHLS from "components/VideoPlayer/VideoPlayerHLS";
 import MisiBlock from "components/Kelas/MisiBlock";
 import MiscContainer from "components/Kelas/MiscContainer";
 import ListSingleVideoPaid from "components/Kelas/ListSingleVideoPaid";
+import VideoIndicatorCheckbox from "components/Kelas/VideoIndicatorCheckbox";
 import {
 	handleClickVideoDay,
 	handleMissionsSave,
 	finishesVideo,
 	isVideoFinished,
 } from "components/Kelas/utils";
+
 import BuyModal from "components/Course/BuyModal";
 import { parseCookies } from "utils/cookies";
 import { API_URL, BUNNY_STREAM_PREFIX_URL } from "config";
@@ -361,10 +362,7 @@ export default function Kelas({ slug, currentCourse, token, noToken = false }) {
 					{ix > 0 && <Lock className="text-white mr-1" />}
 
 					{isVideoFinished(videosState, video) && (
-						<CheckBoxWrapper className="mr-2 position-relative">
-							<MdCheck className="text-white position-absolute" />
-							<input type="checkbox" checked />
-						</CheckBoxWrapper>
+						<VideoIndicatorCheckbox finished />
 					)}
 					<TextSecondary className={`text-white`}>
 						{video.bunny_video.title}

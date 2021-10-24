@@ -1,9 +1,11 @@
 import { HeadingXS, HeadingXXS } from "components/Typography/Headings";
 import { TextSecondary } from "components/Typography/Text";
 import { AiOutlineClockCircle } from "react-icons/ai";
-import { MdLockOutline, MdCheck } from "react-icons/md";
+import { MdLockOutline } from "react-icons/md";
 import { secsToMinOnly } from "utils/secsToMin";
-import { isVideoFinished } from "components/Kelas/utils";
+import { isVideoFinished } from "./utils";
+import VideoIndicatorCheckbox from "./VideoIndicatorCheckbox";
+
 import styled from "styled-components";
 const StyledHeadingXS = styled(HeadingXS)`
 	font-size: 22px;
@@ -69,20 +71,10 @@ const ListSingleVideoPaid = ({ video, videosState, ix, boughtDayDiff }) => {
 						</>
 					)} */}
 
-				{!isFirstVideo && !isPrevVideoFinished() && (
-					<Lock
-						className={`text-${
-							boughtDayDiff >= ix ? `white` : "lighterDarkGray"
-						} mr-1`}
-					/>
-				)}
-
-				{isVideoFinished(videosState, video) && (
-					<MdCheck
-						className={`text-${
-							boughtDayDiff >= ix ? `white` : "lighterDarkGray"
-						} mr-1`}
-					/>
+				{isVideoFinished(videosState, video) ? (
+					<VideoIndicatorCheckbox finished />
+				) : (
+					<VideoIndicatorCheckbox />
 				)}
 
 				{/* {ix > 0 && } */}
