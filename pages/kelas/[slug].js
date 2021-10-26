@@ -379,6 +379,7 @@ export default function Kelas({
 						<MdChevronLeft />
 					</MenuOpenBtn>
 					<VideoContainer className={`${hideList && `hide`}`}>
+						{/* {currentCourse.currentVideo.id} */}
 						<VideoPlayerHLS
 							thumbnailURL={thumbnailURL}
 							videoId={currentCourse.currentVideo.id}

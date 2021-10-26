@@ -35,7 +35,7 @@ const goToTheNextDay = (
 				cancelButtonText: "Batal",
 			}).then((result) => {
 				if (result.isConfirmed) {
-					goToVideo(video);
+					goToVideo(video, slug);
 				}
 			});
 		}
@@ -55,7 +55,7 @@ const goToVideo = (video, slug) => {
 		`${
 			video.bunny_video.upload_id
 				? `/kelas/${slug}?c=${video.bunny_video.upload_id}`
-				: `#`
+				: `/`
 		}`
 	);
 };

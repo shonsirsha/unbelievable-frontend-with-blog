@@ -33,7 +33,6 @@ const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo, thumbnailURL }) => {
 	}, [callFinishVideoAPI]);
 
 	useEffect(() => {
-		console.log("ASDASD");
 		const videoJsOptions = {
 			autoplay: false,
 			preload: "auto",
