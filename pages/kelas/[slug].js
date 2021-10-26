@@ -349,7 +349,6 @@ export default function Kelas({
 	}
 
 	const thumbnailURL = `${BUNNY_STREAM_PREFIX_URL}/${currentCourse.currentVideo.bunny_video.video_id}/${currentCourse.currentVideo.bunny_video.thumbnail_name}`;
-
 	return (
 		<Layout
 			showBurger={false}
@@ -383,6 +382,8 @@ export default function Kelas({
 						<VideoPlayerHLS
 							thumbnailURL={thumbnailURL}
 							videoId={currentCourse.currentVideo.id}
+							captions={currentCourse.currentVideo.bunny_video.captions}
+							bunnyVideoId={currentCourse.currentVideo.bunny_video.video_id}
 							finishesVideo={() =>
 								finishesVideo(
 									finishedWatching,

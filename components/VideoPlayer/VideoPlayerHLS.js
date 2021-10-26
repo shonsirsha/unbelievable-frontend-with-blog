@@ -1,16 +1,23 @@
 import React, { useRef, useState, useEffect } from "react";
 import videojs from "video.js";
 import _ from "videojs-contrib-quality-levels";
-
+import { BUNNY_STREAM_PREFIX_URL } from "config";
 // those imports are important
 import qualitySelector from "videojs-hls-quality-selector";
 
-const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo, thumbnailURL }) => {
+const VideoPlayerHLS = ({
+	liveURL,
+	videoId,
+	finishesVideo,
+	thumbnailURL,
+	bunnyVideoId,
+	captions = [],
+}) => {
 	const videoRef = useRef();
 	const [player, setPlayer] = useState(undefined);
 	const [callFinishVideoAPI, setCallFinishVideoAPI] = useState(false);
 	const [vidDuration, setVidDuration] = useState(50000);
-
+	console.log(captions);
 	useEffect(() => {
 		if (player) {
 			player.src({
@@ -87,7 +94,22 @@ const VideoPlayerHLS = ({ liveURL, videoId, finishesVideo, thumbnailURL }) => {
 					}
 				}}
 				className="vidPlayer video-js vjs-default-skin vjs-big-play-centered"
-			></video>
+			>
+				{captions && captions.length > 0 && (
+					<>
+						{captions.map((c) => (
+							<track
+								key={c.srclang}
+								kind="subtitles"
+								src={`${BUNNY_STREAM_PREFIX_URL}/${bunnyVideoId}/captions/${c.srclang}.vtt`}
+								srcLang={`${c.srclang}`}
+								label={`${c.label}`}
+								default
+							/>
+						))}
+					</>
+				)}
+			</video>
 		</div>
 	);
 };
