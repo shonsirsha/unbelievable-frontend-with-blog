@@ -31,15 +31,22 @@ const OuterContainer = styled.div`
 		padding-bottom: 48px;
 	}
 `;
-export default function HalfHalf({ left, right, light, bottom }) {
+export default function HalfHalf({
+	left,
+	right,
+	leftLg = 6,
+	rightLg = 6,
+	light,
+	bottom,
+}) {
 	return (
 		<OuterContainer className={`${light ? `bg-white` : `bg-primary1`}`}>
 			<Container>
 				<StyledRow>
-					<StyledCol lg={6} md={12}>
+					<StyledCol lg={leftLg} md={12}>
 						{left}
 					</StyledCol>
-					<StyledCol lg={6} md={12}>
+					<StyledCol lg={rightLg} md={12}>
 						{right}
 					</StyledCol>
 					{bottom && (
