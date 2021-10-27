@@ -382,7 +382,11 @@ export default function Kelas({
 						<VideoPlayerHLS
 							thumbnailURL={thumbnailURL}
 							videoId={currentCourse.currentVideo.id}
-							captions={currentCourse.currentVideo.bunny_video.captions}
+							captions={
+								currentCourse.currentVideo.bunny_video.captions
+									? currentCourse.currentVideo.bunny_video.captions
+									: []
+							}
 							bunnyVideoId={currentCourse.currentVideo.bunny_video.video_id}
 							finishesVideo={() =>
 								finishesVideo(

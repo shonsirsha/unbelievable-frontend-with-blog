@@ -28,7 +28,7 @@ const VideoIndicatorCheckbox = ({ finished = false }) => {
 	return (
 		<CheckBoxWrapper className="mr-2 position-relative">
 			{finished && <MdCheck className="text-white position-absolute" />}
-			<input type="checkbox" checked={finished} />
+			<input type="checkbox" checked={finished} readOnly />
 		</CheckBoxWrapper>
 	);
 };

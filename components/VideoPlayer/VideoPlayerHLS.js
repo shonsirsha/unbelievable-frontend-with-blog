@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, Fragment } from "react";
 import videojs from "video.js";
 import _ from "videojs-contrib-quality-levels";
 import { BUNNY_STREAM_PREFIX_URL } from "config";
@@ -17,7 +17,7 @@ const VideoPlayerHLS = ({
 	const [player, setPlayer] = useState(undefined);
 	const [callFinishVideoAPI, setCallFinishVideoAPI] = useState(false);
 	const [vidDuration, setVidDuration] = useState(50000);
-	console.log(captions);
+
 	useEffect(() => {
 		if (player) {
 			player.src({
@@ -26,11 +26,36 @@ const VideoPlayerHLS = ({
 				withCredentials: false,
 			});
 			player.poster(thumbnailURL);
+
+			const captionsCompleted = captions.map((co) => ({
+				...co,
+				src: `${BUNNY_STREAM_PREFIX_URL}/${bunnyVideoId}/captions/${co.srclang}.vtt`,
+				kind: `captions`,
+			}));
+			const allTracks = player.textTracks().tracks_;
+
+			if (allTracks.length > 0) {
+				allTracks.map((t) => {
+					player.removeRemoteTextTrack(t);
+				});
+			}
+
+			if (captionsCompleted.length > 0) {
+				captionsCompleted.map((c) => {
+					player.addRemoteTextTrack({
+						src: c.src,
+						kind: c.kind,
+						srclang: c.srclang,
+						label: c.label,
+					});
+				});
+			}
+
 			setCallFinishVideoAPI(false);
 			setVidDuration(50000);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [videoId, liveURL, thumbnailURL]);
+	}, [videoId, liveURL, thumbnailURL, captions]);
 
 	useEffect(() => {
 		if (callFinishVideoAPI) {
@@ -53,33 +78,46 @@ const VideoPlayerHLS = ({
 				},
 			],
 			html5: {
-				hls: {
+				vhs: {
 					overrideNative: true,
 				},
 				nativeAudioTracks: false,
 				nativeVideoTracks: false,
+				nativeTextTracks: false,
 			},
+			tracks:
+				captions.length > 0
+					? captions.map((co) => ({
+							...co,
+							src: `${BUNNY_STREAM_PREFIX_URL}/${bunnyVideoId}/captions/${co.srclang}.vtt`,
+							kind: `captions`,
+					  }))
+					: [],
 		};
 
 		const p = videojs(
 			videoRef.current,
 			videoJsOptions,
 			function onPlayerReady() {
+				this.qualityLevels();
+				this.src({
+					src: liveURL,
+					type: "application/x-mpegURL",
+					withCredentials: false,
+				});
+				this.hlsQualitySelector({ displayCurrentQuality: true });
 				// console.log('onPlayerReady');
 			}
 		);
 
-		console.log(p.qualityLevels());
 		setPlayer(p);
 		return () => {
 			if (player) player.dispose();
 		};
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	useEffect(() => {
-		if (player) player.hlsQualitySelector({ displayCurrentQuality: true });
-	}, [player]);
 	return (
 		<div data-vjs-player>
 			<video
@@ -94,22 +132,7 @@ const VideoPlayerHLS = ({
 					}
 				}}
 				className="vidPlayer video-js vjs-default-skin vjs-big-play-centered"
-			>
-				{captions && captions.length > 0 && (
-					<>
-						{captions.map((c) => (
-							<track
-								key={c.srclang}
-								kind="subtitles"
-								src={`${BUNNY_STREAM_PREFIX_URL}/${bunnyVideoId}/captions/${c.srclang}.vtt`}
-								srcLang={`${c.srclang}`}
-								label={`${c.label}`}
-								default
-							/>
-						))}
-					</>
-				)}
-			</video>
+			></video>
 		</div>
 	);
 };

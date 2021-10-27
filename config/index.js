@@ -9,5 +9,5 @@ export const NEXT_URL =
 export const USE_FALLBACK_VID = process.env.NEXT_PUBLIC_FALLBACK || true;
 export const BUNNY_STREAM_PREFIX_URL =
 	process.env.NEXT_PUBLIC_BUNNY_STREAM_PREFIX_URL ||
-	"https://vz-a2adf92d-b24.b-cdn.net";
+	"https://vz-b4f1e97e-483.b-cdn.net";
 export const MAINTENANCE = process.env.NEXT_PUBLIC_MAINTENANCE || false;
