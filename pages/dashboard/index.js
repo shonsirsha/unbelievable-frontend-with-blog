@@ -428,6 +428,8 @@ export async function getServerSideProps({ req, _ }) {
 		}
 		const coursesTaken = await res4.json();
 		const siteData = await resSiteData.json();
+		console.log(onboardings);
+
 		return {
 			props: {
 				onboardings,

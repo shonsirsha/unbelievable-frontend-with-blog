@@ -10,8 +10,9 @@ import {
 	HeadingLG,
 	HeadingXS,
 } from "components/Typography/Headings";
-import { TextPrimary, TextSecondary } from "components/Typography/Text";
-import VideoPlayerNonHLS from "components/VideoPlayer/VideoPlayerNonHLS";
+import { BUNNY_STREAM_PREFIX_URL } from "config";
+import { TextSecondary } from "components/Typography/Text";
+import VideoPlayerHLS from "components/VideoPlayer/VideoPlayerHLS";
 import CircleButton from "components/Buttons/CircleButton";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { mediaBreakpoint } from "utils/breakpoints";
@@ -125,10 +126,18 @@ export default function Onboarding({
 	const [userName, setUserName] = useState("");
 	const [lastStep] = useState(stepsRange ? stepsRange[1] : steps);
 	const [firstStep] = useState(stepsRange ? stepsRange[0] : 1);
-	const [url, setUrl] = useState(onboardings[0][`video_intro_1`].url);
+	const [url, setUrl] = useState(
+		`${BUNNY_STREAM_PREFIX_URL}/${onboardings[0].video_1.video.video_id}/playlist.m3u8`
+	);
 	const [VP, setVP] = useState(
 		<VideoContainer id="macan" className="mt-4">
-			<VideoPlayerNonHLS liveUrl={url} onVideoFinished={onVideoFinished} />
+			<VideoPlayerHLS
+				captions={onboardings[0].video_1.video.captions}
+				onboarding
+				liveURL={url}
+				finishesVideo={onVideoFinished}
+				bunnyVideoId={onboardings[0].video_1.video.video_id}
+			/>
 		</VideoContainer>
 	);
 
@@ -194,7 +203,12 @@ export default function Onboarding({
 	useEffect(() => {
 		setTimeout(() => {
 			if (stage <= 2) {
-				setUrl(onboardings[0][`video_intro_${stage}`].url);
+				console.log("ASD");
+				setUrl(
+					`${BUNNY_STREAM_PREFIX_URL}/${
+						onboardings[0][`video_${stage}`].video.video_id
+					}/playlist.m3u8`
+				);
 			} else if (stage === 3) {
 				setVP(
 					<>
@@ -275,14 +289,16 @@ export default function Onboarding({
 
 	useEffect(() => {
 		if (stage <= 2) {
-			setVP(<></>);
 			setTimeout(() => {
 				setVP(
 					<>
 						<VideoContainer className="mt-4">
-							<VideoPlayerNonHLS
-								liveUrl={url}
-								onVideoFinished={onVideoFinished}
+							<VideoPlayerHLS
+								captions={onboardings[0][`video_${stage}`].video.captions}
+								liveURL={url}
+								finishesVideo={onVideoFinished}
+								bunnyVideoId={onboardings[0][`video_${stage}`].video.video_id}
+								onboarding
 							/>
 						</VideoContainer>
 					</>

@@ -9,9 +9,10 @@ const VideoPlayerHLS = ({
 	liveURL,
 	videoId,
 	finishesVideo,
-	thumbnailURL,
+	thumbnailURL = "",
 	bunnyVideoId,
 	captions = [],
+	onboarding = false,
 }) => {
 	const videoRef = useRef();
 	const [player, setPlayer] = useState(undefined);
@@ -26,20 +27,17 @@ const VideoPlayerHLS = ({
 				withCredentials: false,
 			});
 			player.poster(thumbnailURL);
-
 			const captionsCompleted = captions.map((co) => ({
 				...co,
 				src: `${BUNNY_STREAM_PREFIX_URL}/${bunnyVideoId}/captions/${co.srclang}.vtt`,
 				kind: `captions`,
 			}));
 			const allTracks = player.textTracks().tracks_;
-
 			if (allTracks.length > 0) {
 				allTracks.map((t) => {
 					player.removeRemoteTextTrack(t);
 				});
 			}
-
 			if (captionsCompleted.length > 0) {
 				captionsCompleted.map((c) => {
 					player.addRemoteTextTrack({
@@ -50,9 +48,8 @@ const VideoPlayerHLS = ({
 					});
 				});
 			}
-
 			setCallFinishVideoAPI(false);
-			setVidDuration(50000);
+			// setVidDuration(50000);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [videoId, liveURL, thumbnailURL, captions]);
@@ -68,8 +65,10 @@ const VideoPlayerHLS = ({
 		const videoJsOptions = {
 			autoplay: false,
 			preload: "auto",
+			fluid: onboarding,
 			controls: true,
 			poster: thumbnailURL,
+
 			sources: [
 				{
 					src: liveURL,
@@ -123,15 +122,20 @@ const VideoPlayerHLS = ({
 			<video
 				ref={videoRef}
 				onLoadedMetadata={(e, px) => {
-					// console.log(e.target.duration);
 					setVidDuration(e.target.duration);
 				}}
 				onTimeUpdate={(e) => {
-					if (e.target.currentTime >= vidDuration - 10) {
-						setCallFinishVideoAPI(true);
+					if (e.target.currentTime >= vidDuration - 5) {
+						if (!onboarding) {
+							setCallFinishVideoAPI(true);
+						} else {
+							finishesVideo();
+						}
 					}
 				}}
-				className="vidPlayer video-js vjs-default-skin vjs-big-play-centered"
+				className={`${
+					!onboarding ? `vidPlayer` : `onboardingplayer`
+				} video-js vjs-default-skin vjs-big-play-centered`}
 			></video>
 		</div>
 	);
