@@ -124,15 +124,6 @@ const VideoPlayerHLS = ({
 				onLoadedMetadata={(e, px) => {
 					setVidDuration(e.target.duration);
 				}}
-				onTimeUpdate={(e) => {
-					if (e.target.currentTime >= vidDuration - 5) {
-						if (!onboarding) {
-							setCallFinishVideoAPI(true);
-						} else {
-							finishesVideo();
-						}
-					}
-				}}
 				className={`${
 					!onboarding ? `vidPlayer` : `onboardingplayer`
 				} video-js vjs-default-skin vjs-big-play-centered`}
