@@ -76,3 +76,35 @@ a:active {
 	pointer-events: none;
 	touch-action: none;
 }
+.react-datepicker__triangle {
+	display: none;
+}
+.react-datepicker__input-container input {
+	padding: 12px;
+	width: 100%;
+	border: none;
+	border-radius: 6px;
+	background: #f4f4f7;
+	width: 100%;
+}
+
+.react-datepicker__header {
+	background: #fff;
+}
+
+.react-datepicker__day--selected {
+	background: #171b2d !important;
+}
+
+.react-datepicker__day--selected {
+	background: #171b2d !important;
+}
+
+.react-datepicker__navigation {
+	top: 8px !important;
+}
+
+.react-datepicker__day--keyboard-selected {
+	background: transparent !important;
+	color: #000 !important;
+}

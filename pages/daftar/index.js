@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthContext from "context/AuthContext";
 import moment from "moment";
+import ReactDatePicker from "react-datepicker";
 import Layout from "components/Layout";
 import styled from "styled-components";
 import {
@@ -178,7 +179,6 @@ const Index = () => {
 		dob: "",
 		gender: "f",
 	});
-	const [focus, setFocus] = useState("");
 	const [asText, setAsText] = useState(false);
 	const { register, err, authLoading } = useContext(AuthContext);
 
@@ -200,13 +200,12 @@ const Index = () => {
 		if (
 			whitespace(first_name) ||
 			whitespace(last_name) ||
-			whitespace(dob) ||
-			!moment(`${dob}`, "YYYY-MM-DD", true).isValid()
+			!moment(dob).isValid()
 		) {
 			return false;
 		} else {
 			if (
-				new Date(dob).getFullYear() >= 1950 &&
+				new Date(dob).getFullYear() >= 1930 &&
 				new Date().setHours(0, 0, 0, 0) >=
 					new Date(dob).setHours(0, 0, 0, 0).valueOf()
 			) {
@@ -231,7 +230,6 @@ const Index = () => {
 
 			// reg code to be checked on backend if exists
 
-			setFocus("");
 			if (!checkPassword(password)) {
 				toast.error("Password tidak memenuhi kriteria");
 			} else {
@@ -265,8 +263,6 @@ const Index = () => {
 								<div className="d-flex flex-xl-row flex-column">
 									<StyledFormControl
 										type="text"
-										onBlur={() => setFocus("")}
-										onFocus={() => setFocus("focus")}
 										name="first_name"
 										className="mr-xl-2 mb-3 shadow-none"
 										onChange={handleChange}
@@ -275,8 +271,6 @@ const Index = () => {
 									/>
 									<StyledFormControl
 										type="text"
-										onBlur={() => setFocus("")}
-										onFocus={() => setFocus("focus2")}
 										className={"shadow-none mb-3"}
 										name="last_name"
 										value={last_name}
@@ -289,16 +283,23 @@ const Index = () => {
 							<FormGroup>
 								<FormLabel>Tanggal Lahir</FormLabel>
 								<div className="d-flex flex-xl-row flex-column">
-									<StyledFormControl
-										type="date"
-										onBlur={() => setFocus("")}
-										onFocus={() => setFocus("focus")}
-										name="dob"
-										className="mr-xl-2 mb-3 shadow-none"
-										onChange={handleChange}
-										value={dob}
-										max={today}
-										placeholder="Date"
+									<ReactDatePicker
+										name={"dob"}
+										className={"mr-xl-2 mb-3"}
+										maxDate={moment().toDate()}
+										minDate={moment("01-01-1930").toDate()}
+										dateFormat="dd-MM-yyyy"
+										selected={
+											moment(dob).isValid()
+												? moment(dob).toDate()
+												: moment().toDate()
+										}
+										onChange={(date) => {
+											setSignUpDetails({
+												...signUpDetails,
+												["dob"]: date,
+											});
+										}}
 									/>
 								</div>
 							</FormGroup>
@@ -330,8 +331,6 @@ const Index = () => {
 								<FormLabel>E-mail</FormLabel>
 								<StyledFormControl
 									type="email"
-									onBlur={() => setFocus("")}
-									onFocus={() => setFocus("focus")}
 									className="mr-xl-2 mb-3 shadow-none"
 									name="email"
 									value={email}
@@ -346,8 +345,6 @@ const Index = () => {
 									<StyledFormControl
 										type={`${asText ? `text` : `password`}`}
 										name="password"
-										onBlur={() => setFocus("")}
-										onFocus={() => setFocus("focus2")}
 										className={"shadow-none"}
 										value={password}
 										placeholder="Password"

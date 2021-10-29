@@ -1,6 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { parseCookies } from "utils/cookies";
 import moment from "moment";
+import ReactDatePicker from "react-datepicker";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -186,10 +187,10 @@ const Index = ({
 		if (!loading) {
 			setLoading(true);
 			if (
-				moment(`${dob}`, "YYYY-MM-DD", true).isValid() &&
+				moment(dob).isValid() &&
 				new Date().setHours(0, 0, 0, 0) >=
 					new Date(dob).setHours(0, 0, 0, 0).valueOf() &&
-				new Date(dob).getFullYear() >= 1950
+				new Date(dob).getFullYear() >= 1930
 			) {
 				const res = await fetch(`${API_URL}/users/me`, {
 					method: "PUT",
@@ -256,18 +257,21 @@ const Index = ({
 							Mohon masukkan tanggal lahir untuk menyelesaikan pendaftaran
 						</TextTertiary>
 						<div className="d-flex flex-column">
-							<StyledFormControl
-								type="date"
-								name="dob"
-								className="mr-xl-2 mb-3 shadow-none"
-								onChange={(e) => {
-									setDob(e.target.value);
+							<ReactDatePicker
+								name={"dob"}
+								maxDate={moment().toDate()}
+								minDate={moment("01-01-1930").toDate()}
+								dateFormat="dd-MM-yyyy"
+								selected={
+									moment(dob).isValid()
+										? moment(dob).toDate()
+										: moment().toDate()
+								}
+								onChange={(date) => {
+									setDob(date);
 								}}
-								value={dob}
-								min="1950-01-01"
-								max={today}
-								placeholder="Date"
 							/>
+
 							<StyledSubmitBtn
 								disabled={loading}
 								type="submit"

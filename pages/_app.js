@@ -1,6 +1,5 @@
 // import { useEffect } from "react";
 import NProgress from "nprogress";
-import Head from "next/head";
 import "nprogress/nprogress.css";
 import "styles/styles.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -8,6 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "video.js/dist/video-js.css";
 import "styles/globals.css";
+import "react-datepicker/dist/react-datepicker.css";
 
 import Router from "next/router";
 // import { MAINTENANCE } from "../config";

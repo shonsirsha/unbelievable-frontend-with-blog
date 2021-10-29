@@ -20,6 +20,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { TextSecondary } from "components/Typography/Text";
 import moment from "moment";
+import ReactDatePicker from "react-datepicker";
 import Breadcrumb from "components/Breadcrumb/Breadcrumb";
 
 const OuterContainer = styled.div`
@@ -319,6 +320,12 @@ const Edit = () => {
 	);
 
 	useEffect(() => {
+		if (dob) {
+			console.log(dob);
+		}
+	}, []);
+
+	useEffect(() => {
 		if (!userState.country) {
 			setUserState({
 				...userState,
@@ -572,16 +579,16 @@ const Edit = () => {
 	};
 	const validDate = (dob) => {
 		return (
-			moment(`${dob}`, "YYYY-MM-DD", true).isValid() &&
+			moment(dob).isValid() &&
 			new Date().setHours(0, 0, 0, 0) >=
 				new Date(dob).setHours(0, 0, 0, 0).valueOf() &&
-			new Date(dob).getFullYear() >= 1950
+			new Date(dob).getFullYear() >= 1930
 		);
 	};
 	const handleSave = async () => {
 		if (!loading) {
 			setLoading(true);
-
+			console.log(validDate(dob));
 			if (!whitespace(first_name) && !whitespace(last_name) && validDate(dob)) {
 				if (biodata && biodata.length >= 100) {
 					toast.error("Ups... Maaf, biodatamu terlalu panjang.");
@@ -665,7 +672,9 @@ const Edit = () => {
 		getCities();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentProvince]);
-
+	console.log(moment(dob).isValid());
+	console.log(moment(dob).format("dd-mm-yyyy"));
+	console.log(moment().toDate());
 	return (
 		<Layout
 			title="Edit Profil | Unbelievable"
@@ -800,14 +809,22 @@ const Edit = () => {
 							<StyledFormLabel>
 								Tanggal Lahir <span className="text-danger">*</span>
 							</StyledFormLabel>
-							<StyledFormControl
-								type="date"
-								name="dob"
-								className="mr-xl-2 shadow-none"
-								onChange={handleChange}
-								value={dob}
-								max={today}
-								placeholder="Date"
+
+							<ReactDatePicker
+								name={"dob"}
+								maxDate={moment().toDate()}
+								dateFormat="dd-MM-yyyy"
+								selected={
+									moment(dob).isValid()
+										? moment(dob).toDate()
+										: moment().toDate()
+								}
+								onChange={(date) => {
+									setUserState({
+										...userState,
+										["dob"]: date,
+									});
+								}}
 							/>
 						</FormControlContainer>
 					</FormGroup>
