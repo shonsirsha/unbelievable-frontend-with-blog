@@ -21,7 +21,6 @@ import SideBlock from "components/SideItems/SideBlock";
 import styled from "styled-components";
 import PreviewModal from "components/Course/PreviewModal";
 import BuyModal from "components/Course/BuyModal";
-import Wishlist from "components/Wishlist/Wishlist";
 import WishlistModal from "components/Wishlist/WishlistModal";
 import { FormGroup, FormControl, Button } from "react-bootstrap";
 import { FaHeart } from "react-icons/fa";
@@ -428,7 +427,6 @@ export async function getServerSideProps({ req, _ }) {
 		}
 		const coursesTaken = await res4.json();
 		const siteData = await resSiteData.json();
-		console.log(onboardings);
 
 		return {
 			props: {

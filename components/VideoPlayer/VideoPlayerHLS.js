@@ -39,14 +39,18 @@ const VideoPlayerHLS = ({
 				});
 			}
 			if (captionsCompleted.length > 0) {
-				captionsCompleted.map((c) => {
+				captionsCompleted.map((c, ix) => {
 					player.addRemoteTextTrack({
 						src: c.src,
 						kind: c.kind,
 						srclang: c.srclang,
 						label: c.label,
+						default: ix === 0,
 					});
 				});
+
+				const addedTracks = player.textTracks().tracks_;
+				addedTracks[0].mode = "showing";
 			}
 			setCallFinishVideoAPI(false);
 			// setVidDuration(50000);
@@ -86,10 +90,11 @@ const VideoPlayerHLS = ({
 			},
 			tracks:
 				captions.length > 0
-					? captions.map((co) => ({
+					? captions.map((co, ix) => ({
 							...co,
 							src: `${BUNNY_STREAM_PREFIX_URL}/${bunnyVideoId}/captions/${co.srclang}.vtt`,
 							kind: `captions`,
+							default: ix === 0,
 					  }))
 					: [],
 		};
@@ -122,7 +127,13 @@ const VideoPlayerHLS = ({
 			<video
 				ref={videoRef}
 				onLoadedMetadata={(e, px) => {
+					// console.log(e.target.duration);
 					setVidDuration(e.target.duration);
+				}}
+				onTimeUpdate={(e) => {
+					if (e.target.currentTime >= vidDuration - 10) {
+						setCallFinishVideoAPI(true);
+					}
 				}}
 				className={`${
 					!onboarding ? `vidPlayer` : `onboardingplayer`
