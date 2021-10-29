@@ -203,7 +203,6 @@ export default function Onboarding({
 	useEffect(() => {
 		setTimeout(() => {
 			if (stage <= 2) {
-				console.log("ASD");
 				setUrl(
 					`${BUNNY_STREAM_PREFIX_URL}/${
 						onboardings[0][`video_${stage}`].video.video_id
