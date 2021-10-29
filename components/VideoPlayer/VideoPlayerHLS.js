@@ -27,11 +27,14 @@ const VideoPlayerHLS = ({
 				withCredentials: false,
 			});
 			player.poster(thumbnailURL);
-			const captionsCompleted = captions.map((co) => ({
-				...co,
-				src: `${BUNNY_STREAM_PREFIX_URL}/${bunnyVideoId}/captions/${co.srclang}.vtt`,
-				kind: `captions`,
-			}));
+			const captionsCompleted =
+				captions && captions.length > 0
+					? captions.map((co) => ({
+							...co,
+							src: `${BUNNY_STREAM_PREFIX_URL}/${bunnyVideoId}/captions/${co.srclang}.vtt`,
+							kind: `captions`,
+					  }))
+					: [];
 			const allTracks = player.textTracks().tracks_;
 			if (allTracks.length > 0) {
 				allTracks.map((t) => {
