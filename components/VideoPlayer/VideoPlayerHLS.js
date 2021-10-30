@@ -44,13 +44,16 @@ const VideoPlayerHLS = ({
 			}
 			if (captionsCompleted.length > 0) {
 				captionsCompleted.map((c, ix) => {
-					player.addRemoteTextTrack({
-						src: c.src,
-						kind: c.kind,
-						srclang: c.srclang,
-						label: c.label,
-						default: ix === 0,
-					});
+					player.addRemoteTextTrack(
+						{
+							src: c.src,
+							kind: c.kind,
+							srclang: c.srclang,
+							label: c.label,
+							default: ix === 0,
+						},
+						true
+					);
 				});
 			}
 			setCallFinishVideoAPI(false);
@@ -67,6 +70,17 @@ const VideoPlayerHLS = ({
 	}, [callFinishVideoAPI]);
 
 	useEffect(() => {
+		const m =
+			captions.length > 0
+				? captions.map((co, ix) => ({
+						...co,
+						src: `${BUNNY_STREAM_PREFIX_URL}/${bunnyVideoId}/captions/${co.srclang}.vtt`,
+						kind: `captions`,
+						default: ix === 0,
+				  }))
+				: [];
+		console.log("AAAAA ", m);
+
 		const videoJsOptions = {
 			autoplay: false,
 			preload: "auto",
@@ -89,15 +103,6 @@ const VideoPlayerHLS = ({
 				nativeVideoTracks: isMobile,
 				nativeTextTracks: isMobile,
 			},
-			tracks:
-				captions.length > 0
-					? captions.map((co, ix) => ({
-							...co,
-							src: `${BUNNY_STREAM_PREFIX_URL}/${bunnyVideoId}/captions/${co.srclang}.vtt`,
-							kind: `captions`,
-							default: ix === 0,
-					  }))
-					: [],
 		};
 
 		const p = videojs(
@@ -111,6 +116,34 @@ const VideoPlayerHLS = ({
 					withCredentials: false,
 				});
 				this.hlsQualitySelector({ displayCurrentQuality: true });
+
+				const captionsCompleted =
+					captions && captions.length > 0
+						? captions.map((co) => ({
+								...co,
+								src: `${BUNNY_STREAM_PREFIX_URL}/${bunnyVideoId}/captions/${co.srclang}.vtt`,
+								kind: `captions`,
+						  }))
+						: [];
+				const allTracks = this.textTracks().tracks_;
+				console.log(captionsCompleted);
+				if (allTracks.length > 0) {
+					allTracks.map((t) => {
+						this.removeRemoteTextTrack(t);
+					});
+				}
+				if (captionsCompleted.length > 0) {
+					captionsCompleted.map((c, ix) => {
+						this.addRemoteTextTrack({
+							src: c.src,
+							kind: c.kind,
+							srclang: c.srclang,
+							label: c.label,
+							default: ix === 0,
+						});
+					});
+				}
+
 				// console.log('onPlayerReady');
 			}
 		);
@@ -153,12 +186,13 @@ const VideoPlayerHLS = ({
 						setCallFinishVideoAPI(true);
 					}
 
-					setInterval(function () {
-						if (!player.paused()) {
-							console.log(player.currentTime());
-							currentTime = player.currentTime();
-						}
-					}, 1000);
+					if (onboarding) {
+						setInterval(function () {
+							if (!player.paused()) {
+								currentTime = player.currentTime();
+							}
+						}, 1000);
+					}
 				}}
 				className={`${
 					!onboarding ? `vidPlayer` : `onboardingplayer`
