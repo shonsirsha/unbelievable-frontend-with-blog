@@ -10,10 +10,11 @@ import "styles/globals.css";
 import "react-datepicker/dist/react-datepicker.css";
 
 import Router from "next/router";
-// import { MAINTENANCE } from "../config";
+import { MAINTENANCE } from "../config";
 import { AuthProvider } from "context/AuthContext";
 import { CourseProvider } from "context/CourseContext";
-// import MaintenancePage from "./maintenance";
+import MaintenancePage from "./maintenance";
+
 function Application({ Component, pageProps }) {
 	NProgress.configure({
 		minimum: 0.3,
@@ -22,13 +23,13 @@ function Application({ Component, pageProps }) {
 		showSpinner: false,
 	});
 
-	// useEffect(() => {
-	// 	if (MAINTENANCE) {
-	// 		Router.push("/");
-	// 	}
+	useEffect(() => {
+		if (MAINTENANCE) {
+			Router.push("/");
+		}
 
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, [MAINTENANCE]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [MAINTENANCE]);
 
 	Router.events.on("routeChangeStart", () => NProgress.start());
 	Router.events.on("routeChangeComplete", () => NProgress.done());
@@ -36,7 +37,7 @@ function Application({ Component, pageProps }) {
 	return (
 		<AuthProvider>
 			<CourseProvider>
-				{/* {MAINTENANCE ? <MaintenancePage /> : <Component {...pageProps} />} */}
+				{MAINTENANCE ? <MaintenancePage /> : <Component {...pageProps} />}
 
 				<Component {...pageProps} />
 			</CourseProvider>

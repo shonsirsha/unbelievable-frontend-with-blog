@@ -117,14 +117,6 @@ export default function Index({ questions, siteData }) {
 												<HeadingXXS as="p" className="text-gray2">
 													{q.title}
 												</HeadingXXS>
-
-												{/* <Image
-													src={`/images/dropdown-caret.svg`}
-													alt="Question Mark"
-													width={27}
-													height={27}
-													className="ml-auto"
-												/> */}
 											</>
 										</div>
 									</Accordion.Header>
