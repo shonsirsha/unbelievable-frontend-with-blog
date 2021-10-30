@@ -161,7 +161,7 @@ const VideoPlayerHLS = ({
 
 	useEffect(() => {
 		if (onboarding && player) {
-			if (!isMobile) {
+			if (isMobile) {
 				let fullscreen = false;
 
 				document.querySelector(".vjs-fullscreen-control").outerHTML =
