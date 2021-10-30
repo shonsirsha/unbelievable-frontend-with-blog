@@ -128,6 +128,7 @@ const VideoPlayerHLS = ({
 	return (
 		<div data-vjs-player>
 			<video
+				playsInline={true}
 				ref={videoRef}
 				onLoadedMetadata={(e, _) => {
 					// console.log(e.target.duration);
