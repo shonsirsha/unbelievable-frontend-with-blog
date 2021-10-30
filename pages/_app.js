@@ -38,8 +38,6 @@ function Application({ Component, pageProps }) {
 		<AuthProvider>
 			<CourseProvider>
 				{MAINTENANCE ? <MaintenancePage /> : <Component {...pageProps} />}
-
-				<Component {...pageProps} />
 			</CourseProvider>
 		</AuthProvider>
 	);
