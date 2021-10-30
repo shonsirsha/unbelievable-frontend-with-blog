@@ -154,6 +154,10 @@ export default function Layout({
 		<LayoutWrapper>
 			<Head>
 				<title>{title}</title>
+				<meta
+					name="viewport"
+					content="width=device-width, initial-scale=1, viewport-fit=cover"
+				/>
 				<meta property="og:title" content={title} />
 				{metaImageURL && <meta property="og:image" content={metaImageURL} />}
 				<meta name="og:description" content={description} />
