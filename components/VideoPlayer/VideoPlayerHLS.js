@@ -86,6 +86,11 @@ const VideoPlayerHLS = ({
 			fluid: onboarding,
 			controls: true,
 			poster: thumbnailURL,
+			controlBar: {
+				progressControl: {
+					seekBar: false,
+				},
+			},
 
 			sources: [
 				{
@@ -153,6 +158,29 @@ const VideoPlayerHLS = ({
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	useEffect(() => {
+		if (onboarding && player) {
+			if (!isMobile) {
+				let fullscreen = false;
+
+				document.querySelector(".vjs-fullscreen-control").outerHTML =
+					document.querySelector(".vjs-fullscreen-control").outerHTML;
+
+				document
+					.querySelector(".vjs-fullscreen-control")
+					.addEventListener("click", function (_) {
+						if (!fullscreen) {
+							player.enterFullWindow();
+						} else {
+							player.exitFullWindow();
+						}
+						fullscreen = !fullscreen;
+					});
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [[player]]);
 
 	let curT = 1;
 	let justSeeked = false;
