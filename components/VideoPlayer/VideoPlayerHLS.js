@@ -88,7 +88,7 @@ const VideoPlayerHLS = ({
 			poster: thumbnailURL,
 			controlBar: {
 				progressControl: {
-					seekBar: false,
+					seekBar: !onboarding,
 				},
 			},
 
