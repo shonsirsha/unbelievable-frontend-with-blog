@@ -126,18 +126,41 @@ const VideoPlayerHLS = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	let currentTime = 0;
+
 	return (
 		<div data-vjs-player>
 			<video
 				ref={videoRef}
-				onLoadedMetadata={(e, px) => {
+				onLoadedMetadata={(e, _) => {
 					// console.log(e.target.duration);
 					setVidDuration(e.target.duration);
+				}}
+				onSeeking={(_) => {
+					if (onboarding) {
+						if (currentTime < player.currentTime()) {
+							player.currentTime(currentTime);
+						}
+					}
+				}}
+				onSeeked={(_) => {
+					if (onboarding) {
+						if (currentTime < player.currentTime()) {
+							player.currentTime(currentTime);
+						}
+					}
 				}}
 				onTimeUpdate={(e) => {
 					if (e.target.currentTime >= vidDuration - 10) {
 						setCallFinishVideoAPI(true);
 					}
+
+					setInterval(function () {
+						if (!player.paused()) {
+							console.log(player.currentTime());
+							currentTime = player.currentTime();
+						}
+					}, 1000);
 				}}
 				className={`${
 					!onboarding ? `vidPlayer` : `onboardingplayer`

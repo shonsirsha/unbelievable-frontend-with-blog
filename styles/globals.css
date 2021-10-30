@@ -72,10 +72,6 @@ a:active {
 	}
 }
 
-.onboardingplayer .vjs-control-bar .vjs-progress-control {
-	pointer-events: none;
-	touch-action: none;
-}
 .react-datepicker__triangle {
 	display: none;
 }
@@ -107,4 +103,8 @@ a:active {
 .react-datepicker__day--keyboard-selected {
 	background: transparent !important;
 	color: #000 !important;
+}
+.onboardingplayer .vjs-control-bar .vjs-progress-control {
+	pointer-events: none;
+	touch-action: none;
 }
