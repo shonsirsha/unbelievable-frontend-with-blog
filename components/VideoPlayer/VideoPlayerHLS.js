@@ -52,15 +52,12 @@ const VideoPlayerHLS = ({
 						default: ix === 0,
 					});
 				});
-
-				const addedTracks = player.textTracks().tracks_;
-				addedTracks[0].mode = "showing";
 			}
 			setCallFinishVideoAPI(false);
 			// setVidDuration(50000);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [videoId, liveURL, thumbnailURL, captions]);
+	}, [videoId, liveURL, thumbnailURL, captions, player]);
 
 	useEffect(() => {
 		if (callFinishVideoAPI) {
