@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, Fragment } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import videojs from "video.js";
 import _ from "videojs-contrib-quality-levels";
 import { BUNNY_STREAM_PREFIX_URL } from "config";
@@ -79,7 +79,6 @@ const VideoPlayerHLS = ({
 						default: ix === 0,
 				  }))
 				: [];
-		console.log("AAAAA ", m);
 
 		const videoJsOptions = {
 			autoplay: false,
@@ -126,7 +125,6 @@ const VideoPlayerHLS = ({
 						  }))
 						: [];
 				const allTracks = this.textTracks().tracks_;
-				console.log(captionsCompleted);
 				if (allTracks.length > 0) {
 					allTracks.map((t) => {
 						this.removeRemoteTextTrack(t);
@@ -157,7 +155,8 @@ const VideoPlayerHLS = ({
 	}, []);
 
 	let currentTime = 0;
-
+	let justSeeked = false;
+	let seekedTime = 0;
 	return (
 		<div data-vjs-player>
 			<video
@@ -169,23 +168,38 @@ const VideoPlayerHLS = ({
 				}}
 				onSeeking={(_) => {
 					if (onboarding) {
-						if (currentTime < player.currentTime()) {
+						let pct = player.currentTime(); //player current time
+						if (currentTime < pct) {
 							player.currentTime(currentTime);
+							justSeeked = true;
+							seekedTime = pct;
 						}
 					}
 				}}
 				onSeeked={(_) => {
 					if (onboarding) {
-						if (currentTime < player.currentTime()) {
+						let pct = player.currentTime(); //player current time
+						if (currentTime < pct) {
 							player.currentTime(currentTime);
+							justSeeked = true;
+							seekedTime = pct;
 						}
 					}
 				}}
+				// setCallFinishVideoAPI(true);
+
 				onTimeUpdate={(e) => {
 					if (e.target.currentTime >= vidDuration - 10) {
-						setCallFinishVideoAPI(true);
+						if (onboarding) {
+							setTimeout(function () {
+								if (player.currentTime() >= vidDuration - 10) {
+									setCallFinishVideoAPI(true);
+								}
+							}, 1000);
+						} else {
+							setCallFinishVideoAPI(true);
+						}
 					}
-
 					if (onboarding) {
 						setInterval(function () {
 							if (!player.paused()) {

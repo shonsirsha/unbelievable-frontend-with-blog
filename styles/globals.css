@@ -105,6 +105,6 @@ a:active {
 	color: #000 !important;
 }
 .onboardingplayer .vjs-control-bar .vjs-progress-control {
-	pointer-events: none;
-	touch-action: none;
+	/* pointer-events: none;
+	touch-action: none; */
 }
