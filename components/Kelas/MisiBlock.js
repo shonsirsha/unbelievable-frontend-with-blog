@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext, memo } from "react";
 import { HeadingXS, HeadingXXS } from "components/Typography/Headings";
 import { TextTertiary, TextSecondary } from "components/Typography/Text";
-import { Button, Image } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { BsCheckLg } from "react-icons/bs";
 import styled from "styled-components";
 import CourseContext from "context/CourseContext";
@@ -9,6 +9,8 @@ import Loading from "components/Loading/Loading";
 const StyledTextTertiary = styled(TextTertiary)`
 	font-size: 12px;
 `;
+import Linkify from "react-linkify";
+
 const CheckBoxWrapper = styled.div`
 	display: flex;
 	min-height: 28px;
@@ -170,7 +172,21 @@ const MisiBlock = ({
 											}}
 										/>
 									</CheckBoxWrapper>
-									<TextSecondary>{m.text}</TextSecondary>
+									<TextSecondary>
+										<Linkify
+											componentDecorator={(
+												decoratedHref,
+												decoratedText,
+												key
+											) => (
+												<a target="blank" href={decoratedHref} key={key}>
+													{decoratedText}
+												</a>
+											)}
+										>
+											{m.text}
+										</Linkify>
+									</TextSecondary>
 								</div>
 							))}
 
