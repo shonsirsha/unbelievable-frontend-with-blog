@@ -154,7 +154,7 @@ const VideoPlayerHLS = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	let currentTime = 0;
+	let curT = 1;
 	let justSeeked = false;
 	let seekedTime = 0;
 	return (
@@ -164,13 +164,14 @@ const VideoPlayerHLS = ({
 				ref={videoRef}
 				onLoadedMetadata={(e, _) => {
 					// console.log(e.target.duration);
+					console.log(player.currentTime());
 					setVidDuration(e.target.duration);
 				}}
 				onSeeking={(_) => {
 					if (onboarding) {
 						let pct = player.currentTime(); //player current time
-						if (currentTime < pct) {
-							player.currentTime(currentTime);
+						if (curT < pct) {
+							player.currentTime(curT);
 							justSeeked = true;
 							seekedTime = pct;
 						}
@@ -179,8 +180,8 @@ const VideoPlayerHLS = ({
 				onSeeked={(_) => {
 					if (onboarding) {
 						let pct = player.currentTime(); //player current time
-						if (currentTime < pct) {
-							player.currentTime(currentTime);
+						if (curT < pct) {
+							player.currentTime(curT);
 							justSeeked = true;
 							seekedTime = pct;
 						}
@@ -189,7 +190,7 @@ const VideoPlayerHLS = ({
 				// setCallFinishVideoAPI(true);
 
 				onTimeUpdate={(e) => {
-					if (e.target.currentTime >= vidDuration - 10) {
+					if (e.target.curT >= vidDuration - 10) {
 						if (onboarding) {
 							setTimeout(function () {
 								if (player.currentTime() >= vidDuration - 10) {
@@ -203,7 +204,7 @@ const VideoPlayerHLS = ({
 					if (onboarding) {
 						setInterval(function () {
 							if (!player.paused()) {
-								currentTime = player.currentTime();
+								curT = player.currentTime();
 							}
 						}, 1000);
 					}
