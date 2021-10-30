@@ -4,6 +4,7 @@ import _ from "videojs-contrib-quality-levels";
 import { BUNNY_STREAM_PREFIX_URL } from "config";
 // those imports are important
 import qualitySelector from "videojs-hls-quality-selector";
+import { isMobile } from "react-device-detect";
 
 const VideoPlayerHLS = ({
 	liveURL,
@@ -85,11 +86,11 @@ const VideoPlayerHLS = ({
 			],
 			html5: {
 				vhs: {
-					overrideNative: true,
+					overrideNative: !isMobile,
 				},
-				nativeAudioTracks: false,
-				nativeVideoTracks: false,
-				nativeTextTracks: false,
+				nativeAudioTracks: isMobile,
+				nativeVideoTracks: isMobile,
+				nativeTextTracks: isMobile,
 			},
 			tracks:
 				captions.length > 0
