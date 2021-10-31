@@ -19,8 +19,8 @@ import { HeadingXS } from "components/Typography/Headings";
 import { TextSecondary } from "components/Typography/Text";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { checkPassword } from "utils/checkPassword";
-import { parseCookies } from "utils/cookies";
 import { useRouter } from "next/router";
+import mustBeUnauthed from "utils/mustBeUnauthed";
 
 const OuterContainer = styled.div`
 	background: #fff;
@@ -91,40 +91,7 @@ const StyledSubmitBtn = styled(Button)`
 	width: 100%;
 	border-radius: 18px;
 `;
-const GreenCharacter = styled(Image)`
-	position: absolute;
-	right: -50px;
-	top: -50px;
-	width: 124px;
-	height: 109px;
-	transition: 0.8s;
-	&.focus {
-		top: -70px;
-		right: -45px;
-	}
 
-	&.focus2 {
-		top: -80px;
-		right: -65px;
-	}
-
-	@media ${mediaBreakpoint.down.lg} {
-		right: 0;
-		top: 0;
-		width: 64px;
-		height: 56.33px;
-
-		&.focus {
-			top: -10px;
-			right: 15px;
-		}
-
-		&.focus2 {
-			top: -20px;
-			right: 5px;
-		}
-	}
-`;
 const Eye = styled.div`
 	display: flex;
 	width: 24px;
@@ -142,14 +109,17 @@ const Eye = styled.div`
 		font-size: 32px;
 	}
 `;
-export default function ResetPassword({ sc }) {
+function ResetPassword() {
+	const { authLoading, resetPassword, err, success } = useContext(AuthContext);
+	const router = useRouter();
+
 	const [passwords, setPasswords] = useState({
 		password: "",
 		passwordConfirmation: "",
 	});
 	const [asText, setAsText] = useState(false);
-	const router = useRouter();
-	const { authLoading, resetPassword, err, success } = useContext(AuthContext);
+	const [sc, _] = useState(router.query.sc);
+
 	useEffect(() => {
 		if (err === "Auth.form.error.code.provide") {
 			toast.error(
@@ -163,6 +133,7 @@ export default function ResetPassword({ sc }) {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [err]);
+
 	useEffect(() => {
 		if (success) {
 			toast.success("Password berhasil diganti!");
@@ -261,30 +232,5 @@ export default function ResetPassword({ sc }) {
 		</Layout>
 	);
 }
-export async function getServerSideProps(ctx) {
-	const { token } = parseCookies(ctx.req);
-	const { sc } = ctx.query;
-	if (token) {
-		return {
-			redirect: {
-				permanent: false,
-				destination: "/dashboard",
-			},
-			props: {},
-		};
-	}
-	if (!sc) {
-		return {
-			redirect: {
-				permanent: false,
-				destination: "/masuk",
-			},
-			props: {},
-		};
-	}
-	return {
-		props: {
-			sc,
-		},
-	};
-}
+
+export default mustBeUnauthed(ResetPassword);
