@@ -4,15 +4,15 @@ import AuthContext from "context/AuthContext";
 import Loading from "components/Loading/Loading";
 const mustBeUnauthed = (Component) => {
 	const Auth = (props) => {
-		const { user, loading } = useContext(AuthContext);
+		const { user, loading, userLoading } = useContext(AuthContext);
 		const router = useRouter();
 
-		if (loading || !user) {
+		if (userLoading) {
 			return <Loading />; // loading svg..
 		}
 
 		// Login data added to props via redux-store (or use react context for example)
-		if (!loading && user) {
+		if (!userLoading) {
 			// If user is not logged in, return login component
 			if (user) {
 				router.push("/dashboard");
