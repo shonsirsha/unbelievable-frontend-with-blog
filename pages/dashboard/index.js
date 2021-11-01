@@ -179,7 +179,7 @@ const Index = ({
 			}
 			toast.error("Terjadi Kesalahan Mohon Coba Lagi");
 		} else {
-			router.push("/dashboard");
+			router.push("/dashboard?r=1");
 		}
 	};
 
