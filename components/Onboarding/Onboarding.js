@@ -55,6 +55,13 @@ const HighHeadingSM = styled(HeadingSM)`
 		font-size: 24px;
 	}
 `;
+const HighHeadingXS = styled(HeadingXS)`
+	z-index: 3;
+
+	@media ${mediaBreakpoint.down.md} {
+		font-size: 16px;
+	}
+`;
 const FinishBtn = styled(Button)`
 	padding: 16px 24px;
 	border-radius: 32px;
@@ -87,6 +94,7 @@ const Blob = styled(Image)`
 `;
 
 const StyledP = styled.p`
+	line-height: 32px;
 	z-index: 3;
 `;
 
@@ -194,8 +202,7 @@ export default function Onboarding({
 		</>,
 		<>
 			<HeadingSM as="h1" className="text-center text-white">
-				{userName}
-				{"'"}s Contract
+				Komitmen {userName}
 			</HeadingSM>
 		</>,
 	];
@@ -212,35 +219,69 @@ export default function Onboarding({
 				setVP(
 					<>
 						<StyledP className="text-center mt-5 text-white">
-							Surat ini aku bikin khusus buat kamu! Aku tau sekrang kamu baru
-							mau mulai petualangan yang bakal kamu inget seumur hidup!
+							Surat ini aku bikin khusus buat kamu!
 							<br />
+							Aku tau sekrang kamu baru mau mulai petualangan yang bakal kamu
+							inget seumur hidup
 							<br />
 							Kenapa aku tau? karena aku {user.first_name} dari{" "}
 							{parseInt(moment(user.created_at).format("yyyy")) + 1}
 						</StyledP>
+
 						<HighHeadingSM
+							as="p"
+							className="text-center text-yellow2 mt-lg-3 mt-1"
+						>
+							Kenapa aku tau? karena aku {user.first_name} dari{" "}
+							{parseInt(moment(user.created_at).format("yyyy")) + 1}!
+							<br />
+							Ya! Aku adalah kamu dari masa depan!
+						</HighHeadingSM>
+
+						{/* <HighHeadingSM
 							as="p"
 							className="text-center text-yellow2 mt-lg-3 mt-1"
 						>
 							{moment(user.created_at).format("dddd, D MMMM, yyyy")} is the day
 							<br />
 							we decided to change our lives for the better
-						</HighHeadingSM>
+						</HighHeadingSM> */}
 
-						<StyledP className="text-center mt-lg-5 mt-3 text-white">
-							I have excellent news, I’m healthy, in great shape, and
-							worry-free, thanks to choices you’re making.
+						<StyledP className="text-center mt-5 text-white">
+							Sama kaya kamu, dulu juga aku dapet surat misterius ini! Oh iya,
+							kalau kamu mau tau,
 							<br />
-							I’ll be with you every step of the way. See you soon!
+							aku sekarang sudah jauh lebih percaya diri, lebih bisa nerima
+							diri, dan tentunya lebih sehat sekarang!
 						</StyledP>
 
-						<HighHeadingSM
+						<StyledP className="text-center mt-lg-3 mt-3 text-white">
+							Tau gak sih ternyata kebahagiaan yang kita cari selama ini bisa
+							kita dapetin dari hal-hal yang ada di
+							<br />
+							sekeliling kita, namun kita butuh belajar buat cari itu dan
+							ternyata kita gak sendiri!
+							<br />
+							Tau gak? Sekarang aku juga udah punya banyak teman, terutama
+							saudara-saudara kita,
+							<br />
+							para Heroes lainnya di UNBELIEVABLE!
+						</StyledP>
+
+						<StyledP className="text-center mt-lg-3 mt-3 text-white">
+							Kayanya kamu belum tau ya Heroes itu apa? Gapapa, abis ini bakal
+							langsung di jelasin sama
+							<br />
+							Eric di video selanjutnya! Tinggal pencet kanan bawah aja!
+						</StyledP>
+
+						<HighHeadingXS
 							as="p"
-							className="mt-1 ml-auto mr-auto mr-lg-5 text-white"
+							className="mt-1 mx-auto mt-3 text-white text-center"
 						>
-							future {user.first_name} {user.last_name}
-						</HighHeadingSM>
+							Congratulations! Now you are officially part of the Heroes
+							generation!
+						</HighHeadingXS>
 
 						<Blob className={`teal`} src={"/images/blueblob.png"} alt="Blob" />
 						<Blob
@@ -254,20 +295,20 @@ export default function Onboarding({
 			} else if (stage === 4) {
 				setVP(
 					<div className="d-flex flex-column">
-						<p className="text-center mt-5 text-white">
-							It’s me, future {userName}. I’m calling from 2022 because today is
-							an important
+						<StyledP className="text-center mt-5 text-white">
+							Aku, {userName}, mulai hari ini akan mengambil identitas menjadi
+							seorang heroes.
 							<br />
-							day for you - for us!
-						</p>
+							Aku akan mulai sayang sama diriku sendiri, membangun harapan dan
+							keberanian mengejar masa depan.
+							<br />
+							Aku tau aku baru mulai dan aku akan mencoba menikmati prosesnya
+							setiap hari.
+						</StyledP>
 						<HighHeadingSM as="p" className="text-center text-yellow2 mt-3">
-							I, {userName}, will make the most of tommorow.
-							<br />
-							I will always remember that I will not live forever.
-							<br />
-							Every fear and irritation that threatens to distract me
-							<br />
-							will become fuel for building my best life one day at the time
+							Karena aku tau, aku akan menjadi pahlawan
+							<br /> di masa depan yang akan punya dampak positif <br /> buat
+							diriku dan orang-orang di sekitarku!
 						</HighHeadingSM>
 						{!stepsRange && (
 							<FinishBtn
@@ -353,7 +394,7 @@ export default function Onboarding({
 				</div>
 				{stage === steps && videoSkippable && (
 					<Link href="/profil">
-						<a className="mx-auto">
+						<a className="mx-auto mt-4 mt-lg-0">
 							<EnrollBtn className="bg-primary1">
 								<StyledTextSecondary>Selesai</StyledTextSecondary>
 							</EnrollBtn>
