@@ -8,21 +8,24 @@ import "slick-carousel/slick/slick-theme.css";
 import "video.js/dist/video-js.css";
 import "styles/globals.css";
 import "react-datepicker/dist/react-datepicker.css";
-
 import Router from "next/router";
-import { MAINTENANCE } from "../config";
+import { MAINTENANCE, API_URL } from "../config";
 import { AuthProvider } from "context/AuthContext";
 import { CourseProvider } from "context/CourseContext";
 import MaintenancePage from "./maintenance";
-
-function Application({ Component, pageProps }) {
+import { AppProvider } from "context/AppContext";
+let sDCache;
+function Application({ Component, pageProps, sD }) {
 	NProgress.configure({
 		minimum: 0.3,
 		easing: "ease",
 		speed: 800,
 		showSpinner: false,
 	});
-
+	useEffect(() => {
+		sDCache = sD;
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 	useEffect(() => {
 		if (MAINTENANCE) {
 			Router.push("/");
@@ -35,12 +38,26 @@ function Application({ Component, pageProps }) {
 	Router.events.on("routeChangeComplete", () => NProgress.done());
 	Router.events.on("routeChangeError", () => NProgress.done());
 	return (
-		<AuthProvider>
-			<CourseProvider>
-				{MAINTENANCE ? <MaintenancePage /> : <Component {...pageProps} />}
-			</CourseProvider>
-		</AuthProvider>
+		<AppProvider sD={sD}>
+			<AuthProvider>
+				<CourseProvider>
+					{MAINTENANCE ? <MaintenancePage /> : <Component {...pageProps} />}
+				</CourseProvider>
+			</AuthProvider>
+		</AppProvider>
 	);
 }
+
+Application.getInitialProps = async () => {
+	if (sDCache) {
+		return { sD: sDCache };
+	}
+
+	const res = await fetch(`${API_URL}/sitedata`);
+	const sD = await res.json();
+	sDCache = sD;
+
+	return { sD };
+};
 
 export default Application;

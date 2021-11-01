@@ -28,7 +28,6 @@ const StyledContainer = styled(Container)`
 
 export default function Index({ courses }) {
 	const { user, checkUserLoggedIn } = useContext(AuthContext);
-
 	const {
 		previewModalOpen,
 		setPreviewModalOpen,

@@ -301,7 +301,6 @@ const Index = ({
 			background="#171b2d"
 			withMargin
 			userPaid={userPaid}
-			siteData={siteData}
 			mainApp
 		>
 			<ToastContainer />

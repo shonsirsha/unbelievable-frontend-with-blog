@@ -19,6 +19,7 @@ import { HeadingXXS } from "./Typography/Headings";
 import { TextTertiary } from "./Typography/Text";
 import { whitespace } from "utils/whitespace";
 import LoadingLayout from "./Loading/LoadingLayout";
+import AppContext from "context/AppContext";
 
 const FlyingButtonsContainer = styled.div`
 	width: 0;
@@ -124,11 +125,11 @@ export default function Layout({
 	showReviewBlock = true,
 	backBtn,
 	userPaid = false,
-	siteData = null,
 	backTo,
 }) {
 	const { user, loading } = useContext(AuthContext);
 	const { setWishlistModalOpen } = useContext(CourseContext);
+	const { siteData } = useContext(AppContext);
 	const router = useRouter();
 	// mainApp is when layout has the floating side menu...
 
