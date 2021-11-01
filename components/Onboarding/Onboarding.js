@@ -193,7 +193,7 @@ export default function Onboarding({
 			</HighHeadingSM>
 		</>,
 		<>
-			<HeadingSM as="h1" className="text-white">
+			<HeadingSM as="h1" className="text-center text-white">
 				{userName}
 				{"'"}s Contract
 			</HeadingSM>

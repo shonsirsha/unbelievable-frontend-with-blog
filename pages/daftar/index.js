@@ -56,8 +56,8 @@ const FormContainer = styled.div`
 	padding: 32px 24px;
 	border-radius: 10px;
 	align-items: center;
-	position: absolute;
-
+	max-height: 90vh;
+	overflow-y: auto;
 	a.nostyle {
 		color: inherit;
 	}
@@ -71,6 +71,8 @@ const FormContainer = styled.div`
 
 	@media ${mediaBreakpoint.down.md} {
 		position: static;
+		max-height: 100%;
+		overflow: hidden;
 	}
 `;
 const StyledFormControl = styled(FormControl)`

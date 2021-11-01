@@ -160,7 +160,7 @@ const Index = ({
 	} = useContext(CourseContext);
 
 	const [allCourses] = useState(courses);
-	const [dob, setDob] = useState(null);
+	const [dob, setDob] = useState(moment().toDate());
 	const [loading, setLoading] = useState(false);
 
 	const handleFinishOnboarding = async () => {
@@ -206,16 +206,17 @@ const Index = ({
 						return;
 					}
 					toast.error("Terjadi Kesalahan Mohon Coba Lagi");
-					setLoading(false);
 				} else {
 					toast.success("Tersimpan!");
 					setTimeout(() => {
 						router.push("/dashboard");
-					}, 600);
+					}, 200);
 				}
 			} else {
+				console.log(dob);
 				toast.error("Mohon isi tanggal lahir dengan benar");
 			}
+			setLoading(false);
 		}
 	};
 
@@ -238,11 +239,6 @@ const Index = ({
 
 	if (!user.dob) {
 		const datex = new Date();
-		const today = `${datex.getFullYear()}-${
-			datex.getMonth() + 1 < 10
-				? `0${datex.getMonth() + 1}`
-				: datex.getMonth() + 1
-		}-${datex.getDate() < 10 ? `0${datex.getDate()}` : datex.getDate()}`;
 
 		return (
 			<Layout title="Dashboard | Unbelievable" background="#171b2d" withMargin>
