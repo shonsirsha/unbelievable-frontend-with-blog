@@ -19,7 +19,6 @@ import { HeadingXXS } from "./Typography/Headings";
 import { TextTertiary } from "./Typography/Text";
 import { whitespace } from "utils/whitespace";
 import LoadingLayout from "./Loading/LoadingLayout";
-import AppContext from "context/AppContext";
 
 const FlyingButtonsContainer = styled.div`
 	width: 0;
@@ -126,10 +125,10 @@ export default function Layout({
 	backBtn,
 	userPaid = false,
 	backTo,
+	siteData = null,
 }) {
 	const { user, loading } = useContext(AuthContext);
 	const { setWishlistModalOpen } = useContext(CourseContext);
-	const { siteData } = useContext(AppContext);
 	const router = useRouter();
 	// mainApp is when layout has the floating side menu...
 
@@ -140,7 +139,6 @@ export default function Layout({
 	} else if (!user) {
 		showBurger = true;
 	}
-
 	if (loading) {
 		return (
 			<LoadingLayout
@@ -222,22 +220,26 @@ export default function Layout({
 								</Link>
 							)}
 							<ReviewBlock className="mt-0 mt-lg-auto" />
-							{siteData && siteData.ad_picture && (
-								<a
-									href={
-										siteData.ad_url && !whitespace(siteData.ad_url)
-											? siteData.ad_url
-											: "#"
-									}
-									target={
-										siteData.ad_url && !whitespace(siteData.ad_url) && "_blank"
-									}
-									rel="noreferrer"
-									className="ad"
-								>
-									<AdBlock className="mt-2" url={siteData.ad_picture.url} />
-								</a>
-							)}
+							{siteData &&
+								siteData.ad_picture &&
+								router.pathname === "/dashboard" && (
+									<a
+										href={
+											siteData.ad_url && !whitespace(siteData.ad_url)
+												? siteData.ad_url
+												: "#"
+										}
+										target={
+											siteData.ad_url &&
+											!whitespace(siteData.ad_url) &&
+											"_blank"
+										}
+										rel="noreferrer"
+										className="ad"
+									>
+										<AdBlock className="mt-2" url={siteData.ad_picture.url} />
+									</a>
+								)}
 						</div>
 
 						<div className="responsiveSideBlock">

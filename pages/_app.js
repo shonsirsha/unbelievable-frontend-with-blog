@@ -11,11 +11,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import Router from "next/router";
 import { MAINTENANCE, API_URL } from "../config";
 import { AuthProvider } from "context/AuthContext";
+import { AppProvider } from "context/AppContext";
 import { CourseProvider } from "context/CourseContext";
 import MaintenancePage from "./maintenance";
-import { AppProvider } from "context/AppContext";
-let sDCache;
-function Application({ Component, pageProps, sD }) {
+function Application({ Component, pageProps }) {
 	NProgress.configure({
 		minimum: 0.3,
 		easing: "ease",
@@ -23,7 +22,6 @@ function Application({ Component, pageProps, sD }) {
 		showSpinner: false,
 	});
 	useEffect(() => {
-		sDCache = sD;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	useEffect(() => {
@@ -38,7 +36,7 @@ function Application({ Component, pageProps, sD }) {
 	Router.events.on("routeChangeComplete", () => NProgress.done());
 	Router.events.on("routeChangeError", () => NProgress.done());
 	return (
-		<AppProvider sD={sD}>
+		<AppProvider>
 			<AuthProvider>
 				<CourseProvider>
 					{MAINTENANCE ? <MaintenancePage /> : <Component {...pageProps} />}
@@ -47,17 +45,5 @@ function Application({ Component, pageProps, sD }) {
 		</AppProvider>
 	);
 }
-
-Application.getInitialProps = async () => {
-	if (sDCache) {
-		return { sD: sDCache };
-	}
-
-	const res = await fetch(`${API_URL}/sitedata`);
-	const sD = await res.json();
-	sDCache = sD;
-
-	return { sD };
-};
 
 export default Application;

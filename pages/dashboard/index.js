@@ -149,7 +149,7 @@ const Index = ({
 	siteData,
 }) => {
 	const router = useRouter();
-	const { logout, checkUserLoggedIn, getToken } = useContext(AuthContext);
+	const { checkUserLoggedIn, getToken } = useContext(AuthContext);
 	const {
 		previewModalOpen,
 		setPreviewModalOpen,
@@ -238,11 +238,16 @@ const Index = ({
 		return user.paid;
 	});
 
-	if (!user.dob) {
-		const datex = new Date();
+	console.log(siteData);
 
+	if (!user.dob) {
 		return (
-			<Layout title="Dashboard | Unbelievable" background="#171b2d" withMargin>
+			<Layout
+				title="Dashboard | Unbelievable"
+				background="#171b2d"
+				siteData={siteData}
+				withMargin
+			>
 				<ToastContainer />
 
 				<StyledFormGroup>
@@ -302,6 +307,7 @@ const Index = ({
 			withMargin
 			userPaid={userPaid}
 			mainApp
+			siteData={siteData}
 		>
 			<ToastContainer />
 

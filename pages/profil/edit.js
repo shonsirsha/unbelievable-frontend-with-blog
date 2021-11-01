@@ -320,12 +320,6 @@ const Edit = () => {
 	);
 
 	useEffect(() => {
-		if (dob) {
-			console.log(dob);
-		}
-	}, []);
-
-	useEffect(() => {
 		if (!userState.country) {
 			setUserState({
 				...userState,
@@ -588,7 +582,6 @@ const Edit = () => {
 	const handleSave = async () => {
 		if (!loading) {
 			setLoading(true);
-			console.log(validDate(dob));
 			if (!whitespace(first_name) && !whitespace(last_name) && validDate(dob)) {
 				if (biodata && biodata.length >= 100) {
 					toast.error("Ups... Maaf, biodatamu terlalu panjang.");
@@ -672,9 +665,7 @@ const Edit = () => {
 		getCities();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentProvince]);
-	console.log(moment(dob).isValid());
-	console.log(moment(dob).format("dd-mm-yyyy"));
-	console.log(moment().toDate());
+
 	return (
 		<Layout
 			title="Edit Profil | Unbelievable"
@@ -837,7 +828,7 @@ const Edit = () => {
 						</FormLabelContainer>
 
 						<StyledTextArea
-							value={biodata}
+							value={biodata ? biodata : ""}
 							onChange={handleChange}
 							name="biodata"
 							as="textarea"
