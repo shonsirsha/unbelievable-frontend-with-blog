@@ -208,6 +208,7 @@ const Index = ({
 					toast.error("Terjadi Kesalahan Mohon Coba Lagi");
 				} else {
 					toast.success("Tersimpan!");
+					router.push("/dashboard");
 					// setTimeout(() => {
 					// 	router.push("/dashboard");
 					// }, 200);
