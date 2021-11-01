@@ -1,7 +1,7 @@
 import { HeadingXS, HeadingXXS } from "components/Typography/Headings";
 import { TextSecondary } from "components/Typography/Text";
 import { AiOutlineClockCircle } from "react-icons/ai";
-import { MdLockOutline } from "react-icons/md";
+// import { MdLockOutline } from "react-icons/md";
 import { secsToMinOnly } from "utils/secsToMin";
 import { isVideoFinished } from "./utils";
 import VideoIndicatorCheckbox from "./VideoIndicatorCheckbox";
@@ -18,9 +18,7 @@ const TimeText = styled(HeadingXXS)`
 	font-size: 12px;
 	font-family: MontSerratRegular;
 `;
-const Lock = styled(MdLockOutline)`
-	font-size: 18px;
-`;
+
 const ListSingleVideoUnpaid = ({ videosState, video, ix }) => {
 	return (
 		<>
@@ -38,11 +36,14 @@ const ListSingleVideoUnpaid = ({ videosState, video, ix }) => {
 			</div>
 
 			<div className="d-flex align-items-center">
-				{ix > 0 && <Lock className="text-white mr-1" />}
+				{/* {ix > 0 && <Lock className="text-white mr-1" />} */}
 
-				{isVideoFinished(videosState, video) && (
+				{isVideoFinished(videosState, video) ? (
 					<VideoIndicatorCheckbox finished />
+				) : (
+					<VideoIndicatorCheckbox />
 				)}
+
 				<TextSecondary className={`text-white`}>
 					{video.bunny_video.title}
 				</TextSecondary>
