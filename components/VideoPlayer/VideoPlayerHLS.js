@@ -218,10 +218,10 @@ const VideoPlayerHLS = ({
 				// setCallFinishVideoAPI(true);
 
 				onTimeUpdate={(e) => {
-					if (e.target.currentTime >= vidDuration - 30) {
+					if (e.target.currentTime >= vidDuration - 10) {
 						if (onboarding) {
 							setTimeout(function () {
-								if (player.currentTime() >= vidDuration - 30) {
+								if (player.currentTime() >= vidDuration - 10) {
 									setCallFinishVideoAPI(true);
 								}
 							}, 1000);
