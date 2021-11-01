@@ -230,7 +230,7 @@ const Index = ({
 			getToken();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [router.query]);
 
 	const userPaid = coursesTaken.some((user) => {
 		return user.paid;
