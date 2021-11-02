@@ -31,3 +31,4 @@ yarn-error.log*
 .secret-mux
 .vscode
 .env
+.vercel
