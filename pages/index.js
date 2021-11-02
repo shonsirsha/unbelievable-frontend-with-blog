@@ -16,7 +16,9 @@ export default function Home({ homePageContent, seo }) {
 			<TentangKami about={about} about_image={about_image} />
 			<CaraKerja carakerja={carakerja} />
 			<TentangKami2 professionals={professionals} />
-			{testimonials && <Testimonial testimonials={testimonials} />}
+			{testimonials && testimonials.length > 0 && (
+				<Testimonial testimonials={testimonials} />
+			)}
 			<MulaiSekarang />
 		</Layout>
 	);

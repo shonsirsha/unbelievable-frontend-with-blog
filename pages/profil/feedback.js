@@ -156,11 +156,13 @@ const Masukkan = ({ categories }) => {
 								as="select"
 								aria-label="Default select example"
 							>
-								{categories.map((c) => (
-									<option key={c.id} value={c.id}>
-										{c.name}
-									</option>
-								))}
+								{categories &&
+									categories.length > 0 &&
+									categories.map((c) => (
+										<option key={c.id} value={c.id}>
+											{c.name}
+										</option>
+									))}
 							</Select>
 						</FormGroup>
 					)}
