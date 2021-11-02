@@ -309,7 +309,7 @@ const PreviewModal = (props) => {
 							className="bg-cyan align-self-center mt-4"
 						>
 							<StyledHeadingXXS>
-								{enrollClassLoading ? "beli kelas..." : "beli kelas"}
+								{enrollClassLoading ? "Menunggu..." : "Beli Kelas"}
 							</StyledHeadingXXS>
 						</EnrollBtn>
 					</div>

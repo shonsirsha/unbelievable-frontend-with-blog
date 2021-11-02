@@ -1,7 +1,6 @@
 import { HeadingXS, HeadingXXS } from "components/Typography/Headings";
 import { TextSecondary } from "components/Typography/Text";
 import { AiOutlineClockCircle } from "react-icons/ai";
-import { MdLockOutline } from "react-icons/md";
 import { secsToMinOnly } from "utils/secsToMin";
 import { isVideoFinished } from "./utils";
 import VideoIndicatorCheckbox from "./VideoIndicatorCheckbox";
@@ -18,9 +17,7 @@ const TimeText = styled(HeadingXXS)`
 	font-size: 12px;
 	font-family: MontSerratRegular;
 `;
-const Lock = styled(MdLockOutline)`
-	font-size: 18px;
-`;
+
 const ListSingleVideoPaid = ({ video, videosState, ix, boughtDayDiff }) => {
 	const isFirstVideo = videosState.findIndex((v) => v.id === video.id) === 0; // first video of the course
 

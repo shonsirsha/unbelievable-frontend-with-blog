@@ -51,7 +51,7 @@ export default function ReviewBlock({ ...props }) {
 						<StyledHeadingXXS as="p" className="text-left mb-1">
 							Tulis Masukkan
 						</StyledHeadingXXS>
-						<TextTertiary className="mt-1 text-left ">Disini!</TextTertiary>
+						<TextTertiary className="mt-1 text-left ">Di sini!</TextTertiary>
 					</div>
 					<Image src="/images/character2.png" alt="Character" />
 				</ContentContainer>

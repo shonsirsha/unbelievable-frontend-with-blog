@@ -296,7 +296,7 @@ export default function DefaultCourseCard({
 					}}
 				>
 					<StyledHeadingXXS as="p">
-						{!enrolled ? "Free Trial" : "Lanjutkan"}
+						{!enrolled ? "Tonton Gratis" : "Lanjutkan"}
 					</StyledHeadingXXS>
 				</EnrollBtn>
 			</CardBody>

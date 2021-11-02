@@ -66,7 +66,7 @@ export default function MulaiSekarang() {
 			right={right}
 			light
 			bottom={
-				<Link href="/masuk">
+				<Link href="/daftar">
 					<a>
 						<YellowButton width={280}>Mulai Sekarang!</YellowButton>
 					</a>
