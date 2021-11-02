@@ -9,6 +9,7 @@ import CourseContext from "context/CourseContext";
 import AuthContext from "context/AuthContext";
 import { toast } from "react-toastify";
 import { Popover } from "react-tiny-popover";
+import { nanoid } from "nanoid";
 
 const EnrollBtn = styled(Button)`
 	border-radius: 40px;
@@ -18,10 +19,9 @@ const EnrollBtn = styled(Button)`
 	bottom: -16px;
 	left: 0;
 	right: 0;
-	margin-left: ${(props) => (props.small ? `30%` : `30%`)};
-
-	width: 116px;
-`;
+	margin-left: ${(props) => (props.small ? `26%` : `26%`)};
+    width: 136px;
+}`;
 const CardBody = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -128,7 +128,6 @@ const PopoverContainer = styled.div`
 export default function DefaultCourseCard({
 	course,
 	small,
-	user,
 	enrolled = false,
 	...props
 }) {
@@ -137,7 +136,6 @@ export default function DefaultCourseCard({
 		short_desc,
 		content_creator,
 		image,
-		videos,
 		slug,
 		total_rating,
 		paid,
@@ -151,12 +149,33 @@ export default function DefaultCourseCard({
 		setSelectedPreviewCourse,
 		addWishlist,
 	} = useContext(CourseContext);
-	const { token } = useContext(AuthContext);
+	const { setUser, user, token } = useContext(AuthContext);
 	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
 	const openModal = () => {
 		setPreviewModalOpen(true);
 		setSelectedPreviewCourse(course);
+	};
+
+	const handleWishlistClicked = async () => {
+		const added = await addWishlist(course, token);
+
+		const alreadyInWishlist = user.wishlist.some((u) => {
+			return course.uuid === u.course.uuid;
+		});
+
+		if (alreadyInWishlist || added) {
+			if (!alreadyInWishlist) {
+				setUser({
+					...user,
+					wishlist: [...user.wishlist, { course: course }],
+				});
+			}
+			toast.success("Kelas ini telah ditambahkan ke wishlist!");
+		} else {
+			console.log(alreadyInWishlist);
+			toast.error("Terjadi kesalahan dalam menambahkan kelas ke wishlist");
+		}
 	};
 
 	return (
@@ -202,18 +221,7 @@ export default function DefaultCourseCard({
 							<Like
 								onClick={async (e) => {
 									e.stopPropagation();
-									const wishlisted = await addWishlist(
-										{ course: course },
-										token
-									);
-
-									if (wishlisted) {
-										toast.success("Kelas ini telah ditambahkan ke wishlist!");
-									} else {
-										toast.error(
-											"Terjadi kesalahan dalam menambahkan kelas ke wishlist"
-										);
-									}
+									handleWishlistClicked();
 								}}
 								className="mr-2"
 							/>
@@ -263,7 +271,7 @@ export default function DefaultCourseCard({
 							(ix) => (
 								<Image
 									alt="star"
-									key={ix}
+									key={nanoid()}
 									width={17}
 									height={16}
 									src="/images/gold-star.png"
@@ -275,7 +283,7 @@ export default function DefaultCourseCard({
 						].map((ix) => (
 							<Image
 								alt="star"
-								key={ix}
+								key={nanoid()}
 								width={17}
 								height={16}
 								src="/images/gray-star.png"

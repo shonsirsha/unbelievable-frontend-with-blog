@@ -214,7 +214,6 @@ const Index = ({
 					// }, 200);
 				}
 			} else {
-				console.log(dob);
 				toast.error("Mohon isi tanggal lahir dengan benar");
 			}
 			setLoading(false);
@@ -237,8 +236,6 @@ const Index = ({
 	const userPaid = coursesTaken.some((user) => {
 		return user.paid;
 	});
-
-	console.log(siteData);
 
 	if (!user.dob) {
 		return (
@@ -332,14 +329,12 @@ const Index = ({
 				<div className="d-flex flex-column w-100">
 					<StyledHeadingXS className="mb-2 ml-1">Kelas Populer</StyledHeadingXS>
 					{user.token && (
-						<DefaultCardsContainer className="d-flex flex-nowrap w-100 overflow-auto ">
+						<DefaultCardsContainer
+							key="aa"
+							className="d-flex flex-nowrap w-100 overflow-auto "
+						>
 							{allCourses.map((course) => (
-								<StyledDefault
-									key={course.id}
-									small
-									user={user}
-									course={course}
-								/>
+								<StyledDefault key={course.id} small course={course} />
 							))}
 						</DefaultCardsContainer>
 					)}
@@ -362,7 +357,9 @@ const Index = ({
 			<RightContainer>
 				<ComponentsContainer className="position-fixed display-flex">
 					<SideBlock
-						onClick={() => setWishlistModalOpen(true)}
+						onClick={() => {
+							setWishlistModalOpen(true);
+						}}
 						circular
 						content={<FaHeart style={{ fontSize: "24px" }} />}
 						className="mb-3"

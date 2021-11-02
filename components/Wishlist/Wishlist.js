@@ -46,23 +46,30 @@ const StyledTextSecondary = styled(TextSecondary)`
 const Wishlist = () => {
 	const { setWishlistCourses, wishlistCourses, removeWishlist } =
 		useContext(CourseContext);
-	const { token, user, checkUserLoggedIn } = useContext(AuthContext);
+	const { token, user, checkUserLoggedIn, setUser } = useContext(AuthContext);
 	const [loading, setLoading] = useState(true);
-	useEffect(() => {
-		checkUserLoggedIn();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	// useEffect(() => {
+	// 	checkUserLoggedIn();
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, []);
 	useEffect(() => {
 		if (user) {
-			setWishlistCourses(user.wishlist);
+			// console.log(user.wishlist);
+			// setWishlistCourses(user.wishlist);
 			setLoading(false);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [user]);
+	}, []);
 
 	const removeWishlistClicked = async (course) => {
-		const removed = await removeWishlist(course, token);
 		setLoading(true);
+		setUser({
+			...user,
+			wishlist: user.wishlist.filter(
+				(c) => c.course.uuid !== course.course.uuid
+			),
+		});
+		const removed = await removeWishlist(course, token, user, setUser);
 		if (!removed) {
 			toast.error("Terjadi kesalahan. Mohon coba lagi.");
 		} else {
@@ -77,14 +84,15 @@ const Wishlist = () => {
 			</div>
 		);
 	}
+	console.log(user.wishlist);
 	return (
 		<div className="d-flex flex-column p-1 w-100">
 			<HeadingXS as="p" className="text-primary1 mb-3 mt-2">
-				wishlist kelas
+				Wishlist Kelas
 			</HeadingXS>
-			{wishlistCourses.length > 0 && wishlistCourses ? (
+			{user.wishlist && user.wishlist.length > 0 ? (
 				<>
-					{wishlistCourses.map((c) => (
+					{user.wishlist.map((c) => (
 						<MyCard
 							key={c.course.id}
 							className="shadow d-flex align-items-center justify-content-between mb-3"

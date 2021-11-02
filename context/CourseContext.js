@@ -128,7 +128,12 @@ export const CourseProvider = ({ children }) => {
 		setEnrollClassLoading(false);
 	};
 
-	const removeWishlist = async (course, token) => {
+	const removeWishlist = async (course, token, user, setUser = () => {}) => {
+		// setWishlistCourses(
+		// 	wishlistCourses.filter((c) => c.course.uuid !== course.course.uuid)
+		// );
+		// setUser()
+
 		const res = await fetch(
 			`${API_URL}/courses/remove-wishlist/${course.course.id}`,
 			{
@@ -141,9 +146,6 @@ export const CourseProvider = ({ children }) => {
 		);
 
 		if (res.ok) {
-			setWishlistCourses(
-				wishlistCourses.filter((c) => c.course.uuid !== course.course.uuid)
-			);
 			return true;
 		} else {
 			return false;
@@ -155,33 +157,26 @@ export const CourseProvider = ({ children }) => {
 			router.push("/masuk");
 			return;
 		}
-		let alreadyInWishlist = false;
 
-		if (wishlistCourses) {
-			alreadyInWishlist = wishlistCourses.some((c) => {
-				return course.course.uuid === c.course.uuid;
-			});
-		}
-
-		const res = await fetch(`${API_URL}/courses/wishlist/${course.course.id}`, {
+		const res = await fetch(`${API_URL}/courses/wishlist/${course.id}`, {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
 		});
-
-		if (res.ok) {
-			if (!alreadyInWishlist) {
-				setWishlistCourses([...wishlistCourses, course]);
-			}
-			return true;
-		} else {
-			if (alreadyInWishlist) {
-				return true;
-			}
-			return false;
-		}
+		return res.ok;
+		// if (res.ok) {
+		// 	if (!alreadyInWishlist) {
+		// 		setWishlistCourses([...wishlistCourses, course]);
+		// 	}
+		// 	return true;
+		// } else {
+		// 	if (alreadyInWishlist) {
+		// 		return true;
+		// 	}
+		// 	return false;
+		// }
 	};
 
 	const rateClass = async (course, token, rate) => {

@@ -67,7 +67,6 @@ export default function Index({ courses }) {
 						<DefaultCourseCard
 							key={course.id}
 							className=" "
-							user={user}
 							course={course}
 							enrolled={course.enrolled}
 						/>
