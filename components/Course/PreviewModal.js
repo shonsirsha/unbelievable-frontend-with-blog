@@ -126,7 +126,7 @@ const PreviewModal = (props) => {
 		enrollClassLoading,
 		addWishlist,
 	} = useContext(CourseContext);
-	const { token, user } = useContext(AuthContext);
+	const { token, user, setUser } = useContext(AuthContext);
 
 	if (!selectedPreviewCourse) {
 		return <></>;
@@ -156,6 +156,28 @@ const PreviewModal = (props) => {
 		)
 			? selectedPreviewCourse.course_price.crossed_out_price
 			: null;
+
+	const handleWishlistClicked = async () => {
+		const added = await addWishlist(selectedPreviewCourse, token);
+
+		const alreadyInWishlist = user.wishlist.some((u) => {
+			return selectedPreviewCourse.uuid === u.course.uuid;
+		});
+
+		if (alreadyInWishlist || added) {
+			if (!alreadyInWishlist) {
+				setUser({
+					...user,
+					wishlist: [...user.wishlist, { course: selectedPreviewCourse }],
+				});
+			}
+			toast.success("Kelas ini telah ditambahkan ke wishlist!");
+		} else {
+			console.log(alreadyInWishlist);
+			toast.error("Terjadi kesalahan dalam menambahkan kelas ke wishlist");
+		}
+	};
+
 	return (
 		<StyledModal
 			{...props}
@@ -189,18 +211,7 @@ const PreviewModal = (props) => {
 								className="mr-2"
 								onClick={async (e) => {
 									e.stopPropagation();
-									const wishlisted = await addWishlist(
-										{ course: selectedPreviewCourse },
-										token
-									);
-
-									if (wishlisted) {
-										toast.success("Kelas ini telah ditambahkan ke wishlist!");
-									} else {
-										toast.error(
-											"Terjadi kesalahan dalam menambahkan kelas ke wishlist"
-										);
-									}
+									handleWishlistClicked();
 								}}
 							/>
 							<Share
