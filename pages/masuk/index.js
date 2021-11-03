@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -21,6 +21,7 @@ import mustBeUnauthed from "utils/mustBeUnauthed";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { API_URL } from "config";
 import { validateEmail } from "utils/validateEmail";
+import Captcha from "components/Captcha";
 
 const OuterContainer = styled.div`
 	background: #fff;
@@ -152,8 +153,9 @@ const LoginView = ({ setShowLogin }) => {
 		email: "",
 		password: "",
 	});
-	const [focus, setFocus] = useState("");
 	const [asText, setAsText] = useState(false);
+
+	const reRef = useRef();
 
 	const { email, password } = loginDetails;
 
@@ -161,12 +163,15 @@ const LoginView = ({ setShowLogin }) => {
 		setLoginDetails({ ...loginDetails, [e.target.name]: e.target.value });
 	};
 
-	const { login, authLoading, checkIfProviderLocal } = useContext(AuthContext);
+	const { login, authLoading } = useContext(AuthContext);
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		if (!authLoading) {
 			e.preventDefault();
-			login({ email, password });
+			const recaptchaToken = await reRef.current.executeAsync();
+			console.log(recaptchaToken);
+			reRef.current.reset();
+			login({ email, password, recaptchaToken });
 		}
 	};
 
@@ -179,8 +184,6 @@ const LoginView = ({ setShowLogin }) => {
 					<FormLabel>E-mail</FormLabel>
 					<StyledFormControl
 						type="email"
-						onBlur={() => setFocus("")}
-						onFocus={() => setFocus("focus")}
 						className="mr-xl-2 mb-3 shadow-none"
 						name="email"
 						value={email}
@@ -195,8 +198,6 @@ const LoginView = ({ setShowLogin }) => {
 						<StyledFormControl
 							type={`${asText ? `text` : `password`}`}
 							name="password"
-							onBlur={() => setFocus("")}
-							onFocus={() => setFocus("focus2")}
 							className={"shadow-none"}
 							value={password}
 							placeholder="Password"
@@ -207,6 +208,8 @@ const LoginView = ({ setShowLogin }) => {
 						</Eye>
 					</div>
 				</FormGroup>
+
+				<Captcha reRef={reRef} />
 
 				<TextSecondary className="mt-3" onClick={() => setShowLogin(false)}>
 					<Link href="#">

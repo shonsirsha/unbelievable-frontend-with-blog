@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
 
 	//Login user
 
-	const login = async ({ email: identifier, password }) => {
+	const login = async ({ email: identifier, password, recaptchaToken }) => {
 		setAuthLoading(true);
 
 		const res = await fetch(`${NEXT_URL}/api/login`, {
@@ -54,6 +54,7 @@ export const AuthProvider = ({ children }) => {
 			body: JSON.stringify({
 				identifier,
 				password,
+				recaptchaToken,
 			}),
 		});
 
