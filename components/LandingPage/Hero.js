@@ -79,6 +79,8 @@ export default function Hero() {
 						</Link>
 					</Col>
 				</StyledRow>
+				{/* <BlueBlob className="position-absolute" src={"/images/home.gif"} /> */}
+
 				<BlueBlob className="position-absolute" src={"/images/blueblob.png"} />
 			</StyledContainer>
 		</OuterContainer>
