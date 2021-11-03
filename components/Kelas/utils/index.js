@@ -20,7 +20,7 @@ const goToTheNextDay = (
 		videosState.findIndex((v) => v.id === video.id) - 1;
 
 	if (videosState[previousOfClickedVideoIx].all_missions_completed) {
-		if (boughtDayDiff >= video_day) {
+		if (boughtDayDiff >= video_day || isVideoFinished(videosState, video)) {
 			goToVideo(video, slug);
 			setRenderedDescContext(<>{video_desc}</>);
 		} else {

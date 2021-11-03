@@ -33,28 +33,47 @@ const ListSingleVideoPaid = ({ video, videosState, ix, boughtDayDiff }) => {
 	return (
 		<>
 			<div className="d-flex align-items-center">
-				<StyledHeadingXS
-					as="p"
-					className={`text-${
-						boughtDayDiff >= ix ? `white` : "lighterDarkGray"
-					} mb-1`}
-				>
-					{video.day_title}{" "}
-				</StyledHeadingXS>
+				{isVideoFinished(videosState, video) ? (
+					<StyledHeadingXS as="p" className={`text-white mb-1`}>
+						{video.day_title}
+					</StyledHeadingXS>
+				) : (
+					<StyledHeadingXS
+						as="p"
+						className={`text-${
+							boughtDayDiff >= ix ? `white` : "lighterDarkGray"
+						} mb-1`}
+					>
+						{video.day_title}
+					</StyledHeadingXS>
+				)}
 			</div>
 			<div className="d-flex align-items-center mb-2">
-				<Clock
-					className={`text-${
-						boughtDayDiff >= ix ? `white` : "lighterDarkGray"
-					} mr-1`}
-				/>
-				<TimeText
-					className={`text-${
-						boughtDayDiff >= ix ? `white` : "lighterDarkGray"
-					}`}
-				>
-					{secsToMinOnly(video.bunny_video.duration)}
-				</TimeText>
+				{isVideoFinished(videosState, video) ? (
+					<>
+						<Clock className={`text-white mr-1`} />
+
+						<TimeText className={`text-white`}>
+							{secsToMinOnly(video.bunny_video.duration)}
+						</TimeText>
+					</>
+				) : (
+					<>
+						<Clock
+							className={`text-${
+								boughtDayDiff >= ix ? `white` : "lighterDarkGray"
+							} mr-1`}
+						/>
+
+						<TimeText
+							className={`text-${
+								boughtDayDiff >= ix ? `white` : "lighterDarkGray"
+							}`}
+						>
+							{secsToMinOnly(video.bunny_video.duration)}
+						</TimeText>
+					</>
+				)}
 			</div>
 
 			<div className="d-flex align-items-center">
@@ -75,13 +94,20 @@ const ListSingleVideoPaid = ({ video, videosState, ix, boughtDayDiff }) => {
 				)}
 
 				{/* {ix > 0 && } */}
-				<TextSecondary
-					className={`text-${
-						boughtDayDiff >= ix ? `white` : "lighterDarkGray"
-					}`}
-				>
-					{video.bunny_video.title}
-				</TextSecondary>
+
+				{isVideoFinished(videosState, video) ? (
+					<TextSecondary className={`text-white`}>
+						{video.bunny_video.title}
+					</TextSecondary>
+				) : (
+					<TextSecondary
+						className={`text-${
+							boughtDayDiff >= ix ? `white` : "lighterDarkGray"
+						}`}
+					>
+						{video.bunny_video.title}
+					</TextSecondary>
+				)}
 			</div>
 		</>
 	);

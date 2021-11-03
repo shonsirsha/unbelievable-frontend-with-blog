@@ -425,7 +425,7 @@ export async function getServerSideProps({ req, _ }) {
 		let courses = await res3.json();
 		if (courses) {
 			courses = courses.sort(
-				(a, b) => b.enrolled_users.length - a.enrolled_users.length
+				(a, b) => b.num_of_participants - a.num_of_participants
 			);
 		}
 		const coursesTaken = await res4.json();
