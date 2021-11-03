@@ -1,19 +1,6 @@
 import cookie from "cookie";
 import { API_URL, RECAPTCHA_SECRET_KEY } from "config/index";
-
-async function validateHuman(token) {
-	const secret = RECAPTCHA_SECRET_KEY;
-	const response = await fetch(
-		`https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${token}`,
-		{
-			method: "POST",
-		}
-	);
-
-	const data = await response.json();
-
-	return data.success;
-}
+import validateHuman from "utils/validateHuman";
 
 export default async function login(req, res) {
 	if (req.method === "POST") {

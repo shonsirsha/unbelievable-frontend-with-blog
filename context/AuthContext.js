@@ -126,25 +126,18 @@ export const AuthProvider = ({ children }) => {
 		}
 	};
 
-	const forgotPassword = async ({ email }) => {
+	const forgotPassword = async ({ email, recaptchaToken }) => {
 		setAuthLoading(true);
-		const res = await fetch(`${API_URL}/auth/forgot-password`, {
+		const res = await fetch(`${NEXT_URL}/api/forgot-password`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({ email }),
+			body: JSON.stringify({ email, recaptchaToken }),
 		});
-
-		const data = await res.json();
-
-		if (res.ok) {
-			setAuthLoading(false);
-			return data.ok;
-		} else {
-			setAuthLoading(false);
-			return false;
-		}
+		// console.log("ASDAS");
+		setAuthLoading(false);
+		return res.ok;
 	};
 
 	const resetPassword = async ({ code, password }) => {

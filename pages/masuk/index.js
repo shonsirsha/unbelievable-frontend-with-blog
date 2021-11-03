@@ -169,7 +169,6 @@ const LoginView = ({ setShowLogin }) => {
 		if (!authLoading) {
 			e.preventDefault();
 			const recaptchaToken = await reRef.current.executeAsync();
-			console.log(recaptchaToken);
 			reRef.current.reset();
 			login({ email, password, recaptchaToken });
 		}
@@ -226,11 +225,7 @@ const LoginView = ({ setShowLogin }) => {
 					<TextSecondary>Masuk</TextSecondary>
 				</StyledSubmitBtn>
 			</Form>
-			{/* <GreenCharacter
-							className={`${focus}`}
-							src="/images/green.png"
-							alt="Green"
-						/> */}
+
 			<div className="d-flex mt-3 align-items-center w-100">
 				<hr width="100%" />
 				<HeadingXXS className="mx-3" as="p">
@@ -269,6 +264,7 @@ const LoginView = ({ setShowLogin }) => {
 
 const ForgotPasswordView = ({ setShowLogin }) => {
 	const [email, setEmail] = useState("");
+	const reRef = useRef();
 
 	const [emailSent, setEmailSent] = useState(false);
 
@@ -282,12 +278,15 @@ const ForgotPasswordView = ({ setShowLogin }) => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (!authLoading) {
+			const recaptchaToken = await reRef.current.executeAsync();
+			reRef.current.reset();
+
 			if (validateEmail(email)) {
 				const emailLocal = await checkIfProviderLocal({ email });
 				if (!emailLocal) {
 					toast.error("E-mail tidak terdaftar");
 				} else {
-					const sent = await forgotPassword({ email });
+					const sent = await forgotPassword({ email, recaptchaToken });
 					if (!sent) {
 						toast.error(
 							"Terjadi kesalahan dalam mengirim URL. Mohon coba lagi."
@@ -318,6 +317,7 @@ const ForgotPasswordView = ({ setShowLogin }) => {
 						placeholder="email@contoh.com"
 					/>
 				</FormGroup>
+				<Captcha reRef={reRef} />
 
 				<StyledSubmitBtn
 					onClick={async (e) => await handleSubmit(e)}

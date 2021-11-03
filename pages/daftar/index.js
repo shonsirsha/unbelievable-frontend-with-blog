@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
@@ -27,6 +27,8 @@ import { mediaBreakpoint } from "utils/breakpoints";
 import { checkPassword } from "utils/checkPassword";
 import { API_URL } from "config";
 import { whitespace } from "utils/whitespace";
+import Captcha from "components/Captcha";
+
 const OuterContainer = styled.div`
 	background: #fff;
 	height: 100vh;
@@ -183,6 +185,7 @@ const Index = () => {
 	});
 	const [asText, setAsText] = useState(false);
 	const { register, err, authLoading } = useContext(AuthContext);
+	const reRef = useRef();
 
 	useEffect(() => {
 		if (err === "Email is already taken.") {
@@ -217,7 +220,7 @@ const Index = () => {
 			return false;
 		}
 	};
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (!authLoading) {
 			let registerData = {
@@ -237,7 +240,10 @@ const Index = () => {
 			} else {
 				const validData = validateRegisterData();
 				if (validData) {
-					register(registerData);
+					const recaptchaToken = await reRef.current.executeAsync();
+					reRef.current.reset();
+
+					register({ ...registerData, recaptchaToken });
 					sessionStorage.removeItem("unb_reg_code");
 				} else {
 					toast.error("Mohon isi semua kolom dengan benar");
@@ -361,6 +367,8 @@ const Index = () => {
 									kecil, nomer, dan simbol.
 								</FormText>
 							</FormGroup>
+
+							<Captcha reRef={reRef} />
 
 							<StyledSubmitBtn
 								onClick={handleSubmit}

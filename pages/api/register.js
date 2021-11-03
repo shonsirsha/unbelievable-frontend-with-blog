@@ -1,6 +1,7 @@
 import cookie from "cookie";
 import { API_URL } from "config/index";
 import { whitespace } from "utils/whitespace";
+import validateHuman from "utils/validateHuman";
 
 export default async function register(req, res) {
 	if (req.method === "POST") {
@@ -12,7 +13,16 @@ export default async function register(req, res) {
 			dob,
 			r_c_to_be_checked,
 			gender,
+			recaptchaToken,
 		} = req.body;
+
+		const human = await validateHuman(recaptchaToken);
+
+		if (!human) {
+			return res
+				.status(400)
+				.json({ message: "ReCaptcha gagal. Mohon coba lagi!" });
+		}
 
 		let sanitised = r_c_to_be_checked;
 		if (whitespace(r_c_to_be_checked)) {
