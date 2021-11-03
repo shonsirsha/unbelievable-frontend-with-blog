@@ -62,7 +62,7 @@ export default function Hero() {
 						</StyledHeading>
 					</Col>
 				</StyledRow>
-				<StyledRow className="mt-5">
+				<StyledRow className="mt-4">
 					<Col className="align-items-center d-flex justify-content-center">
 						<TextPrimary className="text-center text-white text-capitalize">
 							jadilah lebih baik setiap harinya bersama komunitas kami menuju
