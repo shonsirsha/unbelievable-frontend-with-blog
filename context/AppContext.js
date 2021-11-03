@@ -1,7 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import { NEXT_URL, API_URL } from "config/index";
-import { FaTruckMonster } from "react-icons/fa";
+import { API_URL } from "config/index";
 
 const AppContext = createContext();
 
