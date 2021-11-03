@@ -158,10 +158,10 @@ export default function Onboarding({
 			setStage(stage + 1);
 		} else {
 			Swal.fire({
-				title: "Pemberitahuan",
-				html: "Tonton video hingga selesai untuk melanjutkan",
+				title: "HALO HEROES!",
+				html: "Ini video paling awal buat tau apa artinya menjadi seorang HEROES! Yuk ditonton!",
 				confirmButtonColor: "#171b2d",
-				confirmButtonText: "Lanjutkan menonton",
+				confirmButtonText: "OK aku lanjut nonton!",
 				icon: "info",
 				timer: 10000,
 				timerProgressBar: true,

@@ -25,14 +25,14 @@ const goToTheNextDay = (
 			setRenderedDescContext(<>{video_desc}</>);
 		} else {
 			Swal.fire({
-				title: "Pemberitahuan",
-				text: "Menonton lebih dari 1 video dalam satu hari tidak disarankan. Apakah kamu tetap ingin melanjutkan?",
+				title: "Pertahankan semangatmu HEROES!",
+				text: "Kita menganjurkan untuk ikut 1 video / hari biar kamu focus. Apa kamu tetap mau lanjut?",
 				icon: "warning",
 				showCancelButton: true,
 				confirmButtonColor: "#171b2d",
 				cancelButtonColor: "#d52f89",
-				confirmButtonText: "Ya, lanjutkan!",
-				cancelButtonText: "Batal",
+				confirmButtonText: "Lanjut",
+				cancelButtonText: "Tidak",
 			}).then((result) => {
 				if (result.isConfirmed) {
 					goToVideo(video, slug);
@@ -41,11 +41,11 @@ const goToTheNextDay = (
 		}
 	} else {
 		Swal.fire({
-			title: "Ups...",
-			text: "Mohon kerjakan terlebih dahulu semua misi yang diperlukan untuk dapat melanjutkan ke video ini",
+			title: "Eits, tunggu dulu HEROES!",
+			text: "Sebelum lanjut, aku mau ingetin kamu buat selesaikan misi hari ini. Misi akan keluar kalau sudah selesai menonton video hari ini sampai beres. Kamu tinggal kerjakan misi di bagian kiri bawah, klik, dan simpan misinya ya. ",
 			icon: "error",
 			confirmButtonColor: "#171b2d",
-			confirmButtonText: "Tutup",
+			confirmButtonText: "OKE!",
 		});
 	}
 };
@@ -129,8 +129,8 @@ export const handleClickVideoDay = (
 	} else {
 		if (currentCourse.currentVideo.id !== video.id) {
 			Swal.fire({
-				title: "Pemberitahuan",
-				text: "Kamu harus membeli kelas ini untuk melanjutkan",
+				title: "Wah sayang sekali HEROES..",
+				text: "Untuk pengalaman lebih maksimal.. Beli kelasnya untuk melanjutkan ya!",
 				icon: "warning",
 				showCancelButton: true,
 				confirmButtonColor: "#171b2d",
@@ -199,11 +199,11 @@ export async function handleMissionsSave(
 			);
 			setMissionsCompleted(true);
 			Swal.fire({
-				title: "Kerja Bagus!",
-				text: "Kamu telah berhasil menyelesaikan semua misi video ini!",
+				title: "WAH SELAMAT HEROES!",
+				text: "Berbanggalah kamu uda berhasil selesaikan misi hari ini! Dan kamu tetap berusaha walaupun misinya sulit.",
 				icon: "success",
 				confirmButtonColor: "#171b2d",
-				confirmButtonText: "Tutup pemberitahuan",
+				confirmButtonText: "YES! Akhirnya selesai!",
 			}).then((result) => {
 				if (result.isConfirmed || result.dismiss) {
 					if (window) {

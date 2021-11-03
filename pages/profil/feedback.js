@@ -96,11 +96,11 @@ const Masukkan = ({ categories }) => {
 				if (res.ok) {
 					textAreaRef.current.value = "";
 					Swal.fire({
-						title: "Masukkan Terkirim!",
-						text: "Terima kasih karena kamu akan membuat platform ini menjadi lebih baik lagi",
+						title: "WAH Terima Kasih HEROES!",
+						text: "SETIAP SARAN, MASUKAN dan BANTUAN yang kamu berikan, bisa membantu HQ Unbelievable menjadi lebih baik lagi!",
 						icon: "success",
 						confirmButtonColor: "#171b2d",
-						confirmButtonText: "Tutup",
+						confirmButtonText: "Sama-sama!",
 					});
 					setLoading(false);
 				} else {
