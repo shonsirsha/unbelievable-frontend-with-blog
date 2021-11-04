@@ -108,7 +108,7 @@ export default function Index({ questions, siteData }) {
 										<div className="d-flex align-items-center">
 											<>
 												<Image
-													src={`/images/qmark.png`}
+													src={`/images/qmark.svg`}
 													alt="Question Mark"
 													width={27}
 													height={27}

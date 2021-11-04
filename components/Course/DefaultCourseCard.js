@@ -280,7 +280,7 @@ export default function DefaultCourseCard({
 									key={nanoid()}
 									width={17}
 									height={16}
-									src="/images/gold-star.png"
+									src="/images/gold-star.svg"
 								/>
 							)
 						)}
@@ -292,7 +292,7 @@ export default function DefaultCourseCard({
 								key={nanoid()}
 								width={17}
 								height={16}
-								src="/images/gray-star.png"
+								src="/images/gray-star.svg"
 							/>
 						))}
 					</div>

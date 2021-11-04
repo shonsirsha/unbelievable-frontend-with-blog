@@ -302,9 +302,9 @@ const PreviewModal = (props) => {
 								{selectedPreviewCourse.features.map((f) => (
 									<div key={f.id} className="d-flex align-items-center mb-3">
 										<Image
-											width={19.58}
-											height={19.58}
-											src="images/yellowcheck.png"
+											width={24}
+											height={24}
+											src="images/yellowcheck.svg"
 											alt="Checkmark"
 											className="mr-2"
 										/>
