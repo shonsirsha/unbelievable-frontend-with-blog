@@ -337,7 +337,7 @@ export default function Header({
 					backbtn={backBtn ? 1 : 0}
 					user={user ? 1 : 0}
 					onClick={handleClickLogo}
-					src="/images/logo.png"
+					src="/images/logo.svg"
 					alt="logo"
 				/>
 				<div
@@ -353,7 +353,7 @@ export default function Header({
 				>
 					{window && !user && (
 						<ProfileImage
-							src={`${window.location.origin}/images/profile.png`}
+							src={`${window.location.origin}/images/profile.svg`}
 							alt="Profile"
 							width={43}
 							height={43}
@@ -364,7 +364,7 @@ export default function Header({
 							src={
 								user.profile_picture
 									? user.profile_picture.url
-									: `${window.location.origin}/images/profile-main.png`
+									: `${window.location.origin}/images/green.svg`
 							}
 							alt="Profile"
 							width={24}
@@ -385,7 +385,7 @@ export default function Header({
 									src={
 										user.profile_picture
 											? user.profile_picture.url
-											: `${window.location.origin}/images/profile-main.png`
+											: `${window.location.origin}/images/green.svg`
 									}
 									alt="Profile"
 									width={24}

@@ -56,7 +56,7 @@ export default function MulaiSekarang() {
 	const right = (
 		<RightContainer>
 			<div className="d-flex flex-column">
-				<Image alt="Character" src="/images/characters.png" />
+				<Image alt="Character" src="/images/characters.svg" />
 			</div>
 		</RightContainer>
 	);

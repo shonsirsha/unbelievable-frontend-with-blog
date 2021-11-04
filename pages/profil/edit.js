@@ -702,14 +702,14 @@ const Edit = () => {
 											src={
 												user.profile_picture
 													? user.profile_picture.url
-													: `${window.location.origin}/images/avatar-plc.png`
+													: `${window.location.origin}/images/avatar-plc.svg`
 											}
 											width={96}
 											alt="Avatar"
 											height={96}
 										/>
 										<Image
-											src={`${window.location.origin}/images/cam-icon.png`}
+											src={`${window.location.origin}/images/cam-icon.svg`}
 											alt="camera"
 											style={{ right: 0, bottom: "-3px" }}
 											height={28}

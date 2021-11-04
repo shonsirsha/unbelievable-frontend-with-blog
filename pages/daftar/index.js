@@ -379,11 +379,7 @@ const Index = () => {
 								<TextSecondary>Daftar</TextSecondary>
 							</StyledSubmitBtn>
 						</Form>
-						{/* <GreenCharacter
-							className={`${focus}`}
-							src="/images/green.png"
-							alt="Green"
-						/> */}
+
 						<div className="d-flex mt-3 align-items-center w-100">
 							<hr width="100%" />
 							<HeadingXXS className="mx-3" as="p">

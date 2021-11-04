@@ -34,17 +34,34 @@ const StyledHeading = styled(HeadingXL)`
 `;
 
 const OuterContainer = styled.div`
-	overflow-x: hidden;
 	height: 100vh;
+	position: relative;
 	background: linear-gradient(#1022a4, #31a4fa);
 	@media (max-width: 320px) {
 		min-height: 100vh;
+
+		& video {
+			height: 100vh;
+			left: -140%;
+		}
 	}
 
 	& video {
 		position: absolute;
 		min-width: 100%;
 		min-height: 100%;
+	}
+
+	@media (min-width: 768px) and (max-width: 1024px) {
+		& video {
+			left: -85%;
+		}
+	}
+
+	@media only screen and (max-width: 600px) and (min-width: 321px) {
+		& video {
+			left: -180%;
+		}
 	}
 `;
 const StyledRow = styled(Row)`

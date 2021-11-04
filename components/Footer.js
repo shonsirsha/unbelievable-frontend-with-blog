@@ -25,7 +25,7 @@ export default function Footer() {
 					<Image
 						width={"220px"}
 						height={"24px"}
-						src="/images/logo.png"
+						src="/images/logo.svg"
 						alt="logo"
 					/>
 				</a>

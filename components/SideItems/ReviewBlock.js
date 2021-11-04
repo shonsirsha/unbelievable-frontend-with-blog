@@ -53,7 +53,7 @@ export default function ReviewBlock({ ...props }) {
 						</StyledHeadingXXS>
 						<TextTertiary className="mt-1 text-left ">Di sini!</TextTertiary>
 					</div>
-					<Image src="/images/character2.png" alt="Character" />
+					<Image src="/images/character2.svg" alt="Character" />
 				</ContentContainer>
 				<Feedback />
 			</a>

@@ -106,7 +106,7 @@ const Profil = ({
 						{user && user.first_name}!
 					</HeadingXL>
 					<Image
-						src="/images/green.png"
+						src="/images/green-big.svg"
 						alt="Character"
 						className="mx-md-5 mx-0"
 						width={167}

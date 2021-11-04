@@ -182,12 +182,12 @@ export default function Layout({
 				<FlyingButtonsContainer>
 					<Link href="#hero">
 						<a>
-							<RoundedBtnIcon className="shadow" img={`/images/home.png`} />
+							<RoundedBtnIcon className="shadow" img={`/images/home.svg`} />
 						</a>
 					</Link>
 					<Link href={user ? `/dashboard` : `/daftar`}>
 						<a>
-							<RoundedBtnIcon className="shadow" img={`/images/smiley.png`} />
+							<RoundedBtnIcon className="shadow" img={`/images/smiley.svg`} />
 						</a>
 					</Link>
 				</FlyingButtonsContainer>
@@ -207,9 +207,9 @@ export default function Layout({
 											small
 											content={
 												<>
-													<TextTertiary>status akun:</TextTertiary>{" "}
-													<HeadingXXS>free account.</HeadingXXS>
-													<HeadingXXS className="mt-2">upgrade</HeadingXXS>
+													<TextTertiary>Status akun:</TextTertiary>{" "}
+													<HeadingXXS>Free Account.</HeadingXXS>
+													<HeadingXXS className="mt-2">Upgrade</HeadingXXS>
 													<TextTertiary>
 														untuk akses lebih maksimal!
 													</TextTertiary>

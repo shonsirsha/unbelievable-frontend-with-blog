@@ -107,7 +107,7 @@ export default function index() {
 							</HeadingXS>
 						</div>
 						<div className="d-flex flex-column body">
-							<Link href="/daftar">
+							<Link href="/masuk">
 								<a>
 									<PriceBox className="bg-blue">
 										<StyledHeadingXXS className="text-white">
@@ -131,11 +131,11 @@ export default function index() {
 					<ClassTypeBox className="shadow">
 						<div className="d-flex flex-column bg-lightgray header position-relative">
 							<StyledHeadingXS as="p" className="text-center">
-								rekomendasi
+								Rekomendasi
 							</StyledHeadingXS>
 							<HeadingXS as="p" className="text-center mt-1">
-								beli <br />
-								per-kelas
+								Beli <br />
+								Per-Kelas
 							</HeadingXS>
 						</div>
 						<div className="d-flex flex-column body">
