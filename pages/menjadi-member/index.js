@@ -107,7 +107,7 @@ export default function index() {
 							</HeadingXS>
 						</div>
 						<div className="d-flex flex-column body">
-							<Link href="/masuk">
+							<Link href="/daftar">
 								<a>
 									<PriceBox className="bg-blue">
 										<StyledHeadingXXS className="text-white">

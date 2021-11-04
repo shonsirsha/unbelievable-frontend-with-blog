@@ -18,6 +18,7 @@ import { useRouter } from "next/router";
 import { HeadingXXS } from "./Typography/Headings";
 import { TextTertiary } from "./Typography/Text";
 import { whitespace } from "utils/whitespace";
+import { NEXT_URL } from "config";
 import LoadingLayout from "./Loading/LoadingLayout";
 
 const FlyingButtonsContainer = styled.div`
@@ -111,7 +112,7 @@ export default function Layout({
 	title = "Unbelievable",
 	keywords = "self development, lms",
 	description = "Belajarlah setiap hari, jadilah unbelievable!",
-	metaImageURL = null,
+	metaImageURL = `${NEXT_URL}/images/logo-no-text.png`,
 	children,
 	landingPage = false,
 	withFB = false, // FB = FlyingButtons
