@@ -9,6 +9,7 @@ import {
 	HeadingMD,
 	HeadingLG,
 	HeadingXS,
+	HeadingXXS,
 } from "components/Typography/Headings";
 import { BUNNY_STREAM_PREFIX_URL } from "config";
 import { TextSecondary } from "components/Typography/Text";
@@ -57,11 +58,20 @@ const HighHeadingSM = styled(HeadingSM)`
 `;
 const HighHeadingXS = styled(HeadingXS)`
 	z-index: 3;
+	line-height: 38px;
+	@media ${mediaBreakpoint.down.md} {
+		font-size: 16px;
+	}
+`;
+
+const HighHeadingXXS = styled(HeadingXXS)`
+	z-index: 3;
 
 	@media ${mediaBreakpoint.down.md} {
 		font-size: 16px;
 	}
 `;
+
 const FinishBtn = styled(Button)`
 	padding: 16px 24px;
 	border-radius: 32px;
@@ -197,7 +207,7 @@ export default function Onboarding({
 		</>,
 		<>
 			<HighHeadingSM as="h1" className="text-white">
-				Hi {userName}!
+				Hai, {userName}!
 			</HighHeadingSM>
 		</>,
 		<>
@@ -218,69 +228,67 @@ export default function Onboarding({
 			} else if (stage === 3) {
 				setVP(
 					<>
-						<StyledP className="text-center mt-5 text-white">
-							Surat ini aku bikin khusus buat kamu!
-							<br />
-							Aku tau sekrang kamu baru mau mulai petualangan yang bakal kamu
-							inget seumur hidup
-							<br />
-							Kenapa aku tau? karena aku {user.first_name} dari{" "}
-							{parseInt(moment(user.created_at).format("yyyy")) + 1}
-						</StyledP>
-
-						<HighHeadingSM
+						<HighHeadingXXS
 							as="p"
-							className="text-center text-yellow2 mt-lg-3 mt-1"
+							className="mt-3 mx-auto mt-5 text-white text-center"
 						>
-							Kenapa aku tau? karena aku {user.first_name} dari{" "}
-							{parseInt(moment(user.created_at).format("yyyy")) + 1}!
-							<br />
-							Ya! Aku adalah kamu dari masa depan!
-						</HighHeadingSM>
+							Selamat, kamu sudah resmi menjadi GENERASI HEROES, di
+							UNBELIEVABLE!
+						</HighHeadingXXS>
 
-						{/* <HighHeadingSM
+						<HighHeadingXS
 							as="p"
-							className="text-center text-yellow2 mt-lg-3 mt-1"
+							className="text-center text-yellow2 mt-lg-5 mt-1"
 						>
-							{moment(user.created_at).format("dddd, D MMMM, yyyy")} is the day
+							Hari ini, {moment(user.created_at).format("dddd, D MMMM, yyyy")}{" "}
+							adalah hari yang bersejarah buat kamu!
 							<br />
-							we decided to change our lives for the better
-						</HighHeadingSM> */}
+							Kenapa? Karena hari ini kamu baru aja mulai petualangan yang
+							<br />
+							pasti kamu ingat seumur hidup!
+						</HighHeadingXS>
 
 						<StyledP className="text-center mt-5 text-white">
-							Sama kaya kamu, dulu juga aku dapet surat misterius ini! Oh iya,
-							kalau kamu mau tau,
+							Petualangan untuk mengejar mimpi kamu dan membentuk masa depan
+							kamu!
 							<br />
-							aku sekarang sudah jauh lebih percaya diri, lebih bisa nerima
-							diri, dan tentunya lebih sehat sekarang!
+							Dimulai sebagai HERO IN TRAINING, kamu akan membangunkan skill
+							tersembunyi yang ada di dalam diri kamu.
 						</StyledP>
 
-						<StyledP className="text-center mt-lg-3 mt-3 text-white">
-							Tau gak sih ternyata kebahagiaan yang kita cari selama ini bisa
-							kita dapetin dari hal-hal yang ada di
+						<StyledP className="text-center mt-4 text-white">
+							Ingat! Perjalanan ini tidak mudah dan mungkin terasa lama
+							prosesnya.
 							<br />
-							sekeliling kita, namun kita butuh belajar buat cari itu dan
-							ternyata kita gak sendiri!
+							Kabar baiknya, kamu gak harus ngejalanin semuanya sendiri, karena
+							di sini, ada banyak teman dan
 							<br />
-							Tau gak? Sekarang aku juga udah punya banyak teman, terutama
-							saudara-saudara kita,
+							juga saudara-saudara lainnya yaitu para HEROES di UNBELIEVABLE
+							yang akan berjuang
 							<br />
-							para Heroes lainnya di UNBELIEVABLE!
+							bersama kamu untuk membentuk generasi masa depan.
 						</StyledP>
 
-						<StyledP className="text-center mt-lg-3 mt-3 text-white">
-							Kayanya kamu belum tau ya Heroes itu apa? Gapapa, abis ini bakal
-							langsung di jelasin sama
+						<StyledP className="text-center mt-4 text-white">
+							Kamu mungkin belum mencapai mimpimu, tapi dengan berani berproses,
 							<br />
-							Eric di video selanjutnya! Tinggal pencet kanan bawah aja!
+							hari ini kamu sudah selangkah lebih dekat lagi dibandingkan
+							kemarin. <br />
+							Dan aku percaya ada pahlawan di dalam diri setiap orang, termasuk
+							kamu.
+							<br />
+							Bersama kamu, kita bisa membangun masa depan yang lebih baik untuk
+							semua orang.
 						</StyledP>
 
 						<HighHeadingXS
 							as="p"
 							className="mt-1 mx-auto mt-3 text-white text-center"
 						>
-							Congratulations! Now you are officially part of the Heroes
-							generation!
+							Gak sabar kan memulai petualangan baru kamu?
+							<br />
+							Yuk langsung aja sama-sama kita mulai #MelangkahTanpaBatas <br />
+							bersama UNBELIEVABLE dan jadilah THE UNBELIEVABLE HERO!
 						</HighHeadingXS>
 
 						<Blob className={`teal`} src={"/images/blueblob.png"} alt="Blob" />
@@ -315,7 +323,7 @@ export default function Onboarding({
 								onClick={onClickFinishBtn}
 								className="mt-4 mx-auto bg-primary1"
 							>
-								<HeadingXS as="p">Ya, saya siap berkomitmen!</HeadingXS>
+								<HeadingXS as="p">Ya, aku siap berkomitmen!</HeadingXS>
 							</FinishBtn>
 						)}
 					</div>
