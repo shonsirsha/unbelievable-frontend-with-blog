@@ -34,16 +34,11 @@ const StyledHeading = styled(HeadingXL)`
 `;
 
 const OuterContainer = styled.div`
-	height: 100vh;
+	height: 120vh;
 	position: relative;
 	background: linear-gradient(#1022a4, #31a4fa);
 	@media (max-width: 320px) {
 		min-height: 100vh;
-
-		& video {
-			height: 100vh;
-			left: -140%;
-		}
 	}
 
 	& video {
@@ -52,15 +47,10 @@ const OuterContainer = styled.div`
 		min-height: 100%;
 	}
 
-	@media (min-width: 768px) and (max-width: 1024px) {
+	@media (max-width: 1024px) {
+		height: 100vh;
 		& video {
-			left: -85%;
-		}
-	}
-
-	@media only screen and (max-width: 600px) and (min-width: 321px) {
-		& video {
-			left: -180%;
+			display: none;
 		}
 	}
 `;
@@ -68,7 +58,18 @@ const StyledRow = styled(Row)`
 	position: relative;
 	z-index: 1;
 `;
+const BlueBlob = styled(Image)`
+	position: absolute;
+	bottom: 18%;
+	right: 160px;
+	display: none;
+	width: 340px;
+	height: 340px;
 
+	@media (max-width: 1024px) {
+		display: block;
+	}
+`;
 export default function Hero() {
 	return (
 		<OuterContainer id="hero">
@@ -102,6 +103,7 @@ export default function Hero() {
 						</Link>
 					</Col>
 				</StyledRow>
+				<BlueBlob className="position-absolute" src={"/images/blueblob.png"} />
 			</StyledContainer>
 		</OuterContainer>
 	);
