@@ -34,7 +34,21 @@ const FlyingButtonsContainer = styled.div`
 
 	flex-direction: column;
 	a {
-		margin-bottom: 16px;
+		margin-bottom: 24px;
+	}
+
+	& .text-container {
+		width: 100%;
+		display: flex;
+		height: 25px;
+		margin-top: 8px;
+		background: #fff;
+		justify-content: center;
+		text-align: center;
+		border-radius: 4px;
+		align-items: center;
+		margin-left: -24px;
+		width: 100px;
 	}
 
 	@media ${mediaBreakpoint.down.md} {
@@ -43,7 +57,16 @@ const FlyingButtonsContainer = styled.div`
 		flex-direction: column;
 		padding-left: 18px;
 		a {
-			margin-bottom: 12px;
+			margin-bottom: 18px;
+		}
+
+		& .text-container {
+			width: 72px;
+			margin-left: -10px;
+		}
+
+		& .text-container p {
+			font-size: 12px;
 		}
 
 		a:nth-child(1) {
@@ -184,11 +207,17 @@ export default function Layout({
 					<Link href="#hero">
 						<a>
 							<RoundedBtnIcon className="shadow" img={`/images/home.svg`} />
+							<div className="text-container shadow">
+								<TextTertiary>Home</TextTertiary>
+							</div>
 						</a>
 					</Link>
 					<Link href={user ? `/dashboard` : `/daftar`}>
 						<a>
 							<RoundedBtnIcon className="shadow" img={`/images/smiley.svg`} />
+							<div className="text-container shadow">
+								<TextTertiary>{user ? `Dashboard` : `Daftar`}</TextTertiary>
+							</div>
 						</a>
 					</Link>
 				</FlyingButtonsContainer>

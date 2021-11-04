@@ -22,6 +22,7 @@ import { TextSecondary } from "components/Typography/Text";
 import moment from "moment";
 import ReactDatePicker from "react-datepicker";
 import Breadcrumb from "components/Breadcrumb/Breadcrumb";
+import { validatePhoneNumber } from "utils/validatePhoneNumber";
 
 const OuterContainer = styled.div`
 	width: 100%;
@@ -582,7 +583,12 @@ const Edit = () => {
 	const handleSave = async () => {
 		if (!loading) {
 			setLoading(true);
-			if (!whitespace(first_name) && !whitespace(last_name) && validDate(dob)) {
+			if (
+				!whitespace(first_name) &&
+				!whitespace(last_name) &&
+				validDate(dob) &&
+				validatePhoneNumber(phone_number)
+			) {
 				if (biodata && biodata.length >= 100) {
 					toast.error("Ups... Maaf, biodatamu terlalu panjang.");
 				} else {
@@ -596,7 +602,8 @@ const Edit = () => {
 					});
 					if (!res.ok) {
 						if (res.status === 403 || res.status === 401) {
-							toast.error("Terjadi kesalahan mohon coba lagi. (403)");
+							toast.error("Terjadi kesalahan mohon coba lagi");
+							console.log("403");
 							return;
 						}
 						toast.error("Terjadi kesalahan mohon coba lagi.");

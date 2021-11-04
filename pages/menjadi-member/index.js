@@ -56,10 +56,16 @@ const ClassTypeBox = styled.div`
 		border-top-right-radius: 8px;
 		border-top-left-radius: 8px;
 	}
-
+	&.blueborder {
+		border: 5px solid #2b72f0;
+	}
 	.body {
 		padding: 24px;
 		padding-top: 32px;
+	}
+
+	&.blueborder .body {
+		margin-top: -5px;
 	}
 
 	.separator {
@@ -84,26 +90,29 @@ export default function index() {
 		<Layout
 			showBurger={false}
 			title="Menjadi Member | Unbelievable"
+			description={
+				"Unbelievable membuat setiap kelas dirancang khusus untuk penyampaian yang terbaik agar tercapai hasil yang maksimal! carilah kelas yang sangat murah."
+			}
 			scrollToSolid
 		>
 			<Showcase title="Menjadi Member" />
 			<StyledContainer>
 				<HeadingXS className="text-center text-blue">
-					Jadilah luar biasa!
+					Jadilah Luar Biasa!
 				</HeadingXS>
 				<StyledTextPrimary className="text-center text-specialgray mt-2 mb-3">
 					Unbelievable membuat setiap kelas dirancang khusus untuk penyampaian
 					yang terbaik agar tercapai hasil yang maksimal! carilah kelas yang
 					paling kalian minati, dan jadilah member Unbelievable dengan harga
-					yang sangat murah
+					yang sangat murah.
 				</StyledTextPrimary>
 
 				<div className="d-flex mt-5 justify-content-center flex-wrap">
 					<ClassTypeBox className="shadow mb-md-0 mb-5 mr-md-5 mr-xs-0">
 						<div className="d-flex flex-column bg-lightgray header">
 							<HeadingXS className="text-center">
-								FREE <br />
-								membership
+								Free <br />
+								Membership
 							</HeadingXS>
 						</div>
 						<div className="d-flex flex-column body">
@@ -128,7 +137,7 @@ export default function index() {
 						</div>
 					</ClassTypeBox>
 
-					<ClassTypeBox className="shadow">
+					<ClassTypeBox className="blueborder shadow">
 						<div className="d-flex flex-column bg-lightgray header position-relative">
 							<StyledHeadingXS as="p" className="text-center">
 								Rekomendasi

@@ -97,7 +97,7 @@ export default function Hero() {
 					<Col>
 						<Link href="/menjadi-member">
 							<a>
-								<YellowButton>Menjadi Member</YellowButton>
+								<YellowButton>Coba Gratis!</YellowButton>
 							</a>
 						</Link>
 					</Col>

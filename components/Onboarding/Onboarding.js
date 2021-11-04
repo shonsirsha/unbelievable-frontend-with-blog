@@ -371,11 +371,6 @@ export default function Onboarding({
 					{onboardings && VP}
 				</Container>
 				<div className="d-flex flex-lg-row flex-column align-items-center mt-1">
-					{stage <= 2 && steps === 4 && (
-						<StyledHeadingSM as="p" className="ml-lg-5 ml-0 text-white">
-							intro
-						</StyledHeadingSM>
-					)}
 					{showBackBtn && stage !== firstStep && (
 						<>
 							<CircleButton

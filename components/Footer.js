@@ -20,7 +20,7 @@ export default function Footer() {
 
 	return (
 		<StyledFooter className="bg-primary1 flex-md-row flex-column">
-			<Link href={user ? `/dashboard` : `/`}>
+			<Link href="/">
 				<a>
 					<Image
 						width={"220px"}

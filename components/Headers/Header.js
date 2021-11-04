@@ -228,19 +228,19 @@ export default function Header({
 	const mainAppLinks = [
 		{
 			url: "/dashboard",
-			text: "dashboard",
+			text: "Dashboard",
 		},
 		{
 			url: "/profil",
-			text: "profil",
+			text: "Profil",
 		},
 		{
 			url: "/daftar-kelas",
-			text: "kelas",
+			text: "Kelas",
 		},
 		{
 			url: "/pertanyaan",
-			text: "pertanyaan",
+			text: "Pertanyaan",
 		},
 	];
 
@@ -343,7 +343,7 @@ export default function Header({
 				<div
 					onClick={() => {
 						if (user) {
-							router.push("/dashboard");
+							router.push("/profil");
 						} else {
 							router.push("/masuk");
 						}
@@ -377,7 +377,7 @@ export default function Header({
 								<ProfileImage
 									onClick={() => {
 										if (user) {
-											router.push("/dashboard");
+											router.push("/profil");
 										} else {
 											router.push("/masuk");
 										}
