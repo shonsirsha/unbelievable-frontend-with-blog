@@ -33,7 +33,9 @@ const OuterContainer = styled.div`
 	transition: background 0.5s;
 	display: flex;
 	flex-direction: column;
-
+	& .characters {
+		max-width: 100%;
+	}
 	@media ${mediaBreakpoint.down.md} {
 		padding-top: calc(75px + 32px);
 		padding-bottom: 32px;
@@ -45,10 +47,7 @@ const VideoContainer = styled.div`
 	max-width: 740px;
 	width: 100%;
 `;
-const StyledHeadingSM = styled(HeadingSM)`
-	font-family: MontserratRegular;
-	font-size: 16px;
-`;
+
 const HighHeadingSM = styled(HeadingSM)`
 	z-index: 3;
 
@@ -349,6 +348,13 @@ export default function Onboarding({
 								onboarding
 							/>
 						</VideoContainer>
+						<Image
+							width={420}
+							height={134}
+							className="characters mt-5 mb-lg-0  mb-4 mx-auto"
+							src="/images/characters.svg"
+							alt="Character"
+						/>
 					</>
 				);
 			}, 500);

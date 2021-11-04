@@ -142,19 +142,21 @@ const Profil = ({
 							</OptionButton>
 						</a>
 					</Link>
-					<Link href="/profil/komitmen">
-						<a className="d-flex">
-							<OptionButton
-								as="button"
-								className="d-flex flex-md-row flex-column align-items-center shadow-sm"
-							>
-								<IoDocumentText className="mr-0 mr-md-4" />
-								<TextPrimary className="text-primary1">
-									Lihat Komitmen Saya
-								</TextPrimary>
-							</OptionButton>
-						</a>
-					</Link>
+					{user.onboarded && (
+						<Link href="/profil/komitmen">
+							<a className="d-flex">
+								<OptionButton
+									as="button"
+									className="d-flex flex-md-row flex-column align-items-center shadow-sm"
+								>
+									<IoDocumentText className="mr-0 mr-md-4" />
+									<TextPrimary className="text-primary1">
+										Lihat Komitmen Saya
+									</TextPrimary>
+								</OptionButton>
+							</a>
+						</Link>
+					)}
 
 					<Link href="/profil/feedback">
 						<a className="d-flex">
@@ -169,20 +171,21 @@ const Profil = ({
 							</OptionButton>
 						</a>
 					</Link>
-
-					<Link href="/profil/video-tutorial">
-						<a className="d-flex">
-							<OptionButton
-								as="button"
-								className="d-flex flex-md-row flex-column align-items-center shadow-sm"
-							>
-								<FaVideo className="mr-0 mr-md-4" />
-								<TextPrimary className="text-primary1">
-									Lihat Video Tutorial
-								</TextPrimary>
-							</OptionButton>
-						</a>
-					</Link>
+					{user.onboarded && (
+						<Link href="/profil/video-tutorial">
+							<a className="d-flex">
+								<OptionButton
+									as="button"
+									className="d-flex flex-md-row flex-column align-items-center shadow-sm"
+								>
+									<FaVideo className="mr-0 mr-md-4" />
+									<TextPrimary className="text-primary1">
+										Lihat Video Tutorial
+									</TextPrimary>
+								</OptionButton>
+							</a>
+						</Link>
+					)}
 
 					<Link href="/profil/pengaturan">
 						<a className="d-flex">
