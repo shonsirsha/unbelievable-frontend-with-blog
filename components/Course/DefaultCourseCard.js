@@ -104,7 +104,6 @@ const Like = styled(FaHeart)`
 const TextDesc = styled(TextTertiary)`
 	height: ${(props) => (props.small ? `0` : `auto`)};
 	font-size: ${(props) => (props.small ? `12px` : `14px`)};
-
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
@@ -112,6 +111,10 @@ const TextDesc = styled(TextTertiary)`
 	text-overflow: ellipsis;
 `;
 
+const LebihLanjut = styled(TextTertiary)`
+	height: ${(props) => (props.small ? `0` : `auto`)};
+	font-size: ${(props) => (props.small ? `12px` : `14px`)};
+`;
 const TextSiswa = styled(TextTertiary)`
 	font-size: 11px;
 `;
@@ -206,9 +209,14 @@ export default function DefaultCourseCard({
 					{display_siswa && (
 						<TextSiswa className="mb-2">{num_of_participants} siswa</TextSiswa>
 					)}
-					<TextDesc small={small}>
-						{small ? <u>Lebih lanjut</u> : short_desc}
-					</TextDesc>
+
+					{small ? (
+						<LebihLanjut small={small}>
+							{small ? <u>Lebih lanjut</u> : { short_desc }}
+						</LebihLanjut>
+					) : (
+						<TextDesc small={small}>{short_desc}</TextDesc>
+					)}
 				</div>
 
 				<StyledTextTertiary className="mt-4">
