@@ -102,8 +102,8 @@ const Like = styled(FaHeart)`
 	}
 `;
 const TextDesc = styled(TextTertiary)`
-	height: ${(props) => (props.small ? `0` : `auto`)};
-	font-size: ${(props) => (props.small ? `12px` : `14px`)};
+	height: auto;
+	font-size: 14px;
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
@@ -112,8 +112,8 @@ const TextDesc = styled(TextTertiary)`
 `;
 
 const LebihLanjut = styled(TextTertiary)`
-	height: ${(props) => (props.small ? `0` : `auto`)};
-	font-size: ${(props) => (props.small ? `12px` : `14px`)};
+	height: auto;
+	font-size: 12px;
 `;
 const TextSiswa = styled(TextTertiary)`
 	font-size: 11px;
@@ -205,14 +205,17 @@ export default function DefaultCourseCard({
 				<CardHeader as="p" className="mt-3">
 					{title}
 				</CardHeader>
+
 				<div className="d-flex flex-column mt-2">
 					{display_siswa && (
 						<TextSiswa className="mb-2">{num_of_participants} siswa</TextSiswa>
 					)}
 
 					{small ? (
-						<LebihLanjut small={small}>
-							{small ? <u>Lebih lanjut</u> : { short_desc }}
+						//small here means this card is the one that's
+						//displayed on the dashboard (not Daftar kelas page)
+						<LebihLanjut>
+							<u>Lebih lanjut</u>
 						</LebihLanjut>
 					) : (
 						<TextDesc small={small}>{short_desc}</TextDesc>
