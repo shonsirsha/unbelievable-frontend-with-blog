@@ -102,8 +102,14 @@ const Like = styled(FaHeart)`
 	}
 `;
 const TextDesc = styled(TextTertiary)`
-	height: ${(props) => (props.small ? `0` : `32px`)};
+	height: ${(props) => (props.small ? `0` : `auto`)};
 	font-size: ${(props) => (props.small ? `12px` : `14px`)};
+
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
 `;
 
 const TextSiswa = styled(TextTertiary)`

@@ -34,26 +34,32 @@ const StyledHeading = styled(HeadingXL)`
 `;
 
 const OuterContainer = styled.div`
+	overflow-x: hidden;
 	height: 100vh;
 	background: linear-gradient(#1022a4, #31a4fa);
 	@media (max-width: 320px) {
 		min-height: 100vh;
+	}
+
+	& video {
+		position: absolute;
+		min-width: 100%;
+		min-height: 100%;
 	}
 `;
 const StyledRow = styled(Row)`
 	position: relative;
 	z-index: 1;
 `;
-const BlueBlob = styled(Image)`
-	position: absolute;
-	bottom: 18%;
-	right: 160px;
-	width: 340px;
-	height: 340px;
-`;
+
 export default function Hero() {
 	return (
 		<OuterContainer id="hero">
+			<video autoPlay muted loop id="myVideo">
+				<source src="/images/home.mp4" type="video/mp4" />
+				Your browser does not support HTML5 video.
+			</video>
+
 			<StyledContainer className="position-relative">
 				<StyledRow>
 					<Col className="align-items-center d-flex justify-content-center">
@@ -79,9 +85,6 @@ export default function Hero() {
 						</Link>
 					</Col>
 				</StyledRow>
-				{/* <BlueBlob className="position-absolute" src={"/images/home.gif"} /> */}
-
-				<BlueBlob className="position-absolute" src={"/images/blueblob.png"} />
 			</StyledContainer>
 		</OuterContainer>
 	);
