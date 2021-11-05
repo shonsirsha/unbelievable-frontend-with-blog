@@ -18,6 +18,7 @@ import CircleButton from "components/Buttons/CircleButton";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { mediaBreakpoint } from "utils/breakpoints";
 import Swal from "sweetalert2";
+import "moment/locale/id";
 
 const StyledTextSecondary = styled(TextSecondary)`
 	font-family: "OpenSansBold";
@@ -250,7 +251,10 @@ export default function Onboarding({
 							as="p"
 							className="text-center text-yellow2 mt-lg-5 mt-1"
 						>
-							Hari ini, {moment(user.created_at).format("dddd, D MMMM, yyyy")}{" "}
+							Hari ini,{" "}
+							{moment(user.created_at)
+								.locale("de")
+								.format("dddd, D MMMM, yyyy")}{" "}
 							adalah hari yang bersejarah buat kamu!
 							<br />
 							Kenapa? Karena hari ini kamu baru aja mulai petualangan yang
