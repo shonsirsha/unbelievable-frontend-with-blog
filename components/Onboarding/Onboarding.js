@@ -146,10 +146,15 @@ export default function Onboarding({
 	const [url, setUrl] = useState(
 		`${BUNNY_STREAM_PREFIX_URL}/${onboardings[0].video_1.video.video_id}/playlist.m3u8`
 	);
+	const [thumbUrl, setThumbUrl] = useState(
+		`${BUNNY_STREAM_PREFIX_URL}/${onboardings[0].video_1.video.video_id}/${onboardings[0].video_1.video.thumbnail_name}`
+	);
+
 	const [VP, setVP] = useState(
 		<VideoContainer id="macan" className="mt-4">
 			<VideoPlayerHLS
 				captions={onboardings[0].video_1.video.captions}
+				thumbnailURL={thumbUrl}
 				onboarding
 				liveURL={url}
 				finishesVideo={onVideoFinished}
@@ -219,6 +224,12 @@ export default function Onboarding({
 	useEffect(() => {
 		setTimeout(() => {
 			if (stage <= 2) {
+				setThumbUrl(
+					`${BUNNY_STREAM_PREFIX_URL}/${
+						onboardings[0][`video_${stage}`].video.video_id
+					}/${onboardings[0][`video_${stage}`].video.thumbnail_name}`
+				);
+
 				setUrl(
 					`${BUNNY_STREAM_PREFIX_URL}/${
 						onboardings[0][`video_${stage}`].video.video_id
@@ -343,6 +354,9 @@ export default function Onboarding({
 							<VideoPlayerHLS
 								captions={onboardings[0][`video_${stage}`].video.captions}
 								liveURL={url}
+								thumbnailURL={`${BUNNY_STREAM_PREFIX_URL}/${
+									onboardings[0][`video_${stage}`].video.video_id
+								}/${onboardings[0][`video_${stage}`].video.thumbnail_name}`}
 								finishesVideo={onVideoFinished}
 								bunnyVideoId={onboardings[0][`video_${stage}`].video.video_id}
 								onboarding

@@ -101,7 +101,7 @@ const VideoPlayerHLS = ({
 			],
 			html5: {
 				vhs: {
-					overrideNative: !isMobile,
+					overrideNative: true,
 				},
 				nativeAudioTracks: isMobile,
 				nativeVideoTracks: isMobile,
@@ -113,7 +113,7 @@ const VideoPlayerHLS = ({
 			videoRef.current,
 			videoJsOptions,
 			function onPlayerReady() {
-				this.qualityLevels();
+				console.log(this.qualityLevels());
 				this.src({
 					src: liveURL,
 					type: "application/x-mpegURL",
