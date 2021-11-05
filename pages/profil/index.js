@@ -61,12 +61,7 @@ const ButtonsContainer = styled.div`
 	}
 `;
 
-const Profil = ({
-	courseCount,
-	courses,
-	totalDurationWatched,
-	noToken = false,
-}) => {
+const Profil = ({ courseCount, totalDurationWatched, noToken = false }) => {
 	const { user, userLoading, checkUserLoggedIn, logout } =
 		useContext(AuthContext);
 	const router = useRouter();
@@ -117,7 +112,7 @@ const Profil = ({
 							{courseCount}
 						</HeadingMD>
 						<TextTertiary className="text-primary1 text-center">
-							Kelas Berjalan
+							Kelas Diikuti
 						</TextTertiary>
 					</div>
 					<div className="d-flex flex-column align-items-center mt-md-0 mt-4">
@@ -142,7 +137,7 @@ const Profil = ({
 							</OptionButton>
 						</a>
 					</Link>
-					{user.onboarded && (
+					{user && user.onboarded && (
 						<Link href="/profil/komitmen">
 							<a className="d-flex">
 								<OptionButton
@@ -171,7 +166,7 @@ const Profil = ({
 							</OptionButton>
 						</a>
 					</Link>
-					{user.onboarded && (
+					{user && user.onboarded && (
 						<Link href="/profil/video-tutorial">
 							<a className="d-flex">
 								<OptionButton
@@ -259,7 +254,6 @@ export async function getServerSideProps(ctx) {
 	return {
 		props: {
 			courseCount: courses.length,
-			courses,
 			totalDurationWatched:
 				courses.length > 0 ? all_videos_finished_duration_seconds : 0,
 		},

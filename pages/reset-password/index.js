@@ -24,11 +24,14 @@ import mustBeUnauthed from "utils/mustBeUnauthed";
 
 const OuterContainer = styled.div`
 	background: #fff;
-	height: 80vh;
+
+	justify-content: center;
+	display: flex;
+	align-items: center;
 
 	@media ${mediaBreakpoint.down.md} {
 		height: auto;
-		min-height: 80vh;
+
 		padding-bottom: 64px;
 	}
 `;
@@ -38,6 +41,7 @@ const StyledContainer = styled(Container)`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	padding: 128px 0;
 `;
 
 const FormContainer = styled.div`
@@ -49,7 +53,6 @@ const FormContainer = styled.div`
 	padding: 32px 24px;
 	border-radius: 10px;
 	align-items: center;
-	position: absolute;
 
 	a:hover {
 		text-decoration: none;
