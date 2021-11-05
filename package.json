@@ -33,7 +33,7 @@
 		"slick-carousel": "^1.8.1",
 		"styled-components": "^5.3.0",
 		"sweetalert2": "^11.1.2",
-		"video.js": "^7.13.3",
+		"video.js": "^7.15.4",
 		"videojs-hls-quality-selector": "^1.1.4",
 		"videojs-react-enhanced": "^0.3.1"
 	},

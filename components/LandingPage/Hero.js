@@ -74,7 +74,7 @@ export default function Hero() {
 	return (
 		<OuterContainer id="hero">
 			<video autoPlay muted loop id="myVideo">
-				<source src="/images/home.mp4" type="video/mp4" />
+				<source src="/images/homexzxz.mp4" type="video/mp4" />
 				Your browser does not support HTML5 video.
 			</video>
 
