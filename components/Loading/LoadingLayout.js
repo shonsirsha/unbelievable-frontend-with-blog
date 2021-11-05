@@ -1,6 +1,7 @@
 import { Image } from "react-bootstrap";
 import styled from "styled-components";
 import Head from "next/head";
+import { NEXT_URL } from "config";
 const StyledImage = styled(Image)`
 	position: fixed;
 	top: 50%;
@@ -14,7 +15,7 @@ export default function LoadingLayout({
 	title,
 	keywords = "self development, lms",
 	description,
-	imageURL = null,
+	imageURL = `${NEXT_URL}/images/logo-no-text.png`,
 }) {
 	return (
 		<>

@@ -1,16 +1,30 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useRouter } from "next/router";
 import AuthContext from "context/AuthContext";
-import Loading from "components/Loading/Loading";
+import LoadingLayout from "components/Loading/LoadingLayout";
 const mustBeUnauthed = (Component) => {
 	const Auth = (props) => {
-		const { user, loading, userLoading } = useContext(AuthContext);
+		const { user, userLoading } = useContext(AuthContext);
 		const router = useRouter();
-
-		if (userLoading) {
-			return <Loading />; // loading svg..
+		let description = "";
+		let title = "";
+		switch (router.pathname) {
+			case "/daftar":
+				title = "Daftar Gratis | Unbelievable";
+				description =
+					"Daftar gratis sekarang dan jadilah lebih baik setiap harinya!";
+				break;
+			case "/masuk":
+				title = "Masuk | Unbelievable";
+				description = "Masuk ke Unbelievable!";
+				break;
+			default:
+				description = "Belajarlah setiap hari, jadilah unbelievable!";
 		}
 
+		if (userLoading) {
+			return <LoadingLayout title={title} description={description} />; // loading svg..
+		}
 		// Login data added to props via redux-store (or use react context for example)
 		if (!userLoading) {
 			// If user is not logged in, return login component

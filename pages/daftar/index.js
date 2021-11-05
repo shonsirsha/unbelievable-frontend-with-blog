@@ -258,7 +258,11 @@ const Index = () => {
 			: datex.getMonth() + 1
 	}-${datex.getDate() < 10 ? `0${datex.getDate()}` : datex.getDate()}`;
 	return (
-		<Layout background="#171b2d" withMargin>
+		<Layout
+			
+			background="#171b2d"
+			withMargin
+		>
 			<OuterContainer>
 				<StyledContainer className="align-items-center">
 					<FormContainer className="shadow">

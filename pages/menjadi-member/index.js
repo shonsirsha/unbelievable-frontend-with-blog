@@ -91,7 +91,7 @@ export default function index() {
 			showBurger={false}
 			title="Menjadi Member | Unbelievable"
 			description={
-				"Unbelievable membuat setiap kelas dirancang khusus untuk penyampaian yang terbaik agar tercapai hasil yang maksimal! carilah kelas yang sangat murah."
+				"Unbelievable membuat setiap kelas dirancang khusus untuk penyampaian yang terbaik agar tercapai hasil yang maksimal!"
 			}
 			scrollToSolid
 		>
