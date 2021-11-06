@@ -5,6 +5,7 @@ import { TextPrimary } from "components/Typography/Text";
 import YellowButton from "components/Buttons/YellowButton";
 import { mediaBreakpoint } from "utils/breakpoints";
 import Link from "next/link";
+import { isDesktop } from "react-device-detect";
 
 const StyledContainer = styled(Container)`
 	display: flex;
@@ -73,10 +74,12 @@ const BlueBlob = styled(Image)`
 export default function Hero() {
 	return (
 		<OuterContainer id="hero">
-			<video autoPlay muted loop id="myVideo">
-				<source src="/images/homexzxz.mp4" type="video/mp4" />
-				Your browser does not support HTML5 video.
-			</video>
+			{isDesktop && (
+				<video autoPlay muted loop id="myVideo">
+					<source src="/images/homexzxz.mp4" type="video/mp4" />
+					Your browser does not support HTML5 video.
+				</video>
+			)}
 
 			<StyledContainer className="position-relative">
 				<StyledRow>
