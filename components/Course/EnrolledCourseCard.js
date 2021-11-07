@@ -8,6 +8,7 @@ import { FaStar } from "react-icons/fa";
 import CourseContext from "context/CourseContext";
 import AuthContext from "context/AuthContext";
 import { Popover } from "react-tiny-popover";
+import { nanoid } from "nanoid";
 
 const CardBody = styled.div`
 	display: flex;
@@ -184,6 +185,7 @@ export default function EnrolledCourseCard({ small, user, course, ...props }) {
 							<div className="d-flex">
 								{[...Array(5)].map((_, ix) => (
 									<Star
+										key={nanoid()}
 										size={18}
 										onMouseEnter={() => {
 											setHoveredStar(ix + 1);
@@ -210,7 +212,6 @@ export default function EnrolledCourseCard({ small, user, course, ...props }) {
 											(hoveredStar >= ix + 1 || selectedStar >= ix + 1) &&
 											`checked`
 										}`}
-										key={ix}
 									/>
 								))}
 							</div>

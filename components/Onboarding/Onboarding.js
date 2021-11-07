@@ -211,7 +211,7 @@ export default function Onboarding({
 			</HeadingMD>
 		</>,
 		<>
-			<HighHeadingSM as="h1" className="text-white">
+			<HighHeadingSM as="h1" className="text-white text-center">
 				Hai, {userName}!
 			</HighHeadingSM>
 		</>,

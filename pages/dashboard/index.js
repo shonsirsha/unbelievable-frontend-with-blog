@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, Fragment } from "react";
 import { parseCookies } from "utils/cookies";
 import moment from "moment";
 import ReactDatePicker from "react-datepicker";
@@ -25,6 +25,7 @@ import BuyModal from "components/Course/BuyModal";
 import WishlistModal from "components/Wishlist/WishlistModal";
 import { FormGroup, FormControl, Button } from "react-bootstrap";
 import { FaHeart } from "react-icons/fa";
+import { nanoid } from "nanoid";
 
 const StyledDefault = styled(DefaultCourseCard)`
 	margin-right: 16px;
@@ -64,7 +65,7 @@ const StyledHeadingXS = styled(HeadingXS)`
 const StyledEnrolled = styled(EnrolledCourseCard)`
 	margin-right: 24px;
 	margin-bottom: 24px;
-
+	flex-shrink: 0;
 	@media (max-width: 1024px) {
 		/*iPad Pro and below*/
 		min-width: 280px;
@@ -95,7 +96,7 @@ const EnrolledCardsContainer = styled.div`
 	max-width: 90vw;
 
 	padding: 16px 6px;
-	padding-right: 240px;
+	padding-right: 120px;
 
 	@media (max-width: 1024px) {
 		padding: 16px 6px;
@@ -329,10 +330,7 @@ const Index = ({
 				<div className="d-flex flex-column w-100">
 					<StyledHeadingXS className="mb-2 ml-1">Kelas Populer</StyledHeadingXS>
 					{user.token && (
-						<DefaultCardsContainer
-							key="aa"
-							className="d-flex flex-nowrap w-100 overflow-auto "
-						>
+						<DefaultCardsContainer className="d-flex flex-nowrap w-100 overflow-auto ">
 							{allCourses.map((course) => (
 								<StyledDefault key={course.id} small course={course} />
 							))}
@@ -342,13 +340,13 @@ const Index = ({
 
 				<div className="d-flex flex-column mt-4">
 					<StyledHeadingXS className="mb-2 ml-1 ">Kelas Saya</StyledHeadingXS>
-					<EnrolledCardsContainer className="d-flex flex-lg-wrap flex-nowrap py-4 w-100 overflow-lg-none overflow-auto pb-2">
+					<EnrolledCardsContainer className="d-flex flex-nowrap py-4 w-100 overflow-lg-none overflow-auto pb-2">
 						{coursesTaken.map((course) => (
-							<>
+							<Fragment key={nanoid()}>
 								{course.grouped_videos.videos.length > 0 && (
-									<StyledEnrolled user={user} key={course.id} course={course} />
+									<StyledEnrolled user={user} key={nanoid()} course={course} />
 								)}
-							</>
+							</Fragment>
 						))}
 					</EnrolledCardsContainer>
 				</div>
