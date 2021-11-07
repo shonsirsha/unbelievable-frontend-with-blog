@@ -13,6 +13,8 @@ import { MdShare } from "react-icons/md";
 import { toast } from "react-toastify";
 import { Popover } from "react-tiny-popover";
 
+import YellowCheckMark from "../../public/images/yellowcheck.svg";
+
 const EnrollBtn = styled(Button)`
 	border-radius: 40px;
 	border: none;
@@ -305,7 +307,7 @@ const PreviewModal = (props) => {
 										<Image
 											width={24}
 											height={24}
-											src="/images/yellowcheck.svg"
+											src={YellowCheckMark}
 											alt="Checkmark"
 											layout="fixed"
 										/>

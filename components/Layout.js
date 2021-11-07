@@ -20,6 +20,8 @@ import { TextTertiary } from "./Typography/Text";
 import { whitespace } from "utils/whitespace";
 import { NEXT_URL } from "config";
 import LoadingLayout from "./Loading/LoadingLayout";
+import Smiley from "../public/images/smiley.svg";
+import HomeIcon from "../public/images/home.svg";
 
 const FlyingButtonsContainer = styled.div`
 	width: 0;
@@ -206,7 +208,7 @@ export default function Layout({
 				<FlyingButtonsContainer>
 					<Link href="#hero">
 						<a>
-							<RoundedBtnIcon className="shadow" img={`/images/home.svg`} />
+							<RoundedBtnIcon className="shadow" img={HomeIcon} />
 							<div className="text-container shadow">
 								<TextTertiary>Home</TextTertiary>
 							</div>
@@ -214,7 +216,7 @@ export default function Layout({
 					</Link>
 					<Link href={user ? `/dashboard` : `/daftar`}>
 						<a>
-							<RoundedBtnIcon className="shadow" img={`/images/smiley.svg`} />
+							<RoundedBtnIcon className="shadow" img={Smiley} />
 							<div className="text-container shadow">
 								<TextTertiary>{user ? `Dashboard` : `Daftar`}</TextTertiary>
 							</div>

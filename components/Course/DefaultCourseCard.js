@@ -11,7 +11,8 @@ import { toast } from "react-toastify";
 import { Popover } from "react-tiny-popover";
 import { nanoid } from "nanoid";
 import Image from "next/image";
-
+import GoldStar from "../../public/images/gold-star.svg";
+import GrayStar from "../../public/images/gray-star.svg";
 const EnrollBtn = styled(Button)`
 	border-radius: 40px;
 	border: none;
@@ -301,7 +302,7 @@ export default function DefaultCourseCard({
 									layout="fixed"
 									width={17}
 									height={16}
-									src="/images/gold-star.svg"
+									src={GoldStar}
 								/>
 							)
 						)}
@@ -314,7 +315,7 @@ export default function DefaultCourseCard({
 								layout="fixed"
 								width={17}
 								height={16}
-								src="/images/gray-star.svg"
+								src={GrayStar}
 							/>
 						))}
 					</div>
