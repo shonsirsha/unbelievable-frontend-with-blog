@@ -201,7 +201,13 @@ export default function DefaultCourseCard({
 			}}
 		>
 			<ImageContainer small={small}>
-				<Image src={image} layout="fill" objectFit="cover" alt="Poster Kelas" />
+				<Image
+					src={image}
+					layout="fill"
+					objectFit="cover"
+					alt="Poster Kelas"
+					priority={true}
+				/>
 			</ImageContainer>
 
 			<CardBody>

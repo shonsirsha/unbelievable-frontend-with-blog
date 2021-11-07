@@ -19,7 +19,13 @@ const StyledButton = styled(Button)`
 export default function RoundedBtnIcon({ img, ...props }) {
 	return (
 		<StyledButton {...props}>
-			<Image src={img} layout="fill" objectFit={true} alt="Drawing" />
+			<Image
+				src={img}
+				layout="fill"
+				objectFit={"cover"}
+				alt="Drawing"
+				priority={true}
+			/>
 		</StyledButton>
 	);
 }

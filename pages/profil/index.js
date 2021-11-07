@@ -107,6 +107,7 @@ const Profil = ({ courseCount, totalDurationWatched, noToken = false }) => {
 						src="/images/green-big.svg"
 						alt="Character"
 						layout="fixed"
+						priority={true}
 						width={167}
 						height={147}
 					/>
