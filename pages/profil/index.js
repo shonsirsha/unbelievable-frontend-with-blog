@@ -15,6 +15,7 @@ import styled from "styled-components";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { API_URL } from "config";
 import { profileDisplay } from "utils/secsToMin";
+import GreenMonster from "../../public/images/green-big.svg";
 
 const OptionButton = styled.div`
 	background: #f6f6f6;
@@ -104,7 +105,7 @@ const Profil = ({ courseCount, totalDurationWatched, noToken = false }) => {
 						{user && user.first_name}!
 					</HeadingXL>
 					<Image
-						src="/images/green-big.svg"
+						src={GreenMonster}
 						alt="Character"
 						layout="fixed"
 						priority={true}

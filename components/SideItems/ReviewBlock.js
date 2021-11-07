@@ -5,7 +5,7 @@ import { HeadingXXS } from "components/Typography/Headings";
 import { TextTertiary } from "components/Typography/Text";
 import styled from "styled-components";
 import { MdRateReview } from "react-icons/md";
-
+import SmallGreenMonster from "../../public/images/character2.svg";
 const StyledHeadingXXS = styled(HeadingXXS)`
 	font-size: 18px;
 `;
@@ -57,7 +57,7 @@ export default function ReviewBlock({ ...props }) {
 						layout="fixed"
 						width={67}
 						height={57}
-						src="/images/character2.svg"
+						src={SmallGreenMonster}
 						alt="Character"
 					/>
 				</ContentContainer>
