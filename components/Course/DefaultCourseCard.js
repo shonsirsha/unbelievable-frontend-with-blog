@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { Card, Image, Button } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import styled from "styled-components";
 import { HeadingXXS, HeadingXS } from "components/Typography/Headings";
 import { TextTertiary } from "components/Typography/Text";
@@ -10,6 +10,7 @@ import AuthContext from "context/AuthContext";
 import { toast } from "react-toastify";
 import { Popover } from "react-tiny-popover";
 import { nanoid } from "nanoid";
+import Image from "next/image";
 
 const EnrollBtn = styled(Button)`
 	border-radius: 40px;
@@ -73,15 +74,15 @@ const StyledCard = styled(Card)`
 	}
 `;
 const ImageContainer = styled.div`
-	background: ${(props) =>
-		props.img ? `url(${props.img}) no-repeat` : `gray`};
-	background-size: cover; /* <------ */
-	background-position: center center; /* optional, center the image */
 	height: ${(props) => (props.small ? `300px` : `305px`)};
 	width: 100%;
-	border-radius: 12px;
-	border-bottom-left-radius: 0;
-	border-bottom-right-radius: 0;
+	position: relative;
+
+	& > div {
+		border-radius: 12px;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+	}
 `;
 const Share = styled(MdShare)`
 	font-size: 26px;
@@ -199,7 +200,9 @@ export default function DefaultCourseCard({
 				}
 			}}
 		>
-			<ImageContainer small={small} img={image} />
+			<ImageContainer small={small}>
+				<Image src={image} layout="fill" objectFit="cover" alt="Poster Kelas" />
+			</ImageContainer>
 
 			<CardBody>
 				<CardHeader as="p" className="mt-3">
@@ -289,6 +292,7 @@ export default function DefaultCourseCard({
 								<Image
 									alt="star"
 									key={nanoid()}
+									layout="fixed"
 									width={17}
 									height={16}
 									src="/images/gold-star.svg"
@@ -301,6 +305,7 @@ export default function DefaultCourseCard({
 							<Image
 								alt="star"
 								key={nanoid()}
+								layout="fixed"
 								width={17}
 								height={16}
 								src="/images/gray-star.svg"

@@ -6,7 +6,7 @@ import Layout from "components/Layout";
 import { parseCookies } from "utils/cookies";
 import { HeadingXL, HeadingMD } from "components/Typography/Headings";
 import { TextTertiary, TextPrimary } from "components/Typography/Text";
-import { Image } from "react-bootstrap";
+import Image from "next/image";
 import { FaVideo } from "react-icons/fa";
 import { MdEdit, MdFeedback, MdSettings } from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
@@ -95,7 +95,10 @@ const Profil = ({ courseCount, totalDurationWatched, noToken = false }) => {
 		>
 			<div className="d-flex flex-column w-100">
 				<div className="d-flex flex-md-row flex-column w-100 align-items-center ">
-					<HeadingXL as="p" className="text-primary1 text-md-left text-center">
+					<HeadingXL
+						as="p"
+						className="text-primary1 text-md-left text-center mr-md-5 mr-0"
+					>
 						Halo,
 						<br />
 						{user && user.first_name}!
@@ -103,11 +106,11 @@ const Profil = ({ courseCount, totalDurationWatched, noToken = false }) => {
 					<Image
 						src="/images/green-big.svg"
 						alt="Character"
-						className="mx-md-5 mx-0"
+						layout="fixed"
 						width={167}
 						height={147}
 					/>
-					<div className="d-flex flex-column align-items-center mr-md-5 mr-0 mt-md-0 mt-4">
+					<div className="d-flex flex-column align-items-center ml-md-5 ml-0 mr-md-5 mr-0 mt-md-0 mt-4">
 						<HeadingMD as="p" className="text-primary1">
 							{courseCount}
 						</HeadingMD>

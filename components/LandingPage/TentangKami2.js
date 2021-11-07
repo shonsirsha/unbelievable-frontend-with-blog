@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Image } from "react-bootstrap";
+import Image from "next/image";
 import { TextSecondary } from "components/Typography/Text";
 import { HeadingXXL, HeadingMD } from "components/Typography/Headings";
 import HalfHalf from "components/HalfHalf/HalfHalf";
@@ -10,8 +10,17 @@ const StyledHeadingXXL = styled(HeadingXXL)`
 		font-size: 48px;
 	}
 `;
-const StyledImage = styled(Image)`
-	object-fit: cover;
+// const StyledImage = styled(Image)`
+// 	object-fit: cover;
+// `;
+const ImageContainer = styled.div`
+	width: 210px;
+	height: 210px;
+	position: relative;
+
+	& > div {
+		border-radius: 100%;
+	}
 `;
 const PersonContainer = styled.div`
 	max-width: ${(props) => (props.nothalfhalf ? `320px` : `100%`)};
@@ -54,13 +63,15 @@ export default function TentangKami({ professionals }) {
 							key={p.id}
 							className="d-flex flex-column align-items-center mr-lg-5 mr-0 mb-5"
 						>
-							<StyledImage
-								alt="speaker"
-								src={p.photo ? p.photo.url : `/images/plcholder.png`}
-								width={210}
-								height={210}
-								roundedCircle
-							/>
+							<ImageContainer>
+								<Image
+									alt="speaker"
+									src={p.photo ? p.photo.url : `/images/plcholder.png`}
+									layout="fill"
+									objectFit="cover"
+								/>
+							</ImageContainer>
+
 							<TextSecondary
 								style={{ whiteSpace: "pre-line" }}
 								className="mt-lg-5 mt-2  text-white text-center line-break-anywhere"

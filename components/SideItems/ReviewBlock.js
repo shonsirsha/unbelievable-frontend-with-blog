@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Image } from "react-bootstrap";
+import Image from "next/image";
 import SideBlock from "./SideBlock";
 import { HeadingXXS } from "components/Typography/Headings";
 import { TextTertiary } from "components/Typography/Text";
@@ -53,7 +53,13 @@ export default function ReviewBlock({ ...props }) {
 						</StyledHeadingXXS>
 						<TextTertiary className="mt-1 text-left ">Di sini!</TextTertiary>
 					</div>
-					<Image src="/images/character2.svg" alt="Character" />
+					<Image
+						layout="fixed"
+						width={67}
+						height={57}
+						src="/images/character2.svg"
+						alt="Character"
+					/>
 				</ContentContainer>
 				<Feedback />
 			</a>

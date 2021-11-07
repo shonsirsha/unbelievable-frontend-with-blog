@@ -9,7 +9,7 @@ import CourseContext from "context/CourseContext";
 import AuthContext from "context/AuthContext";
 import { Popover } from "react-tiny-popover";
 import { nanoid } from "nanoid";
-
+import Image from "next/image";
 const CardBody = styled.div`
 	display: flex;
 	height: 40%;
@@ -58,14 +58,15 @@ const StyledCard = styled(Card)`
 	}
 `;
 const ImageContainer = styled.div`
-	background: ${(props) =>
-		props.img ? `url(${props.img}) no-repeat` : `gray`};
-	background-size: cover; /* <------ */
-	background-position: center center; /* optional, center the image */
+	width: 100%;
 	height: 80%;
-	border-radius: 12px;
-	border-bottom-left-radius: 0;
-	border-bottom-right-radius: 0;
+	position: relative;
+
+	& > div {
+		border-radius: 12px;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+	}
 `;
 
 const Star = styled(FaStar)`
@@ -137,7 +138,15 @@ export default function EnrolledCourseCard({ small, user, course, ...props }) {
 			href={`kelas/${slug}?c=${grouped_videos.videos[0].bunny_video.upload_id}`}
 		>
 			<StyledCard small={small} {...props}>
-				<ImageContainer small={small} img={image} />
+				<ImageContainer>
+					<Image
+						priority={true}
+						src={image}
+						layout="fill"
+						objectFit="cover"
+						alt="Poster Kelas"
+					/>
+				</ImageContainer>
 
 				<CardBody>
 					<CardHeader as="p" className="mt-3">

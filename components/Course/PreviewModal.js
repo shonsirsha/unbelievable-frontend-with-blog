@@ -1,7 +1,8 @@
 import { useContext, useState } from "react";
 import CourseContext from "context/CourseContext";
 import AuthContext from "context/AuthContext";
-import { Modal, ModalBody, Image, Button } from "react-bootstrap";
+import { Modal, ModalBody, Button } from "react-bootstrap";
+import Image from "next/image";
 import { HeadingXS, HeadingXXS } from "components/Typography/Headings";
 import { TextTertiary, TextSecondary } from "components/Typography/Text";
 import styled from "styled-components";
@@ -304,11 +305,13 @@ const PreviewModal = (props) => {
 										<Image
 											width={24}
 											height={24}
-											src="images/yellowcheck.svg"
+											src="/images/yellowcheck.svg"
 											alt="Checkmark"
-											className="mr-2"
+											layout="fixed"
 										/>
-										<HeadingXXS className="text-white">{f.feature}</HeadingXXS>
+										<HeadingXXS className="ml-2 text-white">
+											{f.feature}
+										</HeadingXXS>
 									</div>
 								))}
 							</>
