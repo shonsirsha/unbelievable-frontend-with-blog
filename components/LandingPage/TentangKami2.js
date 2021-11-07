@@ -68,6 +68,7 @@ export default function TentangKami({ professionals }) {
 									alt="speaker"
 									src={p.photo ? p.photo.url : `/images/plcholder.png`}
 									layout="fill"
+									priority={true}
 									objectFit="cover"
 								/>
 							</ImageContainer>
