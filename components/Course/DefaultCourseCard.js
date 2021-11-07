@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { Card, Button } from "react-bootstrap";
 import styled from "styled-components";
 import { HeadingXXS, HeadingXS } from "components/Typography/Headings";
@@ -75,15 +75,15 @@ const StyledCard = styled(Card)`
 	}
 `;
 const ImageContainer = styled.div`
+	background: ${(props) =>
+		props.img ? `url(${props.img}) no-repeat` : `gray`};
+	background-size: cover; /* <------ */
+	background-position: center center; /* optional, center the image */
 	height: ${(props) => (props.small ? `300px` : `305px`)};
 	width: 100%;
-	position: relative;
-
-	& > div {
-		border-radius: 12px;
-		border-bottom-left-radius: 0;
-		border-bottom-right-radius: 0;
-	}
+	border-radius: 12px;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
 `;
 const Share = styled(MdShare)`
 	font-size: 26px;
@@ -201,15 +201,7 @@ export default function DefaultCourseCard({
 				}
 			}}
 		>
-			<ImageContainer small={small}>
-				<Image
-					src={image}
-					layout="fill"
-					objectFit="cover"
-					alt="Poster Kelas"
-					priority={true}
-				/>
-			</ImageContainer>
+			<ImageContainer small={small} img={image} />
 
 			<CardBody>
 				<CardHeader as="p" className="mt-3">
