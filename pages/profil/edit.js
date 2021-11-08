@@ -587,7 +587,7 @@ const Edit = () => {
 				!whitespace(first_name) &&
 				!whitespace(last_name) &&
 				validDate(dob) &&
-				validatePhoneNumber(phone_number)
+				(validatePhoneNumber(phone_number) || whitespace(phone_number))
 			) {
 				if (biodata && biodata.length >= 100) {
 					toast.error("Ups... Maaf, biodatamu terlalu panjang.");
