@@ -35,7 +35,7 @@ const StyledHeading = styled(HeadingXL)`
 `;
 
 const OuterContainer = styled.div`
-	height: 120vh;
+	height: 1080px;
 	position: relative;
 	background: linear-gradient(#1022a4, #31a4fa);
 	@media (max-width: 320px) {
