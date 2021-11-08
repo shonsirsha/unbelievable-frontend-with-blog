@@ -27,7 +27,7 @@ export default function TentangKami({ professionals }) {
 	const left = (
 		<>
 			<HeadingMD as="h2" className="mt-1 text-white">
-				Dengan
+				Dengan Mentor
 			</HeadingMD>
 			<StyledHeadingXXL as="h2" className="mt-2 text-blue">
 				TERBAIK
