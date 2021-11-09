@@ -590,7 +590,7 @@ const Edit = () => {
 				(validatePhoneNumber(phone_number) ||
 					whitespace(phone_number ? phone_number : ""))
 			) {
-				if (biodata && biodata.length >= 100) {
+				if (biodata && biodata.length > 100) {
 					toast.error("Ups... Maaf, biodatamu terlalu panjang.");
 				} else {
 					const res = await fetch(`${API_URL}/users/me`, {
