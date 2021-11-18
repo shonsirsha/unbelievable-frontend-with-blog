@@ -9,5 +9,5 @@ export default async function validateHuman(token) {
 	);
 
 	const data = await response.json();
-	return true;
+	return data.success;
 }
