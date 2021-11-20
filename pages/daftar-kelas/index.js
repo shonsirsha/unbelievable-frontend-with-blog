@@ -63,13 +63,17 @@ export default function Index({ courses }) {
 			<Showcase title="Daftar Kelas" />
 			<StyledContainer>
 				{courses.map((course) => (
-					<div className="d-flex" key={course.id}>
-						<DefaultCourseCard
-							key={course.id}
-							className=" "
-							course={course}
-							enrolled={course.enrolled}
-						/>
+					<div key={course.id}>
+						{course.grouped_videos && (
+							<div className="d-flex" key={course.id}>
+								<DefaultCourseCard
+									key={course.id}
+									className=" "
+									course={course}
+									enrolled={course.enrolled}
+								/>
+							</div>
+						)}
 					</div>
 				))}
 			</StyledContainer>

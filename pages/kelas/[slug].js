@@ -509,8 +509,7 @@ export async function getServerSideProps(ctx) {
 		},
 	});
 	const course = await res.json();
-
-	if (course.length < 1) {
+	if (!res.ok) {
 		return {
 			redirect: {
 				permanent: false,
@@ -522,9 +521,8 @@ export async function getServerSideProps(ctx) {
 	const validUploadId = course[0].grouped_videos.videos.some((crs) => {
 		if (crs.bunny_video) {
 			return crs.bunny_video.upload_id === c;
-		} else {
-			return false; // if user hasnt bought the course / course has not even 1 video
 		}
+		return false; // if user hasnt bought the course / course has not even 1 video
 	});
 
 	if (!validUploadId) {

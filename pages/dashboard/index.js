@@ -331,9 +331,15 @@ const Index = ({
 					<StyledHeadingXS className="mb-2 ml-1">Kelas Populer</StyledHeadingXS>
 					{user.token && (
 						<DefaultCardsContainer className="d-flex flex-nowrap w-100 overflow-auto ">
-							{allCourses.map((course) => (
-								<StyledDefault key={course.id} small course={course} />
-							))}
+							{allCourses &&
+								allCourses.length > 0 &&
+								allCourses.map((course) => (
+									<Fragment key={nanoid()}>
+										{course.grouped_videos && (
+											<StyledDefault key={course.id} small course={course} />
+										)}
+									</Fragment>
+								))}
 						</DefaultCardsContainer>
 					)}
 				</div>
@@ -343,7 +349,7 @@ const Index = ({
 					<EnrolledCardsContainer className="d-flex flex-nowrap py-4 w-100 overflow-lg-none overflow-auto pb-2">
 						{coursesTaken.map((course) => (
 							<Fragment key={nanoid()}>
-								{course.grouped_videos.videos.length > 0 && (
+								{course.grouped_videos && (
 									<StyledEnrolled user={user} key={nanoid()} course={course} />
 								)}
 							</Fragment>
@@ -421,7 +427,7 @@ export async function getServerSideProps({ req, _ }) {
 		let user = await res2.json();
 		user.token = token;
 		let courses = await res3.json();
-		if (courses) {
+		if (courses && courses.length > 0) {
 			courses = courses.sort(
 				(a, b) => b.num_of_participants - a.num_of_participants
 			);
