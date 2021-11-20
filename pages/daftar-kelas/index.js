@@ -64,7 +64,7 @@ export default function Index({ courses }) {
 			<StyledContainer>
 				{courses.map((course) => (
 					<div key={course.id}>
-						{course.grouped_videos && (
+						{course.grouped_videos && course.grouped_videos.videos.length > 0 && (
 							<div className="d-flex" key={course.id}>
 								<DefaultCourseCard
 									key={course.id}

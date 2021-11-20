@@ -509,7 +509,7 @@ export async function getServerSideProps(ctx) {
 		},
 	});
 	const course = await res.json();
-	if (!res.ok) {
+	if (!res.ok || course[0].grouped_videos.videos.length < 1) {
 		return {
 			redirect: {
 				permanent: false,

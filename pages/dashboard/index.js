@@ -335,9 +335,10 @@ const Index = ({
 								allCourses.length > 0 &&
 								allCourses.map((course) => (
 									<Fragment key={nanoid()}>
-										{course.grouped_videos && (
-											<StyledDefault key={course.id} small course={course} />
-										)}
+										{course.grouped_videos &&
+											course.grouped_videos.videos.length > 0 && (
+												<StyledDefault key={course.id} small course={course} />
+											)}
 									</Fragment>
 								))}
 						</DefaultCardsContainer>
@@ -349,9 +350,14 @@ const Index = ({
 					<EnrolledCardsContainer className="d-flex flex-nowrap py-4 w-100 overflow-lg-none overflow-auto pb-2">
 						{coursesTaken.map((course) => (
 							<Fragment key={nanoid()}>
-								{course.grouped_videos && (
-									<StyledEnrolled user={user} key={nanoid()} course={course} />
-								)}
+								{course.grouped_videos &&
+									course.grouped_videos.videos.length > 0 && (
+										<StyledEnrolled
+											user={user}
+											key={nanoid()}
+											course={course}
+										/>
+									)}
 							</Fragment>
 						))}
 					</EnrolledCardsContainer>
