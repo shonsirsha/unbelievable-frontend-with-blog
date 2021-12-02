@@ -384,7 +384,7 @@ const Index = () => {
                 </FormText>
               </FormGroup>
 
-              {/* <Captcha reRef={reRef} /> */}
+              <Captcha reRef={reRef} />
 
               <StyledSubmitBtn
                 onClick={handleSubmit}
