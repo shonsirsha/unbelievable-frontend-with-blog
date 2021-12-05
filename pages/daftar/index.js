@@ -28,6 +28,7 @@ import { checkPassword } from "utils/checkPassword";
 import { API_URL } from "config";
 import { whitespace } from "utils/whitespace";
 import Captcha from "components/Captcha";
+import { validatePhoneNumber } from "utils/validatePhoneNumber";
 
 const OuterContainer = styled.div`
   background: #fff;
@@ -212,6 +213,7 @@ const Index = () => {
       return false;
     } else {
       if (
+        validatePhoneNumber(phone_number) &&
         new Date(dob).getFullYear() >= 1930 &&
         new Date().setHours(0, 0, 0, 0) >=
           new Date(dob).setHours(0, 0, 0, 0).valueOf()
