@@ -23,7 +23,13 @@ import styled from "styled-components";
 import PreviewModal from "components/Course/PreviewModal";
 import BuyModal from "components/Course/BuyModal";
 import WishlistModal from "components/Wishlist/WishlistModal";
-import { FormGroup, FormControl, Button } from "react-bootstrap";
+import {
+  Form,
+  FormGroup,
+  FormControl,
+  FormLabel,
+  Button,
+} from "react-bootstrap";
 import { FaHeart } from "react-icons/fa";
 import { nanoid } from "nanoid";
 import { validatePhoneNumber } from "utils/validatePhoneNumber";
@@ -107,10 +113,9 @@ const EnrolledCardsContainer = styled.div`
 
 const StyledFormControl = styled(FormControl)`
   border: none;
-  border-radius: 16px;
+  border-radius: 6px;
   padding: 16px;
   background: #f4f4f7;
-  margin: 0 !important;
   transition: 0.5s;
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
@@ -162,9 +167,18 @@ const Index = ({
   } = useContext(CourseContext);
 
   const [allCourses] = useState(courses);
-  const [dob, setDob] = useState(moment().toDate());
-  const [phoneNumber, setPhoneNumber] = useState("");
+  // const [dob, setDob] = useState(moment().toDate());
+  // const [phoneNumber, setPhoneNumber] = useState("");
+  const [completeSignUp, setCompleteSignUp] = useState({
+    dob: "",
+    phone_number: "",
+  });
   const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setCompleteSignUp({ ...completeSignUp, [e.target.name]: e.target.value });
+  };
+  const { dob, phoneNumber } = completeSignUp;
 
   const handleFinishOnboarding = async () => {
     const res = await fetch(`${API_URL}/users/me`, {
@@ -202,7 +216,7 @@ const Index = ({
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ dob, phoneNumber }),
+          body: JSON.stringify({ dob: dob, phone_number: phoneNumber }),
         });
         if (!res.ok) {
           if (res.status === 403 || res.status === 401) {
@@ -218,7 +232,7 @@ const Index = ({
           // }, 200);
         }
       } else {
-        toast.error("Mohon isi tanggal lahir dengan benar");
+        toast.error("Mohon pastikan data anda sudah benar");
       }
       setLoading(false);
     }
@@ -262,6 +276,18 @@ const Index = ({
 
             <Form className="w-100 mt-3">
               <FormGroup>
+                <FormLabel>No Handphone</FormLabel>
+                <StyledFormControl
+                  type="tel"
+                  pattern="[0-9]{15}"
+                  className="mr-xl-2 mb-3 shadow-none"
+                  name="phoneNumber"
+                  value={phoneNumber}
+                  onChange={handleChange}
+                  placeholder="No Handphone"
+                />
+              </FormGroup>
+              <FormGroup>
                 <FormLabel>Tanggal Lahir</FormLabel>
                 <div className="d-flex flex-column">
                   <ReactDatePicker
@@ -275,25 +301,15 @@ const Index = ({
                         : moment().toDate()
                     }
                     onChange={(date) => {
-                      setDob(date);
+                      setCompleteSignUp({
+                        ...completeSignUp,
+                        ["dob"]: date,
+                      });
                     }}
                   />
                 </div>
               </FormGroup>
-              <FormGroup>
-                <FormLabel>No Handphone</FormLabel>
-                <StyledFormControl
-                  type="tel"
-                  pattern="[0-9]{15}"
-                  className="mr-xl-2 mb-3 shadow-none"
-                  name="phone_number"
-                  value={phone_number}
-                  onChange={(data) => {
-                    setPhoneNumber(data);
-                  }}
-                  placeholder="No Handphone"
-                />
-              </FormGroup>
+
               <StyledSubmitBtn
                 disabled={loading}
                 type="submit"
