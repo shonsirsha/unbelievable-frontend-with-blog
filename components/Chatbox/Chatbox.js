@@ -22,7 +22,12 @@ export default function Chatbox({ children, ...props }) {
   let whatsappURL = "https://api.whatsapp.com/send?phone=+6287827345829";
   return (
     <BoxContainer>
-      <a className="href-white" target="_blank" href={whatsappURL}>
+      <a
+        className="href-white"
+        target="_blank"
+        href={whatsappURL}
+        rel="noreferrer"
+      >
         {children}
       </a>
     </BoxContainer>
