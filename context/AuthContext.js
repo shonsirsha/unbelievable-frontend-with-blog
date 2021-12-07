@@ -198,24 +198,24 @@ export const AuthProvider = ({ children }) => {
         }
       }
 
-      // if (!data.user.mailchimp_set && data.user.dob) {
-      // 	//registering to mailchimp (account with a 'free' tag)
-      // 	const mailchimpRegisterRes = await fetch(
-      // 		`${API_URL}/users/mailchimp-register`,
-      // 		{
-      // 			method: "POST",
-      // 			headers: {
-      // 				Authorization: `Bearer ${data.user.token}`,
-      // 			},
-      // 		}
-      // 	);
+      if (!data.user.mailchimp_set && data.user.dob) {
+        //registering to mailchimp (account with a 'free' tag)
+        const mailchimpRegisterRes = await fetch(
+          `${API_URL}/users/mailchimp-register`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${data.user.token}`,
+            },
+          }
+        );
 
-      // 	if (!mailchimpRegisterRes.ok) {
-      // 		console.log("mc E");
-      // 	} else {
-      // 		console.log("mc R (free)");
-      // 	}
-      // }
+        if (!mailchimpRegisterRes.ok) {
+          console.log("mc E");
+        } else {
+          console.log("mc R (free)");
+        }
+      }
     } else {
       setUserLoading(false);
 
