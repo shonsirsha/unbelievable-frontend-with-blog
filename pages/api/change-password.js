@@ -19,7 +19,7 @@ export default async function register(req, res) {
         confirmPassword: newPassword,
       }),
     });
-    console.log("test commit");
+
     const data = await strapiRes.json();
     if (strapiRes.ok) {
       res.setHeader(
