@@ -26,6 +26,18 @@ import Smiley from "../public/images/smiley.svg";
 import HomeIcon from "../public/images/home.svg";
 import Chatbox from "./Chatbox/Chatbox";
 
+const ChatboxContainer = styled.div`
+  .textChatbox {
+    display: inline !important;
+  }
+
+  @media screen and (max-width: 1024px) {
+    .textChatbox {
+      display: none !important;
+    }
+  }
+`;
+
 const FlyingButtonsContainer = styled.div`
   width: 0;
   display: flex;
@@ -296,10 +308,13 @@ export default function Layout({
           <>{children}</>
         )}
       </div>
-      <Chatbox>
-        <FaWhatsapp style={{ fontSize: "20px", margin: "5px" }} />
-        Chat
-      </Chatbox>
+      <ChatboxContainer>
+        <Chatbox>
+          <FaWhatsapp style={{ fontSize: "20px", margin: "5px" }} />
+          <div className="textChatbox">Chat</div>
+        </Chatbox>
+      </ChatboxContainer>
+
       <Footer />
     </LayoutWrapper>
   );

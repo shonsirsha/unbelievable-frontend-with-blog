@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 const BoxContainer = styled.div`
   position: fixed;
-  bottom: 40px;
-  right: 40px;
+  bottom: 1.5em;
+  right: 1.5em;
   transition: 0.35s;
   z-index: 101;
   display: flex;
@@ -11,7 +11,13 @@ const BoxContainer = styled.div`
   flex-direction: column;
   background: #25d366;
   color: white;
-  border-radius: 50px;
+  border-radius: 100px;
+
+  @media screen and (max-width: 1024px) {
+    bottom: 1em;
+    right: 1em;
+    padding: 10px 20px;
+  }
 
   .href-white {
     color: white;
