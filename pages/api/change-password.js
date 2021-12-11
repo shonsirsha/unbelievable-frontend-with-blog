@@ -6,8 +6,6 @@ export default async function register(req, res) {
     const { identifier, password, newPassword } = req.body;
     const { token } = cookie.parse(req.headers.cookie);
 
-    console.log("test commit");
-
     const strapiRes = await fetch(`${API_URL}/users/password-reset`, {
       method: "PUT",
       headers: {
