@@ -9,3 +9,4 @@ export const MAINTENANCE =
 export const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 export const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
 export const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+export const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FB_PIXEL_ID;
