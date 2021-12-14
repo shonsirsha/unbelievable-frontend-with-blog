@@ -190,7 +190,7 @@ export const AuthProvider = ({ children }) => {
             },
           }
         );
-
+        console.log(sendgridRegisterRes);
         if (!sendgridRegisterRes.ok) {
           console.log("mc E");
         } else {
