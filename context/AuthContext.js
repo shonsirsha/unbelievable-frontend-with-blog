@@ -179,24 +179,24 @@ export const AuthProvider = ({ children }) => {
       setUser(data.user);
       setToken(data.user.token);
 
-      // if (!data.user.sendgrid_set && data.user.dob) {
-      //   //registering to mailchimp (account with a 'free' tag)
-      //   const sendgridRegisterRes = await fetch(
-      //     `${API_URL}/users/sendgrid-register`,
-      //     {
-      //       method: "POST",
-      //       headers: {
-      //         Authorization: `Bearer ${data.user.token}`,
-      //       },
-      //     }
-      //   );
-
-      //   if (!sendgridRegisterRes.ok) {
-      //     console.log("mc E");
-      //   } else {
-      //     console.log("mc R (free)");
-      //   }
-      // }
+      if (!data.user.sendgrid_set && data.user.dob) {
+        //registering to mailchimp (account with a 'free' tag)
+        const sendgridRegisterRes = await fetch(
+          `${API_URL}/users/sendgrid-register`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${data.user.token}`,
+            },
+          }
+        );
+        console.log(sendgridRegisterRes);
+        if (!sendgridRegisterRes.ok) {
+          console.log("sg E");
+        } else {
+          console.log("sg R (free)");
+        }
+      }
 
       if (!data.user.mailchimp_set && data.user.dob) {
         //registering to mailchimp (account with a 'free' tag)
