@@ -192,9 +192,9 @@ export const AuthProvider = ({ children }) => {
         );
         console.log(sendgridRegisterRes);
         if (!sendgridRegisterRes.ok) {
-          console.log("mc E");
+          console.log("sg E");
         } else {
-          console.log("mc R (free)");
+          console.log("sg R (free)");
         }
       }
 
