@@ -180,7 +180,7 @@ export const AuthProvider = ({ children }) => {
       setToken(data.user.token);
 
       if (!data.user.sendgrid_set && data.user.dob) {
-        //registering to mailchimp (account with a 'free' tag)
+        //registering to sendgrid (account with a 'free' tag)
         const sendgridRegisterRes = await fetch(
           `${API_URL}/users/sendgrid-register`,
           {
