@@ -183,7 +183,6 @@ export async function getStaticProps() {
 
 	const questions = await res.json();
 	const siteData = await resSiteData.json();
-
 	return {
 		props: {
 			questions,
