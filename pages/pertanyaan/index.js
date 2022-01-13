@@ -100,7 +100,7 @@ export default function Index({ questions, siteData }) {
 				</StyledRow>
 
 				<StyledRow className="w-100">
-					{questionsState.map((q, ix) => (
+					{questionsState.map((q) => (
 						<Col key={q.title} className="mb-4" md={6} sm={12}>
 							<StyledAccordion flush>
 								<Accordion.Item eventKey="0">
