@@ -101,7 +101,7 @@ const VideoPlayerHLS = ({
 			],
 			html5: {
 				vhs: {
-					overrideNative: isMobile ? false : true,
+					overrideNative: true,
 				},
 				nativeAudioTracks: isMobile,
 				nativeVideoTracks: isMobile,
