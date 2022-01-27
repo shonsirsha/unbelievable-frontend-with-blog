@@ -158,7 +158,7 @@ export default function Footer() {
 				</div>
 			</div>
 
-			<TextTertiary className="text-white">
+			<TextTertiary className="text-white mt-3">
 				Unbelievable {new Date().getFullYear()}
 			</TextTertiary>
 		</StyledFooter>
