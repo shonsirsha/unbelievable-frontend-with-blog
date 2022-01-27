@@ -1,5 +1,4 @@
 import { useContext, useEffect } from "react";
-import AuthContext from "context/AuthContext";
 import { Image } from "react-bootstrap";
 import styled from "styled-components";
 import { TextPrimary, TextSecondary, TextTertiary } from "./Typography/Text";
