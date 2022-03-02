@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Image } from "react-bootstrap";
 import styled from "styled-components";
 import { TextPrimary, TextSecondary, TextTertiary } from "./Typography/Text";
@@ -31,10 +31,6 @@ const StyledTextSecondary = styled(TextSecondary)`
 `;
 export default function Footer() {
 	const { siteData } = useContext(AppContext);
-
-	useEffect(() => {
-		console.log(siteData);
-	}, []);
 
 	const links = [
 		{
