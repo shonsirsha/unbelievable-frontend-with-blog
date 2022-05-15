@@ -184,7 +184,6 @@ export default function DefaultCourseCard({
 			}
 			toast.success("Kelas ini telah ditambahkan ke wishlist!");
 		} else {
-			console.log(alreadyInWishlist);
 			toast.error("Terjadi kesalahan dalam menambahkan kelas ke wishlist");
 		}
 	};

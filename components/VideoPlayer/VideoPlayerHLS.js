@@ -113,7 +113,7 @@ const VideoPlayerHLS = ({
 			videoRef.current,
 			videoJsOptions,
 			function onPlayerReady() {
-				console.log(this.qualityLevels());
+				// console.log(this.qualityLevels());
 				this.src({
 					src: liveURL,
 					type: "application/x-mpegURL",
@@ -192,7 +192,6 @@ const VideoPlayerHLS = ({
 				ref={videoRef}
 				onLoadedMetadata={(e, _) => {
 					// console.log(e.target.duration);
-					console.log(player.currentTime());
 					setVidDuration(e.target.duration);
 				}}
 				onSeeking={(_) => {
