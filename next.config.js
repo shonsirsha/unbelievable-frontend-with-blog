@@ -18,7 +18,7 @@ module.exports = {
 					frameGuard: false,
 					forceHTTPSRedirect: [
 						true,
-						{ maxAge: 60 * 60 * 24 * 7, includeSubDomains: true },
+						{ maxAge: 2592000, includeSubDomains: true },
 					],
 					xssProtection: "sanitize",
 					// referrerPolicy: "same-origin",
