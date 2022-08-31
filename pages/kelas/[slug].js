@@ -433,7 +433,7 @@ export default function Kelas({
 
 						{videosState.map((vid, ix) => (
 							<div
-								key={vid.bunny_video.upload_id}
+								key={vid.bunny_video.title}
 								onClick={() =>
 									handleClickVideoDay(
 										currentCourse,
