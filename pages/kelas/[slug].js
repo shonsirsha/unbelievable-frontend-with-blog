@@ -18,11 +18,7 @@ import { API_URL, BUNNY_STREAM_PREFIX_URL } from "config";
 import { useRouter } from "next/router";
 import Layout from "components/Layout";
 import styled from "styled-components";
-import {
-	HeadingXS,
-	HeadingSM,
-	HeadingXXS,
-} from "components/Typography/Headings";
+import { HeadingXS, HeadingSM } from "components/Typography/Headings";
 import { TextTertiary } from "components/Typography/Text";
 import { MdChevronLeft } from "react-icons/md";
 import { mediaBreakpoint } from "utils/breakpoints";
@@ -171,36 +167,10 @@ const CourseDayContainer = styled.div`
 	}
 `;
 
-const TimeText = styled(HeadingXXS)`
-	font-size: 12px;
-	font-family: MontSerratRegular;
-`;
-
 const StyledTextTertiary = styled(TextTertiary)`
 	font-size: 12px;
 `;
-const CheckBoxWrapper = styled.div`
-	display: flex;
-	input[type="checkbox"] {
-		width: 20px !important;
-		height: 20px !important;
-		appearance: none;
-		position: static;
-		outline: none;
-		box-shadow: none;
-		background: #dbdbdb;
-	}
 
-	input[type="checkbox"]:checked {
-		background: #0ac7ce;
-	}
-
-	& svg {
-		width: 21px;
-    height: 21px;
-}
-	}
-`;
 const StyledMarkDown = styled(Markdown)`
 	& p {
 		font-size: 13px;

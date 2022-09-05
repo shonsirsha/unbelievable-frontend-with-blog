@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "video.js/dist/video-js.css";
 import "styles/globals.css";
+import "styles/ck5.css";
 import "react-datepicker/dist/react-datepicker.css";
 import Router from "next/router";
 import { MAINTENANCE, GA_ID, FB_PIXEL_ID } from "../config";
@@ -16,43 +17,43 @@ import { AppProvider } from "context/AppContext";
 import { CourseProvider } from "context/CourseContext";
 import MaintenancePage from "./maintenance";
 function Application({ Component, pageProps }) {
-  NProgress.configure({
-    minimum: 0.3,
-    easing: "ease",
-    speed: 800,
-    showSpinner: false,
-  });
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  useEffect(() => {
-    if (MAINTENANCE) {
-      Router.push("/");
-    }
+	NProgress.configure({
+		minimum: 0.3,
+		easing: "ease",
+		speed: 800,
+		showSpinner: false,
+	});
+	useEffect(() => {
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+	useEffect(() => {
+		if (MAINTENANCE) {
+			Router.push("/");
+		}
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [MAINTENANCE]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [MAINTENANCE]);
 
-  Router.events.on("routeChangeStart", () => NProgress.start());
-  Router.events.on("routeChangeComplete", () => NProgress.done());
-  Router.events.on("routeChangeError", () => NProgress.done());
-  return (
-    <>
-      <Script
-        strategy="lazyOnload"
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-      />
-      <Script id="ga-analytics">
-        {`
+	Router.events.on("routeChangeStart", () => NProgress.start());
+	Router.events.on("routeChangeComplete", () => NProgress.done());
+	Router.events.on("routeChangeError", () => NProgress.done());
+	return (
+		<>
+			<Script
+				strategy="lazyOnload"
+				src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+			/>
+			<Script id="ga-analytics">
+				{`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
 
             gtag('config', '${GA_ID}');
           `}
-      </Script>
-      <Script id="facebook-pixel">
-        {`
+			</Script>
+			<Script id="facebook-pixel">
+				{`
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
         n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -64,16 +65,16 @@ function Application({ Component, pageProps }) {
         fbq('init', ${FB_PIXEL_ID});
         fbq('track', 'PageView');
       `}
-      </Script>
-      <AppProvider>
-        <AuthProvider>
-          <CourseProvider>
-            {MAINTENANCE ? <MaintenancePage /> : <Component {...pageProps} />}
-          </CourseProvider>
-        </AuthProvider>
-      </AppProvider>
-    </>
-  );
+			</Script>
+			<AppProvider>
+				<AuthProvider>
+					<CourseProvider>
+						{MAINTENANCE ? <MaintenancePage /> : <Component {...pageProps} />}
+					</CourseProvider>
+				</AuthProvider>
+			</AppProvider>
+		</>
+	);
 }
 
 export default Application;
