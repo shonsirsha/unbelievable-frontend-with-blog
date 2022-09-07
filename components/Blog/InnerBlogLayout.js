@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import styled from "styled-components";
 import { mediaBreakpoint } from "utils/breakpoints";
 import Populer from "./Populer";
 import Rekomendasi from "./Rekomendasi";
 import AllTopics from "./AllTopics";
+import SearchBarBlog from "components/Search/SearchBarBlog";
+import SearchBarBlogSubscription from "components/Search/SearchBarBlogSubscription";
 
 const StyledContainer = styled(Container)`
 	width: 100%;
@@ -41,12 +43,24 @@ const InnerBlogLayout = ({
 	sideMenu = { allTopics: [], popularBlogPosts: [], recommendedBlogPosts: [] },
 	children,
 }) => {
+	const [keyword, setKeyword] = useState("");
 	const { allTopics, popularBlogPosts, recommendedBlogPosts } = sideMenu;
 
 	return (
 		<StyledContainer>
 			<Main className="pr-lg-5 mb-lg-0 mb-5">{children}</Main>
 			<Sidebar>
+				<SearchBarBlog
+					onChange={(e) => setKeyword(e.target.value)}
+					placeholder="Cari artikel (judul, kategori, topik)..."
+				/>
+
+				<div className="my-4" />
+
+				<SearchBarBlogSubscription placeholder="Ketik email Anda..." />
+
+				<div className="my-4" />
+
 				{recommendedBlogPosts.length > 0 && (
 					<>
 						<Rekomendasi recommendedBlogPosts={recommendedBlogPosts} />

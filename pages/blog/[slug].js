@@ -50,7 +50,7 @@ const TopicText = styled(HeadingXXS)`
 `;
 
 export default function BlogPost({ blogPost, sideMenu }) {
-	console.log(sideMenu)
+	console.log(sideMenu);
 	return (
 		<Layout
 			background="#171b2d"
@@ -86,7 +86,7 @@ export default function BlogPost({ blogPost, sideMenu }) {
 					</TopicPillContainer>
 
 					<div
-						style={{ lineBreak: "anywhere" }}
+						style={{ lineBreak: "auto" }}
 						className="ck-content mt-4"
 						dangerouslySetInnerHTML={{ __html: blogPost.content }}
 					></div>
