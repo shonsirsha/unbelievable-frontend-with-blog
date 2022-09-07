@@ -26,11 +26,11 @@ module.exports = {
 			},
 		];
 	},
-	// images: {
-	// 	minimumCacheTTL: 1400,
-	// 	domains: [
-	// 		"unb-dev.s3.ap-southeast-1.amazonaws.com",
-	// 		"unbelievable-webapp.s3.ap-southeast-1.amazonaws.com",
-	// 	],
-	// },
+	images: {
+		minimumCacheTTL: 1400,
+		domains: [
+			"unb-dev.s3.ap-southeast-1.amazonaws.com",
+			"unbelievable-webapp.s3.ap-southeast-1.amazonaws.com",
+		],
+	},
 };

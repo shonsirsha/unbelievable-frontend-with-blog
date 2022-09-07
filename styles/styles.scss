@@ -28,6 +28,7 @@ p {
 }
 
 // Base Colours
+$black: #000;
 $white: #ffffff;
 $blue: #2b72f0 !default;
 $indigo: #6610f2 !default;
@@ -76,6 +77,7 @@ $lighterDarkGray: #b6b6b6;
 $theme-colors: () !default;
 $theme-colors: map-merge(
 	(
+		"black": $black,
 		"primary": $primary,
 		"primary1": $primary1,
 		"pink": $pink,

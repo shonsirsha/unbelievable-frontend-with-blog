@@ -57,7 +57,7 @@ export default function BlogPost({ blogPost, sideMenu }) {
 			title={`${blogPost.title} | Blog Unbelievable.id`}
 			description={`${blogPost.shortDesc}`}
 		>
-			<InnerBlogLayout>
+			<InnerBlogLayout sideMenu={sideMenu}>
 				<div className="d-flex flex-column">
 					<HeadingMD as="h1">{blogPost.title}</HeadingMD>
 
@@ -86,6 +86,7 @@ export default function BlogPost({ blogPost, sideMenu }) {
 					</TopicPillContainer>
 
 					<div
+						style={{ lineBreak: "anywhere" }}
 						className="ck-content mt-4"
 						dangerouslySetInnerHTML={{ __html: blogPost.content }}
 					></div>
@@ -118,9 +119,9 @@ export async function getServerSideProps(ctx) {
 
 	const blogTopicsString = blogPost[0].blogTopics.reduce((acc, curr, ix) => {
 		if (ix === 0) {
-			return acc.concat(curr.topicId);
+			return acc.concat(curr.topicId.toLowerCase());
 		} else {
-			return acc.concat(`,${curr.topicId}`);
+			return acc.concat(`,${curr.topicId.toLowerCase()}`);
 		}
 	}, "");
 
