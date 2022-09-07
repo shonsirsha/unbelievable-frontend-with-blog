@@ -2,7 +2,10 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import styled from "styled-components";
 import { mediaBreakpoint } from "utils/breakpoints";
+import Populer from "./Populer";
 import Rekomendasi from "./Rekomendasi";
+import AllTopics from "./AllTopics";
+
 const StyledContainer = styled(Container)`
 	width: 100%;
 	justify-content: center;
@@ -44,7 +47,16 @@ const InnerBlogLayout = ({
 		<StyledContainer>
 			<Main className="pr-lg-5 mb-lg-0 mb-5">{children}</Main>
 			<Sidebar>
-				<Rekomendasi recommendedBlogPosts={recommendedBlogPosts} />
+				{recommendedBlogPosts.length > 0 && (
+					<>
+						<Rekomendasi recommendedBlogPosts={recommendedBlogPosts} />
+						<div className="my-4" />
+					</>
+				)}
+				<AllTopics allTopics={allTopics} />
+				<hr />
+				<div className="mt-5 mb-4" />
+				<Populer popularBlogPosts={popularBlogPosts} />
 			</Sidebar>
 		</StyledContainer>
 	);

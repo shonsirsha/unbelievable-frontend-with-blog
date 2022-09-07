@@ -6,8 +6,12 @@ const StyledText = styled(HeadingXXS)`
 	font-size: 16px;
 `;
 
-const HeaderTextBig = ({ children }) => {
-	return <StyledText as="h2">{children}</StyledText>;
+const HeaderTextBig = ({ children, className = "" }) => {
+	return (
+		<StyledText className={className} as="h2">
+			{children}
+		</StyledText>
+	);
 };
 
 export default HeaderTextBig;

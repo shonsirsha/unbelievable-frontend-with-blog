@@ -50,7 +50,7 @@ const TopicText = styled(HeadingXXS)`
 `;
 
 export default function BlogPost({ blogPost, sideMenu }) {
-	console.log(sideMenu);
+	console.log(sideMenu)
 	return (
 		<Layout
 			background="#171b2d"
@@ -99,7 +99,7 @@ export default function BlogPost({ blogPost, sideMenu }) {
 export async function getServerSideProps(ctx) {
 	const { token } = parseCookies(ctx.req);
 	const { slug } = ctx.query;
-	const res = await fetch(`${API_URL}/blog-posts?_slug=${slug}`, {
+	const res = await fetch(`${API_URL}/blog-posts/${slug}`, {
 		method: "GET",
 	});
 
@@ -107,7 +107,7 @@ export async function getServerSideProps(ctx) {
 
 	//embed: https://www.youtube.com/embed/videoseries?list=UUDrG2_1TcVkXKXXsD6Kjwig&controls=0
 
-	if (!res.ok || !blogPost.length) {
+	if (!res.ok) {
 		return {
 			redirect: {
 				permanent: false,
@@ -117,7 +117,7 @@ export async function getServerSideProps(ctx) {
 		};
 	}
 
-	const blogTopicsString = blogPost[0].blogTopics.reduce((acc, curr, ix) => {
+	const blogTopicsString = blogPost.blogTopics.reduce((acc, curr, ix) => {
 		if (ix === 0) {
 			return acc.concat(curr.topicId.toLowerCase());
 		} else {
@@ -129,7 +129,7 @@ export async function getServerSideProps(ctx) {
 		? { "Content-Type": "application/json", Authorization: `Bearer ${token}` }
 		: { "Content-Type": "application/json" };
 	const sideMenuRes = await fetch(
-		`${API_URL}/blog-posts/side-menu-items?currentTopics=${blogTopicsString}`,
+		`${API_URL}/blog-posts/side-menu-items?currentTopics=${blogTopicsString}&currentPostId=${blogPost.id}`,
 		{
 			method: "GET",
 			headers: sideMenuResHeaders,
@@ -141,7 +141,7 @@ export async function getServerSideProps(ctx) {
 	if (sideMenuRes.ok) {
 		return {
 			props: {
-				blogPost: blogPost[0],
+				blogPost: blogPost,
 				slug,
 				sideMenu,
 			},
@@ -150,7 +150,7 @@ export async function getServerSideProps(ctx) {
 
 	return {
 		props: {
-			blogPost: blogPost[0],
+			blogPost: blogPost,
 			slug,
 			sideMenu: null,
 		},
