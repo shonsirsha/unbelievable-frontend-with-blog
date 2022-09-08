@@ -2,7 +2,6 @@ import React from "react";
 import { API_URL } from "config";
 import { parseCookies } from "utils/cookies";
 import Layout from "components/Layout";
-import Container from "react-bootstrap/Container";
 import styled from "styled-components";
 import { HeadingMD, HeadingXXS } from "components/Typography/Headings";
 import { TextPrimary } from "components/Typography/Text";
@@ -10,14 +9,8 @@ import moment from "moment";
 import { mediaBreakpoint } from "utils/breakpoints";
 import Link from "next/link";
 import InnerBlogLayout from "components/Blog/InnerBlogLayout";
-
-const StyledContainer = styled(Container)`
-	width: 100%;
-	justify-content: center;
-	padding-top: 140px;
-	padding-bottom: 56px;
-	overflow: hidden;
-`;
+import ShareOptions from "components/ShareOptions";
+import { NEXT_URL } from "config";
 
 const TopicPill = styled.div`
 	padding: 11px 40px;
@@ -50,12 +43,16 @@ const TopicText = styled(HeadingXXS)`
 `;
 
 export default function BlogPost({ blogPost, sideMenu }) {
-	console.log(sideMenu);
 	return (
 		<Layout
 			background="#171b2d"
 			title={`${blogPost.title} | Blog Unbelievable.id`}
 			description={`${blogPost.shortDesc}`}
+			metaImageURL={
+				blogPost.thumbnail
+					? blogPost.thumbnail.url
+					: `${NEXT_URL}/images/logo-no-text.png`
+			}
 		>
 			<InnerBlogLayout sideMenu={sideMenu}>
 				<div className="d-flex flex-column">
@@ -84,6 +81,8 @@ export default function BlogPost({ blogPost, sideMenu }) {
 							</Link>
 						))}
 					</TopicPillContainer>
+
+					<ShareOptions />
 
 					<div
 						style={{ lineBreak: "auto" }}

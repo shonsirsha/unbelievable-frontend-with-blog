@@ -14,13 +14,15 @@ import { whitespace } from "utils/whitespace";
 const StyledContainer = styled(Container)`
 	width: 100%;
 	justify-content: center;
-	padding-top: 140px;
-	padding-bottom: 56px;
+	padding-top: 196px;
+	padding-bottom: 116px;
 	overflow: hidden;
 	display: flex;
 	max-width: 1180px;
 	@media ${mediaBreakpoint.down.lg} {
 		flex-direction: column;
+		padding-top: 120px;
+		padding-bottom: 86px;
 	}
 `;
 
@@ -47,8 +49,6 @@ const InnerBlogLayout = ({
 	children,
 }) => {
 	const { siteData } = useContext(AppContext);
-
-	console.log(siteData && siteData.ad_picture_blog);
 
 	const [keyword, setKeyword] = useState("");
 	const { allTopics, popularBlogPosts, recommendedBlogPosts } = sideMenu;
