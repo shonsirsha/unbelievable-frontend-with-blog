@@ -77,7 +77,7 @@ const RekomendasiCard = ({ blogPost, className = "" }) => {
 						<CardHeader as="h3">{blogPost.title}</CardHeader>
 						<ShortDescText as="p" className="text-gray2 mt-3 mb-1">
 							{blogPost.shortDesc.length >= 36
-								? `${blogPost.shortDesc.slice(0, 35)}...`
+								? `${blogPost.shortDesc.slice(0, 30)}...`
 								: blogPost.shortDesc}
 						</ShortDescText>
 						<TagsText className="text-gray2">

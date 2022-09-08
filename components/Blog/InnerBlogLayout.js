@@ -1,12 +1,15 @@
-import React, { useState } from "react";
-import Container from "react-bootstrap/Container";
-import styled from "styled-components";
+import React, { useState, useContext } from "react";
+import Image from "next/image";
+import AppContext from "context/AppContext";
 import { mediaBreakpoint } from "utils/breakpoints";
+import styled from "styled-components";
+import Container from "react-bootstrap/Container";
 import Populer from "./Populer";
 import Rekomendasi from "./Rekomendasi";
 import AllTopics from "./AllTopics";
 import SearchBarBlog from "components/Search/SearchBarBlog";
 import SearchBarBlogSubscription from "components/Search/SearchBarBlogSubscription";
+import { whitespace } from "utils/whitespace";
 
 const StyledContainer = styled(Container)`
 	width: 100%;
@@ -22,7 +25,7 @@ const StyledContainer = styled(Container)`
 `;
 
 const Main = styled.div`
-	width: 72%;
+	width: 70%;
 	display: flex;
 	flex-direction: column;
 
@@ -32,7 +35,7 @@ const Main = styled.div`
 `;
 
 const Sidebar = styled.div`
-	width: 28%;
+	width: 30%;
 
 	@media ${mediaBreakpoint.down.lg} {
 		width: 100%;
@@ -43,6 +46,10 @@ const InnerBlogLayout = ({
 	sideMenu = { allTopics: [], popularBlogPosts: [], recommendedBlogPosts: [] },
 	children,
 }) => {
+	const { siteData } = useContext(AppContext);
+
+	console.log(siteData && siteData.ad_picture_blog);
+
 	const [keyword, setKeyword] = useState("");
 	const { allTopics, popularBlogPosts, recommendedBlogPosts } = sideMenu;
 
@@ -71,6 +78,41 @@ const InnerBlogLayout = ({
 				<hr />
 				<div className="mt-5 mb-4" />
 				<Populer popularBlogPosts={popularBlogPosts} />
+
+				<div style={{ height: "80px", width: "100%", display: "block" }} />
+				{siteData && siteData.ad_picture_blog ? (
+					<a
+						href={
+							siteData.ad_blog_url && !whitespace(siteData.ad_blog_url)
+								? siteData.ad_blog_url
+								: "#"
+						}
+						target={
+							siteData.ad_blog_url &&
+							!whitespace(siteData.ad_blog_url) &&
+							"_blank"
+						}
+						rel="noreferrer"
+					>
+						<div
+							className="position-relative"
+							style={{
+								width: siteData.ad_picture_blog.width,
+								height: siteData.ad_picture_blog.height,
+								maxWidth: "100%",
+							}}
+						>
+							<Image
+								src={siteData.ad_picture_blog.url}
+								alt="Ads"
+								layout="fill"
+								objectFit="cover"
+							/>
+						</div>
+					</a>
+				) : (
+					<>asd</>
+				)}
 			</Sidebar>
 		</StyledContainer>
 	);
