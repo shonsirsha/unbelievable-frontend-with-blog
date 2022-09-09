@@ -82,7 +82,7 @@ export default function BlogPost({ blogPost, sideMenu }) {
 						))}
 					</TopicPillContainer>
 
-					<ShareOptions />
+					<ShareOptions blogPostSlug={blogPost.slug} />
 
 					<div
 						style={{ lineBreak: "auto" }}
