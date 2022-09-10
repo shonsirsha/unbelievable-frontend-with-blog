@@ -75,7 +75,7 @@ export default function BlogPost({ blogPost, sideMenu }) {
 									<TopicPill
 										className={`${ix > 0 ? `ml-md-2` : `ml-md-0`} mb-3 ml-3`}
 									>
-										<TopicText>{topic.topicName}</TopicText>
+										<TopicText as="p">{topic.topicName}</TopicText>
 									</TopicPill>
 								</a>
 							</Link>

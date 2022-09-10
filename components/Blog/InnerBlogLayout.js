@@ -14,20 +14,20 @@ import { whitespace } from "utils/whitespace";
 const StyledContainer = styled(Container)`
 	width: 100%;
 	justify-content: center;
-	padding-top: ${(props) => (props.lesspaddingtop ? `100px` : `196px`)};
+	padding-top: ${(props) => (props.lesspaddingtop ? `64px` : `196px`)};
 	padding-bottom: 116px;
 	overflow: hidden;
 	display: flex;
 	max-width: 1180px;
 	@media ${mediaBreakpoint.down.lg} {
 		flex-direction: column;
-		padding-top: 160px;
+		padding-top: ${(props) => (props.lesspaddingtop ? `32px` : `140px`)};
 		padding-bottom: 86px;
 	}
 
 	@media ${mediaBreakpoint.down.md} {
 		flex-direction: column;
-		padding-top: 120px;
+		padding-top: ${(props) => (props.lesspaddingtop ? `32px` : `120px`)};
 		padding-bottom: 86px;
 	}
 `;

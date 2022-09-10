@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
+import Link from "next/link";
+import AppContext from "context/AppContext";
 import { API_URL } from "config";
 import Container from "react-bootstrap/Container";
 import { parseCookies } from "utils/cookies";
@@ -7,6 +9,8 @@ import styled from "styled-components";
 import InnerBlogLayout from "components/Blog/InnerBlogLayout";
 import BlogCardMain from "components/Blog/BlogCardMain";
 import ShowcaseBlog from "components/Blog/ShowcaseBlog";
+import { HeadingXXS } from "components/Typography/Headings";
+import { mediaBreakpoint } from "utils/breakpoints";
 
 const StyledContainer = styled(Container)`
 	overflow: hidden;
@@ -16,7 +20,28 @@ const StyledContainer = styled(Container)`
 	grid-row-gap: 32px;
 `;
 
+const TopicPill = styled.div`
+	padding: 16px 64px;
+	min-width: 96px;
+	background: #dbdbdb;
+	border-radius: 12px;
+
+	@media ${mediaBreakpoint.down.md} {
+		padding: 8px 16px;
+	}
+`;
+
+const TopicText = styled(HeadingXXS)`
+	font-size: 13px;
+	text-align: center;
+
+	@media ${mediaBreakpoint.down.md} {
+		font-size: 11px;
+	}
+`;
+
 export default function BlogPost({ blogPosts, sideMenu }) {
+	const { siteData } = useContext(AppContext);
 	return (
 		<Layout
 			scrollToSolid
@@ -29,6 +54,25 @@ export default function BlogPost({ blogPosts, sideMenu }) {
 			}
 		>
 			<ShowcaseBlog title="Artikel rekomendasi untuk kamu" />
+			<Container style={{ marginTop: "-36px" }}>
+				<div className="d-flex flex-wrap">
+					{siteData &&
+						siteData.featured_blog_topics &&
+						siteData.featured_blog_topics.map((topic) => (
+							<Link
+								key={topic.blog_topic.topicId}
+								href={`/blog-topik/${topic.blog_topic.topicId}`}
+							>
+								<a className="text-black">
+									<TopicPill className="mr-3 mt-3">
+										<TopicText as="h2">{topic.blog_topic.topicName}</TopicText>
+									</TopicPill>
+								</a>
+							</Link>
+						))}
+				</div>
+			</Container>
+
 			<InnerBlogLayout
 				lessPaddingTop
 				showSearch={false}
