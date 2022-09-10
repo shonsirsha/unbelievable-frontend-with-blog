@@ -316,6 +316,13 @@ export default function Header({
 									</StyledTextPrimary>
 								</a>
 							</Link>
+							<Link href="/blog">
+								<a onClick={handleClickMenu}>
+									<StyledTextPrimary active={router.pathname.includes("/blog")}>
+										Blog
+									</StyledTextPrimary>
+								</a>
+							</Link>
 						</>
 					)}
 				</div>

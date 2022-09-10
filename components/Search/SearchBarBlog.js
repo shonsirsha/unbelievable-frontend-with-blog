@@ -7,9 +7,9 @@ const StyledBar = styled(FormControl)`
 	padding-left: 60px;
 	background: #f2f2f2;
 	border: none;
-	font-size: 13px;
+	font-size: ${(props) => (props.bigtext ? `16px` : `13px`)};
 	border-radius: 28px;
-	width: 100%;
+	width: ${(props) => props.width}%;
 	transition: 0.4s;
 	&:-webkit-autofill,
 	&:-webkit-autofill:hover,
@@ -22,6 +22,11 @@ const StyledBar = styled(FormControl)`
 	&:focus {
 		background: #e8e8e8;
 		outline: none;
+	}
+
+	@media ${mediaBreakpoint.down.md} {
+		font-size: 13px;
+		width: 100%;
 	}
 `;
 const StyledContainer = styled.div`
@@ -41,10 +46,14 @@ const SearchIcon = styled(MdSearch)`
 	left: 18px;
 	top: 13px;
 `;
-export default function SearchBarBlog({ ...props }) {
+export default function SearchBarBlog({
+	bigText = false,
+	barWidthPercent = "100",
+	...props
+}) {
 	return (
 		<StyledContainer>
-			<StyledBar {...props} />
+			<StyledBar {...props} bigtext={bigText ? 1 : 0} width={barWidthPercent} />
 			<SearchIcon />
 		</StyledContainer>
 	);

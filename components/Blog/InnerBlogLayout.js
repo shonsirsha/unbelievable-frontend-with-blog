@@ -14,12 +14,18 @@ import { whitespace } from "utils/whitespace";
 const StyledContainer = styled(Container)`
 	width: 100%;
 	justify-content: center;
-	padding-top: 196px;
+	padding-top: ${(props) => (props.lesspaddingtop ? `100px` : `196px`)};
 	padding-bottom: 116px;
 	overflow: hidden;
 	display: flex;
 	max-width: 1180px;
 	@media ${mediaBreakpoint.down.lg} {
+		flex-direction: column;
+		padding-top: 160px;
+		padding-bottom: 86px;
+	}
+
+	@media ${mediaBreakpoint.down.md} {
 		flex-direction: column;
 		padding-top: 120px;
 		padding-bottom: 86px;
@@ -45,6 +51,9 @@ const Sidebar = styled.div`
 `;
 
 const InnerBlogLayout = ({
+	showSearch = true,
+	showSubscribe = true,
+	lessPaddingTop = false,
 	sideMenu = { allTopics: [], popularBlogPosts: [], recommendedBlogPosts: [] },
 	children,
 }) => {
@@ -54,19 +63,26 @@ const InnerBlogLayout = ({
 	const { allTopics, popularBlogPosts, recommendedBlogPosts } = sideMenu;
 
 	return (
-		<StyledContainer>
+		<StyledContainer lesspaddingtop={lessPaddingTop}>
 			<Main className="pr-lg-5 mb-lg-0 mb-5">{children}</Main>
 			<Sidebar>
-				<SearchBarBlog
-					onChange={(e) => setKeyword(e.target.value)}
-					placeholder="Cari artikel (judul, kategori, topik)..."
-				/>
+				{showSearch && (
+					<>
+						{" "}
+						<SearchBarBlog
+							onChange={(e) => setKeyword(e.target.value)}
+							placeholder="Cari artikel (judul, kategori, topik)..."
+						/>
+						<div className="my-4" />
+					</>
+				)}
 
-				<div className="my-4" />
-
-				<SearchBarBlogSubscription placeholder="Ketik email Anda..." />
-
-				<div className="my-4" />
+				{showSubscribe && (
+					<>
+						<SearchBarBlogSubscription placeholder="Ketik email Anda..." />
+						<div className="my-4" />
+					</>
+				)}
 
 				{recommendedBlogPosts.length > 0 && (
 					<>

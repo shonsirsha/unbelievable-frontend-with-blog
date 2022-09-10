@@ -46,7 +46,7 @@ export default function BlogPost({ blogPost, sideMenu }) {
 	return (
 		<Layout
 			background="#171b2d"
-			title={`${blogPost.title} | Blog Unbelievable.id`}
+			title={`${blogPost.title} | Blog Unbelievable`}
 			description={`${blogPost.shortDesc}`}
 			metaImageURL={
 				blogPost.thumbnail
