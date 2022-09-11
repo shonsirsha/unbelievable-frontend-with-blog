@@ -63,7 +63,7 @@ const InnerBlogLayout = ({
 	const { allTopics, popularBlogPosts, recommendedBlogPosts } = sideMenu;
 
 	return (
-		<StyledContainer lesspaddingtop={lessPaddingTop}>
+		<StyledContainer lesspaddingtop={lessPaddingTop ? 1 : 0}>
 			<Main className="pr-lg-5 mb-lg-0 mb-5">{children}</Main>
 			<Sidebar>
 				{showSearch && (

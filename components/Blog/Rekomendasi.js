@@ -49,6 +49,13 @@ const Rekomendasi = ({ recommendedBlogPosts = [] }) => {
 };
 
 const RekomendasiCard = ({ blogPost, className = "" }) => {
+	const blogTopicsString = blogPost.blogTopics.reduce((acc, curr, ix) => {
+		if (ix === 0) {
+			return acc.concat(curr.topicName);
+		} else {
+			return acc.concat(`, ${curr.topicName}`);
+		}
+	}, "");
 	return (
 		<Link href={`/blog/${blogPost.slug}`}>
 			<a className="text-decoration-none text-black">
@@ -81,7 +88,7 @@ const RekomendasiCard = ({ blogPost, className = "" }) => {
 								: blogPost.shortDesc}
 						</ShortDescText>
 						<TagsText className="text-gray2">
-							{blogPost.blogTopicsText.trim()}
+							{blogTopicsString.trim()}
 						</TagsText>
 					</div>
 				</CardContainer>

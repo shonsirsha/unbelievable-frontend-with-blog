@@ -36,6 +36,7 @@ const ShareOptions = ({
 	whatsapp = true,
 	bookmark = true,
 	blogPostSlug = "",
+	pageURL = window ? window.location.href : "",
 }) => {
 	const { token } = useContext(AuthContext);
 	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -49,7 +50,7 @@ const ShareOptions = ({
 					target="_blank"
 					rel="noopener noreferrer"
 					style={{ lineHeight: "0" }}
-					href={`https://twitter.com/intent/tweet?url=${window.location.href}`}
+					href={`https://twitter.com/intent/tweet?url=${pageURL}`}
 				>
 					<BsTwitter
 						style={{ fontSize: "19px", color: "#737373" }}
@@ -63,7 +64,7 @@ const ShareOptions = ({
 					target="_blank"
 					rel="noopener noreferrer"
 					style={{ lineHeight: "0" }}
-					href={`https://www.facebook.com/sharer.php?u=${window.location.href}`}
+					href={`https://www.facebook.com/sharer.php?u=${pageURL}`}
 				>
 					<BsFacebook
 						style={{ fontSize: "19px", color: "#737373" }}
@@ -76,7 +77,7 @@ const ShareOptions = ({
 					target="_blank"
 					rel="noopener noreferrer"
 					style={{ lineHeight: "0" }}
-					href={`https://www.linkedin.com/sharing/share-offsite/?url=${window.location.href}`}
+					href={`https://www.linkedin.com/sharing/share-offsite/?url=${pageURL}`}
 				>
 					<BsLinkedin
 						style={{ fontSize: "19px", color: "#737373" }}
@@ -88,7 +89,7 @@ const ShareOptions = ({
 				<BsLink45Deg
 					onClick={(e) => {
 						e.stopPropagation();
-						navigator.clipboard.writeText(window.location.href);
+						navigator.clipboard.writeText(pageURL);
 						setIsPopoverOpen(true);
 
 						setTimeout(() => {
@@ -128,7 +129,7 @@ const ShareOptions = ({
 					target="_blank"
 					rel="noopener noreferrer"
 					style={{ lineHeight: "0" }}
-					href={`https://api.whatsapp.com/send?text=${window.location.href}`}
+					href={`https://api.whatsapp.com/send?text=${pageURL}`}
 				>
 					<BsWhatsapp
 						style={{ fontSize: "19px", color: "#737373" }}

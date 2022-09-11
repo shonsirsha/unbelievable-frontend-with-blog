@@ -60,11 +60,11 @@ export default function BlogPost({ blogPost, sideMenu }) {
 
 					<div className="d-flex my-3">
 						<TextPrimary className="text-gray2">
-							{blogPost.readTime === 0 ? `1` : blogPost.readTime} Menit
+							{blogPost.readTime === 0 ? `1` : blogPost.readTime} Menit ·
 						</TextPrimary>
 
-						<TextPrimary className="text-gray2 ml-4">
-							{moment(blogPost.createdAt).format("D MMMM YYYY")}
+						<TextPrimary className="text-gray2 ml-2">
+							{moment(blogPost.created_at).format("D MMMM YYYY")}
 						</TextPrimary>
 					</div>
 
