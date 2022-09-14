@@ -164,6 +164,12 @@ const BlogPostsList = ({
 			</div>
 
 			<div className="d-flex my-5">
+				<Link passHref href={`${currentURL}?sortBy=trending`}>
+					<SortButton className={`${sortBy === "trending" && `active`} mr-2`}>
+						Trending
+					</SortButton>
+				</Link>
+
 				<Link passHref href={`${currentURL}?sortBy=terbaru`}>
 					<SortButton className={`${sortBy === "terbaru" && `active`} mr-2`}>
 						Terbaru

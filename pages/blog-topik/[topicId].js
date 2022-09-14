@@ -40,21 +40,30 @@ export async function getServerSideProps(ctx) {
 	const sortMap = {
 		terbaru: "created_at",
 		terbaik: "views",
+		trending: "/trending-blog-posts?_blogTopics.topicId",
 	};
 
-	const { sortBy, topicId } = ctx.query;
+	let { sortBy, topicId } = ctx.query;
+
+	if (!sortBy || !(sortBy.toLowerCase() in sortMap)) sortBy = "trending";
 
 	let sort =
-		!sortBy || !(sortBy in sortMap)
-			? sortMap["terbaru"]
-			: sortMap[sortBy.toLowerCase()];
+		sortBy.toLowerCase() !== "trending" && sortMap[sortBy.toLowerCase()];
 
-	const res = await fetch(
-		`${API_URL}/blog-posts?_blogTopics.topicId=${topicId}&_sort=${sort}:desc`,
-		{
+	let res;
+
+	if (sortBy && sortBy.toLowerCase() === "trending") {
+		res = await fetch(`${API_URL}${sortMap["trending"]}=${topicId}`, {
 			method: "GET",
-		}
-	);
+		});
+	} else {
+		res = await fetch(
+			`${API_URL}/blog-posts?_blogTopics.topicId=${topicId}&_sort=${sort}:desc`,
+			{
+				method: "GET",
+			}
+		);
+	}
 
 	const resTopic = await fetch(`${API_URL}/blog-topics?topicId=${topicId}`, {
 		method: "GET",
