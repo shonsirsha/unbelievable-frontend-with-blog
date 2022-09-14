@@ -8,7 +8,7 @@ import {
 	BsWhatsapp,
 	BsBookmarkPlus,
 } from "react-icons/bs";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Popover } from "react-tiny-popover";
 import styled from "styled-components";
@@ -44,18 +44,15 @@ const ShareOptions = ({
 
 	return (
 		<OuterContainer className="d-flex flex-wrap">
-			<ToastContainer />
 			{twitter && (
 				<a
 					target="_blank"
 					rel="noopener noreferrer"
 					style={{ lineHeight: "0" }}
+					className="mr-3 d-block"
 					href={`https://twitter.com/intent/tweet?url=${pageURL}`}
 				>
-					<BsTwitter
-						style={{ fontSize: "19px", color: "#737373" }}
-						className="mr-3"
-					/>
+					<BsTwitter style={{ fontSize: "17px", color: "#737373" }} />
 				</a>
 			)}
 
@@ -64,25 +61,20 @@ const ShareOptions = ({
 					target="_blank"
 					rel="noopener noreferrer"
 					style={{ lineHeight: "0" }}
+					className="mr-3 d-block"
 					href={`https://www.facebook.com/sharer.php?u=${pageURL}`}
 				>
-					<BsFacebook
-						style={{ fontSize: "19px", color: "#737373" }}
-						className="mr-3"
-					/>
+					<BsFacebook style={{ fontSize: "17px", color: "#737373" }} />
 				</a>
 			)}
 			{linkedin && (
 				<a
 					target="_blank"
 					rel="noopener noreferrer"
-					style={{ lineHeight: "0" }}
+					style={{ lineHeight: "0", marginRight: "10px" }}
 					href={`https://www.linkedin.com/sharing/share-offsite/?url=${pageURL}`}
 				>
-					<BsLinkedin
-						style={{ fontSize: "19px", color: "#737373" }}
-						className="mr-3"
-					/>
+					<BsLinkedin style={{ fontSize: "17px", color: "#737373" }} />
 				</a>
 			)}
 			{link && (
@@ -130,11 +122,9 @@ const ShareOptions = ({
 					rel="noopener noreferrer"
 					style={{ lineHeight: "0" }}
 					href={`https://api.whatsapp.com/send?text=${pageURL}`}
+					className="mr-3"
 				>
-					<BsWhatsapp
-						style={{ fontSize: "19px", color: "#737373" }}
-						className="mr-3"
-					/>
+					<BsWhatsapp style={{ fontSize: "17px", color: "#737373" }} />
 				</a>
 			)}
 			{bookmark && token && (
@@ -157,15 +147,20 @@ const ShareOptions = ({
 								});
 
 								if (res.ok) {
-									toast.success("Artikel telah dibookmark");
+									toast.success("Artikel telah dibookmark", {
+										toastId: "SUCCESS-BLOG-POST-BOOKMARKED",
+									});
 								} else {
 									toast.error(
-										"Ups, kesalahan terjadi saat mem-bookmark artikel"
+										"Ups, kesalahan terjadi saat mem-bookmark artikel",
+										{
+											toastId: "FAILED-BLOG-POST-BOOKMARKED",
+										}
 									);
 								}
 								setBookmarkLoading(false);
 							}}
-							style={{ fontSize: "19px", color: "#737373" }}
+							style={{ fontSize: "17px", color: "#737373" }}
 						/>
 					)}
 				</>

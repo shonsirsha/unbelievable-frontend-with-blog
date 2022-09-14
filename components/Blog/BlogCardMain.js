@@ -5,6 +5,8 @@ import moment from "moment";
 import styled from "styled-components";
 import { HeadingXXS } from "components/Typography/Headings";
 import { TextTertiary } from "components/Typography/Text";
+import ShareOptions from "components/ShareOptions";
+import { NEXT_URL } from "config";
 
 const AuthorNameText = styled(HeadingXXS)`
 	font-size: 12px;
@@ -101,7 +103,7 @@ const BlogCardMain = ({
 				</a>
 			</Link>
 
-			<div className="d-flex flex-wrap">
+			<div className="d-flex flex-wrap mb-3">
 				{blogTopics.map((topic) => (
 					<Link href={`/blog-topik/${topic.topicId}`} key={topic.topicId}>
 						<a className="text-gray2">
@@ -112,6 +114,8 @@ const BlogCardMain = ({
 					</Link>
 				))}
 			</div>
+
+			<ShareOptions blogPostSlug={slug} pageURL={`${NEXT_URL}/blog/${slug}`} />
 		</div>
 	);
 };

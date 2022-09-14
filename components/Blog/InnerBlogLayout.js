@@ -10,6 +10,7 @@ import AllTopics from "./AllTopics";
 import SearchBarBlog from "components/Search/SearchBarBlog";
 import SearchBarBlogSubscription from "components/Search/SearchBarBlogSubscription";
 import { whitespace } from "utils/whitespace";
+import { ToastContainer } from "react-toastify";
 
 const StyledContainer = styled(Container)`
 	width: 100%;
@@ -64,6 +65,7 @@ const InnerBlogLayout = ({
 
 	return (
 		<StyledContainer lesspaddingtop={lessPaddingTop ? 1 : 0}>
+			<ToastContainer />
 			<Main className="pr-lg-5 mb-lg-0 mb-5">{children}</Main>
 			<Sidebar>
 				{showSearch && (

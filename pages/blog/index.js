@@ -11,17 +11,18 @@ import BlogCardMain from "components/Blog/BlogCardMain";
 import ShowcaseBlog from "components/Blog/ShowcaseBlog";
 import { HeadingXXS } from "components/Typography/Headings";
 import { mediaBreakpoint } from "utils/breakpoints";
+import { TextPrimary } from "components/Typography/Text";
 
 const StyledContainer = styled(Container)`
 	overflow: hidden;
 	display: grid;
 	grid-template-columns: repeat(auto-fill, 325px);
 	grid-column-gap: 32px;
-	grid-row-gap: 32px;
+	grid-row-gap: 64px;
 `;
 
 const TopicPill = styled.div`
-	padding: 16px 64px;
+	padding: 12px 56px;
 	min-width: 96px;
 	background: #dbdbdb;
 	border-radius: 12px;
@@ -31,12 +32,13 @@ const TopicPill = styled.div`
 	}
 `;
 
-const TopicText = styled(HeadingXXS)`
-	font-size: 13px;
+const TopicText = styled(TextPrimary)`
+	font-size: 17.5px;
 	text-align: center;
+	font-family: OpenSansBold;
 
 	@media ${mediaBreakpoint.down.md} {
-		font-size: 11px;
+		font-size: 13px;
 	}
 `;
 

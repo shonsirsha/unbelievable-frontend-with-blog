@@ -242,6 +242,10 @@ export default function Header({
 			url: "/pertanyaan",
 			text: "Pertanyaan",
 		},
+		{
+			url: "/blog",
+			text: "Blog",
+		},
 	];
 
 	return (

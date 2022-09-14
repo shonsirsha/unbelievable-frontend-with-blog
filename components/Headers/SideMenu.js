@@ -58,6 +58,10 @@ export default function SideMenu() {
 			url: "/pertanyaan",
 			text: "Pertanyaan",
 		},
+		{
+			url: "/blog",
+			text: "Blog",
+		},
 	];
 	return (
 		<OuterContainer>
