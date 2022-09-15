@@ -61,10 +61,11 @@ const BlogCardMain = ({
 		readTime,
 		shortDesc,
 		blogTopics,
-		createdAt,
+		created_at,
 		thumbnail,
 		slug,
 	},
+	showBookmark = true,
 }) => {
 	return (
 		<div className="d-flex flex-column">
@@ -96,7 +97,7 @@ const BlogCardMain = ({
 					</ShortDescText>
 					<div className="d-flex flex-wrap mt-1 text-gray2">
 						<DateText>
-							{moment(createdAt).format("D MMM")}&nbsp;·&nbsp;
+							{moment(created_at).format("D MMM")}&nbsp;·&nbsp;
 						</DateText>
 						<DateText>{readTime === 0 ? `1` : readTime} min read</DateText>
 					</div>
@@ -115,7 +116,11 @@ const BlogCardMain = ({
 				))}
 			</div>
 
-			<ShareOptions blogPostSlug={slug} pageURL={`${NEXT_URL}/blog/${slug}`} />
+			<ShareOptions
+				blogPostSlug={slug}
+				pageURL={`${NEXT_URL}/blog/${slug}`}
+				bookmark={showBookmark}
+			/>
 		</div>
 	);
 };

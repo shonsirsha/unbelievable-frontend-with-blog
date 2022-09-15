@@ -15,6 +15,11 @@ const OuterContainer = styled.div`
 	}
 `;
 const MenuContainer = styled.div`
+	background: rgba(255, 255, 255, 0.9);
+
+	padding: 24px;
+	margin-left: -24px;
+	border-radius: 24px;
 	position: fixed;
 	display: flex;
 	top: 40%;
@@ -65,7 +70,7 @@ export default function SideMenu() {
 	];
 	return (
 		<OuterContainer>
-			<MenuContainer>
+			<MenuContainer className="shadow-sm">
 				{routes.map((r, ix) => (
 					<Link key={ix} href={r.url}>
 						<a>
@@ -73,7 +78,6 @@ export default function SideMenu() {
 								active={
 									r.url === router.pathname || router.pathname.includes(r.url)
 								}
-								className="text-black"
 							>
 								{r.text}
 							</StyledHeadingXXS>

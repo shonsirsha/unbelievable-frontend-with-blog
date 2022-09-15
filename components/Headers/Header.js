@@ -394,7 +394,7 @@ export default function Header({
 										}
 									}}
 									src={
-										user.profile_picture
+										user && user.profile_picture
 											? user.profile_picture.url
 											: `${window.location.origin}/images/green.svg`
 									}

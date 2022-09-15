@@ -3,7 +3,7 @@ import { FormControl } from "react-bootstrap";
 import { MdSearch } from "react-icons/md";
 import { mediaBreakpoint } from "utils/breakpoints";
 const StyledBar = styled(FormControl)`
-	padding: 28px 21px;
+	padding: 23px 21px;
 	padding-left: 60px;
 	background: #f2f2f2;
 	border: none;
@@ -30,8 +30,8 @@ const StyledBar = styled(FormControl)`
 	}
 `;
 const StyledContainer = styled.div`
+	width: ${(props) => props.width}%;
 	position: relative;
-	width: 100%;
 	max-width: 640px;
 	display: flex;
 
@@ -42,9 +42,9 @@ const StyledContainer = styled.div`
 
 const SearchIcon = styled(MdSearch)`
 	position: absolute;
-	font-size: 29px;
+	font-size: 25px;
 	left: 18px;
-	top: 13px;
+	top: 11px;
 `;
 export default function SearchBarBlog({
 	bigText = false,
@@ -52,8 +52,8 @@ export default function SearchBarBlog({
 	...props
 }) {
 	return (
-		<StyledContainer>
-			<StyledBar {...props} bigtext={bigText ? 1 : 0} width={barWidthPercent} />
+		<StyledContainer width={barWidthPercent}>
+			<StyledBar {...props} bigtext={bigText ? 1 : 0} width={"100"} />
 			<SearchIcon />
 		</StyledContainer>
 	);

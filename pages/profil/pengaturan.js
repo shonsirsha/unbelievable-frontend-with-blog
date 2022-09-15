@@ -1,4 +1,4 @@
-import { useContext, useRef, useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import { HeadingSM, HeadingXXS } from "components/Typography/Headings";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

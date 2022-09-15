@@ -43,6 +43,11 @@ const TopicText = styled(HeadingXXS)`
 `;
 
 export default function BlogPost({ blogPost, sideMenu }) {
+	const { content } = blogPost;
+	const displayedContent = content.replace(
+		/<img /g,
+		`<img referrerpolicy="no-referrer" `
+	);
 	return (
 		<Layout
 			background="#171b2d"
@@ -87,7 +92,9 @@ export default function BlogPost({ blogPost, sideMenu }) {
 					<div
 						style={{ lineBreak: "auto" }}
 						className="ck-content mt-4"
-						dangerouslySetInnerHTML={{ __html: blogPost.content }}
+						dangerouslySetInnerHTML={{
+							__html: displayedContent,
+						}}
 					></div>
 				</div>
 			</InnerBlogLayout>
@@ -98,8 +105,12 @@ export default function BlogPost({ blogPost, sideMenu }) {
 export async function getServerSideProps(ctx) {
 	const { token } = parseCookies(ctx.req);
 	const { slug } = ctx.query;
+	const sideMenuResHeaders = token
+		? { "Content-Type": "application/json", Authorization: `Bearer ${token}` }
+		: { "Content-Type": "application/json" };
 	const res = await fetch(`${API_URL}/blog-posts/${slug}`, {
 		method: "GET",
+		headers: sideMenuResHeaders,
 	});
 
 	const blogPost = await res.json();
@@ -124,9 +135,7 @@ export async function getServerSideProps(ctx) {
 		}
 	}, "");
 
-	const sideMenuResHeaders = token
-		? { "Content-Type": "application/json", Authorization: `Bearer ${token}` }
-		: { "Content-Type": "application/json" };
+	console.log({ sideMenuResHeaders });
 	const sideMenuRes = await fetch(
 		`${API_URL}/blog-posts/side-menu-items?currentTopics=${blogTopicsString}&currentPostId=${blogPost.id}`,
 		{

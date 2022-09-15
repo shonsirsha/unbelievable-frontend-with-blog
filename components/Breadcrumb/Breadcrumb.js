@@ -30,6 +30,7 @@ const Breadcrumb = () => {
 				replaceCharacterList={[
 					{ from: "feedback", to: "Tulis masukkan" },
 					{ from: "pengaturan", to: "Pengaturan umum" },
+					{ from: "bookmarks", to: "Bookmarked blog posts" },
 				]}
 			/>
 		</BreadcrumbContainer>
