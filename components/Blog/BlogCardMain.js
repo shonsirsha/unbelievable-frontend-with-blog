@@ -1,12 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import moment from "moment";
 import styled from "styled-components";
 import { HeadingXXS } from "components/Typography/Headings";
 import { TextTertiary } from "components/Typography/Text";
 import ShareOptions from "components/ShareOptions";
 import { NEXT_URL } from "config";
+import { dateDiffInDays } from "utils/dateDiffInDays";
 
 const AuthorNameText = styled(HeadingXXS)`
 	font-size: 12px;
@@ -97,7 +97,7 @@ const BlogCardMain = ({
 					</ShortDescText>
 					<div className="d-flex flex-wrap mt-1 text-gray2">
 						<DateText>
-							{moment(created_at).format("D MMM")}&nbsp;·&nbsp;
+							{dateDiffInDays(new Date(created_at), new Date())}&nbsp;·&nbsp;
 						</DateText>
 						<DateText>{readTime === 0 ? `1` : readTime} min read</DateText>
 					</div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { API_URL } from "config";
 import AuthContext from "context/AuthContext";
 import Layout from "components/Layout";
@@ -10,6 +10,7 @@ import BlogCardMain from "components/Blog/BlogCardMain";
 import SearchBarBlog from "components/Search/SearchBarBlog";
 import { HeadingSM } from "components/Typography/Headings";
 import { FormGroup, Form } from "react-bootstrap";
+import { whitespace } from "utils/whitespace";
 
 const Select = styled(Form)`
 	appearance: none;
@@ -62,10 +63,49 @@ const OuterContainer = styled.div`
 
 const Bookmarks = ({ bookmarkedBlogPosts = [] }) => {
 	const { checkUserLoggedIn } = useContext(AuthContext);
+	const [blogPostsState, setBlogPostsState] = useState(bookmarkedBlogPosts);
+	const [sort, setSort] = useState("created_at:desc");
+	const [keyword, setKeyword] = useState("");
+
+	const sorter = (a, b) => {
+		switch (sort) {
+			case "created_at:desc":
+				return b.id - a.id;
+			case "created_at:asc":
+				return a.id - b.id;
+			case "title:desc":
+				return b.title.toLowerCase().localeCompare(a.title.toLowerCase());
+			case "title:asc":
+				return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
+			default:
+				return b.id - a.id;
+		}
+	};
+
 	useEffect(() => {
 		checkUserLoggedIn();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	useEffect(() => {
+		if (!whitespace(keyword)) {
+			const filteredBlogPosts = bookmarkedBlogPosts.filter(
+				(blogPosts) =>
+					blogPosts.title.toLowerCase().includes(keyword.toLowerCase()) ||
+					blogPosts.blogTopicsText.toLowerCase().includes(keyword.toLowerCase())
+			);
+			setBlogPostsState(filteredBlogPosts);
+		} else {
+			setBlogPostsState([...bookmarkedBlogPosts].sort((a, b) => sorter(a, b)));
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [keyword]);
+
+	useEffect(() => {
+		setBlogPostsState([...blogPostsState].sort((a, b) => sorter(a, b)));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [sort]);
 
 	return (
 		<Layout
@@ -83,26 +123,29 @@ const Bookmarks = ({ bookmarkedBlogPosts = [] }) => {
 				<div className="w-100 d-flex align-items-center justify-content-lg-between flex-lg-row flex-column">
 					<SearchBarBlog
 						barWidthPercent="60"
-						placeholder="Cari artikel (judul, kategori, topik)..."
+						onChange={(e) => {
+							setKeyword(e.target.value);
+						}}
+						placeholder="Cari artikel (judul & topik)..."
 					/>
 
 					<StyledFormGroup className="d-flex flex-column text-gray2 mt-lg-0 mt-3">
 						<Select
-							onChange={(e) => setCategoriesId(e.target.value)}
+							onChange={(e) => setSort(e.target.value)}
 							as="select"
 							aria-label="Default select example"
 							className="shadow-md"
 						>
-							<option>Terbaru</option>
-							<option>Terlama</option>
-							<option>Judul (A-Z)</option>
-							<option>Judul (Z-A)</option>
+							<option value="created_at:desc">Terbaru</option>
+							<option value="created_at:asc">Terlama</option>
+							<option value="title:asc">Judul (A-Z)</option>
+							<option value="title:desc">Judul (Z-A)</option>
 						</Select>
 					</StyledFormGroup>
 				</div>
 
 				<OuterContainer className="mt-5">
-					{bookmarkedBlogPosts.map((blogPost) => (
+					{blogPostsState.map((blogPost) => (
 						<BlogCardMain
 							blogPost={blogPost}
 							key={blogPost.id}

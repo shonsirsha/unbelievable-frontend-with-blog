@@ -8,7 +8,12 @@ import { HeadingXL, HeadingMD } from "components/Typography/Headings";
 import { TextTertiary, TextPrimary } from "components/Typography/Text";
 import Image from "next/image";
 import { FaVideo } from "react-icons/fa";
-import { MdEdit, MdFeedback, MdSettings } from "react-icons/md";
+import {
+	MdEdit,
+	MdFeedback,
+	MdSettings,
+	MdBookmarkBorder,
+} from "react-icons/md";
 import { FiLogOut } from "react-icons/fi";
 import { IoDocumentText } from "react-icons/io5";
 import styled from "styled-components";
@@ -196,6 +201,19 @@ const Profil = ({ courseCount, totalDurationWatched, noToken = false }) => {
 								<MdSettings className="mr-0 mr-md-4" />
 								<TextPrimary className="text-primary1">
 									Pengaturan Umum
+								</TextPrimary>
+							</OptionButton>
+						</a>
+					</Link>
+					<Link href="/profil/bookmarks">
+						<a className="d-flex">
+							<OptionButton
+								as="button"
+								className="d-flex flex-md-row flex-column align-items-center shadow-sm"
+							>
+								<MdBookmarkBorder className="mr-0 mr-md-4" />
+								<TextPrimary className="text-primary1">
+									Bookmark Blog
 								</TextPrimary>
 							</OptionButton>
 						</a>

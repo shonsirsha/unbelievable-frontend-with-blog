@@ -73,7 +73,7 @@ const InnerBlogLayout = ({
 						{" "}
 						<SearchBarBlog
 							onChange={(e) => setKeyword(e.target.value)}
-							placeholder="Cari artikel (judul, kategori, topik)..."
+							placeholder="Cari artikel (judul, topik, dll)..."
 						/>
 						<div className="my-4" />
 					</>

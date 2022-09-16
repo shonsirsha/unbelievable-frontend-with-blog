@@ -29,7 +29,7 @@ export default function ShowcaseBlog({ title = "Title" }) {
 					bigText
 					barWidthPercent="90"
 					onChange={(e) => {}}
-					placeholder="Cari artikel (judul, kategori, topik)..."
+					placeholder="Cari artikel (judul, topik, dll)..."
 				/>
 			</Container>
 		</OuterContainer>
