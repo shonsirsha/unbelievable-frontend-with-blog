@@ -22,6 +22,7 @@ const Select = styled(Form)`
 	background-position-x: 98%;
 	background-position-y: 21px;
 	font-size: 14px;
+	min-width: 280px;
 	&:-webkit-autofill,
 	&:-webkit-autofill:hover,
 	&:-webkit-autofill:focus,
@@ -30,6 +31,16 @@ const Select = styled(Form)`
 	}
 	&:focus {
 		outline: none;
+	}
+
+	@media ${mediaBreakpoint.down.md} {
+		width: 100%;
+	}
+`;
+
+const StyledFormGroup = styled(FormGroup)`
+	@media ${mediaBreakpoint.down.lg} {
+		width: 100%;
 	}
 `;
 
@@ -45,12 +56,11 @@ const OuterContainer = styled.div`
 	}
 
 	@media ${mediaBreakpoint.down.md} {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
+		grid-template-columns: repeat(1, minmax(0, 1fr));
 	}
 `;
 
 const Bookmarks = ({ bookmarkedBlogPosts = [] }) => {
-	console.log(bookmarkedBlogPosts);
 	const { checkUserLoggedIn } = useContext(AuthContext);
 	useEffect(() => {
 		checkUserLoggedIn();
@@ -65,26 +75,30 @@ const Bookmarks = ({ bookmarkedBlogPosts = [] }) => {
 			mainApp
 			showLogout
 		>
-			<div className="d-flex flex-column">
+			<div className="d-flex flex-column w-100">
 				<Breadcrumb />
 
 				<HeadingSM className="mb-3">Bookmark Blog</HeadingSM>
 
-				<div className="w-100 d-flex">
+				<div className="w-100 d-flex align-items-center justify-content-lg-between flex-lg-row flex-column">
 					<SearchBarBlog
 						barWidthPercent="60"
 						placeholder="Cari artikel (judul, kategori, topik)..."
 					/>
 
-					<FormGroup className="d-flex flex-column mt-4 text-gray2">
+					<StyledFormGroup className="d-flex flex-column text-gray2 mt-lg-0 mt-3">
 						<Select
 							onChange={(e) => setCategoriesId(e.target.value)}
 							as="select"
 							aria-label="Default select example"
+							className="shadow-md"
 						>
-							<option>sadasdsadasdasasda</option>
+							<option>Terbaru</option>
+							<option>Terlama</option>
+							<option>Judul (A-Z)</option>
+							<option>Judul (Z-A)</option>
 						</Select>
-					</FormGroup>
+					</StyledFormGroup>
 				</div>
 
 				<OuterContainer className="mt-5">

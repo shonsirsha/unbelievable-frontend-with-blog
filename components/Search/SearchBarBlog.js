@@ -36,6 +36,7 @@ const StyledContainer = styled.div`
 	display: flex;
 
 	@media ${mediaBreakpoint.down.lg} {
+		width: 100%;
 		max-width: 100%;
 	}
 `;
