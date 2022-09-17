@@ -10,6 +10,7 @@ import Link from "next/link";
 import InnerBlogLayout from "components/Blog/InnerBlogLayout";
 import ShareOptions from "components/ShareOptions";
 import { NEXT_URL } from "config";
+import YoutubeEmbed from "components/SocialEmbeds/YoutubeEmbed";
 
 const TopicPill = styled.div`
 	padding: 11px 40px;
@@ -95,6 +96,8 @@ export default function BlogPost({ blogPost, sideMenu }) {
 							__html: displayedContent,
 						}}
 					></div>
+
+					<YoutubeEmbed />
 				</div>
 			</InnerBlogLayout>
 		</Layout>

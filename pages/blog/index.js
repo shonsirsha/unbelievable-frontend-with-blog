@@ -12,6 +12,7 @@ import ShowcaseBlog from "components/Blog/ShowcaseBlog";
 import { HeadingXXS } from "components/Typography/Headings";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { TextPrimary } from "components/Typography/Text";
+import YoutubeEmbed from "components/SocialEmbeds/YoutubeEmbed";
 
 const StyledContainer = styled(Container)`
 	overflow: hidden;
@@ -81,11 +82,13 @@ export default function BlogPost({ blogPosts, sideMenu }) {
 				showSubscribe={false}
 				sideMenu={sideMenu}
 			>
-				<StyledContainer>
+				<StyledContainer className="mb-5">
 					{blogPosts.map((blogPost) => (
 						<BlogCardMain blogPost={blogPost} key={blogPost.id} />
 					))}
 				</StyledContainer>
+
+				<YoutubeEmbed />
 			</InnerBlogLayout>
 		</Layout>
 	);

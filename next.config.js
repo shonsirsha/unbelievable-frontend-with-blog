@@ -32,6 +32,7 @@ module.exports = {
 			"unb-dev.s3.ap-southeast-1.amazonaws.com",
 			"unbelievable-webapp.s3.ap-southeast-1.amazonaws.com",
 			"unbelievable-webapp.s3.amazonaws.com",
+			"i.ytimg.com",
 		],
 	},
 };
