@@ -1,7 +1,10 @@
+import { useRouter } from "next/router";
 import styled from "styled-components";
 import { FormControl } from "react-bootstrap";
 import { MdSearch } from "react-icons/md";
 import { mediaBreakpoint } from "utils/breakpoints";
+import { useState } from "react";
+import { whitespace } from "utils/whitespace";
 const StyledBar = styled(FormControl)`
 	padding: 23px 21px;
 	padding-left: 60px;
@@ -50,11 +53,33 @@ const SearchIcon = styled(MdSearch)`
 export default function SearchBarBlog({
 	bigText = false,
 	barWidthPercent = "100",
+	frontendSearch = false, // frontend filtering only
 	...props
 }) {
+	const router = useRouter();
+	const [keyword, setKeyword] = useState("");
+	const onChange = (e) => {
+		setKeyword(e.target.value);
+	};
+	const onKeyUp = (e) => {
+		if (e.keyCode === 13 && !whitespace(e.target.value)) {
+			router.push(`/blog-cari?q=${keyword}&sortBy=trending`);
+		}
+	};
 	return (
 		<StyledContainer width={barWidthPercent}>
-			<StyledBar {...props} bigtext={bigText ? 1 : 0} width={"100"} />
+			{frontendSearch ? (
+				<StyledBar {...props} bigtext={bigText ? 1 : 0} width={"100"} />
+			) : (
+				<StyledBar
+					{...props}
+					onKeyUp={onKeyUp}
+					value={keyword}
+					onChange={onChange}
+					bigtext={bigText ? 1 : 0}
+					width={"100"}
+				/>
+			)}
 			<SearchIcon />
 		</StyledContainer>
 	);

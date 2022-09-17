@@ -102,7 +102,6 @@ export async function getServerSideProps(ctx) {
 	);
 
 	const sideMenu = await sideMenuRes.json();
-
 	if (sideMenuRes.ok) {
 		return {
 			props: {

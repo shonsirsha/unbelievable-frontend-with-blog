@@ -94,7 +94,7 @@ const Bookmarks = ({ bookmarkedBlogPosts = [] }) => {
 					blogPosts.title.toLowerCase().includes(keyword.toLowerCase()) ||
 					blogPosts.blogTopicsText.toLowerCase().includes(keyword.toLowerCase())
 			);
-			setBlogPostsState(filteredBlogPosts);
+			setBlogPostsState(filteredBlogPosts.sort((a, b) => sorter(a, b)));
 		} else {
 			setBlogPostsState([...bookmarkedBlogPosts].sort((a, b) => sorter(a, b)));
 		}
@@ -122,6 +122,7 @@ const Bookmarks = ({ bookmarkedBlogPosts = [] }) => {
 
 				<div className="w-100 d-flex align-items-center justify-content-lg-between flex-lg-row flex-column">
 					<SearchBarBlog
+						frontendSearch
 						barWidthPercent="60"
 						onChange={(e) => {
 							setKeyword(e.target.value);
