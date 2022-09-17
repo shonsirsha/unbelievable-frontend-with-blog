@@ -1,48 +1,52 @@
-import { API_URL } from "config";
 import { parseCookies } from "utils/cookies";
-import BlogPostsList from "components/Blog/BlogPostsList";
+import { API_URL } from "config";
+import { whitespace } from "utils/whitespace";
 import Layout from "components/Layout";
 import InnerBlogLayout from "components/Blog/InnerBlogLayout";
+import BlogPostsList from "components/Blog/BlogPostsList";
 
-const BlogTopic = ({
-	blogPosts = [],
-	topicName = "",
-	sideMenu,
-	topicId = "",
-	sortBy = "terbaru",
-}) => {
+const Cari = ({ sideMenu, blogPosts, sortBy, q = "" }) => {
 	return (
 		<Layout
 			background="#171b2d"
-			title={`${topicName} | Unbelievable.id`}
-			description={`Artikel-artikel tentang ${topicName} untuk kamu dari Unbelievable. Keputusan yang telah kamu ambil hari ini akan membuat diri kamu lebih lebih baik lagi ke depannya!`}
+			title={`Cari Blog | Unbelievable.id`}
+			description={`${
+				blogPosts.length &&
+				`Terdapat ${blogPosts.length} artikel dari hasil pencarian${
+					q ? ` "${q}".` : `.`
+				}`
+			} Cari artikel-artikel untuk kamu dari Unbelievable. Keputusan yang telah kamu ambil hari ini akan membuat diri kamu lebih lebih baik lagi ke depannya!`}
 			keywords={
 				"blog, unbelievable, unbelievable.id blog, self-improvement indonesia, kelas unbelievable indonesia, blog bahasa indonesia"
 			}
 		>
 			<InnerBlogLayout sideMenu={sideMenu}>
 				<BlogPostsList
-					currentURL={`/blog-topik/${topicId}`}
+					currentURL={`/blog-cari?q=${q}`}
 					blogPosts={blogPosts}
-					pageTitle={topicName}
+					pageTitle={"Pencarian"}
+					subtitle={`Hasil dari pencarian ${q && `"${q}"`}`}
 					sortBy={sortBy}
+					paramSeparator={`&`}
 				/>
 			</InnerBlogLayout>
 		</Layout>
 	);
 };
 
-export default BlogTopic;
+export default Cari;
 
 export async function getServerSideProps(ctx) {
 	const { token } = parseCookies(ctx.req);
 	const sortMap = {
 		terbaru: "created_at",
 		terbaik: "views",
-		trending: "/trending-blog-posts?_blogTopics.topicId",
+		trending: "/trending-blog-posts",
 	};
 
-	let { sortBy, topicId } = ctx.query;
+	let { sortBy, q } = ctx.query;
+
+	q = q ? q : "";
 
 	if (!sortBy || !(sortBy.toLowerCase() in sortMap)) sortBy = "trending";
 
@@ -52,28 +56,31 @@ export async function getServerSideProps(ctx) {
 	let res;
 
 	if (sortBy && sortBy.toLowerCase() === "trending") {
-		res = await fetch(`${API_URL}${sortMap["trending"]}=${topicId}`, {
-			method: "GET",
-		});
-	} else {
-		res = await fetch(
-			`${API_URL}/blog-posts?_blogTopics.topicId=${topicId}&_sort=${sort}:desc`,
-			{
+		if (!whitespace(q)) {
+			res = await fetch(`${API_URL}${sortMap["trending"]}?_q=${q}`, {
 				method: "GET",
-			}
-		);
+			});
+		} else {
+			res = await fetch(`${API_URL}${sortMap["trending"]}`, {
+				method: "GET",
+			});
+		}
+	} else {
+		if (!whitespace(q)) {
+			res = await fetch(`${API_URL}/blog-posts?_q=${q}&_sort=${sort}:desc`, {
+				method: "GET",
+			});
+		} else {
+			res = await fetch(`${API_URL}/blog-posts?_sort=${sort}:desc`, {
+				method: "GET",
+			});
+		}
 	}
 
-	const resTopic = await fetch(`${API_URL}/blog-topics?topicId=${topicId}`, {
-		method: "GET",
-	});
-
 	const blogPosts = await res.json();
-	const topic = await resTopic.json(); // just to get the TopicName
 
 	//embed: https://www.youtube.com/embed/videoseries?list=UUDrG2_1TcVkXKXXsD6Kjwig&controls=0
-
-	if (!res.ok || !resTopic.ok) {
+	if (!res.ok) {
 		return {
 			redirect: {
 				permanent: false,
@@ -82,8 +89,6 @@ export async function getServerSideProps(ctx) {
 			props: {},
 		};
 	}
-
-	const topicName = topic[0].topicName;
 
 	const sideMenuResHeaders = token
 		? { "Content-Type": "application/json", Authorization: `Bearer ${token}` }
@@ -102,10 +107,9 @@ export async function getServerSideProps(ctx) {
 		return {
 			props: {
 				sortBy: !sortBy || !(sortBy in sortMap) ? "terbaru" : sortBy,
-				topicId,
 				blogPosts,
 				sideMenu,
-				topicName,
+				q,
 			},
 		};
 	}
@@ -114,9 +118,8 @@ export async function getServerSideProps(ctx) {
 		props: {
 			blogPosts,
 			sideMenu: null,
-			topicName: "",
-			topicId: "",
 			sortBy: "",
+			q,
 		},
 	};
 }

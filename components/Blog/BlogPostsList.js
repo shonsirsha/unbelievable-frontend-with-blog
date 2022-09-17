@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { AiFillTag } from "react-icons/ai";
@@ -153,6 +152,8 @@ const BlogPostsList = ({
 	blogPosts = [],
 	currentURL = "",
 	sortBy = "",
+	subtitle = "",
+	paramSeparator = "?",
 }) => {
 	return (
 		<div className="d-flex flex-column">
@@ -162,21 +163,24 @@ const BlogPostsList = ({
 					{pageTitle}
 				</HeadingSM>
 			</div>
+			<TextTertiary className="mt-2 text-gray2" as="h3">
+				{subtitle}
+			</TextTertiary>
 
 			<div className="d-flex my-5">
-				<Link passHref href={`${currentURL}?sortBy=trending`}>
+				<Link passHref href={`${currentURL}${paramSeparator}sortBy=trending`}>
 					<SortButton className={`${sortBy === "trending" && `active`} mr-2`}>
 						Trending
 					</SortButton>
 				</Link>
 
-				<Link passHref href={`${currentURL}?sortBy=terbaru`}>
+				<Link passHref href={`${currentURL}${paramSeparator}sortBy=terbaru`}>
 					<SortButton className={`${sortBy === "terbaru" && `active`} mr-2`}>
 						Terbaru
 					</SortButton>
 				</Link>
 
-				<Link passHref href={`${currentURL}?sortBy=terbaik`}>
+				<Link passHref href={`${currentURL}${paramSeparator}sortBy=terbaik`}>
 					<SortButton className={`${sortBy === "terbaik" && `active`}`}>
 						Terbaik
 					</SortButton>

@@ -9,7 +9,7 @@ import { mediaBreakpoint } from "utils/breakpoints";
 import BlogCardMain from "components/Blog/BlogCardMain";
 import SearchBarBlog from "components/Search/SearchBarBlog";
 import { HeadingSM } from "components/Typography/Headings";
-import { FormGroup, Form } from "react-bootstrap";
+import { FormGroup, Form, Container } from "react-bootstrap";
 import { whitespace } from "utils/whitespace";
 
 const Select = styled(Form)`
@@ -115,7 +115,7 @@ const Bookmarks = ({ bookmarkedBlogPosts = [] }) => {
 			mainApp
 			showLogout
 		>
-			<div className="d-flex flex-column w-100">
+			<Container className="d-flex flex-column">
 				<Breadcrumb />
 
 				<HeadingSM className="mb-3">Bookmark Blog</HeadingSM>
@@ -153,7 +153,7 @@ const Bookmarks = ({ bookmarkedBlogPosts = [] }) => {
 						/>
 					))}
 				</OuterContainer>
-			</div>
+			</Container>
 		</Layout>
 	);
 };

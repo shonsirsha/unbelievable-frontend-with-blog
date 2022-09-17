@@ -1,4 +1,3 @@
-import React from "react";
 import { API_URL } from "config";
 import { parseCookies } from "utils/cookies";
 import Layout from "components/Layout";
@@ -135,7 +134,6 @@ export async function getServerSideProps(ctx) {
 		}
 	}, "");
 
-	console.log({ sideMenuResHeaders });
 	const sideMenuRes = await fetch(
 		`${API_URL}/blog-posts/side-menu-items?currentTopics=${blogTopicsString}&currentPostId=${blogPost.id}`,
 		{
