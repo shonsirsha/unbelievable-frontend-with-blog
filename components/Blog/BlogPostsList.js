@@ -12,6 +12,7 @@ import { NEXT_URL } from "config";
 import { TextTertiary } from "components/Typography/Text";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { dateDiffInDays } from "utils/dateDiffInDays";
+import CustomisableBanner from "./CustomisableBanner";
 const TopicPill = styled.div`
 	padding: 8px 24px;
 	min-width: 96px;
@@ -186,12 +187,41 @@ const BlogPostsList = ({
 					</SortButton>
 				</Link>
 			</div>
-			{blogPosts.map((blogPost) => (
-				<ListItem
-					key={blogPost.id}
-					blogPost={blogPost}
-					className={`mb-5 mt-2`}
-				/>
+			{blogPosts.map((blogPost, ix) => (
+				<>
+					{blogPosts.length > 3 ? (
+						<>
+							{ix === 3 ? (
+								<CustomisableBanner className="mb-5" />
+							) : (
+								<ListItem
+									key={blogPost.id}
+									blogPost={blogPost}
+									className={`mb-5 mt-2`}
+								/>
+							)}
+						</>
+					) : (
+						<>
+							{ix === blogPosts.length - 1 ? (
+								<>
+									<ListItem
+										key={blogPost.id}
+										blogPost={blogPost}
+										className={`mb-5 mt-2`}
+									/>
+									<CustomisableBanner />
+								</>
+							) : (
+								<ListItem
+									key={blogPost.id}
+									blogPost={blogPost}
+									className={`mb-5 mt-2`}
+								/>
+							)}
+						</>
+					)}
+				</>
 			))}
 		</div>
 	);

@@ -11,6 +11,8 @@ export const AppProvider = ({ children }) => {
 	const [ytPreviewedId, setYtPreviewedId] = useState("");
 	const [ytVideos, setYtVideos] = useState([]);
 
+	const [bannerData, setBannerData] = useState(null);
+
 	useEffect(() => {
 		async function fetchSiteData() {
 			const resSiteData = await fetch(`${API_URL}/sitedata`, {
@@ -86,6 +88,24 @@ export const AppProvider = ({ children }) => {
 			void fetchInstaFeed();
 		}
 	}, [socialEmbedData]);
+
+	useEffect(() => {
+		const fetchBannerData = async () => {
+			const res = await fetch(`${API_URL}/customisable-banner`, {
+				method: "GET",
+			});
+
+			if (res.ok) {
+				const data = await res.json();
+				console.log(data.background_color);
+				setBannerData(data);
+			} else {
+				console.error("Error in fetching banner data");
+			}
+		};
+
+		void fetchBannerData();
+	}, []);
 	return (
 		<AppContext.Provider
 			value={{
@@ -95,6 +115,7 @@ export const AppProvider = ({ children }) => {
 				igPosts,
 				ytVideos,
 				ytPreviewedId,
+				bannerData,
 			}}
 		>
 			{children}

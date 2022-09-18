@@ -98,6 +98,8 @@ const StyledSlider = styled(Slider)`
 `;
 const StyledImage = styled(Image)`
 	object-fit: cover;
+	width: 160px !important;
+	height: 160px !important;
 `;
 export default function Testimonial({ testimonials }) {
 	const settings = {
