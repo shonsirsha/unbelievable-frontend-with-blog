@@ -11,6 +11,8 @@ import InnerBlogLayout from "components/Blog/InnerBlogLayout";
 import ShareOptions from "components/ShareOptions";
 import { NEXT_URL } from "config";
 import YoutubeEmbed from "components/SocialEmbeds/YoutubeEmbed";
+import InstaEmbed from "components/SocialEmbeds/InstaEmbed";
+import SocialEmbed from "components/SocialEmbeds";
 
 const TopicPill = styled.div`
 	padding: 11px 40px;
@@ -97,7 +99,7 @@ export default function BlogPost({ blogPost, sideMenu }) {
 						}}
 					></div>
 
-					<YoutubeEmbed />
+					<SocialEmbed />
 				</div>
 			</InnerBlogLayout>
 		</Layout>

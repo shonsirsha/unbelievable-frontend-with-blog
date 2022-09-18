@@ -1,24 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import Image from "next/image";
 import styled from "styled-components";
+import AppContext from "context/AppContext";
 import { TextTertiary } from "components/Typography/Text";
 import { HeadingXXS } from "components/Typography/Headings";
 import decodeHTMLEntities from "utils/decodeHTMLEntities";
 import { mediaBreakpoint } from "utils/breakpoints";
 import moment from "moment";
+import { BsYoutube } from "react-icons/bs";
 
 const VideosContainer = styled.div`
 	display: flex;
 	max-height: 480px;
 	width: 100%;
-	border-radius: 8px;
+	border-radius: 4px;
 	background: #222222;
 	& iframe {
 		width: 70%;
 		height: 420px;
 	}
 
-	@media ${mediaBreakpoint.down.lg} {
+	@media ${mediaBreakpoint.down.md} {
 		max-height: unset;
 
 		& iframe {
@@ -44,90 +46,78 @@ const VideoTitleText = styled(HeadingXXS)`
 	font-size: 13px;
 `;
 
+const IndividualVideo = styled.div`
+	&:hover {
+		cursor: pointer;
+	}
+`;
+
 const YoutubeEmbed = () => {
-	const PLAYLIST_ID = "UUSDvKdIQOwTfcyOimSi9oYA";
-	const ORDER = "date";
-	const MAX_RESULTS = 10;
-	const KEY = process.env.NEXT_PUBLIC_YT_API_KEY;
-
-	const [videos, setVideos] = useState([]);
-
-	const [previewedId, setPreviewedId] = useState("");
 	const [autoPlay, setAutoplay] = useState(false);
-	useEffect(() => {
-		const fetchYtVideos = async () => {
-			const ytVideosRes = await fetch(
-				`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=${MAX_RESULTS}&playlistId=${PLAYLIST_ID}&key=${KEY}&order=${ORDER}`
-			);
 
-			if (ytVideosRes.ok) {
-				const ytVideos = await ytVideosRes.json();
-				setVideos(ytVideos ? ytVideos.items : []);
-				setPreviewedId(
-					ytVideos && ytVideos.items
-						? ytVideos.items[0].snippet.resourceId.videoId
-						: ""
-				);
-			} else {
-				console.error("Error in fetching youtube videos");
-			}
-		};
-		void fetchYtVideos();
-	}, []);
+	const { ytPreviewedId, ytVideos } = useContext(AppContext);
 
-	if (!videos.length) return <></>;
-	if (videos.length)
+	if (!ytVideos.length) return <></>;
+	if (ytVideos.length)
 		return (
-			<VideosContainer className="p-3 flex-md-row flex-column">
-				<iframe
-					src={`https://www.youtube.com/embed/${previewedId}?autoplay=${
-						autoPlay ? `1` : `0`
-					}&origin=https://unbelievable.id&rel=0`}
-					title="YouTube Video Player for Unbelievable.id"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-					allowFullScreen
-					style={{ border: 0, borderRadius: 8 }}
-					className="mr-3 mt-2 shadow-lg"
-				/>
+			<div className="d-flex flex-column">
+				<div className="d-flex">
+					<BsYoutube size={18} />
+					<HeadingXXS as="p" className="ml-2 mb-3">
+						Unbelievable.id Official YouTube Channel
+					</HeadingXXS>
+				</div>
 
-				<VideosListContainer>
-					{videos.map((video) => (
-						<div
-							onClick={() => {
-								setAutoplay(true);
-								setPreviewedId(video.snippet.resourceId.videoId);
-							}}
-							className="d-flex flex-column mr-4"
-							key={video.id}
-						>
-							<div
-								className="position-relative mr-2"
-								style={{
-									width: "240px",
-									height: "120px",
-									flexShrink: "0",
-									overflow: "hidden",
-									borderRadius: "4px",
+				<VideosContainer className="p-3 flex-md-row flex-column">
+					<iframe
+						src={`https://www.youtube.com/embed/${ytPreviewedId}?autoplay=${
+							autoPlay ? `1` : `0`
+						}&origin=https://unbelievable.id&rel=0`}
+						title="YouTube Video Player for Unbelievable.id"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+						allowFullScreen
+						style={{ border: 0, borderRadius: 8 }}
+						className="mr-3 mt-2 shadow-lg"
+					/>
+
+					<VideosListContainer>
+						{ytVideos.map((video) => (
+							<IndividualVideo
+								onClick={() => {
+									setAutoplay(true);
 								}}
+								className="d-flex flex-column mr-4"
+								key={video.id}
 							>
-								<Image
-									src={video.snippet.thumbnails.medium.url}
-									alt={video.snippet.title}
-									layout="fill"
-									objectFit="cover"
-								/>
-							</div>
+								<div
+									className="position-relative mr-2 mt-lg-0 mt-3"
+									style={{
+										width: "240px",
+										height: "120px",
+										flexShrink: "0",
+										overflow: "hidden",
+										borderRadius: "4px",
+									}}
+								>
+									<Image
+										src={video.snippet.thumbnails.medium.url}
+										alt={video.snippet.title}
+										layout="fill"
+										objectFit="cover"
+									/>
+								</div>
 
-							<VideoTitleText as="p" className="text-white mt-2">
-								{decodeHTMLEntities(video.snippet.title)}
-							</VideoTitleText>
-							<TextTertiary className="mt-1 mb-4 text-lightgray">
-								{moment(video.snippet.publishedAt).format("DD MMM")}
-							</TextTertiary>
-						</div>
-					))}
-				</VideosListContainer>
-			</VideosContainer>
+								<VideoTitleText as="p" className="text-white mt-2">
+									{decodeHTMLEntities(video.snippet.title)}
+								</VideoTitleText>
+								<TextTertiary className="mt-1 mb-4 text-lightgray">
+									{moment(video.snippet.publishedAt).format("DD MMM")}
+								</TextTertiary>
+							</IndividualVideo>
+						))}
+					</VideosListContainer>
+				</VideosContainer>
+			</div>
 		);
 };
 

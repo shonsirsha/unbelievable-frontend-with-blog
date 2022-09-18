@@ -33,6 +33,8 @@ module.exports = {
 			"unbelievable-webapp.s3.ap-southeast-1.amazonaws.com",
 			"unbelievable-webapp.s3.amazonaws.com",
 			"i.ytimg.com",
+			"video.cdninstagram.com",
+			"scontent.cdninstagram.com",
 		],
 	},
 };
