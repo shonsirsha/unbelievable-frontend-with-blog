@@ -25,8 +25,12 @@ const InstaEmbed = () => {
 								<InstaImage
 									src={
 										post.media_type.toUpperCase() === "IMAGE"
-											? post.media_url
-											: post.thumbnail_url
+											? `/api/image-fetcher?url=${encodeURIComponent(
+													post.media_url
+											  )}`
+											: `/api/image-fetcher?url=${encodeURIComponent(
+													post.thumbnail_url
+											  )}`
 									}
 									permalink={post.permalink}
 									isVideo={post.media_type.toUpperCase() === "VIDEO"}

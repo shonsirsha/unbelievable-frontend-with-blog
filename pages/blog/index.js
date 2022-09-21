@@ -9,10 +9,9 @@ import styled from "styled-components";
 import InnerBlogLayout from "components/Blog/InnerBlogLayout";
 import BlogCardMain from "components/Blog/BlogCardMain";
 import ShowcaseBlog from "components/Blog/ShowcaseBlog";
-import { HeadingXXS } from "components/Typography/Headings";
 import { mediaBreakpoint } from "utils/breakpoints";
 import { TextPrimary } from "components/Typography/Text";
-import YoutubeEmbed from "components/SocialEmbeds/YoutubeEmbed";
+import SocialEmbed from "components/SocialEmbeds";
 
 const StyledContainer = styled(Container)`
 	overflow: hidden;
@@ -88,7 +87,7 @@ export default function BlogPost({ blogPosts, sideMenu }) {
 					))}
 				</StyledContainer>
 
-				<YoutubeEmbed />
+				<SocialEmbed />
 			</InnerBlogLayout>
 		</Layout>
 	);
