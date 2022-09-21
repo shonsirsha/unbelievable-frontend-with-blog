@@ -55,7 +55,7 @@ const IndividualVideo = styled.div`
 const YoutubeEmbed = () => {
 	const [autoPlay, setAutoplay] = useState(false);
 
-	const { ytPreviewedId, ytVideos } = useContext(AppContext);
+	const { ytPreviewedId, ytVideos, setYtPreviewedId } = useContext(AppContext);
 
 	if (!ytVideos.length) return <></>;
 	if (ytVideos.length)
@@ -85,6 +85,7 @@ const YoutubeEmbed = () => {
 							<IndividualVideo
 								onClick={() => {
 									setAutoplay(true);
+									setYtPreviewedId(video.snippet.resourceId.videoId);
 								}}
 								className="d-flex flex-column mr-4"
 								key={video.id}

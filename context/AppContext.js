@@ -112,6 +112,7 @@ export const AppProvider = ({ children }) => {
 				siteData,
 				setSiteData,
 				socialEmbedData,
+				setYtPreviewedId,
 				igPosts,
 				ytVideos,
 				ytPreviewedId,
