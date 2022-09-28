@@ -1,7 +1,7 @@
 const { createSecureHeaders } = require("next-secure-headers");
 
 module.exports = {
-	target: "serverless",
+	distDir: "out",
 	async headers() {
 		return [
 			{
