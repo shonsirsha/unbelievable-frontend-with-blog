@@ -1,7 +1,6 @@
 const { createSecureHeaders } = require("next-secure-headers");
 
 module.exports = {
-	distDir: "out",
 	async headers() {
 		return [
 			{
