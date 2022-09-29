@@ -63,6 +63,13 @@ const SortButton = styled.a`
 		color: #606060;
 		border: 1px solid #7c7c7c;
 	}
+
+	@media ${mediaBreakpoint.down.md} {
+		padding: 8px;
+		border-radius: 8px;
+		width: 100px;
+		text-align: center;
+	}
 `;
 
 const ListItem = ({
