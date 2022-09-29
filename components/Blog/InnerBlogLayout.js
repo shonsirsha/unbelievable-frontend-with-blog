@@ -129,7 +129,7 @@ const InnerBlogLayout = ({
 						</div>
 					</a>
 				) : (
-					<>asd</>
+					<></>
 				)}
 			</Sidebar>
 		</StyledContainer>

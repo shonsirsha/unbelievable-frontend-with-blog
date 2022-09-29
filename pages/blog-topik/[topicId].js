@@ -83,7 +83,7 @@ export async function getServerSideProps(ctx) {
 		};
 	}
 
-	const topicName = topic[0].topicName;
+	const topicName = topic[0] ? topic[0].topicName : topicId;
 
 	const sideMenuResHeaders = token
 		? { "Content-Type": "application/json", Authorization: `Bearer ${token}` }

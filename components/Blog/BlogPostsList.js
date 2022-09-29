@@ -156,11 +156,13 @@ const BlogPostsList = ({
 	subtitle = "",
 	paramSeparator = "?",
 }) => {
+	console.log(blogPosts);
+
 	return (
 		<div className="d-flex flex-column">
 			<div className="d-flex align-items-center">
 				<AiFillTag size="32" />
-				<HeadingSM className="ml-2" as="h1">
+				<HeadingSM as="h1" className="ml-2 text-capitalize">
 					{pageTitle}
 				</HeadingSM>
 			</div>
@@ -187,42 +189,52 @@ const BlogPostsList = ({
 					</SortButton>
 				</Link>
 			</div>
-			{blogPosts.map((blogPost, ix) => (
+
+			{blogPosts.length < 1 && (
+				<HeadingXXS as="p">
+					Ups, maaf, sepertinya nggak ada artikel yang bisa ditemukan! 🧐
+				</HeadingXXS>
+			)}
+			{blogPosts.length > 0 && (
 				<>
-					{blogPosts.length > 3 ? (
+					{blogPosts.map((blogPost, ix) => (
 						<>
-							{ix === 3 ? (
-								<CustomisableBanner className="mb-5" />
-							) : (
-								<ListItem
-									key={blogPost.id}
-									blogPost={blogPost}
-									className={`mb-5 mt-2`}
-								/>
-							)}
-						</>
-					) : (
-						<>
-							{ix === blogPosts.length - 1 ? (
+							{blogPosts.length > 3 ? (
 								<>
-									<ListItem
-										key={blogPost.id}
-										blogPost={blogPost}
-										className={`mb-5 mt-2`}
-									/>
-									<CustomisableBanner />
+									{ix === 3 ? (
+										<CustomisableBanner key={blogPost.id} className="mb-5" />
+									) : (
+										<ListItem
+											key={blogPost.id}
+											blogPost={blogPost}
+											className={`mb-5 mt-2`}
+										/>
+									)}
 								</>
 							) : (
-								<ListItem
-									key={blogPost.id}
-									blogPost={blogPost}
-									className={`mb-5 mt-2`}
-								/>
+								<>
+									{ix === blogPosts.length - 1 ? (
+										<>
+											<ListItem
+												key={blogPost.id}
+												blogPost={blogPost}
+												className={`mb-5 mt-2`}
+											/>
+											<CustomisableBanner key={blogPost.id} />
+										</>
+									) : (
+										<ListItem
+											key={blogPost.id}
+											blogPost={blogPost}
+											className={`mb-5 mt-2`}
+										/>
+									)}
+								</>
 							)}
 						</>
-					)}
+					))}
 				</>
-			))}
+			)}
 		</div>
 	);
 };

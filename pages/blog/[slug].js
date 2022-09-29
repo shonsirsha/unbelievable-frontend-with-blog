@@ -10,9 +10,8 @@ import Link from "next/link";
 import InnerBlogLayout from "components/Blog/InnerBlogLayout";
 import ShareOptions from "components/ShareOptions";
 import { NEXT_URL } from "config";
-import YoutubeEmbed from "components/SocialEmbeds/YoutubeEmbed";
-import InstaEmbed from "components/SocialEmbeds/InstaEmbed";
 import SocialEmbed from "components/SocialEmbeds";
+import { whitespace } from "utils/whitespace";
 
 const TopicPill = styled.div`
 	padding: 11px 40px;
@@ -54,6 +53,11 @@ export default function BlogPost({ blogPost, sideMenu }) {
 		<Layout
 			background="#171b2d"
 			title={`${blogPost.title} | Blog Unbelievable`}
+			keywords={
+				blogPost.seo_keywords && !whitespace(blogPost.seo_keywords)
+					? blogPost.seo_keywords
+					: blogPost.blogTopicsText
+			}
 			description={`${blogPost.shortDesc}`}
 			metaImageURL={
 				blogPost.thumbnail
