@@ -66,25 +66,45 @@ const InnerBlogLayout = ({
 	return (
 		<StyledContainer lesspaddingtop={lessPaddingTop ? 1 : 0}>
 			<ToastContainer />
-			<Main className="pr-lg-5 mb-lg-0 mb-5">{children}</Main>
+			<Main className="pr-lg-5 mb-lg-0 mb-5">
+				<>
+					<div className="d-block d-lg-none">
+						{showSearch && (
+							<>
+								{" "}
+								<SearchBarBlog
+									onChange={(e) => setKeyword(e.target.value)}
+									placeholder="Cari artikel (judul, topik, dll)..."
+								/>
+								<div className="mb-5" />
+							</>
+						)}
+					</div>
+					{children}
+				</>
+			</Main>
 			<Sidebar>
 				{showSearch && (
-					<>
-						{" "}
-						<SearchBarBlog
-							onChange={(e) => setKeyword(e.target.value)}
-							placeholder="Cari artikel (judul, topik, dll)..."
-						/>
-						<div className="my-4" />
-					</>
+					<div className="d-none d-lg-block">
+						{showSearch && (
+							<>
+								{" "}
+								<SearchBarBlog
+									onChange={(e) => setKeyword(e.target.value)}
+									placeholder="Cari artikel (judul, topik, dll)..."
+								/>
+								<div className="mb-5" />
+							</>
+						)}
+					</div>
 				)}
 
-				{showSubscribe && (
+				{/* {showSubscribe && (
 					<>
 						<SearchBarBlogSubscription placeholder="Ketik email Anda..." />
 						<div className="my-4" />
 					</>
-				)}
+				)} */}
 
 				{recommendedBlogPosts.length > 0 && (
 					<>

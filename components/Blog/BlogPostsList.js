@@ -204,16 +204,16 @@ const BlogPostsList = ({
 			)}
 			{blogPosts.length > 0 && (
 				<>
-					{blogPosts.map((blogPost, ix) => (
-						<>
+					{[...blogPosts].map((blogPost, ix) => (
+						<div key={blogPost.id}>
 							{blogPosts.length > 3 ? (
 								<>
 									{ix === 3 ? (
-										<CustomisableBanner key={blogPost.id} className="mb-5" />
+										<CustomisableBanner key={Date.now()} className="mb-5" />
 									) : (
 										<ListItem
-											key={blogPost.id}
 											blogPost={blogPost}
+											key={blogPost.id}
 											className={`mb-5 mt-2`}
 										/>
 									)}
@@ -223,11 +223,11 @@ const BlogPostsList = ({
 									{ix === blogPosts.length - 1 ? (
 										<>
 											<ListItem
-												key={blogPost.id}
 												blogPost={blogPost}
+												key={blogPost.id}
 												className={`mb-5 mt-2`}
 											/>
-											<CustomisableBanner key={blogPost.id} />
+											<CustomisableBanner key={Date.now()} />
 										</>
 									) : (
 										<ListItem
@@ -238,7 +238,7 @@ const BlogPostsList = ({
 									)}
 								</>
 							)}
-						</>
+						</div>
 					))}
 				</>
 			)}
