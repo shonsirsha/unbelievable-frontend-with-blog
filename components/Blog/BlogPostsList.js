@@ -176,7 +176,6 @@ const BlogPostsList = ({
 			<TextTertiary className="mt-2 text-gray2" as="h3">
 				{subtitle}
 			</TextTertiary>
-
 			<div className="d-flex my-5">
 				<Link passHref href={`${currentURL}${paramSeparator}sortBy=trending`}>
 					<SortButton className={`${sortBy === "trending" && `active`} mr-2`}>
@@ -196,7 +195,7 @@ const BlogPostsList = ({
 					</SortButton>
 				</Link>
 			</div>
-
+			{/**/}
 			{blogPosts.length < 1 && (
 				<HeadingXXS as="p">
 					Ups, maaf, sepertinya nggak ada artikel yang bisa ditemukan! 🧐
